@@ -1,5 +1,42 @@
 @import 'bootstrap/dist/css/bootstrap.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+:root {
+  --primary: #118ab2;
+  --secondary: #40baec;
+  --secondary-variant: #eff8fb;
+  --tertiary: #cf4130;
+  --concorso: #fed169;
+  --overlay: #e9f1f3;
+  --topbar-mobile-height: 45px;
+  --bottom-mobile-navigation-height: 60px;
+  --font-roboto-slab: 'Roboto Slab', serif;
+  --font-monsterrat: 'Montserrat', sans-serif;
+}
+
+.block-content {
+  height: calc(
+    100% - var(--topbar-mobile-height) - var(--bottom-mobile-navigation-height)
+  );
+  overflow-y: auto;
+}
+
+.no-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.flex-1 {
+  flex: 1;
 }
