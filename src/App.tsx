@@ -16,6 +16,7 @@ import { useEffect } from 'react'
 import { createI18n, DEFAULT_LANG, getLangFromParam } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
 import NavigationWrapper from './components/NavigationWrapper'
+import Detail from './pages/Mobile/Detail'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -72,7 +73,11 @@ function AppRoutes() {
               }
             />
             <Route path="lista" element={<List />} />
+            <Route path="lista/:id" element={<Detail />} />
+            <Route path="mappa" element={<Map />} />
+            <Route path="mappa/:id" element={<Detail />} />
             <Route path="profilo" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
       </Routes>
