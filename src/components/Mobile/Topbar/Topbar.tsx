@@ -4,13 +4,20 @@ import { ReactComponent as Bell } from '../../../assets/bell.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import { useState } from 'react'
 import Legend from '../Legend'
+import WikiLoveMonuments from '../WikiLoveMonuments'
 
 export default function Topbar() {
   const [legend, setLegend] = useState(false)
+  const [infoWiki, setInfoWiki] = useState(false)
   return (
     <>
       <div className={styles.TopBar}>
-        <div>
+        <div
+          className="pointer"
+          onClick={() => {
+            setInfoWiki(!infoWiki)
+          }}
+        >
           <Logo />
         </div>
         <div className={styles.ContainerTitle}>
@@ -28,6 +35,10 @@ export default function Topbar() {
       <Legend
         legend={legend}
         setLegend={(legend: boolean) => setLegend(legend)}
+      />
+      <WikiLoveMonuments
+        infoWiki={infoWiki}
+        setInfoWiki={(infoWiki: boolean) => setInfoWiki(infoWiki)}
       />
     </>
   )

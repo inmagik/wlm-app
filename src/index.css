@@ -27,6 +27,7 @@ body,
   );
   overflow-y: auto;
   margin-top: var(--topbar-mobile-height);
+  position: relative;
 }
 
 .no-link {
