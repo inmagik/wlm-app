@@ -8,8 +8,16 @@ import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
+import BlockFilters from '../../../components/Mobile/BlockFilters'
+import { useQsFilters } from '../../../hooks/filters'
+
+const getFilters = (params: URLSearchParams) => ({
+  search: params.get('search') ?? '',
+  municipality: params.get('municipality') ?? '',
+})
 
 export default function Map() {
+  const { filters, setFilters } = useQsFilters(getFilters)
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
@@ -62,6 +70,12 @@ export default function Map() {
           </div>
         </div>
       </div>
+      <BlockFilters
+        filters={filters}
+        setFilters={setFilters}
+        filtersOpen={filtersOpen}
+        setFiltersOpen={setFiltersOpen}
+      />
     </Layout>
   )
 }
