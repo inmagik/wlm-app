@@ -17,6 +17,7 @@ import { createI18n, DEFAULT_LANG, getLangFromParam } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
 import NavigationWrapper from './components/NavigationWrapper'
 import Detail from './pages/Mobile/Detail'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -34,7 +35,6 @@ function SyncLang() {
   }, [lang, i18n])
 
   return <Outlet />
-
 }
 
 function AvailablesLang() {
@@ -85,14 +85,34 @@ function AppRoutes() {
   )
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      networkMode: 'always',
+      refetchOnMount: false,
+      staleTime: Infinity,
+      retry: false,
+      suspense: true,
+      structuralSharing: false,
+    },
+  },
+})
+
 function App() {
   const i18n = createI18n(window.location.pathname)
   return (
     <BrowserRouter>
       <I18nextProvider i18n={i18n}>
-        <ErrorBoundary>
-          <AppRoutes />
-        </ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <ErrorBoundary>
+            <AppRoutes />
+          </ErrorBoundary>
+        </QueryClientProvider>
       </I18nextProvider>
     </BrowserRouter>
   )

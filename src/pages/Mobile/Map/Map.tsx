@@ -44,21 +44,21 @@ export default function Map() {
     <Layout>
       <div className="w-100 h-100">
         <div ref={mapElement} id="map" className="w-100 h-100">
-          <div
+          <button
             className={styles.ButtonFilter}
             onClick={() => {
               setFiltersOpen(!filtersOpen)
             }}
           >
             <FilterIcon />
-          </div>
+          </button>
           <div className={styles.ContainerButtons}>
-            <div className={styles.ButtonMappe}>
+            <button className={styles.ButtonMappe}>
               <Mappe />
-            </div>
-            <div className={styles.ButtonMyLocation}>
+            </button>
+            <button className={styles.ButtonMyLocation}>
               <MyLocation />
-            </div>
+            </button>
           </div>
         </div>
       </div>
