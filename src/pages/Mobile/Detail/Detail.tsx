@@ -4,16 +4,22 @@ import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
 import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
-import { ReactComponent as Castello } from '../../../assets/castelli.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as CameraWhite } from '../../../assets/camera-white.svg'
-import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
+import { ReactComponent as Direction } from '../../../assets/direction.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
+import IconMonument from '../../../components/IconMonument'
+import SlideShow from '../../../components/Mobile/SlideShow'
+import { Map as MapOl, View } from 'ol'
+import { fromLonLat } from 'ol/proj'
+import TileLayer from 'ol/layer/Tile'
+import OSM from 'ol/source/OSM'
+import MapIcon from '../../../components/Icons/MapIcon'
 
 export default function Detail() {
   const { slug } = useParams()
@@ -26,12 +32,33 @@ export default function Detail() {
   const { t } = useTranslation()
   const inputFileRef = useRef<HTMLInputElement>(null)
   const swiperRef = useRef<SwiperRef>()
-  const swiperSlideShowRef = useRef<SwiperRef>()
-  const picturesById =
-    monument?.pictures.reduce((acc, picture) => {
-      acc[picture.id] = picture
-      return acc
-    }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
+  const mapElement = useRef<HTMLDivElement>(null)
+  const [map, setMap] = useState<MapOl | null>(null)
+
+  useEffect(() => {
+    if (!mapElement.current) return
+    const initialMap = new MapOl({
+      target: mapElement.current,
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      controls: [],
+      view: new View({
+        center: fromLonLat(
+          (monument?.position.coordinates as [number, number]) ?? [0, 0]
+        ),
+        zoom: 11,
+        minZoom: 11,
+        maxZoom: 11,
+      }),
+    })
+
+    setMap(initialMap)
+
+    return () => initialMap.setTarget(undefined as unknown as HTMLElement)
+  }, [monument])
 
   return (
     <Layout>
@@ -89,8 +116,8 @@ export default function Detail() {
           <div className={styles.CardInfoMonument}>
             <div className="d-flex justify-content-between w-100">
               <div className="d-flex">
-                <Castello className="me-1" />
-                <div className="ms-1">
+                <IconMonument monument={monument} />
+                <div className="ms-2">
                   <div>
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
@@ -125,6 +152,23 @@ export default function Detail() {
               ></div>
             ))}
           </div>
+          <button className={styles.ButtonShowAllImages}>
+            {t('guarda_tutte_su_wikimediacommons')}
+          </button>
+        </div>
+        <div className={styles.MapContainer}>
+          <div className={styles.Map} ref={mapElement}></div>
+          <button className={styles.GuardaInMappa}>
+            <MapIcon /> {t('guarda_in_mappa')}
+          </button>
+          <div className={styles.Direction}>
+            <Direction />
+          </div>
+        </div>
+        <div className={styles.CardExternalLinks}>
+          <div className={styles.ExternalLinksTitle}>
+            {t('collegamenti_esterni')}
+          </div>
         </div>
         <div className={styles.FixedButtonUpload}>
           <button
@@ -144,58 +188,14 @@ export default function Detail() {
         </div>
       </div>
       {showAllImages && (
-        <div className={styles.SlideShow}>
-          <Swiper
-            className="h-100"
-            onSwiper={(swiper) => {
-              swiperRef.current = swiper
-            }}
-            onSlideChange={(swiper) => {
-              setSlideShowActive(swiper.activeIndex)
-            }}
-            onInit={(swiper) => {
-              swiper.slideTo(
-                Object.keys(picturesById).indexOf(String(slideShowActive)),
-                0
-              )
-              setTimeout(() => {
-                setInfoSlideSlideShow(true)
-              }, 100)
-            }}
-          >
-            {monument?.pictures.map((picture) => (
-              <SwiperSlide key={picture.id}>
-                <div
-                  className={styles.SlideShowImage}
-                  style={{
-                    backgroundImage: `url(${picture.image_url})`,
-                  }}
-                ></div>
-                <div
-                  className={styles.InfoBlockSlideShow}
-                  style={{
-                    opacity: infoSlideSlideShow ? 1 : 0,
-                    bottom: infoSlideSlideShow ? 0 : -100,
-                    minHeight: infoSlideSlideShow ? 151 : 0,
-                    transition: 'all 0.3s ease-in-out',
-                  }}
-                >
-                  <div className={styles.InfoBlockSlideShowTitle}>
-                    {monument?.label}
-                  </div>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className={styles.SlideShowClose}>
-            <CloseWhite
-              onClick={() => {
-                setShowAllImages(false)
-                setInfoSlideSlideShow(false)
-              }}
-            />
-          </div>
-        </div>
+        <SlideShow
+          infoSlideSlideShow={infoSlideSlideShow}
+          setInfoSlideSlideShow={setInfoSlideSlideShow}
+          setShowAllImages={setShowAllImages}
+          setSlideShowActive={setSlideShowActive}
+          slideShowActive={slideShowActive}
+          monument={monument}
+        />
       )}
     </Layout>
   )

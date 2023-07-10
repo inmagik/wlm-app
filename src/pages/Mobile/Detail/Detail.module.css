@@ -89,9 +89,9 @@
 
 .CardImages {
   background-color: var(--overlay);
-  padding: 16px 32px;
+  padding: 16px;
   border-radius: 5px;
-  margin-top: 16px;
+  margin: 16px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -102,7 +102,7 @@
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   line-height: normal;
 }
 
@@ -165,45 +165,92 @@
   margin-right: 8px;
 }
 
-.SlideShow {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  z-index: 5;
-  top: 0;
-  left: 0;
-}
-
-.SlideShowImage {
-  height: 80%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  margin-top: 20%;
-}
-
-.SlideShowClose {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 6;
-}
-
-.InfoBlockSlideShow {
+.ButtonShowAllImages {
+  margin-top: 16px;
   display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  /* Shade Button Light */
+  box-shadow: 1px 1px 0px 0px rgba(17, 138, 178, 0.23);
+  border: none;
   width: 100%;
-  min-height: 151px;
-  padding: 16px;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  background: rgba(31, 30, 28, 0.6);
-  backdrop-filter: blur(2px);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--colori-neutri-gray);
+}
+
+.MapContainer {
+  height: 221px;
+  width: 100%;
+  margin-top: 8px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.Map {
+  height: 100%;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.GuardaInMappa {
+  display: inline-flex;
+  height: 28px;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  /* Shade Button Light */
+  box-shadow: 1px 1px 0px 0px rgba(17, 138, 178, 0.23);
   position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 7;
-  color: var(--colori-neutri-white);
+  bottom: 8px;
+  left: 8px;
+  border: none;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--colori-neutri-gray);
+}
+
+.Direction {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border-radius: 5px;
+  background: var(--primary);
+  /* Shade Button Light */
+  box-shadow: 1px 1px 0px 0px rgba(17, 138, 178, 0.23);
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.CardExternalLinks {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 5px;
+  background: var(--overlay);
+}
+
+.ExternalLinksTitle {
+  color: var(--colori-neutri-dark-gray);
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
