@@ -28,7 +28,7 @@
 
 .MonumentCard {
   display: flex;
-  height: 84px;
+  min-height: 84px;
   padding: 16px 24px;
   align-items: center;
   justify-content: space-between;
