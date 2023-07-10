@@ -32,17 +32,21 @@ export default function List() {
   useEffect(() => {
     if (!refListMonuments.current) return
     refListMonuments.current.addEventListener('scroll', () => {
-      setFiltersDebounced({ offsetY: refListMonuments.current!.scrollTop.toString() })
+      // setFiltersDebounced({ offsetY: refListMonuments.current!.scrollTop.toString() })
+      sessionStorage.setItem(
+        'offsetY',
+        refListMonuments.current!.scrollTop.toString()
+      )
     })
   }, [refListMonuments])
 
   useEffect(() => {
     if (!refListMonuments.current) return
-    if(filters.offsetY === "0") return
-    refListMonuments.current.scrollTop = Number(
-      filters.offsetY
-    )
-  }, [refListMonuments])
+    refListMonuments.current.scrollTo({
+      top: Number(sessionStorage.getItem('offsetY')) || 0,
+      // behavior: '',
+    })
+  }, [])
 
   return (
     <Layout>
