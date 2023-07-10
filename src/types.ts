@@ -7,13 +7,13 @@ export interface PaginatedDJResponse<TRecord = any> {
 }
 
 export interface Picture {
-    id: number
-    image_date: string
-    image_id: string
-    image_title: string
-    image_url: string
-    relevant_image: boolean
-    wlm_image: boolean
+  id: number
+  image_date: string
+  image_id: string
+  image_title: string
+  image_url: string
+  relevant_image: boolean
+  wlm_image: boolean
 }
 
 export interface Monument {
@@ -48,4 +48,18 @@ export interface Monument {
   pictures_wlm_count: number
   pictures_commons_count: number
   to_review: boolean
+}
+
+export interface Comune {
+  code: number
+  label: string
+  name: string
+  province_code: number
+  region_code: number
+  centroid: {
+    type: string
+    coordinates: [number, number]
+  }
+  province: number
+  region: number
 }

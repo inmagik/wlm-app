@@ -9,7 +9,6 @@ interface Props {
 
 export default function IconMonument({ monument }: Props) {
   const photosNumber = monument.pictures_count
-  console.log(monument.categories)
   return (
     <div
       className={classNames(styles.IconMonument, {

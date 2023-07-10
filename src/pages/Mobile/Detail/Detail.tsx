@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
 import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
@@ -74,9 +74,6 @@ export default function Detail() {
           </div>
           {firstThreeImages.length > 0 ? (
             <Swiper
-              onPaginationShow={() => {
-                console.log('Pagination show')
-              }}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper
               }}
@@ -88,7 +85,6 @@ export default function Detail() {
               {firstThreeImages.map((picture) => (
                 <SwiperSlide
                   onClick={() => {
-                    console.log('ciao')
                     setShowAllImages(true)
                     setSlideShowActive(picture.id)
                   }}
