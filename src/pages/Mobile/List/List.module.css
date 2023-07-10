@@ -2,7 +2,7 @@
   border-radius: 30px;
   background: var(--colori-neutri-white);
   box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
-  
+
   border: 1px solid transparent;
   display: flex;
   padding: 8px;
@@ -23,9 +23,7 @@
 .ContainerList {
   padding: 16px;
   width: 100%;
-  height: calc(
-    100% - var(--topbar-mobile-height)
-  );
+  height: calc(100% - var(--topbar-mobile-height));
 }
 
 .MonumentCard {
@@ -33,6 +31,7 @@
   height: 84px;
   padding: 16px 24px;
   align-items: center;
+  justify-content: space-between;
   gap: 8px;
   align-self: stretch;
   border-radius: 5px;
@@ -47,4 +46,39 @@
   padding: 8px;
   height: 100%;
   overflow-y: auto;
+}
+
+.MonumentTitle {
+  color: var(--primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  max-width: 200px;
+}
+
+.City {
+  color: var(--colori-neutri-gray);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  
+}
+
+.NumberPhoto {
+  color: var(--primary);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  align-items:  center;
 }
