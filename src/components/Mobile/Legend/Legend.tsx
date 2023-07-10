@@ -25,6 +25,7 @@ export default function Legend({ legend, setLegend }: Props) {
       style={{
         height: legend ? '100%' : '0px',
         opacity: legend ? '1' : '0',
+        top: legend ? '0px' : '-100%',
         pointerEvents: legend ? 'all' : 'none',
         transition: 'all 0.3s ease-in-out',
       }}

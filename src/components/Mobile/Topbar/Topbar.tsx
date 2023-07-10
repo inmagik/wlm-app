@@ -17,6 +17,7 @@ export default function Topbar() {
           <Bell /> <span className={styles.Title}>Concorso WLM</span>
         </div>
         <div
+          className="pointer"
           onClick={() => {
             setLegend(!legend)
           }}
