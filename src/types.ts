@@ -6,9 +6,19 @@ export interface PaginatedDJResponse<TRecord = any> {
   results: TRecord[]
 }
 
+export interface Picture {
+    id: number
+    image_date: string
+    image_id: string
+    image_title: string
+    image_url: string
+    relevant_image: boolean
+    wlm_image: boolean
+}
+
 export interface Monument {
   id: number
-  pictures: string[]
+  pictures: Picture[]
   label: string
   q_number: string
   wlm_id: string

@@ -1,0 +1,123 @@
+.DettaglioContainer {
+  padding: 16px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.DettaglioInfoCard {
+  background-color: var(--overlay);
+  padding: 16px;
+  border-radius: 5px;
+}
+
+.PresenzaInConcorso {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  align-self: stretch;
+  border-radius: 5px;
+  border: 1px solid var(--concorso);
+  background: var(--colori-neutri-white);
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+  font-family: var(--font-roboto-slab);
+  color: var(--primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.BlockImage {
+  border-radius: 5px;
+  height: 221px;
+  width: 100%;
+  margin-top: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.CardInfoMonument {
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  display: flex;
+  padding: 16px 24px;
+  align-items: center;
+  margin-top: 16px;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.MonumentTitle {
+  color: var(--primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* H1 */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  max-width: 220px;
+}
+
+.Comune {
+  color: var(--colori-neutri-gray);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Links */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
+.PicturesCount {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 8px;
+  color: var(--primary);
+}
+
+.CardImages {
+  background-color: var(--overlay);
+  padding: 16px 32px;
+  border-radius: 5px;
+  margin-top: 16px;
+}
+
+.ImmaginiWlmTitle {
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  /* H1 */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: normal;
+}
+
+.Image {
+  width: 64px;
+  height: 64px;
+  border-radius: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.ContainerImages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

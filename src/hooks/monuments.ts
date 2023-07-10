@@ -4,7 +4,6 @@ import { Monument, PaginatedDJResponse } from '../types'
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 
-
 export async function getMonuments(
   params: Record<string, any> = {},
   signal?: AbortSignal
@@ -43,4 +42,18 @@ export function useInfiniteMomuments(params: Record<string, any> = {}) {
       getNextPageParam: getNextPageParam,
     }
   )
+}
+
+export async function getMonument(
+  idOrSlug: string | number,
+  signal?: AbortSignal
+) {
+  return (await axios.get(`${API_URL}/monument/${idOrSlug}/`, { signal }))
+    .data as Monument
+}
+
+export function useMonument(idOrSlug: string | number) {
+  return useQuery(['monument', idOrSlug], ({ signal }) =>
+    getMonument(idOrSlug, signal)
+  ).data!
 }

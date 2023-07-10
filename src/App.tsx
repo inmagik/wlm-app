@@ -73,9 +73,9 @@ function AppRoutes() {
               }
             />
             <Route path="lista" element={<List />} />
-            <Route path="lista/:id" element={<Detail />} />
+            <Route path="lista/:slug" element={<Detail />} />
             <Route path="mappa" element={<Map />} />
-            <Route path="mappa/:id" element={<Detail />} />
+            <Route path="mappa/:slug" element={<Detail />} />
             <Route path="profilo" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>

@@ -17,37 +17,36 @@ export default function BottomNavigation() {
     <div className={styles.BottomNavigation}>
       <LangLink to="/" className="no-link">
         <div className={styles.Map}>
-          {currentPath === '/' + i18n.language + '/' || currentPath === '/' ? (
+          {currentPath === '/' + i18n.language + '/' ||
+          currentPath === '/' ||
+          currentPath.indexOf('mappa') !== -1 ? (
             <MapActive />
           ) : (
             <Map />
           )}
           {(currentPath === '/' + i18n.language + '/' ||
-            currentPath === '/') && (
+            currentPath === '/' ||
+            currentPath.indexOf('mappa') !== -1) && (
             <div className={styles.LabelActive}>{t('mappa')}</div>
           )}
         </div>
       </LangLink>
       <LangLink to="/lista" className="no-link">
         <div className={styles.List}>
-          {currentPath === '/' + i18n.language + '/lista' ? (
-            <ListActive />
-          ) : (
-            <List />
-          )}
-          {currentPath === '/' + i18n.language + '/lista' && (
+          {currentPath.indexOf('lista') !== -1 ? <ListActive /> : <List />}
+          {currentPath.indexOf('lista') !== -1 && (
             <div className={styles.LabelActive}>{t('lista')}</div>
           )}
         </div>
       </LangLink>
       <LangLink to="/profilo" className="no-link">
         <div className={styles.Profile}>
-          {currentPath === '/' + i18n.language + '/profilo' ? (
+          {currentPath.indexOf('profilo') !== -1 ? (
             <ProfileActive />
           ) : (
             <Profile />
           )}
-          {currentPath === '/' + i18n.language + '/profilo' && (
+          {currentPath.indexOf('profilo') !== -1 && (
             <div className={styles.LabelActive}>{t('profilo')}</div>
           )}
         </div>
