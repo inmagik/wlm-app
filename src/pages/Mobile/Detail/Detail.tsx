@@ -52,7 +52,9 @@ export default function Detail() {
       controls: [],
       view: new View({
         center: fromLonLat(
-          (monument?.position.coordinates as [number, number]) ?? [0, 0]
+          monument?.position?.coordinates
+            ? monument?.position.coordinates
+            : [12.56738, 41.87194]
         ),
         zoom: 11,
         minZoom: 11,
@@ -130,10 +132,12 @@ export default function Detail() {
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
                     </div>
-                    <div className={styles.Comune}>
-                      {monument?.municipality_label} ({monument?.province_label}
-                      )
-                    </div>
+                    {monument.municipality_label && (
+                      <div className={styles.Comune}>
+                        {monument?.municipality_label} (
+                        {monument?.province_label})
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -179,26 +183,26 @@ export default function Detail() {
           </div>
           <div className={styles.ExternalLink}>
             <div>
-            <Reasonator className='me-1' /> Reasonator
+              <Reasonator className="me-1" /> Reasonator
             </div>
             <div>
-                <ArrowRight />
-            </div>
-          </div>
-          <div className={styles.ExternalLink}>
-            <div>
-            <Wikidata className='me-1' /> Wikidata
-            </div>
-            <div>
-                <ArrowRight />
+              <ArrowRight />
             </div>
           </div>
           <div className={styles.ExternalLink}>
             <div>
-            <Wikipedia className='me-1' /> Pagina Wikipedia
+              <Wikidata className="me-1" /> Wikidata
             </div>
             <div>
-                <ArrowRight />
+              <ArrowRight />
+            </div>
+          </div>
+          <div className={styles.ExternalLink}>
+            <div>
+              <Wikipedia className="me-1" /> Pagina Wikipedia
+            </div>
+            <div>
+              <ArrowRight />
             </div>
           </div>
         </div>

@@ -15,10 +15,11 @@ import BlockFilters from '../../../components/Mobile/BlockFilters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
+  offsetY: params.get('offsetY') ?? '0',
 })
 
 export default function List() {
-  const { filters, setFilters } = useQsFilters(getFilters)
+  const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const refListMonuments = useRef<HTMLDivElement>(null)
   const {
@@ -31,6 +32,7 @@ export default function List() {
   useEffect(() => {
     if (!refListMonuments.current) return
     refListMonuments.current.addEventListener('scroll', () => {
+      setFiltersDebounced({ offsetY: refListMonuments.current!.scrollTop.toString() })
       sessionStorage.setItem(
         'offsetY',
         refListMonuments.current!.scrollTop.toString()
@@ -40,8 +42,9 @@ export default function List() {
 
   useEffect(() => {
     if (!refListMonuments.current) return
+    if(filters.offsetY === "0") return
     refListMonuments.current.scrollTop = Number(
-      sessionStorage.getItem('offsetY')
+      sessionStorage.getItem('offsetY') || filters.offsetY
     )
   }, [refListMonuments])
 
