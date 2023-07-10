@@ -46,7 +46,7 @@ function AvailablesLang() {
 }
 
 function AppRoutes() {
-  const location = useLocation()s
+  const location = useLocation()
   return (
     <>
       <Routes location={location}>

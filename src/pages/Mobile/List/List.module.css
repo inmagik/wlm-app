@@ -14,21 +14,6 @@
   padding-right: 100px;
 }
 
-.InputSearchFieldComune {
-  border-radius: 30px;
-  background: var(--colori-neutri-white);
-  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
-  border: 1px solid transparent;
-  display: flex;
-  padding: 8px;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  width: 100%;
-  padding-left: 24px;
-  padding-right: 48px;
-}
-
 .InputContainer {
   position: relative;
   width: 100%;
@@ -37,13 +22,6 @@
 .SearchIcon {
   position: absolute;
   left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.SearchIconSearch {
-  position: absolute;
-  right: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -135,121 +113,4 @@
   line-height: normal;
   display: flex;
   align-items: center;
-}
-
-.OverlayFilters {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* background: var(--overlay); */
-  z-index: 8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  background-color: rgba(0, 0, 0, 0.2);
-  overflow-y: auto;
-}
-
-.ContainerFilters {
-  border-radius: 30px 30px 0px 0px;
-  background: var(--overlay);
-  box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.1);
-  display: flex;
-  padding: 16px 24px 24px 24px;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  position: fixed;
-  min-height: 340px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-}
-
-.TitleBlockFilters {
-  color: var(--primary);
-  text-align: center;
-  /* H2 */
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  border-bottom: 0.5px solid var(--primary);
-  padding-bottom: 4px;
-}
-
-.ListFilters {
-  padding-top: 24px;
-  padding-bottom: 24px;
-  width: 100%;
-}
-
-.Filter {
-  display: flex;
-  padding: 8px;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  color: var(--primary);
-  /* Body */
-  font-family: var(--font-roboto-slab);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.BlockFilterComune {
-  position: fixed;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  background: var(--overlay);
-  right: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 12;
-}
-
-.BlockFilterComune {
-  padding: 16px 24px;
-}
-
-.InputSearchComune {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.ListComuni {
-  height: 100%;
-  overflow: auto;
-}
-
-.FilterItemComune {
-  display: flex;
-  height: 43px;
-  padding: 8px 24px;
-  align-items: center;
-  gap: 8px;
-  align-self: stretch;
-  border-radius: 5px;
-  border: 0.5px solid var(--overlay);
-  background: var(--colori-neutri-white);
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  cursor: pointer;
-  line-height: normal;
-  color: var(--primary);
 }
