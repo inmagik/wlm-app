@@ -8,14 +8,27 @@ import { ReactComponent as ProfileActive } from '../../../assets/profile-active.
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LangLink from '../../LangLink'
+import { useQsFilters } from '../../../hooks/filters'
+
+const getFilters = (params: URLSearchParams) => ({
+  search: params.get('search') ?? '',
+  municipality: params.get('municipality') ?? '',
+})
 
 export default function BottomNavigation() {
   const location = useLocation()
   const { i18n, t } = useTranslation()
+  const { filters } = useQsFilters(getFilters)
   const currentPath = location.pathname
   return (
     <div className={styles.BottomNavigation}>
-      <LangLink to="/" className="no-link">
+      <LangLink
+        to={`/?${new URLSearchParams({
+          search: filters.search,
+          municipality: filters.municipality,
+        })}`}
+        className="no-link"
+      >
         <div className={styles.Map}>
           {currentPath === '/' + i18n.language + '/' ||
           currentPath === '/' ||
@@ -31,7 +44,13 @@ export default function BottomNavigation() {
           )}
         </div>
       </LangLink>
-      <LangLink to="/lista" className="no-link">
+      <LangLink
+        to={`/lista?${new URLSearchParams({
+          search: filters.search,
+          municipality: filters.municipality,
+        })}`}
+        className="no-link"
+      >
         <div className={styles.List}>
           {currentPath.indexOf('lista') !== -1 ? <ListActive /> : <List />}
           {currentPath.indexOf('lista') !== -1 && (
