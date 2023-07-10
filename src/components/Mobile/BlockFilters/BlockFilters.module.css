@@ -136,3 +136,11 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+.InputSearchFieldComune:focus-visible {
+  border-radius: 30px;
+  border: 1px solid var(--secondary-variant);
+  background: var(--colori-neutri-white);
+  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+  outline: none;
+}

@@ -44,8 +44,7 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
 }
 
-.InputSearch:focus-visible,
-.InputSearchFieldComune:focus-visible {
+.InputSearch:focus-visible {
   border-radius: 30px;
   border: 1px solid var(--secondary-variant);
   background: var(--colori-neutri-white);
