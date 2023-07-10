@@ -254,3 +254,29 @@
   font-weight: 700;
   line-height: normal;
 }
+
+.BoxNoImages {
+  height: 221px;
+  padding: 0px 16px;
+  margin-top: 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid var(--overlay3);
+  background: var(--colori-neutri-background);
+  box-shadow: 2px 2px 0px 0px rgba(17, 138, 178, 0.23);
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

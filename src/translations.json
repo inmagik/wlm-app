@@ -20,7 +20,8 @@
             "immagini_wlm": "WLM Images",
             "guarda_tutte_su_wikimediacommons": "See all on Wikimedia Commons",
             "guarda_in_mappa": "See in map",
-            "collegamenti_esterni": "External links"
+            "collegamenti_esterni": "External links",
+            "ancora_nessuna_foto_all_orizzonte": "Still no photos on the horizon"
         }
     },
     "it": {
@@ -44,7 +45,8 @@
             "immagini_wlm": "Immagini WLM",
             "guarda_tutte_su_wikimediacommons": "Guarda tutte su Wikimedia Commons",
             "guarda_in_mappa": "Guarda in mappa",
-            "collegamenti_esterni": "Collegamenti esterni"
+            "collegamenti_esterni": "Collegamenti esterni",
+            "ancora_nessuna_foto_all_orizzonte": "Ancora nessuna foto all'orizzonte"
         }
     }
 }

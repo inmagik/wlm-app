@@ -7,6 +7,7 @@ import { ReactComponent as Bell } from '../../../assets/bell.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as CameraWhite } from '../../../assets/camera-white.svg'
 import { ReactComponent as Direction } from '../../../assets/direction.svg'
+import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
@@ -67,7 +68,7 @@ export default function Detail() {
           <div className={styles.PresenzaInConcorso}>
             <Bell className="me-2" /> Il Monumento fa parte del concorso
           </div>
-          {firstThreeImages.length > 0 && (
+          {firstThreeImages.length > 0 ? (
             <Swiper
               onPaginationShow={() => {
                 console.log('Pagination show')
@@ -98,6 +99,13 @@ export default function Detail() {
                 </SwiperSlide>
               ))}
             </Swiper>
+          ) : (
+            <div className={styles.BoxNoImages}>
+              <div>{t('ancora_nessuna_foto_all_orizzonte')}</div>
+              <div>
+                <SmileBad className="mt-2" />
+              </div>
+            </div>
           )}
           <div className={styles.PaginationImagesDots}>
             {firstThreeImages.map((_, i) => (
