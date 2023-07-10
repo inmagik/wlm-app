@@ -20,6 +20,7 @@ export default function Detail() {
   const monument = useMonument(parseSmartSlug(slug!))
   const [showAllImages, setShowAllImages] = useState(false)
   const [slideShowActive, setSlideShowActive] = useState(0)
+  const [infoSlideSlideShow, setInfoSlideSlideShow] = useState(false)
   const firstThreeImages = monument?.pictures.slice(0, 3)
   const [slideActive, setSlideActive] = useState(0)
   const { t } = useTranslation()
@@ -31,6 +32,7 @@ export default function Detail() {
       acc[picture.id] = picture
       return acc
     }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
+
   return (
     <Layout>
       <div className={styles.DettaglioContainer}>
@@ -113,6 +115,10 @@ export default function Detail() {
               <div
                 key={picture.id}
                 className={styles.Image}
+                onClick={() => {
+                  setShowAllImages(true)
+                  setSlideShowActive(picture.id)
+                }}
                 style={{
                   backgroundImage: `url(${picture.image_url})`,
                 }}
@@ -145,9 +151,17 @@ export default function Detail() {
               swiperRef.current = swiper
             }}
             onSlideChange={(swiper) => {
-                setSlideShowActive(swiper.activeIndex)
+              setSlideShowActive(swiper.activeIndex)
             }}
-            
+            onInit={(swiper) => {
+              swiper.slideTo(
+                Object.keys(picturesById).indexOf(String(slideShowActive)),
+                0
+              )
+              setTimeout(() => {
+                setInfoSlideSlideShow(true)
+              }, 100)
+            }}
           >
             {monument?.pictures.map((picture) => (
               <SwiperSlide key={picture.id}>
@@ -157,6 +171,19 @@ export default function Detail() {
                     backgroundImage: `url(${picture.image_url})`,
                   }}
                 ></div>
+                <div
+                  className={styles.InfoBlockSlideShow}
+                  style={{
+                    opacity: infoSlideSlideShow ? 1 : 0,
+                    bottom: infoSlideSlideShow ? 0 : -100,
+                    minHeight: infoSlideSlideShow ? 151 : 0,
+                    transition: 'all 0.3s ease-in-out',
+                  }}
+                >
+                  <div className={styles.InfoBlockSlideShowTitle}>
+                    {monument?.label}
+                  </div>
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -164,6 +191,7 @@ export default function Detail() {
             <CloseWhite
               onClick={() => {
                 setShowAllImages(false)
+                setInfoSlideSlideShow(false)
               }}
             />
           </div>

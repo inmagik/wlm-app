@@ -175,7 +175,7 @@
 }
 
 .SlideShowImage {
-  height: 478px;
+  height: 80%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -188,4 +188,21 @@
   top: 16px;
   right: 16px;
   z-index: 6;
+}
+
+.InfoBlockSlideShow {
+  display: flex;
+  width: 100%;
+  min-height: 151px;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: rgba(31, 30, 28, 0.6);
+  backdrop-filter: blur(2px);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 7;
+  color: var(--colori-neutri-white);
 }
