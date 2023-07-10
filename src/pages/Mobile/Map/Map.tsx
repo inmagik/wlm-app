@@ -1,14 +1,11 @@
-import BottomNavigation from '../../../components/Mobile/BottomNavigation'
-import TopBar from '../../../components/Mobile/Topbar'
+import Layout from '../../../components/Mobile/Layout'
 
 export default function Map() {
   return (
-    <div className='h-100 w-100'>
-      <TopBar />
-      <div className='block-content'>
-
+    <Layout>
+      <div>
+        Mappa
       </div>
-      <BottomNavigation />
-    </div>
+    </Layout>
   )
 }

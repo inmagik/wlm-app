@@ -5,38 +5,53 @@ import { ReactComponent as Profile } from '../../../assets/profile.svg'
 import { ReactComponent as MapActive } from '../../../assets/map-active.svg'
 import { ReactComponent as ListActive } from '../../../assets/list-active.svg'
 import { ReactComponent as ProfileActive } from '../../../assets/profile-active.svg'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import LangLink from '../../LangLink'
 
 export default function BottomNavigation() {
   const location = useLocation()
+  const { i18n, t } = useTranslation()
   const currentPath = location.pathname
-  console.log(currentPath)
   return (
     <div className={styles.BottomNavigation}>
-      <Link to="/" className="no-link">
+      <LangLink to="/" className="no-link">
         <div className={styles.Map}>
-          {currentPath === '/' ? <MapActive /> : <Map />}
-          {currentPath === '/' && (
-            <div className={styles.LabelActive}>Mappa</div>
+          {currentPath === '/' + i18n.language + '/' || currentPath === '/' ? (
+            <MapActive />
+          ) : (
+            <Map />
+          )}
+          {(currentPath === '/' + i18n.language + '/' ||
+            currentPath === '/') && (
+            <div className={styles.LabelActive}>{t('mappa')}</div>
           )}
         </div>
-      </Link>
-      <Link to="/lista" className="no-link">
+      </LangLink>
+      <LangLink to="/lista" className="no-link">
         <div className={styles.List}>
-          {currentPath === '/lista' ? <ListActive /> : <List />}
-          {currentPath === '/lista' && (
-            <div className={styles.LabelActive}>Lista</div>
+          {currentPath === '/' + i18n.language + '/lista' ? (
+            <ListActive />
+          ) : (
+            <List />
+          )}
+          {currentPath === '/' + i18n.language + '/lista' && (
+            <div className={styles.LabelActive}>{t('lista')}</div>
           )}
         </div>
-      </Link>
-      <Link to="/profilo" className="no-link">
+      </LangLink>
+      <LangLink to="/profilo" className="no-link">
         <div className={styles.Profile}>
-          {currentPath === '/profilo' ? <ProfileActive /> : <Profile />}
-          {currentPath === '/profilo' && (
-            <div className={styles.LabelActive}>Profilo</div>
+          {currentPath === '/' + i18n.language + '/profilo' ? (
+            <ProfileActive />
+          ) : (
+            <Profile />
+          )}
+          {currentPath === '/' + i18n.language + '/profilo' && (
+            <div className={styles.LabelActive}>{t('profilo')}</div>
           )}
         </div>
-      </Link>
+      </LangLink>
     </div>
   )
 }

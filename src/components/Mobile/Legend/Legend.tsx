@@ -12,6 +12,7 @@ import { ReactComponent as MonumentoMaggiore10 } from '../../../assets/monumento
 import { ReactComponent as MonumentoConcorso } from '../../../assets/monumento-concorso.svg'
 import { ReactComponent as MonumentoNoConcorso } from '../../../assets/monumento-no-concorso.svg'
 import styles from './Legend.module.css'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   legend: boolean
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function Legend({ legend, setLegend }: Props) {
+  const { t } = useTranslation()
   return (
     <div
       className={styles.Legend}
@@ -33,7 +35,9 @@ export default function Legend({ legend, setLegend }: Props) {
       <div className={styles.TopLegend}>
         <div className={styles.LegendaLabel}>
           <Legenda fill="var(--primary)" />
-          <span className="ms-2">Legenda</span>
+          <span className="ms-2">
+            {t('legenda')}
+          </span>
         </div>
         <div className="pointer">
           <Close onClick={() => setLegend(false)} />
@@ -42,56 +46,58 @@ export default function Legend({ legend, setLegend }: Props) {
       <div className={styles.Card}>
         <div className={styles.ItemCard}>
           <Comune />
-          <span className={styles.NameItem}>Comuni (Vedute d’insieme)</span>
+          <span className={styles.NameItem}>{t('comuni_vedute_d_insieme')}</span>
         </div>
         <div className={styles.ItemCard}>
           <EdificiReligiosi />
-          <span className={styles.NameItem}>Edifici religiosi</span>
+          <span className={styles.NameItem}>{t('edifici_religiosi')}</span>
         </div>
         <div className={styles.ItemCard}>
           <Castello />
-          <span className={styles.NameItem}>Castelli</span>
+          <span className={styles.NameItem}>{t('castelli')}</span>
         </div>
         <div className={styles.ItemCard}>
           <AlberoMonumentale />
-          <span className={styles.NameItem}>Alberi monumentali</span>
+          <span className={styles.NameItem}>{t('alberi_monumentali')}</span>
         </div>
         <div className={styles.ItemCard}>
           <Museo />
-          <span className={styles.NameItem}>Musei</span>
+          <span className={styles.NameItem}>{t('musei')}</span>
         </div>
         <div className={styles.ItemCardLast}>
           <AltroMonumento />
-          <span className={styles.NameItem}>Altro monumento</span>
+          <span className={styles.NameItem}>{t('altro_monumento')}</span>
         </div>
       </div>
       <div className={`${styles.CardMinorPadding} mt-2`}>
         <div className={styles.ItemCard}>
           <MonumentoNoFoto />
-          <span className={styles.NameItem}>Il monumento non ha foto</span>
+          <span className={styles.NameItem}>{t('il_monumento_non_ha_foto')}</span>
         </div>
         <div className={styles.ItemCard}>
           <Monumento1a10 />
           <span className={styles.NameItem}>
-            Il monumento possiede da 1 a 10 foto
+            {t('il_monumento_possiede_da_1_a_10_foto')}
           </span>
         </div>
         <div className={styles.ItemCardLast}>
           <MonumentoMaggiore10 />
           <span className={styles.NameItem}>
-            Il monumento possiede più di 10 foto
+            {t('il_monumento_possiede_piu_di_10_foto')}
           </span>
         </div>
       </div>
       <div className={`${styles.CardMinorPadding} mt-2`}>
         <div className={styles.ItemCard}>
           <MonumentoConcorso />
-          <span className={styles.NameItem}>Il monumento è in concorso</span>
+          <span className={styles.NameItem}>
+            {t('il_monumento_e_in_concorso')}
+          </span>
         </div>
         <div className={styles.ItemCardLast}>
           <MonumentoNoConcorso />
           <span className={styles.NameItem}>
-            Il monumento non è in concorso
+            {t('il_monumento_non_e_in_concorso')}
           </span>
         </div>
       </div>

@@ -26,6 +26,7 @@ body,
     100% - var(--topbar-mobile-height) - var(--bottom-mobile-navigation-height)
   );
   overflow-y: auto;
+  margin-top: var(--topbar-mobile-height);
 }
 
 .no-link {

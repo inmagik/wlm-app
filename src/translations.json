@@ -1,0 +1,40 @@
+{
+    "en": {
+        "translation": {
+            "mappa": "Map",
+            "lista": "List",
+            "profilo": "Profile",
+            "legenda": "Legend",
+            "comuni_vedute_d_insieme": "Municipalities (Overview)",
+            "edifici_religiosi": "Religious buildings",
+            "castelli": "Castles",
+            "alberi_monumentali": "Monumental trees",
+            "musei": "Museums",
+            "altro_monumento": "Other monuments",
+            "il_monumento_non_ha_foto": "The monument has no photo",
+            "il_monumento_possiede_da_1_a_10_foto": "The monument has from 1 to 10 photos",
+            "il_monumento_possiede_piu_di_10_foto": "The monument has more than 10 photos",
+            "il_monumento_e_in_concorso": "The monument is in competition",
+            "il_monumento_non_e_in_concorso": "The monument is not in competition"
+        }
+    },
+    "it": {
+        "translation": {
+            "mappa": "Mappa",
+            "lista": "Lista",
+            "profilo": "Profilo",
+            "legenda": "Legenda",
+            "comuni_vedute_d_insieme": "Comuni (Vedute d’insieme)",
+            "edifici_religiosi": "Edifici religiosi",
+            "castelli": "Castelli",
+            "alberi_monumentali": "Alberi monumentali",
+            "musei": "Musei",
+            "altro_monumento": "Altro monumento",
+            "il_monumento_non_ha_foto": "Il monumento non ha foto",
+            "il_monumento_possiede_da_1_a_10_foto": "Il monumento possiede da 1 a 10 foto",
+            "il_monumento_possiede_piu_di_10_foto": "Il monumento possiede più di 10 foto",
+            "il_monumento_e_in_concorso": "Il monumento è in concorso",
+            "il_monumento_non_e_in_concorso": "Il monumento non è in concorso"
+        }
+    }
+}
