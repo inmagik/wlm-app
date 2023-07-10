@@ -39,7 +39,7 @@ export default function SlideShow({
         }}
         onInit={(swiper) => {
           swiper.slideTo(
-            Object.keys(picturesById).indexOf(String(slideShowActive)) - 1,
+            Object.keys(picturesById).indexOf(String(slideShowActive)),
             0
           )
           setTimeout(() => {

@@ -8,6 +8,10 @@ import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as CameraWhite } from '../../../assets/camera-white.svg'
 import { ReactComponent as Direction } from '../../../assets/direction.svg'
 import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
+import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
+import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
+import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
+import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
@@ -176,6 +180,30 @@ export default function Detail() {
         <div className={styles.CardExternalLinks}>
           <div className={styles.ExternalLinksTitle}>
             {t('collegamenti_esterni')}
+          </div>
+          <div className={styles.ExternalLink}>
+            <div>
+            <Reasonator className='me-1' /> Reasonator
+            </div>
+            <div>
+                <ArrowRight />
+            </div>
+          </div>
+          <div className={styles.ExternalLink}>
+            <div>
+            <Wikidata className='me-1' /> Wikidata
+            </div>
+            <div>
+                <ArrowRight />
+            </div>
+          </div>
+          <div className={styles.ExternalLink}>
+            <div>
+            <Wikipedia className='me-1' /> Pagina Wikipedia
+            </div>
+            <div>
+                <ArrowRight />
+            </div>
           </div>
         </div>
         <div className={styles.FixedButtonUpload}>
