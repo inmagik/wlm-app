@@ -2,6 +2,7 @@
   padding: 16px;
   overflow-y: auto;
   height: 100%;
+  position: relative;
 }
 
 .DettaglioInfoCard {
@@ -120,4 +121,23 @@
   gap: 8px;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.FixedButtonUpload {
+  position: fixed;
+  bottom: calc(var(--bottom-mobile-navigation-height) + 30px);
+  right: 16px;
+  z-index: 3;
+}
+
+.ButtonUpload {
+  border-radius: 48px;
+  border: none;
+  background: var(--secondary);
+  /* Shade Button Blu */
+  box-shadow: 1px 1px 0px 0px var(--primary);
+  display: inline-flex;
+  padding: 16px;
+  justify-content: center;
+  align-items: center;
 }

@@ -6,9 +6,9 @@ import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
 import { ReactComponent as Castello } from '../../../assets/castelli.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
+import { ReactComponent as CameraWhite } from '../../../assets/camera-white.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
@@ -46,7 +46,7 @@ export default function Detail() {
           )}
           <div className={styles.CardInfoMonument}>
             <div className="d-flex justify-content-between w-100">
-              <div className='d-flex'>
+              <div className="d-flex">
                 <Castello className="me-1" />
                 <div className="ms-1">
                   <div>
@@ -79,6 +79,11 @@ export default function Detail() {
               ></div>
             ))}
           </div>
+        </div>
+        <div className={styles.FixedButtonUpload}>
+          <button className={styles.ButtonUpload}>
+            <CameraWhite />
+          </button>
         </div>
       </div>
     </Layout>
