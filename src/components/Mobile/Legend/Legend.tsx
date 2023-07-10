@@ -1,11 +1,5 @@
 import { ReactComponent as Legenda } from '../../../assets/legend-primary.svg'
 import { ReactComponent as Close } from '../../../assets/close.svg'
-import { ReactComponent as Comune } from '../../../assets/comune.svg'
-import { ReactComponent as EdificiReligiosi } from '../../../assets/edifici-religiosi.svg'
-import { ReactComponent as Castello } from '../../../assets/castello.svg'
-import { ReactComponent as AlberoMonumentale } from '../../../assets/albero-monumentale.svg'
-import { ReactComponent as Museo } from '../../../assets/museo.svg'
-import { ReactComponent as AltroMonumento } from '../../../assets/altro-monumento.svg'
 import { ReactComponent as MonumentoNoFoto } from '../../../assets/monumento-no-foto.svg'
 import { ReactComponent as Monumento1a10 } from '../../../assets/monumento-1a10.svg'
 import { ReactComponent as MonumentoMaggiore10 } from '../../../assets/monumento-maggiore-10.svg'
@@ -13,6 +7,12 @@ import { ReactComponent as MonumentoConcorso } from '../../../assets/monumento-c
 import { ReactComponent as MonumentoNoConcorso } from '../../../assets/monumento-no-concorso.svg'
 import styles from './Legend.module.css'
 import { useTranslation } from 'react-i18next'
+import CastelloIcon from '../../Icons/CastelloIcon'
+import EdificioReligiosoIcon from '../../Icons/EdificioReligiosoIcon'
+import ComuneIcon from '../../Icons/ComuneIcon'
+import AlberoMonumentaleIcon from '../../Icons/AlberoMonumentaleIcon'
+import MuseoIcon from '../../Icons/MuseoIcon'
+import AltroMonumentoIcon from '../../Icons/AltroMonumentoIcon'
 
 interface Props {
   legend: boolean
@@ -35,9 +35,7 @@ export default function Legend({ legend, setLegend }: Props) {
       <div className={styles.TopLegend}>
         <div className={styles.LegendaLabel}>
           <Legenda fill="var(--primary)" />
-          <span className="ms-2">
-            {t('legenda')}
-          </span>
+          <span className="ms-2">{t('legenda')}</span>
         </div>
         <div className="pointer">
           <Close onClick={() => setLegend(false)} />
@@ -45,34 +43,38 @@ export default function Legend({ legend, setLegend }: Props) {
       </div>
       <div className={styles.Card}>
         <div className={styles.ItemCard}>
-          <Comune />
-          <span className={styles.NameItem}>{t('comuni_vedute_d_insieme')}</span>
+          <ComuneIcon fill="var(--primary)" />
+          <span className={styles.NameItem}>
+            {t('comuni_vedute_d_insieme')}
+          </span>
         </div>
         <div className={styles.ItemCard}>
-          <EdificiReligiosi />
+          <EdificioReligiosoIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('edifici_religiosi')}</span>
         </div>
         <div className={styles.ItemCard}>
-          <Castello />
+          <CastelloIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('castelli')}</span>
         </div>
         <div className={styles.ItemCard}>
-          <AlberoMonumentale />
+          <AlberoMonumentaleIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('alberi_monumentali')}</span>
         </div>
         <div className={styles.ItemCard}>
-          <Museo />
+          <MuseoIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('musei')}</span>
         </div>
         <div className={styles.ItemCardLast}>
-          <AltroMonumento />
+          <AltroMonumentoIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('altro_monumento')}</span>
         </div>
       </div>
       <div className={`${styles.CardMinorPadding} mt-2`}>
         <div className={styles.ItemCard}>
           <MonumentoNoFoto />
-          <span className={styles.NameItem}>{t('il_monumento_non_ha_foto')}</span>
+          <span className={styles.NameItem}>
+            {t('il_monumento_non_ha_foto')}
+          </span>
         </div>
         <div className={styles.ItemCard}>
           <Monumento1a10 />

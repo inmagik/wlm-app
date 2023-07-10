@@ -3,12 +3,12 @@ import { Waypoint } from 'react-waypoint'
 import Layout from '../../../components/Mobile/Layout'
 import { useInfiniteMomuments } from '../../../hooks/monuments'
 import styles from './List.module.css'
-import { ReactComponent as CastelloIcon } from '../../../assets/castelli.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { useQsFilters } from '../../../hooks/filters'
 import LangLink from '../../../components/LangLink'
 import { smartSlug } from '../../../utils'
 import { useBlockBodyScroll } from '../../../hooks/screen'
+import IconMonument from '../../../components/IconMonument'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -47,7 +47,7 @@ export default function List() {
                     <div className={styles.MonumentCard}>
                       <div className="d-flex">
                         <div>
-                          <CastelloIcon />
+                          <IconMonument monument={monument} />
                         </div>
                         <div className="ms-2">
                           <div className={styles.MonumentTitle}>

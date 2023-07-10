@@ -1,0 +1,21 @@
+.IconMonument {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.NoPhotos {
+  background-color: var(--tertiary);
+}
+
+.OneToTenPhoto {
+  background-color: var(--monumento-poche-foto);
+}
+
+.MoreThenTenPhoto {
+  background-color: var(--monumento-tante-foto);
+}
