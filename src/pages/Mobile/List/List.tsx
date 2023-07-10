@@ -33,10 +33,6 @@ export default function List() {
     if (!refListMonuments.current) return
     refListMonuments.current.addEventListener('scroll', () => {
       setFiltersDebounced({ offsetY: refListMonuments.current!.scrollTop.toString() })
-      sessionStorage.setItem(
-        'offsetY',
-        refListMonuments.current!.scrollTop.toString()
-      )
     })
   }, [refListMonuments])
 
@@ -44,7 +40,7 @@ export default function List() {
     if (!refListMonuments.current) return
     if(filters.offsetY === "0") return
     refListMonuments.current.scrollTop = Number(
-      sessionStorage.getItem('offsetY') || filters.offsetY
+      filters.offsetY
     )
   }, [refListMonuments])
 
