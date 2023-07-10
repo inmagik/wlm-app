@@ -1,0 +1,50 @@
+.InputSearch {
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+  
+  border: 1px solid transparent;
+  display: flex;
+  padding: 8px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+}
+
+.InputSearch:focus-visible {
+  border-radius: 30px;
+  border: 1px solid var(--secondary-variant);
+  background: var(--colori-neutri-white);
+  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+  outline: none;
+}
+
+.ContainerList {
+  padding: 16px;
+  width: 100%;
+  height: calc(
+    100% - var(--topbar-mobile-height)
+  );
+}
+
+.MonumentCard {
+  display: flex;
+  height: 84px;
+  padding: 16px 24px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  margin-bottom: 4px;
+}
+
+.ListMonuments {
+  border-radius: 10px;
+  background: var(--overlay);
+  margin-top: 8px;
+  padding: 8px;
+  height: 100%;
+  overflow-y: auto;
+}

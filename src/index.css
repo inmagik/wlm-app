@@ -6,6 +6,7 @@ body,
 #root {
   height: 100%;
   font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
 }
 
 :root {
@@ -27,9 +28,9 @@ body,
   height: calc(
     100% - var(--topbar-mobile-height) - var(--bottom-mobile-navigation-height)
   );
-  overflow-y: auto;
   margin-top: var(--topbar-mobile-height);
   position: relative;
+  overflow: hidden;
 }
 
 .no-link {
