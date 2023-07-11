@@ -48,7 +48,7 @@ export default function Detail() {
   const swiperRef = useRef<SwiperRef>()
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
-  const [imageUpload, setImageUpload] = useState<File | null>(null)
+  const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
 
   useEffect(() => {
@@ -109,8 +109,6 @@ export default function Detail() {
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [])
-
-  console.log(imageUpload)
 
   return (
     <Layout>
@@ -297,9 +295,10 @@ export default function Detail() {
           </button>
           <input
             ref={inputFileRef}
+            multiple
             onChange={(e) => {
               if (e.target.files && e.target.files?.length > 0) {
-                setImageUpload(e.target?.files[0])
+                setImageUpload(e.target.files)
                 setShowModalUpload(true)
               }
             }}
@@ -320,10 +319,10 @@ export default function Detail() {
         />
       )}
       <BlockUpload
-        file={imageUpload}
+        fileList={imageUpload}
         setUploadOpen={setShowModalUpload}
         uploadOpen={showModalUpload}
-        setFile={setImageUpload}
+        setFileList={setImageUpload}
       />
     </Layout>
   )

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Flag } from '../../../assets/flag.svg'
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import styles from './BlockFilters.module.css'
 import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../Icons/FiltersIcon'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 interface BlockFiltersProps {
   filtersOpen: boolean
@@ -31,6 +32,16 @@ export default function BlockFilters({
       comune.label.toLowerCase().includes(searchComune.toLowerCase())
     )
   }, [comuni, searchComune])
+
+  const parentRef = useRef<HTMLDivElement>(null)
+
+  const rowVirtualizer = useVirtualizer({
+    count: comuniFiltered?.length || 0,
+    getScrollElement: () => parentRef.current,
+    estimateSize: useCallback(() => 50, []),
+  })
+
+  console.log(rowVirtualizer)
 
   return (
     <>
@@ -110,21 +121,47 @@ export default function BlockFilters({
             <Search />
           </div>
         </div>
-        <div className={styles.ListComuni}>
-          {comuniFiltered?.map((comune) => {
-            return (
-              <div
-                className={styles.FilterItemComune}
-                key={comune.code}
-                onClick={() => {
-                  setFilters({ municipality: comune.label })
-                  setFilterComuneOpen(false)
-                }}
-              >
-                <Flag className="me-2" /> {comune.label}
-              </div>
-            )
-          })}
+        <div className={styles.ListComuni} ref={parentRef} style={{
+          height: 'calc(100vh - 200px)',
+        }}>
+          <div
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              width: '100%',
+              position: 'relative',
+            }}
+          >
+            {comuniFiltered?.map((comune, i) => {
+              return (
+                <div
+                  className={styles.FilterItemComune}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: `${
+                      rowVirtualizer
+                        .getVirtualItems()
+                        .find((item) => item.index === i)?.size
+                    }px`,
+                    transform: `translateY(${
+                      rowVirtualizer
+                        .getVirtualItems()
+                        .find((item) => item.index === i)?.start
+                    }px)`,
+                  }}
+                  key={comune.code}
+                  onClick={() => {
+                    setFilters({ municipality: comune.label })
+                    setFilterComuneOpen(false)
+                  }}
+                >
+                  <Flag className="me-2" /> {comune.label}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </>

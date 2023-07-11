@@ -2,33 +2,41 @@ import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { type Swiper as SwiperRef } from 'swiper'
+import 'swiper/css'
+import classNames from 'classnames'
 
 interface BlockUploadProps {
   uploadOpen: boolean
   setUploadOpen: (uploadOpen: boolean) => void
-  file: File | null
-  setFile: (file: File | null) => void
+  fileList: FileList | null
+  setFileList: (file: FileList | null) => void
 }
 
 export default function BlockUpload({
   uploadOpen,
   setUploadOpen,
-  file,
-  setFile,
+  fileList,
+  setFileList,
 }: BlockUploadProps) {
   const { t } = useTranslation()
   const [uploadState, setUploadState] = useState({
     title: '',
     description: '',
-    file,
+    fileList,
     date: '',
   })
 
   const inputFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setUploadState({ ...uploadState, file })
-  }, [file])
+    setUploadState({ ...uploadState, fileList })
+  }, [fileList])
+
+  const swiperRef = useRef<SwiperRef>()
+
+  const [slideActive, setSlideActive] = useState<number>(0)
 
   return (
     <div
@@ -43,10 +51,10 @@ export default function BlockUpload({
           setUploadState({
             title: '',
             description: '',
-            file: null,
+            fileList: null,
             date: '',
           })
-          setFile(null)
+          setFileList(null)
         }
       }}
     >
@@ -60,13 +68,40 @@ export default function BlockUpload({
         </div>
         <div className={styles.CardImageToUpload}>
           <div>
-            {uploadState.file && (
-              <img
-                src={URL.createObjectURL(uploadState.file)}
-                className={styles.ImageToUpload}
-                alt="image"
-              />
-            )}
+            <Swiper
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper
+              }}
+              onSlideChange={(swiper) => {
+                setSlideActive(swiper.activeIndex)
+              }}
+              className={styles.Swiper}
+            >
+              {uploadState.fileList &&
+                [...uploadState.fileList].map((file) => (
+                  <SwiperSlide key={file.name}>
+                    <div
+                      className={styles.ImageToUpload}
+                      style={{
+                        backgroundImage: `url("${URL.createObjectURL(file)}")`,
+                      }}
+                    />
+                  </SwiperSlide>
+                ))}
+            </Swiper>
+            <div className={styles.PaginationImagesDots}>
+              {uploadState.fileList && [...uploadState.fileList!].map((file, index) => (
+                <div
+                  key={file.name}
+                  className={classNames(styles.PaginationDot, {
+                    [styles.PaginationDotActive]: slideActive === index,
+                  })}
+                  onClick={() => {
+                    swiperRef.current?.slideTo(index)
+                  }}
+                />
+              ))}
+            </div>
           </div>
           <div className="mt-4">
             <div className={styles.LabelInput}>{t('titolo_immagine')}</div>
@@ -76,7 +111,7 @@ export default function BlockUpload({
                 className={styles.InputTitle}
                 value={uploadState.title}
                 onChange={(e) => {
-                  setFile(e.target.files![0])
+                  setFileList(e.target.files!)
                   setUploadState({ ...uploadState, title: e.target.value })
                 }}
                 placeholder={t('inserisci_titolo')}
@@ -126,10 +161,11 @@ export default function BlockUpload({
           </button>
           <input
             type="file"
+            multiple
             className="d-none"
             onChange={(e) => {
               if (e.target.files) {
-                setUploadState({ ...uploadState, file: e.target.files[0] })
+                setUploadState({ ...uploadState, fileList: e.target.files })
               }
             }}
             ref={inputFileRef}

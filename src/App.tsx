@@ -88,7 +88,7 @@ function AppRoutes() {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 3000,
+      // cacheTime: 3000,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchInterval: false,
