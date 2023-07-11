@@ -30,7 +30,10 @@
             "scegli_ordinamento": "Choose ordering",
             "alfabetico_a_z": "Alphabetical A-Z",
             "alfabetico_z_a": "Alphabetical Z-A",
-            "carica_foto": "Upload photo"
+            "carica_foto": "Upload photo",
+            "cambia_lingua": "Change language",
+            "testo_login": "Log in with your “Wikimedia Commons” profile to upload your photos.",
+            "login": "Login"
         }
     },
     "it": {
@@ -64,7 +67,10 @@
             "scegli_ordinamento": "Scegli ordinamento",
             "alfabetico_a_z": "Alfabetico A-Z",
             "alfabetico_z_a": "Alfabetico Z-A",
-            "carica_foto": "Carica foto"
+            "carica_foto": "Carica foto",
+            "cambia_lingua": "Cambia lingua",
+            "testo_login": "Effettua il login con il tuo profilo “Wikimedia Commons” per poter caricare le tue foto.",
+            "login": "Login"
         }
     }
 }

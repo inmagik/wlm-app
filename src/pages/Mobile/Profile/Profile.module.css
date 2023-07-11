@@ -1,0 +1,83 @@
+.ProfileContainer {
+  display: flex;
+  padding: 16px 32px 0px 32px;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px;
+  flex: 1 0 0;
+  align-self: stretch;
+  width: 100%;
+}
+
+.BlockChangeLanguage {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.BlockChangeLanguage {
+  color: var(--primary);
+  margin-right: 8px;
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.ButtonChangeLanguage {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: var(--primary);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+  border: none;
+}
+
+.TextLogin {
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  /* H1 */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.TextLogin {
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 32px;
+}
+
+.LoginButton {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--secondary);
+  /* Shade Button Blu */
+  box-shadow: 1px 1px 0px 0px var(--primary);
+  width: 100%;
+  border: none;
+  color: var(--colori-neutri-white);
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
