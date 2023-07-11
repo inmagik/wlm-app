@@ -36,7 +36,9 @@
             "login": "Login",
             "italiano": "Italian",
             "inglese": "English",
-            "lingua_selezionata": "Selected language"
+            "lingua_selezionata": "Selected language",
+            "nessuna_coordinata": "No coordinates",
+            "questo_monumento_non_ha_coordinate": "This monument has no coordinates"
         }
     },
     "it": {
@@ -76,7 +78,9 @@
             "login": "Login",
             "italiano": "Italiano",
             "inglese": "Inglese",
-            "lingua_selezionata": "Lingua selezionata"
+            "lingua_selezionata": "Lingua selezionata",
+            "nessuna_coordinata": "Nessuna coordinata",
+            "questo_monumento_non_ha_coordinate": "Questo monumento non ha coordinate"
         }
     }
 }

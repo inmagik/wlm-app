@@ -323,3 +323,40 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.NoMap {
+  position: absolute;
+  border-radius: 5px;
+  background: rgba(178, 178, 178, 0.6);
+  backdrop-filter: blur(1px);
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.NoCoordinatesTitle {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 8px;
+}
+
+.NoCoordinatesDescription {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 8px;
+}

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
 import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
@@ -12,6 +12,7 @@ import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
+import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
@@ -223,18 +224,35 @@ export default function Detail() {
         )}
         <div className={styles.MapContainer}>
           <div className={styles.Map} ref={mapElement}></div>
-          <button className={styles.GuardaInMappa}>
-            <MapIcon /> {t('guarda_in_mappa')}
-          </button>
+          {monument?.position?.coordinates && (
+            <button className={styles.GuardaInMappa}>
+              <MapIcon /> {t('guarda_in_mappa')}
+            </button>
+          )}
           <div>
-            <a
-              className={styles.Direction}
-              href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}`}
-              target="_blank"
-            >
-              <Direction />
-            </a>
+            {monument?.position?.coordinates && (
+              <a
+                className={styles.Direction}
+                href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}`}
+                target="_blank"
+              >
+                <Direction />
+              </a>
+            )}
           </div>
+          {!monument?.position?.coordinates && (
+            <div className={styles.NoMap}>
+              <div>
+                <NoCoordinates />
+              </div>
+              <div className={
+                styles.NoCoordinatesTitle
+              }>{t('nessuna_coordinata')}</div>
+              <div className={
+                styles.NoCoordinatesDescription
+              }>{t('questo_monumento_non_ha_coordinate')}</div>
+            </div>
+          )}
         </div>
         <div className={styles.CardExternalLinks}>
           <div className={styles.ExternalLinksTitle}>
