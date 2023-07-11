@@ -20,11 +20,20 @@ import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import IconMonument from '../../../components/IconMonument'
 import SlideShow from '../../../components/Mobile/SlideShow'
-import { Map as MapOl, View } from 'ol'
+import { Feature, Map as MapOl, View } from 'ol'
 import { fromLonLat } from 'ol/proj'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import MapIcon from '../../../components/Icons/MapIcon'
+import VectorTileLayer from 'ol/layer/VectorTile'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { Point } from 'ol/geom'
+import Style from 'ol/style/Style'
+import Fill from 'ol/style/Fill'
+import ImageStyle from 'ol/style/Image'
+import Icon from 'ol/style/Icon'
+import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
 
 export default function Detail() {
   const { slug } = useParams()
@@ -40,16 +49,17 @@ export default function Detail() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
 
-  console.log(firstThreeImages)
-
   useEffect(() => {
     if (!mapElement.current) return
+
     const initialMap = new MapOl({
+      interactions: [],
       target: mapElement.current,
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
+        new VectorTileLayer({}),
       ],
       controls: [],
       view: new View({
@@ -58,11 +68,42 @@ export default function Detail() {
             ? monument?.position.coordinates
             : [12.56738, 41.87194]
         ),
-        zoom: 11,
-        minZoom: 11,
-        maxZoom: 11,
+        zoom: 13,
+        
+      }),
+      moveTolerance: 10,
+    })
+
+    const iconFeature = new Feature({
+      geometry: new Point(
+        fromLonLat(
+          monument?.position?.coordinates
+            ? monument?.position.coordinates
+            : [12.56738, 41.87194]
+        )
+      ),
+    })
+
+    const iconStyle = new Style({
+      image: new Icon({
+        src: getMarkerMap({
+          monument: monument!,
+        }),
+        
       }),
     })
+
+    iconFeature.setStyle(iconStyle)
+
+    const vectorSource = new VectorSource({
+      features: [iconFeature],
+    })
+
+    const vectorLayer = new VectorLayer({
+      source: vectorSource,
+    })
+
+    initialMap.addLayer(vectorLayer)
 
     setMap(initialMap)
 
