@@ -33,7 +33,10 @@
             "carica_foto": "Upload photo",
             "cambia_lingua": "Change language",
             "testo_login": "Log in with your “Wikimedia Commons” profile to upload your photos.",
-            "login": "Login"
+            "login": "Login",
+            "italiano": "Italian",
+            "inglese": "English",
+            "lingua_selezionata": "Selected language"
         }
     },
     "it": {
@@ -70,7 +73,10 @@
             "carica_foto": "Carica foto",
             "cambia_lingua": "Cambia lingua",
             "testo_login": "Effettua il login con il tuo profilo “Wikimedia Commons” per poter caricare le tue foto.",
-            "login": "Login"
+            "login": "Login",
+            "italiano": "Italiano",
+            "inglese": "Inglese",
+            "lingua_selezionata": "Lingua selezionata"
         }
     }
 }
