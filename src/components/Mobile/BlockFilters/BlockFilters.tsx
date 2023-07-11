@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react'
-import { ReactComponent as FiltersIcon } from '../../../assets/filter.svg'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Flag } from '../../../assets/flag.svg'
@@ -7,6 +6,7 @@ import { ReactComponent as Search } from '../../../assets/search.svg'
 import { useTranslation } from 'react-i18next'
 import styles from './BlockFilters.module.css'
 import { useComuni } from '../../../hooks/comuni'
+import FiltersIcon from '../../Icons/FiltersIcon'
 
 interface BlockFiltersProps {
   filtersOpen: boolean
@@ -38,7 +38,7 @@ export default function BlockFilters({
         style={{
           opacity: filtersOpen ? 1 : 0,
           pointerEvents: filtersOpen ? 'all' : 'none',
-          transition: 'all 0.3s ease-in-out',
+          transition: 'all 0.5s ease-in-out',
         }}
         onClick={() => {
           setFiltersOpen(false)
@@ -47,7 +47,7 @@ export default function BlockFilters({
       <div
         style={{
           transform: filtersOpen ? 'translateY(0)' : 'translateY(100%)',
-          transition: 'all 0.3s ease-in-out',
+          transition: 'all 0.5s ease-in-out',
         }}
         className={styles.ContainerFilters}
       >
@@ -61,15 +61,15 @@ export default function BlockFilters({
           </div>
         </div>
         <div className={styles.ListFilters}>
-          <div className={styles.Filter}>
+          <div
+            className={styles.Filter}
+            onClick={() => {
+              setFilterComuneOpen(!filterComuneOpen)
+            }}
+          >
             <div className={styles.FilterTitle}>{t('comune')}</div>
             <div className="d-flex align-items-center">
-              <div
-                className={styles.FilterItem}
-                onClick={() => {
-                  setFilterComuneOpen(!filterComuneOpen)
-                }}
-              >
+              <div className={styles.FilterItem}>
                 {filters.municipality !== ''
                   ? filters.municipality
                   : t('tutti')}
@@ -85,7 +85,7 @@ export default function BlockFilters({
         className={styles.BlockFilterComune}
         style={{
           transform: filterComuneOpen ? 'translateX(0)' : 'translateX(-100%)',
-          transition: 'all 0.3s ease-in-out',
+          transition: 'all 0.5s ease-in-out',
           pointerEvents: filterComuneOpen ? 'all' : 'none',
         }}
       >

@@ -14,7 +14,7 @@ export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
       style={{
         opacity: infoWiki ? '1' : '0',
         pointerEvents: infoWiki ? 'all' : 'none',
-        transition: 'all 0.3s ease-in-out',
+        transition: 'all 0.5s ease-in-out',
       }}
     >
       <div className={styles.TopWikiLove}>

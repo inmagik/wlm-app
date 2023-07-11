@@ -5,21 +5,25 @@ import { useInfiniteMomuments } from '../../../hooks/monuments'
 import styles from './List.module.css'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as Search } from '../../../assets/search.svg'
+import { ReactComponent as OrderingIcon } from '../../../assets/ordering.svg'
 import { useQsFilters } from '../../../hooks/filters'
 import LangLink from '../../../components/LangLink'
 import { smartSlug } from '../../../utils'
 import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
+import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
+  ordering: params.get('ordering') ?? 'label',
 })
 
 export default function List() {
   const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
+  const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
   const refListMonuments = useRef<HTMLDivElement>(null)
   const {
     data: infiniteMonuments,
@@ -40,6 +44,14 @@ export default function List() {
           />
           <div className={styles.SearchIcon}>
             <Search />
+          </div>
+          <div
+            className={styles.ButtonOrdering}
+            onClick={() => {
+              setOrderingOpen(!orderingOpen)
+            }}
+          >
+            <OrderingIcon />
           </div>
           <div
             className={styles.ButtonFilters}
@@ -98,6 +110,12 @@ export default function List() {
       <BlockFilters
         filtersOpen={filtersOpen}
         setFiltersOpen={setFiltersOpen}
+        filters={filters}
+        setFilters={setFilters}
+      />
+      <BlockOrdering
+        orderingOpen={orderingOpen}
+        setOrderingOpen={setOrderingOpen}
         filters={filters}
         setFilters={setFilters}
       />

@@ -25,7 +25,11 @@
             "filtra": "Filter",
             "comune": "Municipality",
             "tutti": "All",
-            "cerca_comune": "Search municipality"
+            "cerca_comune": "Search municipality",
+            "ordinamento": "Ordering",
+            "scegli_ordinamento": "Choose ordering",
+            "alfabetico_a_z": "Alphabetical A-Z",
+            "alfabetico_z_a": "Alphabetical Z-A"
         }
     },
     "it": {
@@ -54,7 +58,11 @@
             "filtra": "Filtra",
             "comune": "Comune",
             "tutti": "Tutti",
-            "cerca_comune": "Cerca comune"
+            "cerca_comune": "Cerca comune",
+            "ordinamento": "Ordinamento",
+            "scegli_ordinamento": "Scegli ordinamento",
+            "alfabetico_a_z": "Alfabetico A-Z",
+            "alfabetico_z_a": "Alfabetico Z-A"
         }
     }
 }

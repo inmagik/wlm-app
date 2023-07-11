@@ -41,6 +41,26 @@
   border-radius: 10px;
   border: 1px solid var(--primary);
   background: var(--primary);
+  cursor: pointer;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+.ButtonOrdering{
+  display: flex;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  cursor: pointer;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px;
+  border: 1px solid var(--secondary);
+  background: var(--secondary);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
 }
 

@@ -61,7 +61,7 @@ export default function SlideShow({
                 opacity: infoSlideSlideShow ? 1 : 0,
                 bottom: infoSlideSlideShow ? 0 : -100,
                 minHeight: infoSlideSlideShow ? 151 : 0,
-                transition: 'all 0.3s ease-in-out',
+                transition: 'all 0.5s ease-in-out',
               }}
             >
               <div className={styles.InfoBlockSlideShowTitle}>
