@@ -302,3 +302,24 @@
   line-height: normal;
   text-decoration-line: underline;
 }
+
+.ButtonCaricaFoto {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--secondary);
+  /* Shade Button Blu */
+  width: 100%;
+  box-shadow: 1px 1px 0px 0px var(--primary);
+  margin-top: 16px;
+  border: none;
+  color: var(--colori-neutri-white);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -29,7 +29,8 @@
             "ordinamento": "Ordering",
             "scegli_ordinamento": "Choose ordering",
             "alfabetico_a_z": "Alphabetical A-Z",
-            "alfabetico_z_a": "Alphabetical Z-A"
+            "alfabetico_z_a": "Alphabetical Z-A",
+            "carica_foto": "Upload photo"
         }
     },
     "it": {
@@ -62,7 +63,8 @@
             "ordinamento": "Ordinamento",
             "scegli_ordinamento": "Scegli ordinamento",
             "alfabetico_a_z": "Alfabetico A-Z",
-            "alfabetico_z_a": "Alfabetico Z-A"
+            "alfabetico_z_a": "Alfabetico Z-A",
+            "carica_foto": "Carica foto"
         }
     }
 }

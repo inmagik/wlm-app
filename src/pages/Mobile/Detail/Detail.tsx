@@ -104,12 +104,22 @@ export default function Detail() {
               ))}
             </Swiper>
           ) : (
-            <div className={styles.BoxNoImages}>
-              <div>{t('ancora_nessuna_foto_all_orizzonte')}</div>
-              <div>
-                <SmileBad className="mt-2" />
+            <>
+              <div className={styles.BoxNoImages}>
+                <div>{t('ancora_nessuna_foto_all_orizzonte')}</div>
+                <div>
+                  <SmileBad className="mt-2" />
+                </div>
               </div>
-            </div>
+              <button
+                onClick={() => {
+                  inputFileRef.current?.click()
+                }}
+                className={styles.ButtonCaricaFoto}
+              >
+                {t('carica_foto')}
+              </button>
+            </>
           )}
           <div className={styles.PaginationImagesDots}>
             {firstThreeImages.map((_, i) => (
@@ -150,27 +160,27 @@ export default function Detail() {
           </div>
         </div>
         {monument?.pictures.length > 0 && (
-        <div className={styles.CardImages}>
-          <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
-          <div className={styles.ContainerImages}>
-            {monument?.pictures.slice(0, 12).map((picture) => (
-              <div
-                key={picture.id}
-                className={styles.Image}
-                onClick={() => {
-                  setShowAllImages(true)
-                  setSlideShowActive(picture.id)
-                }}
-                style={{
-                  backgroundImage: `url("${picture.image_url}")`,
-                }}
-              ></div>
-            ))}
+          <div className={styles.CardImages}>
+            <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
+            <div className={styles.ContainerImages}>
+              {monument?.pictures.slice(0, 12).map((picture) => (
+                <div
+                  key={picture.id}
+                  className={styles.Image}
+                  onClick={() => {
+                    setShowAllImages(true)
+                    setSlideShowActive(picture.id)
+                  }}
+                  style={{
+                    backgroundImage: `url("${picture.image_url}")`,
+                  }}
+                ></div>
+              ))}
+            </div>
+            <button className={styles.ButtonShowAllImages}>
+              {t('guarda_tutte_su_wikimediacommons')}
+            </button>
           </div>
-          <button className={styles.ButtonShowAllImages}>
-            {t('guarda_tutte_su_wikimediacommons')}
-          </button>
-        </div>
         )}
         <div className={styles.MapContainer}>
           <div className={styles.Map} ref={mapElement}></div>
@@ -203,7 +213,7 @@ export default function Detail() {
           </div>
           <div className={styles.ExternalLink}>
             <div>
-              <Wikipedia className="me-1" /> 
+              <Wikipedia className="me-1" />
             </div>
             <div>
               <ArrowRight />
