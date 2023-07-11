@@ -15,7 +15,6 @@ import BlockFilters from '../../../components/Mobile/BlockFilters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  offsetY: params.get('offsetY') ?? '0',
 })
 
 export default function List() {
@@ -29,25 +28,6 @@ export default function List() {
     fetchNextPage,
   } = useInfiniteMomuments(filters)
 
-  useEffect(() => {
-    if (!refListMonuments.current) return
-    refListMonuments.current.addEventListener('scroll', () => {
-      // setFiltersDebounced({ offsetY: refListMonuments.current!.scrollTop.toString() })
-      sessionStorage.setItem(
-        'offsetY',
-        refListMonuments.current!.scrollTop.toString()
-      )
-    })
-  }, [refListMonuments])
-
-  useEffect(() => {
-    if (!refListMonuments.current) return
-    refListMonuments.current.scrollTo({
-      top: Number(sessionStorage.getItem('offsetY')) || 0,
-      // behavior: '',
-    })
-  }, [])
-
   return (
     <Layout>
       <div className={styles.ContainerList}>
@@ -55,7 +35,7 @@ export default function List() {
           <input
             className={styles.InputSearch}
             onChange={(e) => {
-              setFilters({ search: e.target.value })
+              setFiltersDebounced({ search: e.target.value })
             }}
           />
           <div className={styles.SearchIcon}>

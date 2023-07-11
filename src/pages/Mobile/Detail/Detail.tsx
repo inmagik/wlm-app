@@ -40,6 +40,8 @@ export default function Detail() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
 
+  console.log(firstThreeImages)
+
   useEffect(() => {
     if (!mapElement.current) return
     const initialMap = new MapOl({
@@ -95,7 +97,7 @@ export default function Detail() {
                   <div
                     className={styles.BlockImage}
                     style={{
-                      backgroundImage: `url(${picture.image_url})`,
+                      backgroundImage: `url("${picture.image_url}")`,
                     }}
                   ></div>
                 </SwiperSlide>

@@ -14,7 +14,6 @@ import { useQsFilters } from '../../../hooks/filters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  offsetY: params.get('offsetY') ?? '0',
 })
 
 export default function Map() {

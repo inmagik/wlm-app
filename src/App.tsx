@@ -88,14 +88,14 @@ function AppRoutes() {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60,
+      cacheTime: 5000 * 60,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchInterval: false,
       refetchIntervalInBackground: false,
       networkMode: 'always',
       refetchOnMount: false,
-      staleTime: Infinity,
+      staleTime: 5000 * 30,
       retry: false,
       suspense: true,
       structuralSharing: false,

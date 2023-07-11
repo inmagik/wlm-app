@@ -31,7 +31,6 @@ export default function BlockFilters({
       comune.label.toLowerCase().includes(searchComune.toLowerCase())
     )
   }, [comuni, searchComune])
-  console.log(filtersOpen, 'filtersOpen')
   return (
     <>
       <div

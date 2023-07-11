@@ -13,7 +13,6 @@ import { useQsFilters } from '../../../hooks/filters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  offsetY: params.get('offsetY') ?? '0',
 })
 
 export default function BottomNavigation() {
@@ -27,7 +26,6 @@ export default function BottomNavigation() {
         to={`/?${new URLSearchParams({
           search: filters.search,
           municipality: filters.municipality,
-          offsetY: filters.offsetY ?? '0',
         })}`}
         className="no-link"
       >
@@ -50,7 +48,6 @@ export default function BottomNavigation() {
         to={`/lista?${new URLSearchParams({
           search: filters.search,
           municipality: filters.municipality,
-          offsetY: filters.offsetY ?? '0',
         })}`}
         className="no-link"
       >
