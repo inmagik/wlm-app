@@ -22,6 +22,32 @@ export default function Map() {
   const [map, setMap] = useState<MapOl | null>(null)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
 
+  const [mapState, setMapState] = useState({
+    center: fromLonLat([12.56738, 41.87194]),
+    zoom: 6,
+  })
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
+  }
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setMapState({
+      center: fromLonLat([longitude, latitude]),
+      zoom: 16,
+    })
+  }
+
+  function error() {
+    console.log('Unable to retrieve your location')
+  }
+
   useEffect(() => {
     if (!mapElement.current) return
     const initialMap = new MapOl({
@@ -31,17 +57,13 @@ export default function Map() {
           source: new OSM(),
         }),
       ],
-      controls: [],
-      view: new View({
-        center: fromLonLat([12.56738, 41.87194]),
-        zoom: 6,
-      }),
+      view: new View(mapState),
     })
 
     setMap(initialMap)
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
-  }, [])
+  }, [mapState])
 
   useEffect(() => {
     if (!map) return
@@ -64,7 +86,10 @@ export default function Map() {
             <button className={styles.ButtonMappe}>
               <Mappe />
             </button>
-            <button className={styles.ButtonMyLocation}>
+            <button
+              className={styles.ButtonMyLocation}
+              onClick={handleLocationClick}
+            >
               <MyLocation />
             </button>
           </div>
