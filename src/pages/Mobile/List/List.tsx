@@ -5,7 +5,7 @@ import { useInfiniteMomuments } from '../../../hooks/monuments'
 import styles from './List.module.css'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as Search } from '../../../assets/search.svg'
-import { ReactComponent as OrderingIcon } from '../../../assets/ordering.svg'
+import { ReactComponent as OrderingIcon } from '../../../assets/ordering.svg'
 import { useQsFilters } from '../../../hooks/filters'
 import LangLink from '../../../components/LangLink'
 import { smartSlug } from '../../../utils'
@@ -13,6 +13,73 @@ import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
+import { Monument, PaginatedDJResponse } from '../../../types'
+import { InfiniteData } from '@tanstack/react-query'
+
+interface Props {
+  filters: {
+    search: string
+    municipality: string
+    ordering: string
+  }
+}
+
+function ListMonuments({ filters }: Props) {
+  const {
+    data: infiniteMonuments,
+    hasNextPage,
+    isLoading,
+    fetchNextPage,
+  } = useInfiniteMomuments(filters)
+
+  return (
+    <div className={styles.ListMonuments}>
+      {infiniteMonuments!.pages.map((list, i) => (
+        <Fragment key={i}>
+          {list.results.map((monument) => {
+            return (
+              <LangLink
+                key={monument.id}
+                to={`/lista/${smartSlug(monument.id, monument.label)}`}
+                className="no-link"
+              >
+                <div className={styles.MonumentCard}>
+                  <div className="d-flex">
+                    <div>
+                      <IconMonument monument={monument} />
+                    </div>
+                    <div className="ms-2">
+                      <div className={styles.MonumentTitle}>
+                        {monument.label}
+                      </div>
+                      <div className={styles.City}>
+                        {monument.municipality_label}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className={styles.NumberPhoto}>
+                      <div>{monument.pictures_count}</div>
+                      <Camera className="ms-2" />
+                    </div>
+                  </div>
+                </div>
+              </LangLink>
+            )
+          })}
+        </Fragment>
+      ))}
+      {hasNextPage && !isLoading && (
+        <Waypoint
+          topOffset={-100}
+          onEnter={() => {
+            fetchNextPage()
+          }}
+        />
+      )}
+    </div>
+  )
+}
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -24,13 +91,6 @@ export default function List() {
   const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
-  const refListMonuments = useRef<HTMLDivElement>(null)
-  const {
-    data: infiniteMonuments,
-    hasNextPage,
-    isLoading,
-    fetchNextPage,
-  } = useInfiniteMomuments(filters)
 
   return (
     <Layout>
@@ -62,50 +122,7 @@ export default function List() {
             <FiltersIcon />
           </div>
         </div>
-        <div className={styles.ListMonuments} ref={refListMonuments}>
-          {infiniteMonuments!.pages.map((list, i) => (
-            <Fragment key={i}>
-              {list.results.map((monument) => {
-                return (
-                  <LangLink
-                    key={monument.id}
-                    to={`/lista/${smartSlug(monument.id, monument.label)}`}
-                    className="no-link"
-                  >
-                    <div className={styles.MonumentCard}>
-                      <div className="d-flex">
-                        <div>
-                          <IconMonument monument={monument} />
-                        </div>
-                        <div className="ms-2">
-                          <div className={styles.MonumentTitle}>
-                            {monument.label}
-                          </div>
-                          <div className={styles.City}>
-                            {monument.municipality_label}
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className={styles.NumberPhoto}>
-                          <div>{monument.pictures_count}</div>
-                          <Camera className="ms-2" />
-                        </div>
-                      </div>
-                    </div>
-                  </LangLink>
-                )
-              })}
-            </Fragment>
-          ))}
-          {hasNextPage && !isLoading && (
-            <Waypoint
-              onEnter={() => {
-                fetchNextPage()
-              }}
-            />
-          )}
-        </div>
+        <ListMonuments filters={filters} />
       </div>
       <BlockFilters
         filtersOpen={filtersOpen}

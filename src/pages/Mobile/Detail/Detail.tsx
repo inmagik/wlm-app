@@ -149,6 +149,7 @@ export default function Detail() {
             </div>
           </div>
         </div>
+        {monument?.pictures.length > 0 && (
         <div className={styles.CardImages}>
           <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
           <div className={styles.ContainerImages}>
@@ -170,6 +171,7 @@ export default function Detail() {
             {t('guarda_tutte_su_wikimediacommons')}
           </button>
         </div>
+        )}
         <div className={styles.MapContainer}>
           <div className={styles.Map} ref={mapElement}></div>
           <button className={styles.GuardaInMappa}>
