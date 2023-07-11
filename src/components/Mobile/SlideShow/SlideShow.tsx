@@ -52,7 +52,7 @@ export default function SlideShow({
             <div
               className={styles.SlideShowImage}
               style={{
-                backgroundImage: `url(${picture.image_url})`,
+                backgroundImage: `url("${picture.image_url}")`,
               }}
             ></div>
             <div

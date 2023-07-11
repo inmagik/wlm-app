@@ -161,7 +161,7 @@ export default function Detail() {
                   setSlideShowActive(picture.id)
                 }}
                 style={{
-                  backgroundImage: `url(${picture.image_url})`,
+                  backgroundImage: `url("${picture.image_url}")`,
                 }}
               ></div>
             ))}
