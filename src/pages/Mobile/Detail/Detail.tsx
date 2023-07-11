@@ -12,7 +12,7 @@ import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
-import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
+import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
@@ -31,10 +31,9 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 import { Point } from 'ol/geom'
 import Style from 'ol/style/Style'
-import Fill from 'ol/style/Fill'
-import ImageStyle from 'ol/style/Image'
 import Icon from 'ol/style/Icon'
 import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
+import BlockUpload from '../../../components/Mobile/BlockUpload'
 
 export default function Detail() {
   const { slug } = useParams()
@@ -49,6 +48,8 @@ export default function Detail() {
   const swiperRef = useRef<SwiperRef>()
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
+  const [imageUpload, setImageUpload] = useState<File | null>(null)
+  const [showModalUpload, setShowModalUpload] = useState(false)
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -107,7 +108,9 @@ export default function Detail() {
     setMap(initialMap)
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
-  }, [monument])
+  }, [])
+
+  console.log(imageUpload)
 
   return (
     <Layout>
@@ -245,12 +248,12 @@ export default function Detail() {
               <div>
                 <NoCoordinates />
               </div>
-              <div className={
-                styles.NoCoordinatesTitle
-              }>{t('nessuna_coordinata')}</div>
-              <div className={
-                styles.NoCoordinatesDescription
-              }>{t('questo_monumento_non_ha_coordinate')}</div>
+              <div className={styles.NoCoordinatesTitle}>
+                {t('nessuna_coordinata')}
+              </div>
+              <div className={styles.NoCoordinatesDescription}>
+                {t('questo_monumento_non_ha_coordinate')}
+              </div>
             </div>
           )}
         </div>
@@ -294,8 +297,14 @@ export default function Detail() {
           </button>
           <input
             ref={inputFileRef}
+            onChange={(e) => {
+              if (e.target.files && e.target.files?.length > 0) {
+                setImageUpload(e.target?.files[0])
+                setShowModalUpload(true)
+              }
+            }}
             type="file"
-            className="d-none"
+            hidden={true}
             accept="image/*"
           />
         </div>
@@ -310,6 +319,11 @@ export default function Detail() {
           monument={monument}
         />
       )}
+      <BlockUpload
+        file={imageUpload}
+        setUploadOpen={setShowModalUpload}
+        uploadOpen={showModalUpload}
+      />
     </Layout>
   )
 }

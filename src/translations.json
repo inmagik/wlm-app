@@ -38,7 +38,14 @@
             "inglese": "English",
             "lingua_selezionata": "Selected language",
             "nessuna_coordinata": "No coordinates",
-            "questo_monumento_non_ha_coordinate": "This monument has no coordinates"
+            "questo_monumento_non_ha_coordinate": "This monument has no coordinates",
+            "titolo_immagine": "Title of the image",
+            "inserisci_titolo": "Enter the title of the image",
+            "descrizione_immagine": "Description of the image",
+            "inserisci_descrizione": "Enter the description of the image",
+            "date": "Date",
+            "inserisci_data": "Enter the date of the image",
+            "riseleziona": "Reselect"
         }
     },
     "it": {
@@ -80,7 +87,14 @@
             "inglese": "Inglese",
             "lingua_selezionata": "Lingua selezionata",
             "nessuna_coordinata": "Nessuna coordinata",
-            "questo_monumento_non_ha_coordinate": "Questo monumento non ha coordinate"
+            "questo_monumento_non_ha_coordinate": "Questo monumento non ha coordinate",
+            "titolo_immagine": "Titolo dell'immagine",
+            "inserisci_titolo": "Inserisci il titolo dell'immagine",
+            "descrizione_immagine": "Descrizione dell'immagine",
+            "inserisci_descrizione": "Inserisci la descrizione dell'immagine",
+            "date": "Data",
+            "inserisci_data": "Inserisci la data dell'immagine",
+            "riseleziona": "Riseleziona"
         }
     }
 }
