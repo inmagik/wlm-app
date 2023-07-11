@@ -38,19 +38,23 @@ export default function BlockUpload({
         pointerEvents: uploadOpen ? 'all' : 'none',
         transition: 'all 0.5s ease-in-out',
       }}
+      onTransitionEnd={() => {
+        if (!uploadOpen) {
+          setUploadState({
+            title: '',
+            description: '',
+            file: null,
+            date: '',
+          })
+          setFile(null)
+        }
+      }}
     >
       <div className={styles.ModalUploadContainer}>
         <div className={styles.CloseModal}>
           <Close
             onClick={() => {
               setUploadOpen(false)
-              setFile(null)
-              setUploadState({
-                title: '',
-                description: '',
-                file: null,
-                date: '',
-              })
             }}
           />
         </div>
