@@ -81,6 +81,9 @@
   height: 100%;
   z-index: 12;
   padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .InputSearchComune {
@@ -137,4 +140,29 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.OrderingItem {
+  display: flex;
+  height: 34px;
+  padding: 8px 0px 8px 24px;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  color: var(--primary-color, #118ab2);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 8px;
+}
+
+.OrderingItemActive {
+  background: var(--primary);
+  color: var(--colori-neutri-white);
 }

@@ -201,7 +201,7 @@ export default function Detail() {
           </div>
           <div className={styles.ExternalLink}>
             <div>
-              <Wikipedia className="me-1" /> Pagina Wikipedia
+              <Wikipedia className="me-1" /> 
             </div>
             <div>
               <ArrowRight />

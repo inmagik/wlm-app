@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
-import { ReactComponent as FiltersIcon } from '../../../assets/filter.svg'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as OrderingPrimaryIcon } from '../../../assets/ordering-primary.svg'
+import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
+import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { useTranslation } from 'react-i18next'
 import styles from './BlockOrdering.module.css'
+import classNames from 'classnames'
 
 interface BlockOrderingProps {
   orderingOpen: boolean
@@ -27,9 +29,8 @@ export default function BlockOrdering({
     if (ordering === 'label') {
       return t('alfabetico_a_z')
     } else if (ordering === '-label') {
-      t('alfabetico_z_a')
+      return t('alfabetico_z_a')
     }
-    return t('alfabetico_a_z')
   }, [filters.ordering, t])
 
   return (
@@ -88,11 +89,59 @@ export default function BlockOrdering({
       >
         <div className={styles.TitleBlockOrdering}>
           <div className="d-flex align-items-center">
-            <FiltersIcon fill="var(--primary)" />
+            <OrderingPrimaryIcon fill="var(--primary)" />
             <div className="ms-2">{t('scegli_ordinamento')}</div>
           </div>
           <div>
             <Close onClick={() => setFilterOrderingOpen(false)} />
+          </div>
+        </div>
+        <div className={styles.ListOrderingItems}>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.ordering === 'label',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                ordering: 'label',
+              })
+              setFilterOrderingOpen(false)
+            }}
+          >
+            <div>
+              {filters.ordering === 'label' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('alfabetico_a_z')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.ordering === '-label',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                ordering: '-label',
+              })
+              setFilterOrderingOpen(false)
+            }}
+          >
+            <div>
+              {filters.ordering === '-label' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('alfabetico_z_a')}
+            </div>
           </div>
         </div>
       </div>
