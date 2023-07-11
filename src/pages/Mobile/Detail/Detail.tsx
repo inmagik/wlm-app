@@ -69,7 +69,6 @@ export default function Detail() {
             : [12.56738, 41.87194]
         ),
         zoom: 13,
-        
       }),
       moveTolerance: 10,
     })
@@ -89,7 +88,6 @@ export default function Detail() {
         src: getMarkerMap({
           monument: monument!,
         }),
-        
       }),
     })
 
@@ -228,8 +226,14 @@ export default function Detail() {
           <button className={styles.GuardaInMappa}>
             <MapIcon /> {t('guarda_in_mappa')}
           </button>
-          <div className={styles.Direction}>
-            <Direction />
+          <div>
+            <a
+              className={styles.Direction}
+              href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}`}
+              target="_blank"
+            >
+              <Direction />
+            </a>
           </div>
         </div>
         <div className={styles.CardExternalLinks}>
