@@ -323,6 +323,7 @@ export default function Detail() {
         file={imageUpload}
         setUploadOpen={setShowModalUpload}
         uploadOpen={showModalUpload}
+        setFile={setImageUpload}
       />
     </Layout>
   )

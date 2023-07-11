@@ -1,18 +1,20 @@
 import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { useTranslation } from 'react-i18next'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface BlockUploadProps {
   uploadOpen: boolean
   setUploadOpen: (uploadOpen: boolean) => void
   file: File | null
+  setFile: (file: File | null) => void
 }
 
 export default function BlockUpload({
   uploadOpen,
   setUploadOpen,
   file,
+  setFile,
 }: BlockUploadProps) {
   const { t } = useTranslation()
   const [uploadState, setUploadState] = useState({
@@ -23,6 +25,10 @@ export default function BlockUpload({
   })
 
   const inputFileRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    setUploadState({ ...uploadState, file })
+  }, [file])
 
   return (
     <div
@@ -35,7 +41,18 @@ export default function BlockUpload({
     >
       <div className={styles.ModalUploadContainer}>
         <div className={styles.CloseModal}>
-          <Close onClick={() => setUploadOpen(false)} />
+          <Close
+            onClick={() => {
+              setUploadOpen(false)
+              setFile(null)
+              setUploadState({
+                title: '',
+                description: '',
+                file: null,
+                date: '',
+              })
+            }}
+          />
         </div>
         <div className={styles.CardImageToUpload}>
           <div>
@@ -54,9 +71,10 @@ export default function BlockUpload({
                 type="text"
                 className={styles.InputTitle}
                 value={uploadState.title}
-                onChange={(e) =>
+                onChange={(e) => {
+                  setFile(e.target.files![0])
                   setUploadState({ ...uploadState, title: e.target.value })
-                }
+                }}
                 placeholder={t('inserisci_titolo')}
               />
             </div>
