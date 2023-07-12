@@ -54,7 +54,8 @@
             "scegli_categoria": "Choose category",
             "tutte_le_categorie": "All categories",
             "altri_monumenti": "Other monuments",
-            "tutti_i_monumenti": "All monuments"
+            "tutti_i_monumenti": "All monuments",
+            "monumenti_senza_foto": "Monuments without photos"
         }
     },
     "it": {
@@ -112,7 +113,8 @@
             "scegli_categoria": "Scegli categoria",
             "tutte_le_categorie": "Tutte le categorie",
             "altri_monumenti": "Altri monumenti",
-            "tutti_i_monumenti": "Tutti i monumenti"
+            "tutti_i_monumenti": "Tutti i monumenti",
+            "monumenti_senza_foto": "Monumenti senza foto"
         }
     }
 }

@@ -157,6 +157,26 @@ export default function BlockFilters({
               </div>
             </div>
           </div>
+          <div className={styles.Filter}>
+            <div className={styles.FilterTitle}>{t('monumenti_senza_foto')}</div>
+            <div className="d-flex align-items-center">
+              <div className={styles.FilterItem}>
+                <input
+                  type="checkbox"
+                  checked={filters.allMonuments}
+                  onChange={(e) => {
+                    setFilters({
+                      ...filters,
+                      only_with_pictures: e.target.checked ? '' : 'false',
+                    })
+                  }}
+                />
+              </div>
+              <div className="ms-2">
+                <ArrowRight />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div

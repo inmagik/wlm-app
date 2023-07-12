@@ -21,6 +21,7 @@ interface Props {
     ordering: string
     category: string
     in_contest: string
+    only_with_pictures: string
   }
 }
 
@@ -114,6 +115,7 @@ const getFilters = (params: URLSearchParams) => ({
   municipality: params.get('municipality') ?? '',
   ordering: params.get('ordering') ?? 'label',
   in_contest: params.get('in_contest') ?? "true",
+  only_with_pictures: params.get('only_with_pictures') ?? "false",
   category: params.get('category') ?? '',
 })
 
