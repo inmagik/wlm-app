@@ -50,3 +50,8 @@ body,
 .flex-1 {
   flex: 1;
 }
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+  position: relative;
+  margin-top: 20px;
+}

@@ -16,6 +16,18 @@ export interface Picture {
   wlm_image: boolean
 }
 
+
+export interface MonumentList {
+  id: number
+  app_category: string
+  in_contest: boolean
+  label: string
+  municipality_label: string
+  municipality: number
+  pictures_wlm_count: number
+}
+
+
 export interface Monument {
   id: number
   pictures: Picture[]
@@ -48,6 +60,8 @@ export interface Monument {
   pictures_wlm_count: number
   pictures_commons_count: number
   to_review: boolean
+  app_category: string
+  in_contest: boolean
 }
 
 export interface Comune {

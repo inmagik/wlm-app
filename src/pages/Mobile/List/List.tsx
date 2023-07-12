@@ -25,6 +25,14 @@ interface Props {
 }
 
 function ListMonuments({ filters }: Props) {
+  useEffect(() => {
+    if (history.state?.scroll) {
+      listMonumentsRef.current!.scrollTop = history.state.scroll
+    } else {
+      listMonumentsRef.current!.scrollTop = 0
+    }
+  }, [])
+
   const {
     data: infiniteMonuments,
     hasNextPage,
@@ -32,8 +40,28 @@ function ListMonuments({ filters }: Props) {
     fetchNextPage,
   } = useInfiniteMomuments(filters)
 
+  const listMonumentsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (listMonumentsRef.current) {
+        history.replaceState(
+          {
+            ...history.state,
+            scroll: listMonumentsRef.current.scrollTop,
+          },
+          ''
+        )
+      }
+    }
+    listMonumentsRef.current?.addEventListener('scrollend', handleScroll)
+    return () => {
+      listMonumentsRef.current?.removeEventListener('scrollend', handleScroll)
+    }
+  }, [])
+
   return (
-    <div className={styles.ListMonuments}>
+    <div className={styles.ListMonuments} ref={listMonumentsRef}>
       {infiniteMonuments!.pages.map((list, i) => (
         <Fragment key={i}>
           {list.results.map((monument) => {
@@ -59,7 +87,7 @@ function ListMonuments({ filters }: Props) {
                   </div>
                   <div>
                     <div className={styles.NumberPhoto}>
-                      <div>{monument.pictures_count}</div>
+                      <div>{monument.pictures_wlm_count}</div>
                       <Camera className="ms-2" />
                     </div>
                   </div>

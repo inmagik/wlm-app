@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { API_URL } from '../const'
-import { Monument, PaginatedDJResponse } from '../types'
+import { Monument, MonumentList, PaginatedDJResponse } from '../types'
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 
@@ -9,11 +9,11 @@ export async function getMonuments(
   signal?: AbortSignal
 ) {
   return (
-    await axios.get(`${API_URL}/monument/`, {
+    await axios.get(`${API_URL}/monuments/`, {
       signal,
       params: serializeQueryParams(params),
     })
-  ).data as PaginatedDJResponse<Monument>
+  ).data as PaginatedDJResponse<MonumentList>
 }
 
 export function useMonuments(params: Record<string, any> = {}) {
@@ -48,7 +48,7 @@ export async function getMonument(
   idOrSlug: string | number,
   signal?: AbortSignal
 ) {
-  return (await axios.get(`${API_URL}/monument/${idOrSlug}/`, { signal }))
+  return (await axios.get(`${API_URL}/monuments/${idOrSlug}/`, { signal }))
     .data as Monument
 }
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { API_URL } from '../const'
+import { API_URL, API_URL_SECOND } from '../const'
 import { Comune } from '../types'
 import axios from 'axios'
 import { serializeQueryParams } from './utils'
@@ -9,7 +9,7 @@ export async function getComuni(
   signal?: AbortSignal
 ) {
   return (
-    await axios.get(`${API_URL}/municipality/`, {
+    await axios.get(`${API_URL_SECOND}/municipality/`, {
       signal,
       params: serializeQueryParams(params),
     })

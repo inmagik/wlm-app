@@ -14,11 +14,11 @@ import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { type Swiper as SwiperRef } from 'swiper'
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react'
+import { Pagination } from 'swiper/modules'
 import 'swiper/css'
+import 'swiper/css/pagination'
 import { useEffect, useRef, useState } from 'react'
-import classNames from 'classnames'
 import IconMonument from '../../../components/IconMonument'
 import SlideShow from '../../../components/Mobile/SlideShow'
 import { Feature, Map as MapOl, View } from 'ol'
@@ -41,7 +41,6 @@ export default function Detail() {
   const [showAllImages, setShowAllImages] = useState(false)
   const [slideShowActive, setSlideShowActive] = useState(0)
   const [infoSlideSlideShow, setInfoSlideSlideShow] = useState(false)
-  const firstThreeImages = monument?.pictures.slice(0, 3)
   const [slideActive, setSlideActive] = useState(0)
   const { t } = useTranslation()
   const inputFileRef = useRef<HTMLInputElement>(null)
@@ -50,6 +49,15 @@ export default function Detail() {
   const [map, setMap] = useState<MapOl | null>(null)
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
+
+  const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
+    const groupIndex = Math.floor(index / 12)
+    if (!acc[groupIndex]) {
+      acc[groupIndex] = []
+    }
+    acc[groupIndex].push(curr)
+    return acc
+  }, [] as any[])
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -117,8 +125,13 @@ export default function Detail() {
           <div className={styles.PresenzaInConcorso}>
             <Bell className="me-2" /> Il Monumento fa parte del concorso
           </div>
-          {firstThreeImages.length > 0 ? (
+          {monument.pictures.length > 0 ? (
             <Swiper
+              pagination={{
+                dynamicBullets: true,
+              }}
+              // @ts-ignore
+              modules={[Pagination]}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper
               }}
@@ -127,7 +140,7 @@ export default function Detail() {
               }}
               className={styles.Swiper}
             >
-              {firstThreeImages.map((picture) => (
+              {monument.pictures.map((picture) => (
                 <SwiperSlide
                   onClick={() => {
                     setShowAllImages(true)
@@ -162,20 +175,6 @@ export default function Detail() {
               </button>
             </>
           )}
-          <div className={styles.PaginationImagesDots}>
-            {firstThreeImages.map((_, i) => (
-              <div
-                key={i}
-                className={classNames(styles.PaginationDot, {
-                  [styles.PaginationDotActive]:
-                    swiperRef.current?.activeIndex === i,
-                })}
-                onClick={() => {
-                  swiperRef.current?.slideTo(i)
-                }}
-              ></div>
-            ))}
-          </div>
           <div className={styles.CardInfoMonument}>
             <div className="d-flex justify-content-between w-100">
               <div className="d-flex">
@@ -187,8 +186,15 @@ export default function Detail() {
                     </div>
                     {monument.municipality_label && (
                       <div className={styles.Comune}>
-                        {monument?.municipality_label} (
-                        {monument?.province_label})
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          className="no-link"
+                          href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}&name=${monument?.label}`}
+                        >
+                          {monument?.municipality_label} (
+                          {monument?.province_label})
+                        </a>
                       </div>
                     )}
                   </div>
@@ -203,8 +209,37 @@ export default function Detail() {
         {monument?.pictures.length > 0 && (
           <div className={styles.CardImages}>
             <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
+            <Swiper
+              pagination={{ dynamicBullets: true }}
+              className={styles.Swiper}
+              modules={[Pagination]}
+            >
+              {groupsOf12Pictures.map((group, index) => (
+                <>
+                  {group.length > 0 && (
+                    <SwiperSlide key={index}>
+                      <div className={styles.ContainerImages}>
+                        {group.map((picture: any) => (
+                          <div
+                            key={picture.id}
+                            className={styles.Image}
+                            onClick={() => {
+                              setShowAllImages(true)
+                              setSlideShowActive(picture.id)
+                            }}
+                            style={{
+                              backgroundImage: `url("${picture.image_url}")`,
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                    </SwiperSlide>
+                  )}
+                </>
+              ))}
+            </Swiper>
             <div className={styles.ContainerImages}>
-              {monument?.pictures.slice(0, 12).map((picture) => (
+              {/* {monument?.pictures.slice(0, 12).map((picture) => (
                 <div
                   key={picture.id}
                   className={styles.Image}
@@ -216,7 +251,7 @@ export default function Detail() {
                     backgroundImage: `url("${picture.image_url}")`,
                   }}
                 ></div>
-              ))}
+              ))} */}
             </div>
             <button className={styles.ButtonShowAllImages}>
               {t('guarda_tutte_su_wikimediacommons')}
