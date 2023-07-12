@@ -15,8 +15,7 @@ import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperClass  from 'swiper'
-import { Pagination } from 'swiper/modules'
+import SwiperClass, { Pagination }  from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Fragment, useEffect, useRef, useState } from 'react'
@@ -239,21 +238,6 @@ export default function Detail() {
                 </Fragment>
               ))}
             </Swiper>
-            <div className={styles.ContainerImages}>
-              {/* {monument?.pictures.slice(0, 12).map((picture) => (
-                <div
-                  key={picture.id}
-                  className={styles.Image}
-                  onClick={() => {
-                    setShowAllImages(true)
-                    setSlideShowActive(picture.id)
-                  }}
-                  style={{
-                    backgroundImage: `url("${picture.image_url}")`,
-                  }}
-                ></div>
-              ))} */}
-            </div>
             <button className={styles.ButtonShowAllImages}>
               {t('guarda_tutte_su_wikimediacommons')}
             </button>

@@ -113,6 +113,7 @@ const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
   ordering: params.get('ordering') ?? 'label',
+  is_contest: params.get('is_contest') ?? '',
 })
 
 export default function List() {

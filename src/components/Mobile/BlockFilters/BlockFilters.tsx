@@ -95,11 +95,11 @@ export default function BlockFilters({
             <div className={styles.FilterTitle}>{t('categoria')}</div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
-                {filters.municipality !== ''
+                {filters.categoria !== ''
                   ? comuni?.find(
                       (comune) => comune.code === Number(filters.municipality)
                     )?.name
-                  : t('tutti')}
+                  : t('tutte')}
               </div>
               <div className="ms-2">
                 <ArrowRight />

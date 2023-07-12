@@ -47,7 +47,8 @@
             "inserisci_data": "Enter the date of the image",
             "riseleziona": "Reselect",
             "categoria": "Category",
-            "meno_fotografati": "Less photographed"
+            "meno_fotografati": "Less photographed",
+            "tutte": "All"
         }
     },
     "it": {
@@ -98,7 +99,8 @@
             "inserisci_data": "Inserisci la data dell'immagine",
             "riseleziona": "Riseleziona",
             "categoria": "Categoria",
-            "meno_fotografati": "Meno fotografati"
+            "meno_fotografati": "Meno fotografati",
+            "tutte": "Tutte"
         }
     }
 }
