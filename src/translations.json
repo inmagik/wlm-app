@@ -53,7 +53,8 @@
             "il_monumento_fa_parte_del_concorso": "The monument is part of the competition",
             "scegli_categoria": "Choose category",
             "tutte_le_categorie": "All categories",
-            "altri_monumenti": "Other monuments"
+            "altri_monumenti": "Other monuments",
+            "tutti_i_monumenti": "All monuments"
         }
     },
     "it": {
@@ -110,7 +111,8 @@
             "il_monumento_fa_parte_del_concorso": "Il monumento fa parte del concorso",
             "scegli_categoria": "Scegli categoria",
             "tutte_le_categorie": "Tutte le categorie",
-            "altri_monumenti": "Altri monumenti"
+            "altri_monumenti": "Altri monumenti",
+            "tutti_i_monumenti": "Tutti i monumenti"
         }
     }
 }

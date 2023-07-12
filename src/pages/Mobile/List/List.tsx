@@ -20,6 +20,7 @@ interface Props {
     municipality: string
     ordering: string
     category: string
+    in_contest: string
   }
 }
 
@@ -112,7 +113,7 @@ const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
   ordering: params.get('ordering') ?? 'label',
-  is_contest: params.get('is_contest') ?? '',
+  in_contest: params.get('in_contest') ?? "true",
   category: params.get('category') ?? '',
 })
 

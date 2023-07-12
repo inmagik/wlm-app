@@ -87,7 +87,8 @@ export default function BlockFilters({
                     }
                     <CloseSecondary
                       className="ms-2"
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation()
                         setFilters({
                           ...filters,
                           municipality: '',
@@ -130,6 +131,26 @@ export default function BlockFilters({
                 ) : (
                   t('tutte')
                 )}
+              </div>
+              <div className="ms-2">
+                <ArrowRight />
+              </div>
+            </div>
+          </div>
+          <div className={styles.Filter}>
+            <div className={styles.FilterTitle}>{t('tutti_i_monumenti')}</div>
+            <div className="d-flex align-items-center">
+              <div className={styles.FilterItem}>
+                <input
+                  type="checkbox"
+                  checked={filters.allMonuments}
+                  onChange={(e) => {
+                    setFilters({
+                      ...filters,
+                      in_contest: e.target.checked ? '' : 'true',
+                    })
+                  }}
+                />
               </div>
               <div className="ms-2">
                 <ArrowRight />
