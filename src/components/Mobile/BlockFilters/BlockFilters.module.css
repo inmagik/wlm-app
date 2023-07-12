@@ -83,6 +83,7 @@
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
+  border-bottom: 1px solid var(--colori-neutri-white);
 }
 
 .BlockFilterComune {

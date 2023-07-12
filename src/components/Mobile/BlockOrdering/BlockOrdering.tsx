@@ -30,6 +30,8 @@ export default function BlockOrdering({
       return t('alfabetico_a_z')
     } else if (ordering === '-label') {
       return t('alfabetico_z_a')
+    } else if (ordering === 'pictures_wlm_count') {
+      return t('meno_fotografati')
     }
   }, [filters.ordering, t])
 
@@ -141,6 +143,29 @@ export default function BlockOrdering({
             </div>
             <div className={styles.OrderingItemTitle}>
               {t('alfabetico_z_a')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.ordering === 'pictures_wlm_count',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                ordering: 'pictures_wlm_count',
+              })
+              setFilterOrderingOpen(false)
+            }}
+          >
+            <div>
+              {filters.ordering === '' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('meno_fotografati')}
             </div>
           </div>
         </div>

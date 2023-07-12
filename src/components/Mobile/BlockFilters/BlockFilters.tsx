@@ -24,6 +24,7 @@ export default function BlockFilters({
 }: BlockFiltersProps) {
   const [searchComune, setSearchComune] = useState<string>('')
   const [filterComuneOpen, setFilterComuneOpen] = useState<boolean>(false)
+  const [filterCategoriaOpen, setFilterCategoriaOpen] = useState<boolean>(false)
   const { t } = useTranslation()
   const { data: comuni } = useComuni()
 
@@ -76,7 +77,27 @@ export default function BlockFilters({
               <div className={styles.FilterItem}>
                 {filters.municipality !== ''
                   ? comuni?.find(
-                      (comune) => comune.code === filters.municipality
+                      (comune) => comune.code === Number(filters.municipality)
+                    )?.name
+                  : t('tutti')}
+              </div>
+              <div className="ms-2">
+                <ArrowRight />
+              </div>
+            </div>
+          </div>
+          <div
+            className={styles.Filter}
+            onClick={() => {
+              setFilterCategoriaOpen(!filterCategoriaOpen)
+            }}
+          >
+            <div className={styles.FilterTitle}>{t('categoria')}</div>
+            <div className="d-flex align-items-center">
+              <div className={styles.FilterItem}>
+                {filters.municipality !== ''
+                  ? comuni?.find(
+                      (comune) => comune.code === Number(filters.municipality)
                     )?.name
                   : t('tutti')}
               </div>
