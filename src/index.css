@@ -55,3 +55,7 @@ body,
   position: relative;
   margin-top: 20px;
 }
+
+.swiper-pagination-bullet-active{
+  background: var(--primary);
+}

@@ -14,11 +14,12 @@ import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
-import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperClass  from 'swiper'
 import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import IconMonument from '../../../components/IconMonument'
 import SlideShow from '../../../components/Mobile/SlideShow'
 import { Feature, Map as MapOl, View } from 'ol'
@@ -44,7 +45,7 @@ export default function Detail() {
   const [slideActive, setSlideActive] = useState(0)
   const { t } = useTranslation()
   const inputFileRef = useRef<HTMLInputElement>(null)
-  const swiperRef = useRef<SwiperRef>()
+  const swiperRef = useRef<SwiperClass>()
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
@@ -215,9 +216,9 @@ export default function Detail() {
               modules={[Pagination]}
             >
               {groupsOf12Pictures.map((group, index) => (
-                <>
+                <Fragment key={index}>
                   {group.length > 0 && (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide>
                       <div className={styles.ContainerImages}>
                         {group.map((picture: any) => (
                           <div
@@ -235,7 +236,7 @@ export default function Detail() {
                       </div>
                     </SwiperSlide>
                   )}
-                </>
+                </Fragment>
               ))}
             </Swiper>
             <div className={styles.ContainerImages}>
