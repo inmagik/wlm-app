@@ -13,14 +13,13 @@ import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
-import { Monument, PaginatedDJResponse } from '../../../types'
-import { InfiniteData } from '@tanstack/react-query'
 
 interface Props {
   filters: {
     search: string
     municipality: string
     ordering: string
+    category: string
   }
 }
 
@@ -114,6 +113,7 @@ const getFilters = (params: URLSearchParams) => ({
   municipality: params.get('municipality') ?? '',
   ordering: params.get('ordering') ?? 'label',
   is_contest: params.get('is_contest') ?? '',
+  category: params.get('category') ?? '',
 })
 
 export default function List() {

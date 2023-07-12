@@ -1,13 +1,16 @@
 import { useMemo, useRef, useState } from 'react'
 import { ReactComponent as Close } from '../../../assets/close.svg'
+import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Flag } from '../../../assets/flag.svg'
 import { ReactComponent as Search } from '../../../assets/search.svg'
+import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
+import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { useTranslation } from 'react-i18next'
 import styles from './BlockFilters.module.css'
 import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../Icons/FiltersIcon'
-import { useVirtualizer } from '@tanstack/react-virtual'
+import classNames from 'classnames'
 
 interface BlockFiltersProps {
   filtersOpen: boolean
@@ -75,11 +78,26 @@ export default function BlockFilters({
             <div className={styles.FilterTitle}>{t('comune')}</div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
-                {filters.municipality !== ''
-                  ? comuni?.find(
-                      (comune) => comune.code === Number(filters.municipality)
-                    )?.name
-                  : t('tutti')}
+                {filters.municipality !== '' ? (
+                  <>
+                    {
+                      comuni?.find(
+                        (comune) => comune.code === Number(filters.municipality)
+                      )?.name
+                    }
+                    <CloseSecondary
+                      className="ms-2"
+                      onClick={() => {
+                        setFilters({
+                          ...filters,
+                          municipality: '',
+                        })
+                      }}
+                    />
+                  </>
+                ) : (
+                  t('tutti')
+                )}
               </div>
               <div className="ms-2">
                 <ArrowRight />
@@ -95,11 +113,23 @@ export default function BlockFilters({
             <div className={styles.FilterTitle}>{t('categoria')}</div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
-                {filters.categoria !== ''
-                  ? comuni?.find(
-                      (comune) => comune.code === Number(filters.municipality)
-                    )?.name
-                  : t('tutte')}
+                {filters.category !== '' ? (
+                  <>
+                    {filters.category}{' '}
+                    <CloseSecondary
+                      className="ms-2"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setFilters({
+                          ...filters,
+                          category: '',
+                        })
+                      }}
+                    />
+                  </>
+                ) : (
+                  t('tutte')
+                )}
               </div>
               <div className="ms-2">
                 <ArrowRight />
@@ -151,6 +181,165 @@ export default function BlockFilters({
               </div>
             )
           })}
+        </div>
+      </div>
+      <div
+        className={styles.BlockFilterCategoria}
+        style={{
+          transform: filterCategoriaOpen
+            ? 'translateX(0)'
+            : 'translateX(-100%)',
+          transition: 'all 0.5s ease-in-out',
+          pointerEvents: filterCategoriaOpen ? 'all' : 'none',
+        }}
+      >
+        <div className={styles.TitleBlockFilters}>
+          <div className="d-flex align-items-center">
+            <FiltersIcon fill="var(--primary)" />
+            <div className="ms-2">{t('scegli_categoria')}</div>
+          </div>
+          <div>
+            <Close onClick={() => setFilterCategoriaOpen(false)} />
+          </div>
+        </div>
+        <div className={styles.ListOrderingItems}>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.category === '',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: '',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === '' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('tutte_le_categorie')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.category === 'Castelli',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Castelli',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Castelli' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>{t('castelli')}</div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]:
+                filters.category === 'Edifici religiosi',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Edifici religiosi',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Edifici religiosi' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('edifici_religiosi')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]:
+                filters.category === 'Altri monumenti',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Altri monumenti',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Altri monumenti' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('altri_monumenti')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.category === 'Musei',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Musei',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Musei' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>{t('musei')}</div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]:
+                filters.category === 'Alberi monumentali',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Alberi monumentali',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Alberi monumentali' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('alberi_monumentali')}
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -15,10 +15,10 @@ import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperClass, { Pagination }  from 'swiper'
+import SwiperClass, { Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import IconMonument from '../../../components/IconMonument'
 import SlideShow from '../../../components/Mobile/SlideShow'
 import { Feature, Map as MapOl, View } from 'ol'
@@ -58,6 +58,10 @@ export default function Detail() {
     acc[groupIndex].push(curr)
     return acc
   }, [] as any[])
+
+  const inContestMonument = useMemo(() => {
+    return monument?.in_contest
+  }, [monument])
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -122,15 +126,19 @@ export default function Detail() {
     <Layout>
       <div className={styles.DettaglioContainer}>
         <div className={styles.DettaglioInfoCard}>
-          <div className={styles.PresenzaInConcorso}>
-            <Bell className="me-2" /> Il Monumento fa parte del concorso
-          </div>
+          {inContestMonument && (
+            <div className={styles.PresenzaInConcorso}>
+              <Bell className="me-2" />
+              {monument.app_category === 'Comune'
+                ? t('il_comune_fa_parte_del_concorso')
+                : t('il_monumento_fa_parte_del_concorso')}
+            </div>
+          )}
           {monument.pictures.length > 0 ? (
             <Swiper
               pagination={{
                 dynamicBullets: true,
               }}
-              // @ts-ignore
               modules={[Pagination]}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper
@@ -186,15 +194,8 @@ export default function Detail() {
                     </div>
                     {monument.municipality_label && (
                       <div className={styles.Comune}>
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          className="no-link"
-                          href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}&name=${monument?.label}`}
-                        >
-                          {monument?.municipality_label} (
-                          {monument?.province_label})
-                        </a>
+                        {monument?.municipality_label} (
+                        {monument?.province_label})
                       </div>
                     )}
                   </div>

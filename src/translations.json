@@ -48,7 +48,12 @@
             "riseleziona": "Reselect",
             "categoria": "Category",
             "meno_fotografati": "Less photographed",
-            "tutte": "All"
+            "tutte": "All",
+            "il_comune_fa_parte_del_concorso": "The municipality is part of the competition",
+            "il_monumento_fa_parte_del_concorso": "The monument is part of the competition",
+            "scegli_categoria": "Choose category",
+            "tutte_le_categorie": "All categories",
+            "altri_monumenti": "Other monuments"
         }
     },
     "it": {
@@ -100,7 +105,12 @@
             "riseleziona": "Riseleziona",
             "categoria": "Categoria",
             "meno_fotografati": "Meno fotografati",
-            "tutte": "Tutte"
+            "tutte": "Tutte",
+            "il_comune_fa_parte_del_concorso": "Il comune fa parte del concorso",
+            "il_monumento_fa_parte_del_concorso": "Il monumento fa parte del concorso",
+            "scegli_categoria": "Scegli categoria",
+            "tutte_le_categorie": "Tutte le categorie",
+            "altri_monumenti": "Altri monumenti"
         }
     }
 }
