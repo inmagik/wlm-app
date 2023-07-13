@@ -5,12 +5,25 @@ interface Props {
 }
 
 export default function getMarkerMap({ monument }: Props) {
-  const photosNumber = monument.pictures_count
+  const photosNumber = monument.pictures_wlm_count
+  const inContest = monument.in_contest
   if (photosNumber === 0) {
-    return '/markers/no-foto-si-concorso.svg'
+    if (inContest) {
+      return '/markers/no-foto-si-concorso.svg'
+    } else {
+      return '/markers/no-foto-no-concorso.svg'
+    }
   } else if (photosNumber > 0 && photosNumber <= 10) {
-    return '/markers/0-10-foto-si-concorso.svg'
+    if (inContest) {
+      return '/markers/0-10-foto-si-concorso.svg'
+    } else {
+      return '/markers/0-10-foto-no-concorso.svg'
+    }
   } else if (photosNumber > 10) {
-    return '/markers/maggiore-10-foto-si-concorso.svg'
+    if (inContest) {
+      return '/markers/maggiore-10-foto-si-concorso.svg'
+    } else {
+      return '/markers/maggiore-10-foto-no-concorso.svg'
+    }
   }
 }
