@@ -98,6 +98,7 @@
   padding: 8px;
   height: 100%;
   overflow-y: auto;
+  position: relative;
 }
 
 .MonumentTitle {

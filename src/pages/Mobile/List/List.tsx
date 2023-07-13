@@ -14,6 +14,7 @@ import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 import { Spinner } from 'react-bootstrap'
+import classNames from 'classnames'
 
 interface Props {
   filters: {
@@ -64,9 +65,16 @@ function ListMonuments({ filters }: Props) {
   }, [])
 
   return (
-    <div className={styles.ListMonuments} ref={listMonumentsRef}>
+    <div className={classNames(styles.ListMonuments, {
+      'overflow-hidden': isLoading || isFetching
+    })} ref={listMonumentsRef}>
       {(isLoading || isFetching) &&(
-        <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+        <div style={{
+          height: '100%',
+          left: 0,
+          top: 0,
+          background: 'var(--overlay)'
+        }} className="w-100 d-flex align-items-center justify-content-center position-absolute">
           <Spinner />
         </div>
       )}
