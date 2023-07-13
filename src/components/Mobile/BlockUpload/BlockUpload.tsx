@@ -3,7 +3,7 @@ import { ReactComponent as Close } from '../../../assets/close.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { type Swiper as SwiperRef } from 'swiper'
+import { Pagination, type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
 import classNames from 'classnames'
 
@@ -21,17 +21,33 @@ export default function BlockUpload({
   setFileList,
 }: BlockUploadProps) {
   const { t } = useTranslation()
-  const [uploadState, setUploadState] = useState({
-    title: '',
-    description: '',
-    fileList,
-    date: '',
-  })
+
+  interface ImageInfo {
+    title: string
+    description: string
+    file: File | null
+    date: string
+  }
+
+  const [uploadState, setUploadState] = useState<ImageInfo[] | undefined>(
+    undefined
+  )
 
   const inputFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setUploadState({ ...uploadState, fileList })
+    if (fileList) {
+      const images: ImageInfo[] = []
+      for (let i = 0; i < fileList.length; i++) {
+        images.push({
+          title: '',
+          description: '',
+          file: fileList[i],
+          date: '',
+        })
+      }
+      setUploadState(images)
+    }
   }, [fileList])
 
   const swiperRef = useRef<SwiperRef>()
@@ -48,12 +64,7 @@ export default function BlockUpload({
       }}
       onTransitionEnd={() => {
         if (!uploadOpen) {
-          setUploadState({
-            title: '',
-            description: '',
-            fileList: null,
-            date: '',
-          })
+          setUploadState(undefined)
           setFileList(null)
         }
       }}
@@ -66,90 +77,115 @@ export default function BlockUpload({
             }}
           />
         </div>
-        <div className={styles.CardImageToUpload}>
-          <div>
-            <Swiper
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper
-              }}
-              onSlideChange={(swiper) => {
-                setSlideActive(swiper.activeIndex)
-              }}
-              className={styles.Swiper}
-            >
-              {uploadState.fileList &&
-                [...uploadState.fileList].map((file) => (
-                  <SwiperSlide key={file.name}>
-                    <div
-                      className={styles.ImageToUpload}
-                      style={{
-                        backgroundImage: `url("${URL.createObjectURL(file)}")`,
-                      }}
-                    />
-                  </SwiperSlide>
-                ))}
-            </Swiper>
-            <div className={styles.PaginationImagesDots}>
-              {uploadState.fileList && [...uploadState.fileList!].map((file, index) => (
-                <div
-                  key={file.name}
-                  className={classNames(styles.PaginationDot, {
-                    [styles.PaginationDotActive]: slideActive === index,
-                  })}
-                  onClick={() => {
-                    swiperRef.current?.slideTo(index)
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-          <div className="mt-4">
-            <div className={styles.LabelInput}>{t('titolo_immagine')}</div>
-            <div>
-              <input
-                type="text"
-                className={styles.InputTitle}
-                value={uploadState.title}
-                onChange={(e) => {
-                  setFileList(e.target.files!)
-                  setUploadState({ ...uploadState, title: e.target.value })
-                }}
-                placeholder={t('inserisci_titolo')}
-              />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className={styles.LabelInput}>{t('descrizione_immagine')}</div>
-            <div>
-              <textarea
-                className={styles.InputTitle}
-                rows={5}
-                value={uploadState.description}
-                onChange={(e) =>
-                  setUploadState({
-                    ...uploadState,
-                    description: e.target.value,
-                  })
-                }
-                placeholder={t('inserisci_descrizione')}
-              />
-            </div>
-          </div>
-          <div className="mt-2">
-            <div className={styles.LabelInput}>{t('date')}</div>
-            <div>
-              <input
-                type="date"
-                className={styles.InputTitle}
-                value={uploadState.date}
-                onChange={(e) =>
-                  setUploadState({ ...uploadState, date: e.target.value })
-                }
-                placeholder={t('inserisci_titolo')}
-              />
-            </div>
-          </div>
-        </div>
+        <Swiper
+          modules={[Pagination]}
+          pagination={{
+            dynamicBullets: true,
+          }}
+          onSwiper={(swiper) => {
+            swiperRef.current = swiper
+          }}
+          onSlideChange={(swiper) => {
+            setSlideActive(swiper.activeIndex)
+          }}
+          className={styles.Swiper}
+        >
+          {uploadState &&
+            uploadState.map((image, i) => (
+              <SwiperSlide key={i}>
+                <div className={styles.CardImageToUpload}>
+                  <div>
+                    {image.file && (
+                      <div
+                        className={styles.ImageToUpload}
+                        style={{
+                          backgroundImage: `url("${URL.createObjectURL(
+                            image.file
+                          )}")`,
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <div className={styles.LabelInput}>
+                      {t('titolo_immagine')}
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        className={styles.InputTitle}
+                        value={uploadState[i].title}
+                        onChange={(e) => {
+                          setUploadState(
+                            uploadState.map((image, j) => {
+                              if (i === j) {
+                                return {
+                                  ...image,
+                                  title: e.target.value,
+                                }
+                              }
+                              return image
+                            })
+                          )
+                        }}
+                        placeholder={t('inserisci_titolo')}
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <div className={styles.LabelInput}>
+                      {t('descrizione_immagine')}
+                    </div>
+                    <div>
+                      <textarea
+                        className={styles.InputTitle}
+                        rows={5}
+                        value={uploadState[i].description}
+                        onChange={(e) => {
+                          setUploadState(
+                            uploadState.map((image, j) => {
+                              if (i === j) {
+                                return {
+                                  ...image,
+                                  description: e.target.value,
+                                }
+                              }
+                              return image
+                            })
+                          )
+                        }}
+                        placeholder={t('inserisci_descrizione')}
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <div className={styles.LabelInput}>{t('date')}</div>
+                    <div>
+                      <input
+                        type="date"
+                        className={styles.InputTitle}
+                        value={uploadState[i].date}
+                        onChange={(e) =>
+                          setUploadState(
+                            uploadState.map((image, j) => {
+                              if (i === j) {
+                                return {
+                                  ...image,
+                                  date: e.target.value,
+                                }
+                              }
+                              return image
+                            })
+                          )
+                        }
+                        placeholder={t('inserisci_titolo')}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+        </Swiper>
         <div className={styles.ContainerButtons}>
           <button
             className={styles.ButtonRiseleziona}
@@ -161,11 +197,20 @@ export default function BlockUpload({
           </button>
           <input
             type="file"
-            multiple
             className="d-none"
             onChange={(e) => {
               if (e.target.files) {
-                setUploadState({ ...uploadState, fileList: e.target.files })
+                setUploadState(
+                  uploadState?.map((image, i) => {
+                    if (i === slideActive) {
+                      return {
+                        ...image,
+                        file: e.target.files![0],
+                      }
+                    }
+                    return image
+                  })
+                )
               }
             }}
             ref={inputFileRef}
