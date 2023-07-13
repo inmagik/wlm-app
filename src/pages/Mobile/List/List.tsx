@@ -65,19 +65,7 @@ function ListMonuments({ filters }: Props) {
   }, [])
 
   return (
-    <div className={classNames(styles.ListMonuments, {
-      'overflow-hidden': isLoading || isFetching
-    })} ref={listMonumentsRef}>
-      {(isLoading || isFetching) &&(
-        <div style={{
-          height: '100%',
-          left: 0,
-          top: 0,
-          background: 'var(--overlay)'
-        }} className="w-100 d-flex align-items-center justify-content-center position-absolute">
-          <Spinner />
-        </div>
-      )}
+    <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {infiniteMonuments!.pages.map((list, i) => (
         <Fragment key={i}>
           {list.results.map((monument) => {
