@@ -19,6 +19,17 @@
   border: none;
 }
 
+.ButtonMyLocation:hover,
+.ButtonMyLocation:active {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    #fff;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
 .ButtonMappe {
   display: flex;
   width: 44px;

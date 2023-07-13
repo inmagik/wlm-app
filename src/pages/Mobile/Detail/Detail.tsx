@@ -192,7 +192,7 @@ export default function Detail() {
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
                     </div>
-                    {monument.municipality_label && (
+                    {monument.municipality_label && monument.app_category !== 'Comune' && (
                       <div className={styles.Comune}>
                         {monument?.municipality_label} (
                         {monument?.province_label})
