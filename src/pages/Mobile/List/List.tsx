@@ -137,7 +137,7 @@ export default function List() {
         <div className={styles.InputContainer}>
           <input
             className={styles.InputSearch}
-            value={filters.search}
+            // value={filters.search}
             onChange={(e) => {
               setFiltersDebounced({ search: e.target.value })
             }}
