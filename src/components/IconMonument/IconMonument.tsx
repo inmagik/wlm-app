@@ -29,6 +29,7 @@ export default function IconMonument({ monument }: Props) {
       {category === "Musei" && <MuseoIcon />}
       {category === "Edifici religiosi" && <EdificioReligiosoIcon />}
       {category === "Altri monumenti" && <AltroMonumentoIcon />}
+      {!category && <AltroMonumentoIcon />}
 
     </div>
   )
