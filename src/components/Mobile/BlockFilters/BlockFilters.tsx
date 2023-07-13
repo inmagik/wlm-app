@@ -39,6 +39,15 @@ export default function BlockFilters({
 
   const parentRef = useRef<HTMLDivElement>(null)
 
+  const isResetDisaable = useMemo(() => {
+    return (
+      filters.category === '' &&
+      filters.municipality === '' &&
+      filters.in_contest === 'true' &&
+      filters.only_without_pictures === ''
+    )
+  }, [filters])
+
   return (
     <>
       <div
@@ -143,7 +152,7 @@ export default function BlockFilters({
               <div className={styles.FilterItem}>
                 <input
                   type="checkbox"
-                  checked={filters.allMonuments}
+                  checked={filters.in_contest !== 'true'}
                   onChange={(e) => {
                     setFilters({
                       ...filters,
@@ -158,12 +167,14 @@ export default function BlockFilters({
             </div>
           </div>
           <div className={styles.Filter}>
-            <div className={styles.FilterTitle}>{t('monumenti_senza_foto')}</div>
+            <div className={styles.FilterTitle}>
+              {t('monumenti_senza_foto')}
+            </div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
                 <input
                   type="checkbox"
-                  checked={filters.allMonuments}
+                  checked={filters.only_without_pictures === 'true'}
                   onChange={(e) => {
                     setFilters({
                       ...filters,
@@ -176,6 +187,25 @@ export default function BlockFilters({
                 <ArrowRight />
               </div>
             </div>
+          </div>
+          <div className="d-flex mt-4 justify-content-end">
+            <button
+              className={classNames({
+                [styles.ResetDisabled]: isResetDisaable,
+                [styles.Reset]: !isResetDisaable,
+              })}
+              disabled={isResetDisaable}
+              onClick={() => {
+                setFilters({
+                  category: '',
+                  municipality: '',
+                  in_contest: 'true',
+                  only_without_pictures: '',
+                })
+              }}
+            >
+              {t('reset')}
+            </button>
           </div>
         </div>
       </div>
