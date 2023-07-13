@@ -42,7 +42,7 @@ export default function Detail() {
   const [slideShowActive, setSlideShowActive] = useState(0)
   const [infoSlideSlideShow, setInfoSlideSlideShow] = useState(false)
   const [slideActive, setSlideActive] = useState(0)
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const inputFileRef = useRef<HTMLInputElement>(null)
   const swiperRef = useRef<SwiperClass>()
   const mapElement = useRef<HTMLDivElement>(null)
@@ -192,12 +192,13 @@ export default function Detail() {
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
                     </div>
-                    {monument.municipality_label && monument.app_category !== 'Comune' && (
-                      <div className={styles.Comune}>
-                        {monument?.municipality_label} (
-                        {monument?.province_label})
-                      </div>
-                    )}
+                    {monument.municipality_label &&
+                      monument.app_category !== 'Comune' && (
+                        <div className={styles.Comune}>
+                          {monument?.municipality_label} (
+                          {monument?.province_label})
+                        </div>
+                      )}
                   </div>
                 </div>
               </div>
@@ -255,7 +256,7 @@ export default function Detail() {
             {monument?.position?.coordinates && (
               <a
                 className={styles.Direction}
-                href={`https://www.google.com/maps/dir/?api=1&destination=${monument?.position?.coordinates[1]},${monument?.position?.coordinates[0]}`}
+                href={`https://www.openstreetmap.org/directions?engine=graphhopper_car&route=${monument?.position?.coordinates[1]}%2C${monument?.position?.coordinates[0]}%3B%3B&#map=16/${monument?.position?.coordinates[1]}/${monument?.position?.coordinates[0]}`}
                 target="_blank"
               >
                 <Direction />
@@ -280,30 +281,53 @@ export default function Detail() {
           <div className={styles.ExternalLinksTitle}>
             {t('collegamenti_esterni')}
           </div>
-          <div className={styles.ExternalLink}>
-            <div>
-              <Reasonator className="me-1" /> Reasonator
+          <a
+            className="no-link"
+            target={'_blank'}
+            rel="noreferrer"
+            href={`https://reasonator.toolforge.org/?lang=${i18n.language}&q=${monument?.q_number}`}
+          >
+            <div className={styles.ExternalLink}>
+              <div>
+                <Reasonator className="me-1" /> Reasonator
+              </div>
+              <div>
+                <ArrowRight />
+              </div>
             </div>
-            <div>
-              <ArrowRight />
+          </a>
+          <a
+            className="no-link"
+            target={'_blank'}
+            rel="noreferrer"
+            href={`https://www.wikidata.org/wiki/${monument?.q_number}?uselang=${i18n.language}`}
+          >
+            <div className={styles.ExternalLink}>
+              <div>
+                <Wikidata className="me-1" /> Wikidata
+              </div>
+              <div>
+                <ArrowRight />
+              </div>
             </div>
-          </div>
-          <div className={styles.ExternalLink}>
-            <div>
-              <Wikidata className="me-1" /> Wikidata
+          </a>
+          <a
+            className="no-link"
+            target={'_blank'}
+            rel="noreferrer"
+            href={`https://${
+              i18n.language
+            }.wikipedia.org/wiki/${monument?.label.replace(/ /g, '_')}`}
+          >
+            <div className={styles.ExternalLink}>
+              <div>
+                <Wikipedia className="me-1" />
+              </div>
+              <div>
+                <ArrowRight />
+              </div>
             </div>
-            <div>
-              <ArrowRight />
-            </div>
-          </div>
-          <div className={styles.ExternalLink}>
-            <div>
-              <Wikipedia className="me-1" />
-            </div>
-            <div>
-              <ArrowRight />
-            </div>
-          </div>
+          </a>
         </div>
         <div className={styles.FixedButtonUpload}>
           <button
