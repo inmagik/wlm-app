@@ -167,7 +167,7 @@ export default function BlockFilters({
                   onChange={(e) => {
                     setFilters({
                       ...filters,
-                      only_with_pictures: e.target.checked ? '' : 'false',
+                      only_without_pictures: e.target.checked ? 'true' : '',
                     })
                   }}
                 />
