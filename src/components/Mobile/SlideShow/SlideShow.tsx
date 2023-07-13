@@ -21,7 +21,7 @@ export default function SlideShow({
   setInfoSlideSlideShow,
   setShowAllImages,
 }: Props) {
-  const swiperSlideShowRef = useRef<SwiperRef>()
+  const swiperSlideShowRef = useRef<any>()
   const picturesById =
     monument?.pictures.reduce((acc, picture) => {
       acc[picture.id] = picture

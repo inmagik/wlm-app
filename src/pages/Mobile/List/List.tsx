@@ -13,6 +13,7 @@ import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
+import { Spinner } from 'react-bootstrap'
 
 interface Props {
   filters: {
@@ -38,6 +39,7 @@ function ListMonuments({ filters }: Props) {
     data: infiniteMonuments,
     hasNextPage,
     isLoading,
+    isFetching,
     fetchNextPage,
   } = useInfiniteMomuments(filters)
 
@@ -63,6 +65,11 @@ function ListMonuments({ filters }: Props) {
 
   return (
     <div className={styles.ListMonuments} ref={listMonumentsRef}>
+      {(isLoading || isFetching) &&(
+        <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+          <Spinner />
+        </div>
+      )}
       {infiniteMonuments!.pages.map((list, i) => (
         <Fragment key={i}>
           {list.results.map((monument) => {
@@ -114,8 +121,8 @@ const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
   ordering: params.get('ordering') ?? 'label',
-  in_contest: params.get('in_contest') ?? "true",
-  only_with_pictures: params.get('only_with_pictures') ?? "false",
+  in_contest: params.get('in_contest') ?? 'true',
+  only_with_pictures: params.get('only_with_pictures') ?? 'false',
   category: params.get('category') ?? '',
 })
 
@@ -130,6 +137,7 @@ export default function List() {
         <div className={styles.InputContainer}>
           <input
             className={styles.InputSearch}
+            value={filters.search}
             onChange={(e) => {
               setFiltersDebounced({ search: e.target.value })
             }}
