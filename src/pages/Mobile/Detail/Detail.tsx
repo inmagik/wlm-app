@@ -203,7 +203,7 @@ export default function Detail() {
                 </div>
               </div>
               <div className={styles.PicturesCount}>
-                {monument?.pictures_count} <Camera className="ms-1" />
+                {monument?.pictures_wlm_count} <Camera className="ms-1" />
               </div>
             </div>
           </div>
