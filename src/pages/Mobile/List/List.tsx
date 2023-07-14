@@ -67,10 +67,10 @@ function ListMonuments({ filters }: Props) {
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {infiniteMonuments!.pages.map((list, i) => (
         <Fragment key={i}>
-          {list.results.map((monument) => {
+          {list.results.map((monument, k) => {
             return (
               <LangLink
-                key={monument.id}
+                key={k}
                 to={`/lista/${smartSlug(monument.id, monument.label)}`}
                 className="no-link"
               >
@@ -125,6 +125,25 @@ export default function List() {
   const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
+
+  const [myCoordinates, setMyCoordinates] = useState<{
+    lat: number
+    lng: number
+  } | null>(null)
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setMyCoordinates({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        })
+      },
+      (error) => {
+        console.error(error)
+      }
+    )
+  }, [])
 
   return (
     <Layout>
