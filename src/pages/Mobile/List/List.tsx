@@ -13,7 +13,6 @@ import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
-import { Spinner } from 'react-bootstrap'
 import classNames from 'classnames'
 
 interface Props {

@@ -13,7 +13,9 @@ import { useQsFilters } from '../../../hooks/filters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  app_category: params.get('app_category') ?? '',
+  category: params.get('category') ?? '',
+  in_contest: params.get('in_contest') ?? 'true',
+  only_without_pictures: params.get('only_without_pictures') ?? '',
 })
 
 export default function BottomNavigation() {
@@ -27,9 +29,9 @@ export default function BottomNavigation() {
         to={`/?${new URLSearchParams({
           search: filters.search,
           municipality: filters.municipality,
-          app_category: filters.app_category,
-          in_contest: 'true',
-          only_without_pictures: '',
+          category: filters.category,
+          in_contest: filters.in_contest,
+          only_without_pictures: filters.only_without_pictures,
         })}`}
         className="no-link"
       >
@@ -52,9 +54,10 @@ export default function BottomNavigation() {
         to={`/lista?${new URLSearchParams({
           search: filters.search,
           municipality: filters.municipality,
-          app_category: filters.app_category,
-          in_contest: 'true',
-          only_without_pictures: '',
+          category: filters.category,
+          in_contest: filters.in_contest,
+          only_without_pictures: filters.only_without_pictures,
+    
         })}`}
         className="no-link"
       >

@@ -14,6 +14,9 @@ import { useQsFilters } from '../../../hooks/filters'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
+  category: params.get('category') ?? '',
+  in_contest: params.get('in_contest') ?? 'true',
+  only_without_pictures: params.get('only_without_pictures') ?? '',
 })
 
 export default function Map() {
