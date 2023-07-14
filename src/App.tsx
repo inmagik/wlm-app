@@ -18,6 +18,7 @@ import ErrorBoundary from './components/ErrorBoundary'
 import NavigationWrapper from './components/NavigationWrapper'
 import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useMediaQuery } from 'usehooks-ts'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -105,6 +106,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const i18n = createI18n(window.location.pathname)
+  const matches = useMediaQuery('(min-width: 768px)')
   return (
     <BrowserRouter>
       <I18nextProvider i18n={i18n}>
