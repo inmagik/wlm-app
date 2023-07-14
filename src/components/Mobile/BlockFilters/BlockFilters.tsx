@@ -11,6 +11,7 @@ import styles from './BlockFilters.module.css'
 import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../Icons/FiltersIcon'
 import classNames from 'classnames'
+import ReactSwitch from 'react-switch'
 
 interface BlockFiltersProps {
   filtersOpen: boolean
@@ -150,15 +151,19 @@ export default function BlockFilters({
             <div className={styles.FilterTitle}>{t('tutti_i_monumenti')}</div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
-                <input
-                  type="checkbox"
-                  checked={filters.in_contest !== 'true'}
-                  onChange={(e) => {
+                <ReactSwitch
+                  offColor="#D0DFE4"
+                  size={15}
+                  checkedIcon={false}
+                  uncheckedIcon={false}
+                  onColor="#40BAEC"
+                  onChange={(checked) => {
                     setFilters({
                       ...filters,
-                      in_contest: e.target.checked ? '' : 'true',
+                      in_contest: checked ? '' : 'true',
                     })
                   }}
+                  checked={filters.in_contest !== 'true'}
                 />
               </div>
               <div className="ms-2">
@@ -172,15 +177,19 @@ export default function BlockFilters({
             </div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
-                <input
-                  type="checkbox"
-                  checked={filters.only_without_pictures === 'true'}
-                  onChange={(e) => {
+                <ReactSwitch
+                  offColor="#D0DFE4"
+                  size={15}
+                  checkedIcon={false}
+                  uncheckedIcon={false}
+                  onColor="#40BAEC"
+                  onChange={(checked) => {
                     setFilters({
                       ...filters,
-                      only_without_pictures: e.target.checked ? 'true' : '',
+                      only_without_pictures: checked ? 'true' : '',
                     })
                   }}
+                  checked={filters.only_without_pictures === 'true'}
                 />
               </div>
               <div className="ms-2">
