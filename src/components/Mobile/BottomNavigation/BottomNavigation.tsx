@@ -28,6 +28,8 @@ export default function BottomNavigation() {
           search: filters.search,
           municipality: filters.municipality,
           app_category: filters.app_category,
+          in_contest: 'true',
+          only_without_pictures: '',
         })}`}
         className="no-link"
       >
@@ -51,6 +53,8 @@ export default function BottomNavigation() {
           search: filters.search,
           municipality: filters.municipality,
           app_category: filters.app_category,
+          in_contest: 'true',
+          only_without_pictures: '',
         })}`}
         className="no-link"
       >
