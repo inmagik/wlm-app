@@ -1,5 +1,7 @@
 import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
+import { AnyclusterOpenLayers } from 'anycluster-openlayers'
+
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { useEffect, useRef, useState } from 'react'
@@ -62,6 +64,26 @@ export default function Map() {
       ],
       view: new View(mapState),
     })
+
+    const apiUrl = '/anycluster/'
+
+    const settings = {
+      srid: 'EPSG:4326',
+      clusterMethod: 'grid',
+      onFinalClick: function (marker:any, data:any) {
+        console.log(marker, data)
+        
+      },
+    }
+
+    const markerFolderPath = '/static/anycluster/images/'
+
+    let anyclusterOpenLayers = new AnyclusterOpenLayers(
+      initialMap,
+      apiUrl,
+      markerFolderPath,
+      settings
+    )
 
     setMap(initialMap)
 
