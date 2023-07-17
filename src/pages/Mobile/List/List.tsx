@@ -26,6 +26,7 @@ interface Props {
     user_lat: number
     user_lon: number
   }
+  isDesktop?: boolean
 }
 
 export function ListMonuments({ filters }: Props) {

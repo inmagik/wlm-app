@@ -161,7 +161,7 @@ export default function BlockOrdering({
             }}
           >
             <div>
-              {filters.ordering === '' ? (
+              {filters.ordering === 'pictures_wlm_count' ? (
                 <CheckOrderingIcon />
               ) : (
                 <UncheckOrderingIcon />
@@ -184,7 +184,7 @@ export default function BlockOrdering({
             }}
           >
             <div>
-              {filters.ordering === '' ? (
+              {filters.ordering === 'distance' ? (
                 <CheckOrderingIcon />
               ) : (
                 <UncheckOrderingIcon />

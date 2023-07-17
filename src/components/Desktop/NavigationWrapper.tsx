@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom'
-import Layout from './Mobile/Layout'
+import Layout from './Layout'
 
 interface NavigationWrapperProps {
   className?: string

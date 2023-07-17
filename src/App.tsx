@@ -10,13 +10,15 @@ import List from './pages/Mobile/List'
 import ListDesktop from './pages/Desktop/List'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 import Map from './pages/Mobile/Map'
+import MapDesktop from './pages/Desktop/Map'
 import Profile from './pages/Mobile/Profile'
 import NotFound from './pages/NotFound'
 import { LANGS } from './const'
 import { useEffect } from 'react'
 import { createI18n, DEFAULT_LANG, getLangFromParam } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
-import NavigationWrapper from './components/NavigationWrapper'
+import NavigationWrapper from './components/Mobile/NavigationWrapper'
+import NavigationWrapperDesktop from './components/Desktop/NavigationWrapper'
 import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMediaQuery } from 'usehooks-ts'
@@ -57,27 +59,46 @@ function AppRoutes() {
         <Route path="*" element={<SyncLang />} />
       </Routes>
       <Routes location={location}>
-        <Route element={<NavigationWrapper />}>
+        <Route
+          element={
+            isMobile ? <NavigationWrapper /> : <NavigationWrapperDesktop />
+          }
+        >
           <Route
             index
             element={
-              <NavigationWrapper>
-                <Map />
-              </NavigationWrapper>
+              isMobile ? (
+                <NavigationWrapper>
+                  <Map />
+                </NavigationWrapper>
+              ) : (
+                <NavigationWrapperDesktop>
+                  <MapDesktop />
+                </NavigationWrapperDesktop>
+              )
             }
           />
           <Route path={':lang/*'} element={<AvailablesLang />}>
             <Route
               index
               element={
-                <NavigationWrapper>
-                  <Map />
-                </NavigationWrapper>
+                isMobile ? (
+                  <NavigationWrapper>
+                    <Map />
+                  </NavigationWrapper>
+                ) : (
+                  <NavigationWrapperDesktop>
+                    <MapDesktop />
+                  </NavigationWrapperDesktop>
+                )
               }
             />
-            <Route path="lista" element={isMobile ? <List /> : <ListDesktop />} />
+            <Route
+              path="lista"
+              element={isMobile ? <List /> : <ListDesktop />}
+            />
             <Route path="lista/:slug" element={<Detail />} />
-            <Route path="mappa" element={<Map />} />
+            <Route path="mappa" element={isMobile ? <Map /> : <MapDesktop />} />
             <Route path="mappa/:slug" element={<Detail />} />
             <Route path="profilo" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
@@ -108,7 +129,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const i18n = createI18n(window.location.pathname)
-  
+
   return (
     <BrowserRouter>
       <I18nextProvider i18n={i18n}>

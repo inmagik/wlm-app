@@ -51,6 +51,7 @@
 .OrderingItemActive {
   background: var(--primary);
   color: var(--colori-neutri-white);
+  width: 100%;
 }
 
 .ListOrderingItems{
