@@ -261,7 +261,7 @@ export default function BlockFilters({
       <div className={styles.Filter}>
         <div className={styles.FilterTitle}>{t('tutti_i_monumenti')}</div>
         <div className="d-flex align-items-center">
-          <div>
+          <div className='d-flex align-items-center'>
             <ReactSwitch
               offColor="#D0DFE4"
               size={15}
@@ -275,6 +275,27 @@ export default function BlockFilters({
                 })
               }}
               checked={filters.in_contest !== 'true'}
+            />
+          </div>
+        </div>
+      </div>
+      <div className={styles.Filter}>
+        <div className={styles.FilterTitle}>{t('monumenti_senza_foto')}</div>
+        <div className="d-flex align-items-center">
+          <div className='d-flex align-items-center'>
+            <ReactSwitch
+              offColor="#D0DFE4"
+              size={15}
+              checkedIcon={false}
+              uncheckedIcon={false}
+              onColor="#40BAEC"
+              onChange={(checked) => {
+                setFilters({
+                  ...filters,
+                  only_without_pictures: checked ? 'true' : '',
+                })
+              }}
+              checked={filters.only_without_pictures === 'true'}
             />
           </div>
         </div>

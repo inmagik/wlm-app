@@ -158,7 +158,7 @@ export default function List() {
           className={styles.CardContainerList}
           style={{
             width: detail ? 'calc(100% - 401px - 348px)' : 'calc(100% - 348px)',
-            transition: 'width 0.3s ease-in-out',
+            transition: 'width 0.5s ease-in-out',
           }}
         >
           <div

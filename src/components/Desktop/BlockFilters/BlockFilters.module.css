@@ -111,7 +111,7 @@
   flex-direction: column;
   align-items: flex-start;
   border-bottom: 1px solid var(--colori-neutri-white);
-  padding-bottom: 16px;
+  padding-bottom: 8px;
 }
 
 .FilterOptions {
@@ -158,7 +158,7 @@
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
-  border-bottom: 1px solid var(--colori-neutri-white);
+  
 }
 
 .Filter {
@@ -166,6 +166,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  border-bottom: 1px solid var(--colori-neutri-white);
 }
 
 .ComuniList {
