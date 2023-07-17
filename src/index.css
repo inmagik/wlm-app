@@ -73,3 +73,7 @@ body,
 .swiper-pagination-bullet-active{
   background: var(--primary);
 }
+
+.ol-layer > canvas {
+  border-radius: 30px;
+}
