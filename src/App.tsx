@@ -7,6 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom'
 import List from './pages/Mobile/List'
+import ListDesktop from './pages/Desktop/List'
 import { I18nextProvider, useTranslation } from 'react-i18next'
 import Map from './pages/Mobile/Map'
 import Profile from './pages/Mobile/Profile'
@@ -48,6 +49,7 @@ function AvailablesLang() {
 
 function AppRoutes() {
   const location = useLocation()
+  const isMobile = useMediaQuery('(max-width: 768px)')
   return (
     <>
       <Routes location={location}>
@@ -73,7 +75,7 @@ function AppRoutes() {
                 </NavigationWrapper>
               }
             />
-            <Route path="lista" element={<List />} />
+            <Route path="lista" element={isMobile ? <List /> : <ListDesktop />} />
             <Route path="lista/:slug" element={<Detail />} />
             <Route path="mappa" element={<Map />} />
             <Route path="mappa/:slug" element={<Detail />} />
@@ -106,7 +108,7 @@ const queryClient = new QueryClient({
 
 function App() {
   const i18n = createI18n(window.location.pathname)
-  const matches = useMediaQuery('(min-width: 768px)')
+  
   return (
     <BrowserRouter>
       <I18nextProvider i18n={i18n}>

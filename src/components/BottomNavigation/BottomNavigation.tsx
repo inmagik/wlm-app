@@ -1,14 +1,14 @@
 import styles from './BottomNavigation.module.css'
-import { ReactComponent as Map } from '../../../assets/map.svg'
-import { ReactComponent as List } from '../../../assets/list.svg'
-import { ReactComponent as Profile } from '../../../assets/profile.svg'
-import { ReactComponent as MapActive } from '../../../assets/map-active.svg'
-import { ReactComponent as ListActive } from '../../../assets/list-active.svg'
-import { ReactComponent as ProfileActive } from '../../../assets/profile-active.svg'
+import { ReactComponent as Map } from '../../assets/map.svg'
+import { ReactComponent as List } from '../../assets/list.svg'
+import { ReactComponent as Profile } from '../../assets/profile.svg'
+import { ReactComponent as MapActive } from '../../assets/map-active.svg'
+import { ReactComponent as ListActive } from '../../assets/list-active.svg'
+import { ReactComponent as ProfileActive } from '../../assets/profile-active.svg'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import LangLink from '../../LangLink'
-import { useQsFilters } from '../../../hooks/filters'
+import LangLink from '../LangLink'
+import { useQsFilters } from '../../hooks/filters'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',

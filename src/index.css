@@ -24,7 +24,9 @@ body,
   --colori-neutri-dark-gray: #4a4a4a;
   --colori-neutri-background: #fbfbfb;
   --topbar-mobile-height: 45px;
+  --topbar-desktop-height: 53px;
   --bottom-mobile-navigation-height: 60px;
+  --bottom-desktop-navigation-height: 83px;
   --font-roboto-slab: 'Roboto Slab', serif;
   --font-monsterrat: 'Montserrat', sans-serif;
 }
@@ -34,6 +36,15 @@ body,
     100% - var(--topbar-mobile-height) - var(--bottom-mobile-navigation-height)
   );
   margin-top: var(--topbar-mobile-height);
+  position: relative;
+  overflow: hidden;
+}
+
+.block-content-desktop {
+  height: calc(
+    100% - var(--topbar-desktop-height) - var(--bottom-desktop-navigation-height)
+  );
+  margin-top: var(--topbar-desktop-height);
   position: relative;
   overflow: hidden;
 }

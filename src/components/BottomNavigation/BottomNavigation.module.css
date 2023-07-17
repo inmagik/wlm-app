@@ -35,3 +35,9 @@
   font-family: var(--font-roboto-slab);
   color: #ffffff;
 }
+
+@media screen and (min-width: 768px) {
+  .BottomNavigation {
+    height: var(--bottom-desktop-navigation-height);
+  }
+}
