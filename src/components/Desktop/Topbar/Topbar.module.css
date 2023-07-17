@@ -14,3 +14,40 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.WikiLoveMonuments {
+  display: flex;
+  padding: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.ButtonConcorso {
+  display: flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  border: 2px solid var(--concorso);
+  background: var(--colori-neutri-white);
+  color: var(--primary);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -47,6 +47,7 @@ body,
   margin-top: var(--topbar-desktop-height);
   position: relative;
   overflow: hidden;
+  background: var(--primary);
 }
 
 .no-link {
