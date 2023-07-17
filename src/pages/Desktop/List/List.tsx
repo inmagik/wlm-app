@@ -53,6 +53,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
   const {
     data: infiniteMonuments,
     hasNextPage,
+    isFetchingNextPage,
     isLoading,
     isFetching,
     fetchNextPage,
@@ -62,7 +63,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {isFetching ? (
+      {isFetching  && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <Spinner />
         </div>
