@@ -344,7 +344,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                         '/lista/?category=' +
                         type.categories__app_category__name +
                         '&municipality=' +
-                        monument?.municipality
+                        monument?.municipality + '&in_contest='
                       }
                     >
                       <div key={i} className={styles.MonumentiComuneItem}>
