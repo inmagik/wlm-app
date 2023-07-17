@@ -59,50 +59,17 @@ function AppRoutes() {
         <Route path="*" element={<SyncLang />} />
       </Routes>
       <Routes location={location}>
-        <Route
-          element={
-            isMobile ? <NavigationWrapper /> : <NavigationWrapperDesktop />
-          }
-        >
+        <Route path={':lang/*'} element={<AvailablesLang />}>
+          <Route index element={isMobile ? <Map /> : <MapDesktop />} />
+          <Route path="lista" element={isMobile ? <List /> : <ListDesktop />} />
           <Route
-            index
-            element={
-              isMobile ? (
-                <NavigationWrapper>
-                  <Map />
-                </NavigationWrapper>
-              ) : (
-                <NavigationWrapperDesktop>
-                  <MapDesktop />
-                </NavigationWrapperDesktop>
-              )
-            }
+            path="lista/:slug"
+            element={isMobile ? <Detail /> : <ListDesktop />}
           />
-          <Route path={':lang/*'} element={<AvailablesLang />}>
-            <Route
-              index
-              element={
-                isMobile ? (
-                  <NavigationWrapper>
-                    <Map />
-                  </NavigationWrapper>
-                ) : (
-                  <NavigationWrapperDesktop>
-                    <MapDesktop />
-                  </NavigationWrapperDesktop>
-                )
-              }
-            />
-            <Route
-              path="lista"
-              element={isMobile ? <List /> : <ListDesktop />}
-            />
-            <Route path="lista/:slug" element={<Detail />} />
-            <Route path="mappa" element={isMobile ? <Map /> : <MapDesktop />} />
-            <Route path="mappa/:slug" element={<Detail />} />
-            <Route path="profilo" element={<Profile />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+          <Route path="mappa" element={isMobile ? <Map /> : <MapDesktop />} />
+          <Route path="mappa/:slug" element={<Detail />} />
+          <Route path="profilo" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>

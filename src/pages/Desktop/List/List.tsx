@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, Suspense, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import { ReactComponent as Search } from '../../../assets/search.svg'
@@ -142,10 +142,11 @@ export default function List() {
           <BlockFilters filters={filters} setFilters={setFilters} />
         </div>
         <div
-          className={classNames({
-            [styles.CardContainerList]: !detail,
-            [styles.CardContainerListWithDetail]: detail,
-          })}
+          className={styles.CardContainerList}
+          style={{
+            width: detail ? 'calc(100% - 401px - 348px)' : 'calc(100% - 348px)',
+            transition: 'width 0.3s ease-in-out',
+          }}
         >
           <div
             className={classNames({
@@ -165,7 +166,19 @@ export default function List() {
                 <Search />
               </div>
             </div>
-            <ListMonuments setDetail={setDetail} filters={filters} />
+            <Suspense
+              fallback={
+                <div
+                  className={
+                    'w-100 h-100 d-flex align-items-center justify-content-center'
+                  }
+                >
+                  <Spinner />
+                </div>
+              }
+            >
+              <ListMonuments setDetail={setDetail} filters={filters} />
+            </Suspense>
           </div>
           <div className={'h-100'}>
             {!detail && (
@@ -174,9 +187,19 @@ export default function List() {
           </div>
         </div>
         {detail && (
-          <div className={styles.CardDetail}>
-            <Detail isDesktop monumentId={detail.id} setDetail={setDetail} />
-          </div>
+          <Suspense
+            fallback={
+              <div className={styles.CardDetail}>
+                <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                  <Spinner />
+                </div>
+              </div>
+            }
+          >
+            <div className={styles.CardDetail}>
+              <Detail isDesktop monumentId={detail.id} setDetail={setDetail} />
+            </div>
+          </Suspense>
         )}
       </div>
     </Layout>

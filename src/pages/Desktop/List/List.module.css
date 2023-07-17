@@ -1,18 +1,5 @@
 .CardContainerList {
   display: flex;
-  width: calc(100% - 348px);
-  height: 100%;
-  padding: 24px;
-  align-items: center;
-  flex-shrink: 0;
-  border-radius: 30px;
-  background: var(--colori-neutri-background);
-  margin-left: 8px;
-}
-
-.CardContainerListWithDetail {
-  display: flex;
-  width: calc(100% - 401px - 348px);
   height: 100%;
   padding: 24px;
   align-items: center;
@@ -25,11 +12,13 @@
 .MonumentsBlock {
   width: calc(100% - 225px);
   height: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
 .MonumentsBlockWithDetail {
   width: calc(100%);
   height: 100%;
+  transition: all 0.3s ease-in-out;
 }
 
 .InputSearch {

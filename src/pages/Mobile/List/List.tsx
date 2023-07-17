@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, Suspense, useEffect, useRef, useState } from 'react'
 import { Waypoint } from 'react-waypoint'
 import Layout from '../../../components/Mobile/Layout'
 import { useInfiniteMomuments } from '../../../hooks/monuments'
@@ -70,7 +70,7 @@ export function ListMonuments({ filters }: Props) {
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching ? (
-        <div className='d-flex align-items-center justify-content-center w-100 h-100'>
+        <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <Spinner />
         </div>
       ) : (
@@ -185,7 +185,15 @@ export default function List() {
             <FiltersIcon />
           </div>
         </div>
-        <ListMonuments filters={filters} />
+        <Suspense
+          fallback={
+            <div className="d-flex align-items-center justify-content-center w-100 h-100">
+              <Spinner />
+            </div>
+          }
+        >
+          <ListMonuments filters={filters} />
+        </Suspense>
       </div>
       <BlockFilters
         filtersOpen={filtersOpen}
