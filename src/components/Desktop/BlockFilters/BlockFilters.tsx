@@ -33,8 +33,6 @@ export default function BlockFilters({
     )
   }, [comuni, searchComune])
 
-  console.log(filters.municipality, 'comuni')
-
   useEffect(() => {
     if (filters.municipality) {
       const comune = comuni?.find(
@@ -49,7 +47,7 @@ export default function BlockFilters({
       <div className={styles.TopFiltri}>
         <div className="d-flex align-items-center">
           <FiltersIcon />{' '}
-          <div className={styles.FilterLabel}>{t('filtri')}</div>
+          <div className={styles.FilterLabelFiltri}>{t('filtri')}</div>
         </div>
         <div
           className={styles.ResetButton}

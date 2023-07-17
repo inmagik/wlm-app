@@ -34,6 +34,17 @@
   padding-bottom: 16px;
 }
 
+.FilterLabelFiltri {
+  color: var(--primary);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 8px;
+}
+
 .ResetButton {
   display: flex;
   padding: 8px;
@@ -51,6 +62,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
 }
 
 .FilterLabel {
@@ -158,7 +170,6 @@
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
-  
 }
 
 .Filter {
