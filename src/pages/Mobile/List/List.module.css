@@ -145,15 +145,3 @@
   line-height: normal;
   margin-top: 4px;
 }
-
-@media screen and (min-width: 768px) {
-  .ListMonuments {
-    border-radius: 10px;
-    background: var(--overlay);
-    margin-top: 8px;
-    padding: 8px;
-    height: calc(100% - 52px);
-    overflow-y: auto;
-    position: relative;
-  }
-}

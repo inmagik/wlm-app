@@ -5,6 +5,19 @@
   position: relative;
 }
 
+.DettaglioContainerDesktop{
+  padding: 0px;
+  overflow-y: auto;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.DettaglioInfoCardDesktop {
+  background-color: inherit;
+  padding: 0px;
+}
+
 .DettaglioInfoCard {
   background-color: var(--overlay);
   padding: 16px;
@@ -448,4 +461,9 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.Close {
+  margin-bottom: 16px;
+  cursor: pointer;
 }

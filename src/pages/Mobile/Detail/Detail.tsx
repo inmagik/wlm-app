@@ -14,6 +14,7 @@ import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
+import { ReactComponent as Close } from '../../../assets/close.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperClass, { Pagination } from 'swiper'
@@ -37,10 +38,22 @@ import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
 import BlockUpload from '../../../components/Mobile/BlockUpload'
 import VeduteInsiemeModal from '../../../components/Mobile/VeduteInsiemeModal'
 import LangLink from '../../../components/LangLink'
+import { Monument, MonumentList } from '../../../types'
+import classNames from 'classnames'
 
-export default function Detail() {
-  const { slug } = useParams()
-  const monument = useMonument(parseSmartSlug(slug!))
+interface Props {
+  monumentId?: number
+  setDetail?: (monument: MonumentList | null) => void
+  isDesktop?: boolean
+}
+
+interface DetailBlockProps {
+  monument: Monument | null
+  setDetail?: (monument: MonumentList | null) => void
+  isDesktop?: boolean
+}
+
+function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showAllImages, setShowAllImages] = useState(false)
   const [slideShowActive, setSlideShowActive] = useState(0)
   const [infoSlideSlideShow, setInfoSlideSlideShow] = useState(false)
@@ -125,20 +138,32 @@ export default function Detail() {
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [])
-
   return (
-    <Layout>
-      <div className={styles.DettaglioContainer}>
-        <div className={styles.DettaglioInfoCard}>
+    <>
+      <div
+        className={classNames({
+          [styles.DettaglioContainer]: !isDesktop,
+          [styles.DettaglioContainerDesktop]: isDesktop,
+        })}
+      >
+        <div
+          className={classNames({
+            [styles.DettaglioInfoCard]: !isDesktop,
+            [styles.DettaglioInfoCardDesktop]: isDesktop,
+          })}
+        >
+          {isDesktop && setDetail && (
+            <Close className={styles.Close} onClick={() => setDetail(null)} />
+          )}
           {inContestMonument && (
             <div className={styles.PresenzaInConcorso}>
               <Bell className="me-2" />
-              {monument.app_category === 'Comune'
+              {monument?.app_category === 'Comune'
                 ? t('il_comune_fa_parte_del_concorso')
                 : t('il_monumento_fa_parte_del_concorso')}
             </div>
           )}
-          {monument.pictures.length > 0 ? (
+          {monument && monument?.pictures.length > 0 ? (
             <Swiper
               pagination={{
                 dynamicBullets: true,
@@ -152,7 +177,7 @@ export default function Detail() {
               }}
               className={styles.Swiper}
             >
-              {monument.pictures.map((picture) => (
+              {monument?.pictures.map((picture) => (
                 <SwiperSlide
                   onClick={() => {
                     setShowAllImages(true)
@@ -190,20 +215,20 @@ export default function Detail() {
           <div className={styles.CardInfoMonument}>
             <div className="d-flex justify-content-between w-100">
               <div className="d-flex">
-                <IconMonument monument={monument} />
+                {monument && <IconMonument monument={monument} />}
                 <div className="ms-2">
                   <div>
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
                     </div>
-                    {monument.municipality_label &&
-                      monument.app_category !== 'Comune' && (
+                    {monument?.municipality_label &&
+                      monument?.app_category !== 'Comune' && (
                         <div className={styles.Comune}>
                           {monument?.municipality_label} (
                           {monument?.province_label})
                         </div>
                       )}
-                    {monument.app_category === 'Comune' && (
+                    {monument?.app_category === 'Comune' && (
                       <div className="w-100 d-flex justify-content-between align-items-center">
                         <div className={styles.ComuneVedute}>
                           {t('vedute_d_insieme_del_comune_di')}{' '}
@@ -218,7 +243,7 @@ export default function Detail() {
                 <div className="d-flex align-items-center">
                   {monument?.pictures_wlm_count} <Camera className="ms-1" />
                 </div>
-                {monument.app_category === 'Comune' && (
+                {monument?.app_category === 'Comune' && (
                   <div
                     className="pointer"
                     onClick={() => {
@@ -232,7 +257,7 @@ export default function Detail() {
             </div>
           </div>
         </div>
-        {monument?.pictures.length > 0 && (
+        {monument && monument?.pictures.length > 0 && (
           <div className={styles.CardImages}>
             <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
             <Swiper
@@ -240,29 +265,30 @@ export default function Detail() {
               className={styles.Swiper}
               modules={[Pagination]}
             >
-              {groupsOf12Pictures.map((group, index) => (
-                <Fragment key={index}>
-                  {group.length > 0 && (
-                    <SwiperSlide>
-                      <div className={styles.ContainerImages}>
-                        {group.map((picture: any, k: number) => (
-                          <div
-                            key={k}
-                            className={styles.Image}
-                            onClick={() => {
-                              setShowAllImages(true)
-                              setSlideShowActive(picture.id)
-                            }}
-                            style={{
-                              backgroundImage: `url("${picture.image_url}")`,
-                            }}
-                          ></div>
-                        ))}
-                      </div>
-                    </SwiperSlide>
-                  )}
-                </Fragment>
-              ))}
+              {groupsOf12Pictures &&
+                groupsOf12Pictures.map((group, index) => (
+                  <Fragment key={index}>
+                    {group.length > 0 && (
+                      <SwiperSlide>
+                        <div className={styles.ContainerImages}>
+                          {group.map((picture: any, k: number) => (
+                            <div
+                              key={k}
+                              className={styles.Image}
+                              onClick={() => {
+                                setShowAllImages(true)
+                                setSlideShowActive(picture.id)
+                              }}
+                              style={{
+                                backgroundImage: `url("${picture.image_url}")`,
+                              }}
+                            ></div>
+                          ))}
+                        </div>
+                      </SwiperSlide>
+                    )}
+                  </Fragment>
+                ))}
             </Swiper>
             <button className={styles.ButtonShowAllImages}>
               {t('guarda_tutte_su_wikimediacommons')}
@@ -301,7 +327,7 @@ export default function Detail() {
             </div>
           )}
         </div>
-        {monument.app_category === 'Comune' && (
+        {monument?.app_category === 'Comune' && (
           <div className={styles.CardMonumentiComune}>
             <div className={styles.IMonumentiDelComune}>
               {t('i_monumenti_del_comune')}
@@ -420,7 +446,7 @@ export default function Detail() {
           />
         </div>
       </div>
-      {showAllImages && (
+      {showAllImages && monument && (
         <SlideShow
           infoSlideSlideShow={infoSlideSlideShow}
           setInfoSlideSlideShow={setInfoSlideSlideShow}
@@ -440,6 +466,23 @@ export default function Detail() {
         setVeduteInsiemeOpen={setVeduteInsiemeOpen}
         veduteInsiemeOpen={veduteInsiemeOpen}
       />
+    </>
+  )
+}
+
+export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
+  const { slug } = useParams()
+  const monument = slug
+    ? useMonument(parseSmartSlug(slug!))
+    : monumentId
+    ? useMonument(monumentId)
+    : null
+
+  return isDesktop ? (
+    <DetailBlock monument={monument} isDesktop setDetail={setDetail} />
+  ) : (
+    <Layout>
+      <DetailBlock monument={monument} />
     </Layout>
   )
 }

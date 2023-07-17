@@ -1,11 +1,19 @@
 import classNames from 'classnames'
-import { useEffect } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
+import { ReactComponent as Search } from '../../../assets/search.svg'
+import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
-import { ListMonuments } from '../../Mobile/List/List'
 import styles from './List.module.css'
+import { useInfiniteMomuments } from '../../../hooks/monuments'
+import { Spinner } from 'react-bootstrap'
+import { Waypoint } from 'react-waypoint'
+import IconMonument from '../../../components/IconMonument'
+import { useNavigate } from 'react-router-dom'
+import { Monument, MonumentList } from '../../../types'
+import Detail from '../../Mobile/Detail'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -18,8 +26,103 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
 })
 
+interface Props {
+  filters: {
+    search: string
+    municipality: string
+    ordering: string
+    category: string
+    in_contest: string
+    only_without_pictures: string
+    user_lat: number
+    user_lon: number
+  }
+  setDetail: (monument: MonumentList) => void
+}
+
+export function ListMonuments({ filters, setDetail }: Props) {
+  useEffect(() => {
+    if (history.state?.scroll) {
+      listMonumentsRef.current!.scrollTop = history.state.scroll
+    } else {
+      listMonumentsRef.current!.scrollTop = 0
+    }
+  }, [])
+
+  const {
+    data: infiniteMonuments,
+    hasNextPage,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+  } = useInfiniteMomuments(filters)
+
+  const listMonumentsRef = useRef<HTMLDivElement>(null)
+
+  const navigate = useNavigate()
+
+  return (
+    <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
+      {isFetching ? (
+        <div className="d-flex align-items-center justify-content-center w-100 h-100">
+          <Spinner />
+        </div>
+      ) : (
+        infiniteMonuments!.pages.map((list, i) => (
+          <Fragment key={i}>
+            {list.results.map((monument, k) => {
+              return (
+                <div
+                  className={styles.MonumentCard}
+                  onClick={() => {
+                    setDetail(monument)
+                  }}
+                >
+                  <div className="d-flex">
+                    <div>
+                      <IconMonument monument={monument} />
+                    </div>
+                    <div className="ms-2">
+                      <div className={styles.MonumentTitle}>
+                        {monument.label}
+                      </div>
+                      <div className={styles.City}>
+                        {monument.municipality_label}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center flex-column">
+                    <div className={styles.NumberPhoto}>
+                      <div>{monument.pictures_wlm_count}</div>
+                      <Camera className="ms-2" />
+                    </div>
+                    {monument.distance && navigator.geolocation && (
+                      <div className={styles.Distance}>
+                        {monument.distance.toFixed(1)} Km
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </Fragment>
+        ))
+      )}
+      {hasNextPage && !isLoading && (
+        <Waypoint
+          topOffset={-100}
+          onEnter={() => {
+            fetchNextPage()
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
 export default function List() {
   const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
+  const [detail, setDetail] = useState<MonumentList | null>(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -38,9 +141,19 @@ export default function List() {
         <div className="h-100">
           <BlockFilters filters={filters} setFilters={setFilters} />
         </div>
-        <div className={styles.CardContainerList}>
-          <div className={classNames(styles.MonumentsBlock)}>
-            <div className="w-100">
+        <div
+          className={classNames({
+            [styles.CardContainerList]: !detail,
+            [styles.CardContainerListWithDetail]: detail,
+          })}
+        >
+          <div
+            className={classNames({
+              [styles.MonumentsBlock]: !detail,
+              [styles.MonumentsBlockWithDetail]: detail,
+            })}
+          >
+            <div className="w-100 position-relative">
               <input
                 onChange={(e) => {
                   setFiltersDebounced({ search: e.target.value })
@@ -48,13 +161,23 @@ export default function List() {
                 className={styles.InputSearch}
                 type="text"
               />
+              <div className={styles.SearchIcon}>
+                <Search />
+              </div>
             </div>
-            <ListMonuments filters={filters} />
+            <ListMonuments setDetail={setDetail} filters={filters} />
           </div>
-          <div className={'h-100'}> 
-            <BlockOrdering filters={filters} setFilters={setFilters} />
+          <div className={'h-100'}>
+            {!detail && (
+              <BlockOrdering filters={filters} setFilters={setFilters} />
+            )}
           </div>
         </div>
+        {detail && (
+          <div className={styles.CardDetail}>
+            <Detail isDesktop monumentId={detail.id} setDetail={setDetail} />
+          </div>
+        )}
       </div>
     </Layout>
   )

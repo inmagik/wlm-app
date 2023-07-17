@@ -14,6 +14,7 @@ import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 import classNames from 'classnames'
+import { Spinner } from 'react-bootstrap'
 
 interface Props {
   filters: {
@@ -68,46 +69,52 @@ export function ListMonuments({ filters }: Props) {
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {infiniteMonuments!.pages.map((list, i) => (
-        <Fragment key={i}>
-          {list.results.map((monument, k) => {
-            return (
-              <LangLink
-                key={k}
-                to={`/lista/${smartSlug(monument.id, monument.label)}`}
-                className="no-link"
-              >
-                <div className={styles.MonumentCard}>
-                  <div className="d-flex">
-                    <div>
-                      <IconMonument monument={monument} />
+      {isFetching ? (
+        <div className='d-flex align-items-center justify-content-center w-100 h-100'>
+          <Spinner />
+        </div>
+      ) : (
+        infiniteMonuments!.pages.map((list, i) => (
+          <Fragment key={i}>
+            {list.results.map((monument, k) => {
+              return (
+                <LangLink
+                  key={k}
+                  to={`/lista/${smartSlug(monument.id, monument.label)}`}
+                  className="no-link"
+                >
+                  <div className={styles.MonumentCard}>
+                    <div className="d-flex">
+                      <div>
+                        <IconMonument monument={monument} />
+                      </div>
+                      <div className="ms-2">
+                        <div className={styles.MonumentTitle}>
+                          {monument.label}
+                        </div>
+                        <div className={styles.City}>
+                          {monument.municipality_label}
+                        </div>
+                      </div>
                     </div>
-                    <div className="ms-2">
-                      <div className={styles.MonumentTitle}>
-                        {monument.label}
+                    <div className="d-flex align-items-center flex-column">
+                      <div className={styles.NumberPhoto}>
+                        <div>{monument.pictures_wlm_count}</div>
+                        <Camera className="ms-2" />
                       </div>
-                      <div className={styles.City}>
-                        {monument.municipality_label}
-                      </div>
+                      {monument.distance && navigator.geolocation && (
+                        <div className={styles.Distance}>
+                          {monument.distance.toFixed(1)} Km
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="d-flex align-items-center flex-column">
-                    <div className={styles.NumberPhoto}>
-                      <div>{monument.pictures_wlm_count}</div>
-                      <Camera className="ms-2" />
-                    </div>
-                    {monument.distance && navigator.geolocation && (
-                      <div className={styles.Distance}>
-                        {monument.distance.toFixed(1)} Km
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </LangLink>
-            )
-          })}
-        </Fragment>
-      ))}
+                </LangLink>
+              )
+            })}
+          </Fragment>
+        ))
+      )}
       {hasNextPage && !isLoading && (
         <Waypoint
           topOffset={-100}
