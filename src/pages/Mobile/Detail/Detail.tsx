@@ -36,6 +36,7 @@ import Icon from 'ol/style/Icon'
 import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
 import BlockUpload from '../../../components/Mobile/BlockUpload'
 import VeduteInsiemeModal from '../../../components/Mobile/VeduteInsiemeModal'
+import LangLink from '../../../components/LangLink'
 
 export default function Detail() {
   const { slug } = useParams()
@@ -300,6 +301,49 @@ export default function Detail() {
             </div>
           )}
         </div>
+        {monument.app_category === 'Comune' && (
+          <div className={styles.CardMonumentiComune}>
+            <div className={styles.IMonumentiDelComune}>
+              {t('i_monumenti_del_comune')}
+            </div>
+            <div className={styles.MonumentiComune}>
+              {monument.counts_comune_by_app_category.map(
+                (type, i) =>
+                  type.categories__app_category__name &&
+                  type.categories__app_category__name !== 'Comune' && (
+                    <LangLink
+                      className="no-link"
+                      to={
+                        '/lista/?category=' +
+                        type.categories__app_category__name +
+                        '&municipality=' +
+                        monument?.municipality
+                      }
+                    >
+                      <div key={i} className={styles.MonumentiComuneItem}>
+                        <div className={styles.MonumentiComuneItemTitle}>
+                          {type.categories__app_category__name}
+                        </div>
+                        <div className={styles.MonumentiComuneItemValue}>
+                          {type.count}
+                        </div>
+                      </div>
+                    </LangLink>
+                  )
+              )}
+            </div>
+            <div className="w-100">
+              <LangLink
+                className="no-link"
+                to={'/lista/?municipality=' + monument?.municipality}
+              >
+                <div className={styles.ButtonShowMonumenti}>
+                  {t('vedi_monumenti')}
+                </div>
+              </LangLink>
+            </div>
+          </div>
+        )}
         <div className={styles.CardExternalLinks}>
           <div className={styles.ExternalLinksTitle}>
             {t('collegamenti_esterni')}

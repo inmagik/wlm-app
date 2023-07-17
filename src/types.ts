@@ -28,7 +28,10 @@ export interface MonumentList {
   distance: number
 }
 
-
+export interface CountByCategory {
+  categories__app_category__name: string
+  count: number
+}
 export interface Monument {
   id: number
   pictures: Picture[]
@@ -64,6 +67,7 @@ export interface Monument {
   app_category: string
   in_contest: boolean
   distance: number
+  counts_comune_by_app_category: CountByCategory[]
 }
 
 export interface Comune {
