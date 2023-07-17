@@ -69,7 +69,7 @@ export function ListMonuments({ filters }: Props) {
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {isFetching ? (
+      {isLoading ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <Spinner />
         </div>

@@ -40,6 +40,8 @@ export default function BlockFilters({
 
   const parentRef = useRef<HTMLDivElement>(null)
 
+  const [openComuni, setOpenComuni] = useState<boolean>(false)
+
   const isResetDisaable = useMemo(() => {
     return (
       filters.category === '' &&
@@ -239,6 +241,7 @@ export default function BlockFilters({
           <input
             className={styles.InputSearchFieldComune}
             onChange={(e) => {
+              setOpenComuni(true)
               setSearchComune(e.target.value)
             }}
           />
@@ -247,7 +250,7 @@ export default function BlockFilters({
           </div>
         </div>
         <div className={styles.ListComuni} ref={parentRef}>
-          {comuniFiltered?.map((comune) => {
+          {openComuni && searchComune.length > 0 && comuniFiltered?.map((comune) => {
             return (
               <div
                 className={styles.FilterItemComune}

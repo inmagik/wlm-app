@@ -48,6 +48,14 @@
   transform: translateY(-50%);
 }
 
+.ClearSearch{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
 .ListMonuments {
   border-radius: 10px;
   background: var(--overlay);

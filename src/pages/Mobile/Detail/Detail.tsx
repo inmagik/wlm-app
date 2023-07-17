@@ -20,7 +20,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperClass, { Pagination } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import IconMonument from '../../../components/IconMonument'
 import SlideShow from '../../../components/Mobile/SlideShow'
 import { Feature, Map as MapOl, View } from 'ol'
@@ -40,16 +40,17 @@ import VeduteInsiemeModal from '../../../components/Mobile/VeduteInsiemeModal'
 import LangLink from '../../../components/LangLink'
 import { Monument, MonumentList } from '../../../types'
 import classNames from 'classnames'
+import { Spinner } from 'react-bootstrap'
 
 interface Props {
   monumentId?: number
-  setDetail?: (monument: MonumentList | null) => void
+  setDetail?: (monument: number | null) => void
   isDesktop?: boolean
 }
 
 interface DetailBlockProps {
   monument: Monument | null
-  setDetail?: (monument: MonumentList | null) => void
+  setDetail?: (monument: number | null) => void
   isDesktop?: boolean
 }
 
@@ -479,10 +480,26 @@ export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
     : null
 
   return isDesktop ? (
-    <DetailBlock monument={monument} isDesktop setDetail={setDetail} />
+    <Suspense
+      fallback={
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <Spinner />
+        </div>
+      }
+    >
+      <DetailBlock monument={monument} isDesktop setDetail={setDetail} />
+    </Suspense>
   ) : (
     <Layout>
-      <DetailBlock monument={monument} />
+      <Suspense
+        fallback={
+          <div className="d-flex justify-content-center align-items-center h-100">
+            <Spinner />
+          </div>
+        }
+      >
+        <DetailBlock monument={monument} />
+      </Suspense>
     </Layout>
   )
 }

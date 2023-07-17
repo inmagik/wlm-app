@@ -4,6 +4,7 @@ import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
+import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
 import styles from './List.module.css'
@@ -11,9 +12,9 @@ import { useInfiniteMomuments } from '../../../hooks/monuments'
 import { Spinner } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 import IconMonument from '../../../components/IconMonument'
-import { useNavigate } from 'react-router-dom'
-import { Monument, MonumentList } from '../../../types'
+import { useParams } from 'react-router-dom'
 import Detail from '../../Mobile/Detail'
+import { parseSmartSlug } from '../../../utils'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -37,7 +38,7 @@ interface Props {
     user_lat: number
     user_lon: number
   }
-  setDetail: (monument: MonumentList) => void
+  setDetail: (monument: number) => void
 }
 
 export function ListMonuments({ filters, setDetail }: Props) {
@@ -59,8 +60,6 @@ export function ListMonuments({ filters, setDetail }: Props) {
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
-  const navigate = useNavigate()
-
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching ? (
@@ -73,9 +72,10 @@ export function ListMonuments({ filters, setDetail }: Props) {
             {list.results.map((monument, k) => {
               return (
                 <div
+                  key={k}
                   className={styles.MonumentCard}
                   onClick={() => {
-                    setDetail(monument)
+                    setDetail(monument.id)
                   }}
                 >
                   <div className="d-flex">
@@ -122,7 +122,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
 
 export default function List() {
   const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
-  const [detail, setDetail] = useState<MonumentList | null>(null)
+  const [detail, setDetail] = useState<number | null>(null)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -135,11 +135,23 @@ export default function List() {
     }
   }, [])
 
+  const { slug } = useParams()
+
+  useEffect(() => {
+    if (slug) {
+      setDetail(Number(parseSmartSlug(slug)))
+    }
+  }, [slug])
+
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
         <div className="h-100">
-          <BlockFilters filters={filters} setFilters={setFilters} />
+          <BlockFilters
+            filters={filters}
+            setFilters={setFilters}
+            setDetail={setDetail}
+          />
         </div>
         <div
           className={styles.CardContainerList}
@@ -159,12 +171,23 @@ export default function List() {
                 onChange={(e) => {
                   setFiltersDebounced({ search: e.target.value })
                 }}
+                value={filters.search}
                 className={styles.InputSearch}
                 type="text"
               />
               <div className={styles.SearchIcon}>
                 <Search />
               </div>
+              {filters.search && (
+                <div
+                  className={styles.ClearSearch}
+                  onClick={() => {
+                    setFiltersDebounced({ search: '' })
+                  }}
+                >
+                  <CloseSecondary />
+                </div>
+              )}
             </div>
             <Suspense
               fallback={
@@ -197,7 +220,7 @@ export default function List() {
             }
           >
             <div className={styles.CardDetail}>
-              <Detail isDesktop monumentId={detail.id} setDetail={setDetail} />
+              <Detail isDesktop monumentId={detail} setDetail={setDetail} />
             </div>
           </Suspense>
         )}

@@ -31,6 +31,7 @@
   font-weight: 700;
   line-height: normal;
   margin-left: 8px;
+  padding-bottom: 16px;
 }
 
 .ResetButton {
@@ -67,7 +68,6 @@
   flex-direction: column;
   align-items: flex-start;
   border-bottom: 1px solid var(--colori-neutri-white);
-  padding-bottom: 16px;
 }
 
 .InputComune {
@@ -75,13 +75,33 @@
   padding: 8px 24px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
   width: 100%;
   align-self: stretch;
   border-radius: 30px;
   border: 1px solid var(--secondary-variant);
   background: var(--colori-neutri-white);
   box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+  color: var(--secondary);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.InputComune:focus-visible {
+  outline: none;
+  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+}
+
+.InputComune::placeholder {
+  color: var(--colori-neutri-gray-2);
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .FilterCategoria {
@@ -100,7 +120,6 @@
   width: 100%;
   align-items: flex-start;
   gap: 8px;
-  margin-top: 16px;
 }
 
 .FilterItem {
@@ -147,4 +166,48 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.ComuniList {
+  display: flex;
+  max-height: 254px;
+  padding: 8px;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  gap: 4px;
+  align-self: stretch;
+  border-radius: 10px;
+  margin-top: 8px;
+  background: var(--colori-neutri-gray-2);
+}
+
+.ComuneItem {
+  display: flex;
+  height: 43px;
+  padding: 8px 24px;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 5px;
+  border: 0.5px solid var(--overlay);
+  background: var(--colori-neutri-white);
+  color: var(--primary);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+}
+
+.CloseIconWrapper {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }

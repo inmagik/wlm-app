@@ -2,19 +2,48 @@ import styles from './BlockFilters.module.css'
 import { ReactComponent as FiltersIcon } from '../../../assets/filter-primary.svg'
 import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
 import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
+import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
+import { ReactComponent as Flag } from '../../../assets/flag.svg'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import ReactSwitch from 'react-switch'
+import { useComuni } from '../../../hooks/comuni'
 
 interface Props {
   setFilters: (filters: any) => void
   filters: Record<string, any>
+  setDetail: (detail: any) => void
 }
 
-export default function BlockFilters({ setFilters, filters }: Props) {
+export default function BlockFilters({
+  setFilters,
+  filters,
+  setDetail,
+}: Props) {
   const { t } = useTranslation()
   const [searchComune, setSearchComune] = useState<string>('')
+  const [openOptions, setOpenOptions] = useState<boolean>(false)
+
+  const { data: comuni } = useComuni()
+
+  const comuniFiltered = useMemo(() => {
+    return comuni?.filter((comune) =>
+      comune.label.toLowerCase().includes(searchComune.toLowerCase())
+    )
+  }, [comuni, searchComune])
+
+  console.log(filters.municipality, 'comuni')
+
+  useEffect(() => {
+    if (filters.municipality) {
+      const comune = comuni?.find(
+        (comune) => comune.code === Number(filters.municipality)
+      )
+      setSearchComune(comune?.label || '')
+    }
+  }, [filters.municipality, comuni])
+
   return (
     <div className={styles.BlockFilters}>
       <div className={styles.TopFiltri}>
@@ -38,17 +67,59 @@ export default function BlockFilters({ setFilters, filters }: Props) {
       </div>
       <div className={styles.FilterComune}>
         <div className={styles.FilterLabel}>{t('comune')}</div>
-        <div className="w-100">
+        <div className="w-100 position-relative">
           <input
             className={styles.InputComune}
             type="text"
             placeholder={t('cerca_comune')}
             value={searchComune}
             onChange={(e) => {
+              setOpenOptions(true)
               setSearchComune(e.target.value)
             }}
           />
+          {searchComune.length > 0 && (
+            <div
+              className={styles.CloseIconWrapper}
+              onClick={() => {
+                setFilters({
+                  ...filters,
+                  municipality: '',
+                })
+                setSearchComune('')
+                setOpenOptions(false)
+              }}
+            >
+              <CloseSecondary className={styles.CloseIcon} />
+            </div>
+          )}
         </div>
+        {openOptions &&
+          searchComune.length > 0 &&
+          comuniFiltered &&
+          comuniFiltered?.length > 0 && (
+            <div className={styles.ComuniList}>
+              {comuniFiltered.map((comune) => (
+                <div
+                  key={comune.code}
+                  className={classNames(styles.ComuneItem)}
+                  onClick={() => {
+                    setDetail(null)
+                    setSearchComune(comune.label)
+                    setOpenOptions(false)
+                    setFilters({
+                      ...filters,
+                      municipality: comune.code,
+                    })
+                  }}
+                >
+                  <div className={styles.ComuneItemTitle}>
+                    <Flag className="me-2" /> {comune.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
       </div>
       <div className={styles.FilterCategoria}>
         <div className={styles.FilterLabel}>{t('categoria')}</div>
@@ -58,6 +129,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
               [styles.FilterItemActive]: filters.category === '',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: '',
@@ -78,6 +150,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
               [styles.FilterItemActive]: filters.category === 'Castelli',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: 'Castelli',
@@ -99,6 +172,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
                 filters.category === 'Edifici religiosi',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: 'Edifici religiosi',
@@ -121,6 +195,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
               [styles.FilterItemActive]: filters.category === 'Altri monumenti',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: 'Altri monumenti',
@@ -141,6 +216,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
               [styles.FilterItemActive]: filters.category === 'Musei',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: 'Musei',
@@ -162,6 +238,7 @@ export default function BlockFilters({ setFilters, filters }: Props) {
                 filters.category === 'Alberi monumentali',
             })}
             onClick={() => {
+              setDetail(null)
               setFilters({
                 ...filters,
                 category: 'Alberi monumentali',

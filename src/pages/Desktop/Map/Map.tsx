@@ -7,6 +7,7 @@ import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
+import { MonumentList } from '../../../types'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -70,11 +71,13 @@ export default function Map() {
     map.updateSize()
   }, [map])
 
+  const [detail, setDetail] = useState<MonumentList | null>(null)
+
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
         <div className="h-100">
-          <BlockFilters filters={filters} setFilters={setFilters} />
+          <BlockFilters setDetail={setDetail} filters={filters} setFilters={setFilters} />
         </div>
         <div className={styles.MapContainer}>
           <div ref={mapElement} id="map" className="w-100 h-100"></div>
