@@ -169,7 +169,7 @@ export default function List() {
             <div className="w-100 position-relative">
               <input
                 onChange={(e) => {
-                  setFiltersDebounced({ search: e.target.value })
+                  setFilters({ search: e.target.value })
                 }}
                 value={filters.search}
                 className={styles.InputSearch}
