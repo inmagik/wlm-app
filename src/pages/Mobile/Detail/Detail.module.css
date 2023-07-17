@@ -84,6 +84,9 @@
   font-weight: 700;
   line-height: normal;
   margin-left: 8px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   color: var(--primary);
 }
 
@@ -359,4 +362,14 @@
   font-weight: 400;
   line-height: normal;
   margin-top: 8px;
+}
+
+.ComuneVedute {
+  color: var(--colori-neutri-gray);
+  text-overflow: ellipsis;
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

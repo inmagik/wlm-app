@@ -13,6 +13,7 @@ import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
+import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperClass, { Pagination } from 'swiper'
@@ -34,6 +35,7 @@ import Style from 'ol/style/Style'
 import Icon from 'ol/style/Icon'
 import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
 import BlockUpload from '../../../components/Mobile/BlockUpload'
+import VeduteInsiemeModal from '../../../components/Mobile/VeduteInsiemeModal'
 
 export default function Detail() {
   const { slug } = useParams()
@@ -49,6 +51,7 @@ export default function Detail() {
   const [map, setMap] = useState<MapOl | null>(null)
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
+  const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
     const groupIndex = Math.floor(index / 12)
@@ -199,11 +202,31 @@ export default function Detail() {
                           {monument?.province_label})
                         </div>
                       )}
+                    {monument.app_category === 'Comune' && (
+                      <div className="w-100 d-flex justify-content-between align-items-center">
+                        <div className={styles.ComuneVedute}>
+                          {t('vedute_d_insieme_del_comune_di')}{' '}
+                          {monument?.label}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
               <div className={styles.PicturesCount}>
-                {monument?.pictures_wlm_count} <Camera className="ms-1" />
+                <div className="d-flex align-items-center">
+                  {monument?.pictures_wlm_count} <Camera className="ms-1" />
+                </div>
+                {monument.app_category === 'Comune' && (
+                  <div
+                    className="pointer"
+                    onClick={() => {
+                      setVeduteInsiemeOpen(true)
+                    }}
+                  >
+                    <InfoVedute className="me-2" />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -221,9 +244,9 @@ export default function Detail() {
                   {group.length > 0 && (
                     <SwiperSlide>
                       <div className={styles.ContainerImages}>
-                        {group.map((picture: any) => (
+                        {group.map((picture: any, k: number) => (
                           <div
-                            key={picture.id}
+                            key={k}
                             className={styles.Image}
                             onClick={() => {
                               setShowAllImages(true)
@@ -368,6 +391,10 @@ export default function Detail() {
         setUploadOpen={setShowModalUpload}
         uploadOpen={showModalUpload}
         setFileList={setImageUpload}
+      />
+      <VeduteInsiemeModal
+        setVeduteInsiemeOpen={setVeduteInsiemeOpen}
+        veduteInsiemeOpen={veduteInsiemeOpen}
       />
     </Layout>
   )

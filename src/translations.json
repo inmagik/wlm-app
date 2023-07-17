@@ -57,7 +57,9 @@
             "tutti_i_monumenti": "All monuments",
             "monumenti_senza_foto": "Monuments without photos",
             "reset": "Reset",
-            "distanza": "Distance"
+            "distanza": "Distance",
+            "vedute_d_insieme_del_comune_di": "Overview of the municipality of",
+            "vedute_insieme": "Overview"
         }
     },
     "it": {
@@ -118,7 +120,9 @@
             "tutti_i_monumenti": "Tutti i monumenti",
             "monumenti_senza_foto": "Monumenti senza foto",
             "reset": "Reset",
-            "distanza": "Distanza"
+            "distanza": "Distanza",
+            "vedute_d_insieme_del_comune_di": "Vedute d'insieme del comune di",
+            "vedute_insieme": "Vedute d'insieme"
         }
     }
 }

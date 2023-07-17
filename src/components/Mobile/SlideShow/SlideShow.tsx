@@ -47,8 +47,8 @@ export default function SlideShow({
           }, 100)
         }}
       >
-        {monument?.pictures.map((picture) => (
-          <SwiperSlide key={picture.id}>
+        {monument?.pictures.map((picture, i) => (
+          <SwiperSlide key={i}>
             <div
               className={styles.SlideShowImage}
               style={{
