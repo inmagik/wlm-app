@@ -1,0 +1,149 @@
+.BlockFilters {
+  display: flex;
+  width: 340px;
+  height: 100%;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: var(--overlay);
+  overflow-y: auto;
+}
+
+.TopFiltri {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  border-bottom: 0.5px solid var(--primary);
+  padding-bottom: 4px;
+}
+
+.FilterLabel {
+  color: var(--primary);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 8px;
+}
+
+.ResetButton {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  background: rgba(17, 138, 178, 0.8);
+  /* Shade Button Light */
+  box-shadow: 1px 1px 0px 0px rgba(17, 138, 178, 0.23);
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* CTA */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.FilterLabel {
+  color: var(--primary);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.FilterComune {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--colori-neutri-white);
+  padding-bottom: 16px;
+}
+
+.InputComune {
+  display: flex;
+  padding: 8px 24px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  width: 100%;
+  align-self: stretch;
+  border-radius: 30px;
+  border: 1px solid var(--secondary-variant);
+  background: var(--colori-neutri-white);
+  box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
+}
+
+.FilterCategoria {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--colori-neutri-white);
+  padding-bottom: 16px;
+}
+
+.FilterOptions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.FilterItem {
+  display: flex;
+  height: 34px;
+  padding: 8px 0px 8px 24px;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  color: var(--primary-color, #118ab2);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  width: 100%;
+  line-height: normal;
+}
+
+.FilterItemActive {
+  background: var(--primary);
+  width: 100%;
+  color: var(--colori-neutri-white);
+}
+
+.FilterTitle {
+  color: var(--primary);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+  border-bottom: 1px solid var(--colori-neutri-white);
+}
+
+.Filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}

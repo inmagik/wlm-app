@@ -28,7 +28,7 @@ interface Props {
   }
 }
 
-function ListMonuments({ filters }: Props) {
+export function ListMonuments({ filters }: Props) {
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll

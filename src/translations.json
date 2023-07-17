@@ -63,7 +63,8 @@
             "i_monumenti_del_comune": "Monuments of the municipality",
             "vedi_monumenti": "See monuments",
             "wiki_loves_monuments": "Wiki Loves Monuments",
-            "concorso_wiki_loves_monuments_1_30_settembre": "Competion Wiki Loves Monuments 1-30 September"
+            "concorso_wiki_loves_monuments_1_30_settembre": "Competion Wiki Loves Monuments 1-30 September",
+            "filtri": "Filters"
         }
     },
     "it": {
@@ -130,7 +131,8 @@
             "i_monumenti_del_comune": "I monumenti del comune",
             "vedi_monumenti": "Vedi Monumenti",
             "wiki_loves_monuments": "Wiki Loves Monuments",
-            "concorso_wiki_loves_monuments_1_30_settembre": "Concorso Wiki Loves Monuments 1-30 Settembre"
+            "concorso_wiki_loves_monuments_1_30_settembre": "Concorso Wiki Loves Monuments 1-30 Settembre",
+            "filtri": "Filtri"
         }
     }
 }
