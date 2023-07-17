@@ -152,7 +152,7 @@
     background: var(--overlay);
     margin-top: 8px;
     padding: 8px;
-    height: calc(100% - 45px);
+    height: calc(100% - 52px);
     overflow-y: auto;
     position: relative;
   }

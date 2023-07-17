@@ -1,0 +1,58 @@
+.BlockOrdering {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 30px;
+  background: var(--overlay);
+  height: 100%;
+  margin-left: 16px;
+  width: 225px;
+}
+
+.TitleOrdering {
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  /* H2 */
+  width: 100%;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--primary-color, #118ab2);
+}
+
+.OrderingItem {
+  display: flex;
+  height: 34px;
+  padding: 8px 0px 8px 24px;
+  align-items: center;
+  gap: 32px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  color: var(--primary-color, #118ab2);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.OrderingItemActive {
+  background: var(--primary);
+  color: var(--colori-neutri-white);
+}
+
+.ListOrderingItems{
+    width: 100%;
+}

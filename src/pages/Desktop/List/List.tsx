@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { useEffect } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
+import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
 import { ListMonuments } from '../../Mobile/List/List'
@@ -40,9 +41,18 @@ export default function List() {
         <div className={styles.CardContainerList}>
           <div className={classNames(styles.MonumentsBlock)}>
             <div className="w-100">
-              <input className={styles.InputSearch} type="text" />
+              <input
+                onChange={(e) => {
+                  setFiltersDebounced({ search: e.target.value })
+                }}
+                className={styles.InputSearch}
+                type="text"
+              />
             </div>
             <ListMonuments filters={filters} />
+          </div>
+          <div className={'h-100'}> 
+            <BlockOrdering filters={filters} setFilters={setFilters} />
           </div>
         </div>
       </div>
