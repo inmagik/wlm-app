@@ -56,7 +56,8 @@
             "altri_monumenti": "Other monuments",
             "tutti_i_monumenti": "All monuments",
             "monumenti_senza_foto": "Monuments without photos",
-            "reset": "Reset"
+            "reset": "Reset",
+            "distanza": "Distance"
         }
     },
     "it": {
@@ -116,7 +117,8 @@
             "altri_monumenti": "Altri monumenti",
             "tutti_i_monumenti": "Tutti i monumenti",
             "monumenti_senza_foto": "Monumenti senza foto",
-            "reset": "Reset"
+            "reset": "Reset",
+            "distanza": "Distanza"
         }
     }
 }

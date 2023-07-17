@@ -23,6 +23,8 @@ interface Props {
     category: string
     in_contest: string
     only_without_pictures: string
+    user_lat: number
+    user_lon: number
   }
 }
 
@@ -88,11 +90,16 @@ function ListMonuments({ filters }: Props) {
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div className="d-flex align-items-center flex-column">
                     <div className={styles.NumberPhoto}>
                       <div>{monument.pictures_wlm_count}</div>
                       <Camera className="ms-2" />
                     </div>
+                    {monument.distance && navigator.geolocation && (
+                      <div className={styles.Distance}>
+                        {monument.distance.toFixed(1)} Km
+                      </div>
+                    )}
                   </div>
                 </div>
               </LangLink>
@@ -119,6 +126,8 @@ const getFilters = (params: URLSearchParams) => ({
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',
+  user_lat: Number(params.get('user_lat')) ?? '',
+  user_lon: Number(params.get('user_lon')) ?? '',
 })
 
 export default function List() {
@@ -126,23 +135,15 @@ export default function List() {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
-  const [myCoordinates, setMyCoordinates] = useState<{
-    lat: number
-    lng: number
-  } | null>(null)
-
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setMyCoordinates({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setFiltersDebounced({
+          user_lat: position.coords.latitude,
+          user_lon: position.coords.longitude,
         })
-      },
-      (error) => {
-        console.error(error)
-      }
-    )
+      })
+    }
   }, [])
 
   return (

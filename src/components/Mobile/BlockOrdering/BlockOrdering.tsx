@@ -7,6 +7,7 @@ import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-
 import { useTranslation } from 'react-i18next'
 import styles from './BlockOrdering.module.css'
 import classNames from 'classnames'
+import { fromLonLat } from 'ol/proj'
 
 interface BlockOrderingProps {
   orderingOpen: boolean
@@ -32,7 +33,9 @@ export default function BlockOrdering({
       return t('alfabetico_z_a')
     } else if (ordering === 'pictures_wlm_count') {
       return t('meno_fotografati')
-    }
+    } else if (ordering === 'distance') {
+      return t('distanza')
+    } 
   }, [filters.ordering, t])
 
   return (
@@ -166,6 +169,29 @@ export default function BlockOrdering({
             </div>
             <div className={styles.OrderingItemTitle}>
               {t('meno_fotografati')}
+            </div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]: filters.ordering === 'distance',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                ordering: 'distance',
+              })
+              setFilterOrderingOpen(false)
+            }}
+          >
+            <div>
+              {filters.ordering === '' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('distanza')}
             </div>
           </div>
         </div>

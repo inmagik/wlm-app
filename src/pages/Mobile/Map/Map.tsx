@@ -19,6 +19,8 @@ const getFilters = (params: URLSearchParams) => ({
   category: params.get('category') ?? '',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
+  user_lat: params.get('user_lat') ?? '',
+  user_lon: params.get('user_lon') ?? '',
 })
 
 export default function Map() {
@@ -76,14 +78,14 @@ export default function Map() {
       },
     }
 
-    const markerFolderPath = '/static/anycluster/images/'
+    // const markerFolderPath = '/static/anycluster/images/'
 
-    let anyclusterOpenLayers = new AnyclusterOpenLayers(
-      initialMap,
-      apiUrl,
-      markerFolderPath,
-      settings
-    )
+    // let anyclusterOpenLayers = new AnyclusterOpenLayers(
+    //   initialMap,
+    //   apiUrl,
+    //   markerFolderPath,
+    //   settings
+    // )
 
     setMap(initialMap)
 

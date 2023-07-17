@@ -45,7 +45,7 @@
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
 }
 
-.ButtonOrdering{
+.ButtonOrdering {
   display: flex;
   width: 32px;
   height: 32px;
@@ -133,4 +133,15 @@
   line-height: normal;
   display: flex;
   align-items: center;
+}
+
+.Distance {
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 4px;
 }

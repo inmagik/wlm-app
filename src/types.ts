@@ -25,6 +25,7 @@ export interface MonumentList {
   municipality_label: string
   municipality: number
   pictures_wlm_count: number
+  distance: number
 }
 
 
@@ -62,6 +63,7 @@ export interface Monument {
   to_review: boolean
   app_category: string
   in_contest: boolean
+  distance: number
 }
 
 export interface Comune {
