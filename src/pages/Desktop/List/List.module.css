@@ -31,6 +31,13 @@
   background: var(--colori-neutri-white, #fff);
   box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
   width: 100%;
+  color: var(--secondary);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .InputSearch:focus-visible {

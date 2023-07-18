@@ -14,7 +14,7 @@ import { Waypoint } from 'react-waypoint'
 import IconMonument from '../../../components/IconMonument'
 import { useParams } from 'react-router-dom'
 import Detail from '../../Mobile/Detail'
-import { parseSmartSlug } from '../../../utils'
+import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -141,6 +141,10 @@ export default function List() {
   useEffect(() => {
     if (slug) {
       setDetail(Number(parseSmartSlug(slug)))
+      setFilters({
+        ...filters,
+        search: getLabelFromSlug(slug),
+      })
     }
   }, [slug])
 

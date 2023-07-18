@@ -128,5 +128,25 @@ export default function getMarkerMap({ monument }: Props) {
         return '/markers/AltriMonumenti/_10/NOConcorso.png'
       }
     }
+  } else {
+    if (photosNumber === 0) {
+      if (inContest) {
+        return '/markers/AltriMonumenti/NoFoto/Concorso.png'
+      } else {
+        return '/markers/AltriMonumenti/NoFoto/NOConcorso.png'
+      }
+    } else if (photosNumber > 0 && photosNumber <= 10) {
+      if (inContest) {
+        return '/markers/AltriMonumenti/1-10/Concorso.png'
+      } else {
+        return '/markers/AltriMonumenti/1-10/NOConcorso.png'
+      }
+    } else if (photosNumber > 10) {
+      if (inContest) {
+        return '/markers/AltriMonumenti/_10/Concorso.png'
+      } else {
+        return '/markers/AltriMonumenti/_10/NOConcorso.png'
+      }
+    }
   }
 }
