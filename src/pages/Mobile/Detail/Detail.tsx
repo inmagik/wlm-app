@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
 import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
@@ -41,6 +41,7 @@ import LangLink from '../../../components/LangLink'
 import { Monument, MonumentList } from '../../../types'
 import classNames from 'classnames'
 import { Spinner } from 'react-bootstrap'
+import { useQsFilters } from '../../../hooks/filters'
 
 interface Props {
   monumentId?: number
@@ -53,6 +54,17 @@ interface DetailBlockProps {
   setDetail?: (monument: number | null) => void
   isDesktop?: boolean
 }
+
+const getFilters = (params: URLSearchParams) => ({
+  search: params.get('search') ?? '',
+  municipality: params.get('municipality') ?? '',
+  ordering: params.get('ordering') ?? 'label',
+  in_contest: params.get('in_contest') ?? 'true',
+  only_without_pictures: params.get('only_without_pictures') ?? '',
+  category: params.get('category') ?? '',
+  user_lat: Number(params.get('user_lat')) ?? '',
+  user_lon: Number(params.get('user_lon')) ?? '',
+})
 
 function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showAllImages, setShowAllImages] = useState(false)
@@ -67,6 +79,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
+  const { filters, setFilters } = useQsFilters(getFilters)
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
     const groupIndex = Math.floor(index / 12)
@@ -139,6 +152,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [monument])
+
+  const { slug } = useParams()
+  const navigate = useNavigate()
+
   return (
     <>
       <div
@@ -154,7 +171,25 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           })}
         >
           {isDesktop && setDetail && (
-            <Close className={styles.Close} onClick={() => setDetail(null)} />
+            <Close
+              className={styles.Close}
+              onClick={() => {
+                if (slug) {
+                  setDetail(null)
+                  navigate(
+                    `/${i18n.language}/lista/?${new URLSearchParams({
+                      search: '',
+                      municipality: filters.municipality,
+                      category: filters.category,
+                      in_contest: filters.in_contest,
+                      only_without_pictures: filters.only_without_pictures,
+                    })}`,
+
+                    { replace: true }
+                  )
+                }
+              }}
+            />
           )}
           {inContestMonument && (
             <div className={styles.PresenzaInConcorso}>
@@ -344,7 +379,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                         '/lista/?category=' +
                         type.categories__app_category__name +
                         '&municipality=' +
-                        monument?.municipality + '&in_contest='
+                        monument?.municipality +
+                        '&in_contest='
                       }
                     >
                       <div key={i} className={styles.MonumentiComuneItem}>

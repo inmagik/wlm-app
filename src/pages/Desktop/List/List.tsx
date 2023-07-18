@@ -4,7 +4,7 @@ import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
-import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
+import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
 import styles from './List.module.css'
@@ -12,9 +12,10 @@ import { useInfiniteMomuments } from '../../../hooks/monuments'
 import { Spinner } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 import IconMonument from '../../../components/IconMonument'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Detail from '../../Mobile/Detail'
 import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
+import { useTranslation } from 'react-i18next'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -61,9 +62,11 @@ export function ListMonuments({ filters, setDetail }: Props) {
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
+  const navigate = useNavigate()
+
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {isFetching  && !isFetchingNextPage ? (
+      {isFetching && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <Spinner />
         </div>
@@ -148,6 +151,10 @@ export default function List() {
     }
   }, [slug])
 
+  const navigate = useNavigate()
+
+  const { i18n } = useTranslation()
+
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
@@ -187,7 +194,29 @@ export default function List() {
                 <div
                   className={styles.ClearSearch}
                   onClick={() => {
-                    setFiltersDebounced({ search: '' })
+                    if (slug) {
+                      navigate(
+                        '/' +
+                          i18n.language +
+                          '/lista' +
+                          '?search=&ordering=' +
+                          filters.ordering +
+                          '&municipality=' +
+                          filters.municipality +
+                          '&category=' +
+                          filters.category +
+                          '&in_contest=' +
+                          filters.in_contest +
+                          '&only_without_pictures=' +
+                          filters.only_without_pictures
+                      )
+                      setDetail(null)
+                    } else {
+                      setFilters({
+                        ...filters,
+                        search: '',
+                      })
+                    }
                   }}
                 >
                   <CloseSecondary />
