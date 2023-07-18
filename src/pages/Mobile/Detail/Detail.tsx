@@ -133,6 +133,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         src: getMarkerMap({
           monument: monument!,
         }),
+        scale: 0.2
       }),
     })
 
