@@ -188,6 +188,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
                     { replace: true }
                   )
+                } else {
+                  setDetail(null)
                 }
               }}
             />
