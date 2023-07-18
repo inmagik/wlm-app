@@ -8,6 +8,7 @@ import OSM from 'ol/source/OSM'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
+import { AnyclusterOpenLayers } from 'anycluster-openlayers'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -27,7 +28,7 @@ export default function Map() {
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
-    zoom: 6,
+    zoom: 5,
   })
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export default function Map() {
           source: new OSM(),
         }),
       ],
+      controls: [],
       view: new View(mapState),
     })
 
@@ -52,17 +54,15 @@ export default function Map() {
       },
     }
 
-    // const markerFolderPath = '/static/anycluster/images/'
+    const markerFolderPath = '/static/anycluster/images/'
 
-    // let anyclusterOpenLayers = new AnyclusterOpenLayers(
-    //   initialMap,
-    //   apiUrl,
-    //   markerFolderPath,
-    //   settings
-    // )
-
+    let anyclusterOpenLayers = new AnyclusterOpenLayers(
+      initialMap,
+      apiUrl,
+      markerFolderPath,
+      settings as any
+    )
     setMap(initialMap)
-
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [mapState])
 
@@ -77,7 +77,11 @@ export default function Map() {
     <Layout>
       <div className="d-flex h-100 w-100">
         <div className="h-100">
-          <BlockFilters setDetail={setDetail} filters={filters} setFilters={setFilters} />
+          <BlockFilters
+            setDetail={setDetail}
+            filters={filters}
+            setFilters={setFilters}
+          />
         </div>
         <div className={styles.MapContainer}>
           <div ref={mapElement} id="map" className="w-100 h-100"></div>

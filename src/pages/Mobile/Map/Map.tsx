@@ -64,8 +64,10 @@ export default function Map() {
           source: new OSM(),
         }),
       ],
+      controls: [],
       view: new View(mapState),
     })
+    
 
     const apiUrl = '/anycluster/'
 

@@ -138,7 +138,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
     setMap(initialMap)
 
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
-  }, [])
+  }, [monument])
   return (
     <>
       <div
