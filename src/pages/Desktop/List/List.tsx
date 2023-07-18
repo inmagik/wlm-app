@@ -129,9 +129,10 @@ export default function List() {
   const [detail, setDetail] = useState<number | null>(null)
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && !filters.user_lat && !filters.user_lon) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setFiltersDebounced({
+        setFilters({
+          ...filters,
           user_lat: position.coords.latitude,
           user_lon: position.coords.longitude,
         })

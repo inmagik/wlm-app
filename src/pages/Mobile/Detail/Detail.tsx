@@ -184,6 +184,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                       category: filters.category,
                       in_contest: filters.in_contest,
                       only_without_pictures: filters.only_without_pictures,
+                      user_lat: String(filters.user_lat),
+                      user_lon: String(filters.user_lon),
                     })}`,
 
                     { replace: true }
