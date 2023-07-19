@@ -9,6 +9,9 @@ import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
 import { AnyclusterOpenLayers } from 'anycluster-openlayers'
+import VectorLayer from 'ol/layer/Vector'
+import { clusterSource } from '../../../lib/MagikCluster'
+import { Stroke, Style, Circle, Fill } from 'ol/style'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -29,39 +32,38 @@ export default function Map() {
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
     zoom: 5,
+    maxZoom: 18,
+    minZoom: 5,
   })
 
   useEffect(() => {
     if (!mapElement.current) return
+
+    const featureOverlay = new VectorLayer({
+      source: clusterSource,
+      style: new Style({
+        image: new Circle({
+          radius: 10,
+          fill: new Fill({color: "red"}),
+        }),
+      })
+
+      
+    });
+    
     const initialMap = new MapOl({
       target: mapElement.current,
+      
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
+        featureOverlay,
       ],
       controls: [],
       view: new View(mapState),
     })
-
-    const apiUrl = '/anycluster/'
-
-    const settings = {
-      srid: 'EPSG:4326',
-      clusterMethod: 'grid',
-      onFinalClick: function (marker: any, data: any) {
-        console.log(marker, data)
-      },
-    }
-
-    const markerFolderPath = '/static/anycluster/images/'
-
-    let anyclusterOpenLayers = new AnyclusterOpenLayers(
-      initialMap,
-      apiUrl,
-      markerFolderPath,
-      settings as any
-    )
+    
     setMap(initialMap)
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [mapState])

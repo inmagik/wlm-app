@@ -1,6 +1,5 @@
 import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
-import { AnyclusterOpenLayers } from 'anycluster-openlayers'
 
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
@@ -12,6 +11,10 @@ import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import { Stroke, Style } from 'ol/style'
+import { vectorSource } from '../../../lib/MagikCluster'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -57,37 +60,41 @@ export default function Map() {
 
   useEffect(() => {
     if (!mapElement.current) return
+
+    const featureOverlay = new VectorLayer({
+      source: vectorSource,
+      style: new Style({
+        stroke: new Stroke({
+          color: 'rgba(255, 255, 255, 0.7)',
+          width: 2,
+        }),
+      }),
+    });
+    
     const initialMap = new MapOl({
       target: mapElement.current,
       layers: [
         new TileLayer({
           source: new OSM(),
         }),
+        featureOverlay,
       ],
       controls: [],
       view: new View(mapState),
     })
+
     
 
-    const apiUrl = '/anycluster/'
 
-    const settings = {
-      srid: 'EPSG:4326',
-      clusterMethod: 'grid',
-      onFinalClick: function (marker:any, data:any) {
-        console.log(marker, data)
-        
-      },
-    }
 
-    // const markerFolderPath = '/static/anycluster/images/'
 
-    // let anyclusterOpenLayers = new AnyclusterOpenLayers(
-    //   initialMap,
-    //   apiUrl,
-    //   markerFolderPath,
-    //   settings
-    // )
+
+
+
+
+
+
+    
 
     setMap(initialMap)
 
