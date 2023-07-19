@@ -40,9 +40,10 @@ interface Props {
     user_lon: number
   }
   setDetail: (monument: number) => void
+  detail: number | null
 }
 
-export function ListMonuments({ filters, setDetail }: Props) {
+export function ListMonuments({ filters, setDetail, detail }: Props) {
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll
@@ -68,7 +69,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
-          <div className='loader' />
+          <div className="loader" />
         </div>
       ) : (
         infiniteMonuments!.pages.map((list, i) => (
@@ -77,7 +78,10 @@ export function ListMonuments({ filters, setDetail }: Props) {
               return (
                 <div
                   key={k}
-                  className={styles.MonumentCard}
+                  className={classNames({
+                    [styles.MonumentCard]: !detail || detail !== monument.id,
+                    [styles.MonumentCardWithDetail]: detail && detail === monument.id,
+                  })}
                   onClick={() => {
                     setDetail(monument.id)
                   }}
@@ -234,11 +238,15 @@ export default function List() {
                     'w-100 d-flex align-items-center justify-content-center'
                   }
                 >
-                  <div className='loader' />
+                  <div className="loader" />
                 </div>
               }
             >
-              <ListMonuments setDetail={setDetail} filters={filters} />
+              <ListMonuments
+                detail={detail}
+                setDetail={setDetail}
+                filters={filters}
+              />
             </Suspense>
           </div>
           <div className={'h-100'}>
@@ -252,7 +260,7 @@ export default function List() {
             fallback={
               <div className={styles.CardDetail}>
                 <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                <div className='loader' />
+                  <div className="loader" />
                 </div>
               </div>
             }

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -7,11 +7,17 @@ import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
-import { MonumentList } from '../../../types'
 import VectorLayer from 'ol/layer/Vector'
-import { clusterSource, getFeatureInfo, getFeatureStyle, vectorSource } from '../../../lib/MagikCluster'
-import { Stroke, Style, Circle, Fill } from 'ol/style'
+import {
+  clusterSource,
+  getFeatureInfo,
+  getFeatureStyle,
+  vectorSource,
+} from '../../../lib/MagikCluster'
 import { useCategoriesDomain } from '../../../hooks/monuments'
+import Detail from '../../Mobile/Detail'
+import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
+import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -28,7 +34,9 @@ export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
-  const { data: categories } = useCategoriesDomain()
+  const { data: categories } = useCategoriesDomain()
+  const [detail, setDetail] = useState<number | null>(null)
+  console.log(detail)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -37,11 +45,33 @@ export default function Map() {
     minZoom: 5,
   })
 
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
+  }
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setMapState({
+      ...mapState,
+      center: fromLonLat([longitude, latitude]),
+      zoom: 14,
+    })
+  }
+
+  function error() {
+    console.log('Unable to retrieve your location')
+  }
+
+
   useEffect(() => {
     vectorSource.set('filters', filters)
     vectorSource.set('categories', categories)
     vectorSource.refresh()
-
   }, [filters])
 
   useEffect(() => {
@@ -49,7 +79,7 @@ export default function Map() {
 
     const featureOverlay = new VectorLayer({
       source: clusterSource,
-      style: getFeatureStyle
+      style: getFeatureStyle,
     })
 
     const initialMap = new MapOl({
@@ -65,18 +95,16 @@ export default function Map() {
       view: new View(mapState),
     })
 
-    initialMap.on('click', function(evt) {
-      if (initialMap.forEachFeatureAtPixel(evt.pixel,
-        function(feature) {
+    initialMap.on('click', function (evt) {
+      if (
+        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
           const info = getFeatureInfo(feature)
-          if(info === 1){
-            const monument = feature.getProperties().features[0]
-            const id = monument.getProperties().id
-            
-            console.info("xxx", id)
+          if (info === 1) {
+            const monument = feature.getProperties().features[0].getProperties()
+            const id = monument.id
 
+            setDetail(id)
           }
-          
         })
       ) {
         console.log('boo')
@@ -104,8 +132,6 @@ export default function Map() {
     }
   }, [])
 
-  const [detail, setDetail] = useState<MonumentList | null>(null)
-
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
@@ -117,8 +143,35 @@ export default function Map() {
           />
         </div>
         <div className={styles.MapContainer}>
-          <div ref={mapElement} id="map" className="w-100 h-100"></div>
+          <div ref={mapElement} id="map" className="w-100 h-100">
+            <div className={styles.ContainerButtons}>
+              <button className={styles.ButtonMappe}>
+                <Mappe />
+              </button>
+              <button
+                className={styles.ButtonMyLocation}
+                onClick={handleLocationClick}
+              >
+                <MyLocation />
+              </button>
+            </div>
+          </div>
         </div>
+        {detail && (
+          <Suspense
+            fallback={
+              <div className={styles.CardDetail}>
+                <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                  <div className="loader" />
+                </div>
+              </div>
+            }
+          >
+            <div className={styles.CardDetail}>
+              <Detail isDesktop monumentId={detail} setDetail={setDetail} />
+            </div>
+          </Suspense>
+        )}
       </div>
     </Layout>
   )

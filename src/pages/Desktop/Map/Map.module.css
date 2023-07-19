@@ -3,4 +3,64 @@
   height: 100%;
   border-radius: 30px;
   margin-left: 8px;
+  position: relative;
+}
+
+.CardDetail {
+  display: flex;
+  width: 401px;
+  height: 100%;
+  padding: 24px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: var(--colori-neutri-background);
+  margin-left: 8px;
+}
+
+.ContainerButtons {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1;
+}
+
+.ButtonMyLocation {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  border: none;
+}
+
+.ButtonMyLocation:hover,
+.ButtonMyLocation:active {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    #fff;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.ButtonMappe {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
+  border: none;
 }

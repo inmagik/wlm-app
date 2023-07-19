@@ -1,6 +1,5 @@
 import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
-
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { useEffect, useRef, useState } from 'react'
@@ -12,7 +11,6 @@ import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
 import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
 import { Stroke, Style } from 'ol/style'
 import { vectorSource } from '../../../lib/MagikCluster'
 

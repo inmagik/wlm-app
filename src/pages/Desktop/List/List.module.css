@@ -55,12 +55,12 @@
   transform: translateY(-50%);
 }
 
-.ClearSearch{
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+.ClearSearch {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .ListMonuments {
@@ -85,6 +85,20 @@
   background: var(--colori-neutri-white);
   margin-bottom: 4px;
   cursor: pointer;
+}
+
+.MonumentCardWithDetail {
+  display: flex;
+  min-height: 84px;
+  padding: 16px 24px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  background: var(--colori-neutri-gray-2);
 }
 
 .MonumentTitle {
