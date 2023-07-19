@@ -63,6 +63,16 @@ export default function Map() {
       controls: [],
       view: new View(mapState),
     })
+
+    initialMap.on('click', function(evt) {
+      if (initialMap.forEachFeatureAtPixel(evt.pixel,
+        function(feature) {
+          console.log(feature)
+        })
+      ) {
+        console.log("boo")
+      }
+    });
     
     setMap(initialMap)
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
