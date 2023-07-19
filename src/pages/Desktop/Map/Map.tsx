@@ -11,6 +11,7 @@ import { MonumentList } from '../../../types'
 import VectorLayer from 'ol/layer/Vector'
 import { clusterSource, getFeatureInfo, getFeatureStyle, vectorSource } from '../../../lib/MagikCluster'
 import { Stroke, Style, Circle, Fill } from 'ol/style'
+import { useCategoriesDomain } from '../../../hooks/monuments'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -27,19 +28,18 @@ export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
+  const { data: categories } = useCategoriesDomain()
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
-    zoom: 10,
+    zoom: 5,
     maxZoom: 18,
     minZoom: 5,
   })
 
-  console.log(clusterSource, 'clusterSource')
-
   useEffect(() => {
-    console.log("filters changed", filters)
     vectorSource.set('filters', filters)
+    vectorSource.set('categories', categories)
     vectorSource.refresh()
 
   }, [filters])

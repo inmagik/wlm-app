@@ -57,3 +57,20 @@ export function useMonument(idOrSlug: string | number) {
     getMonument(idOrSlug, signal)
   ).data!
 }
+
+interface CategoryDomain {
+  name: string
+  categories: number[]
+}
+
+export async function getCategoriesDomain(signal?: AbortSignal) {
+  return (
+    await axios.get(`${API_URL}/categories-domain/`, {
+      signal,
+    })
+  ).data as CategoryDomain[]
+}
+
+export function useCategoriesDomain() {
+  return useQuery(['categories-domain'], () => getCategoriesDomain())
+}

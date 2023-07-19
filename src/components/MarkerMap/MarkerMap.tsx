@@ -1,7 +1,11 @@
 import { Monument } from '../../types'
 
 interface Props {
-  monument: Monument
+  monument: {
+    app_category: string
+    pictures_wlm_count: number
+    in_contest: boolean
+  }
 }
 
 export default function getMarkerMap({ monument }: Props) {
