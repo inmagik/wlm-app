@@ -48,7 +48,8 @@ export default function Map() {
 
     const settings = {
       srid: 'EPSG:4326',
-      clusterMethod: 'grid',
+      clusterMethod: 'viewport',
+      geometryType: 'area',
       onFinalClick: function (marker: any, data: any) {
         console.log(marker, data)
       },

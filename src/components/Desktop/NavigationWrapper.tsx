@@ -16,7 +16,7 @@ export default function NavigationWrapper({
       fallback={
         <Layout>
           <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-            <Spinner />
+            <div className='loader' />
           </div>
         </Layout>
       }

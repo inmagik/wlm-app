@@ -68,7 +68,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
-          <Spinner />
+          <div className='loader' />
         </div>
       ) : (
         infiniteMonuments!.pages.map((list, i) => (
@@ -125,7 +125,7 @@ export function ListMonuments({ filters, setDetail }: Props) {
 }
 
 export default function List() {
-  const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
+  const { filters, setFilters } = useQsFilters(getFilters)
   const [detail, setDetail] = useState<number | null>(null)
 
   useEffect(() => {
@@ -227,11 +227,14 @@ export default function List() {
             <Suspense
               fallback={
                 <div
+                  style={{
+                    height: 'calc(100% - 64px)',
+                  }}
                   className={
-                    'w-100 h-100 d-flex align-items-center justify-content-center'
+                    'w-100 d-flex align-items-center justify-content-center'
                   }
                 >
-                  <Spinner />
+                  <div className='loader' />
                 </div>
               }
             >
@@ -249,7 +252,7 @@ export default function List() {
             fallback={
               <div className={styles.CardDetail}>
                 <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                  <Spinner />
+                <div className='loader' />
                 </div>
               </div>
             }

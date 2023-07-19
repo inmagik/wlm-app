@@ -25,7 +25,6 @@
 .FilterLabel {
   color: var(--primary);
   text-align: center;
-  /* H2 */
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -37,7 +36,6 @@
 .FilterLabelFiltri {
   color: var(--primary);
   text-align: center;
-  /* H2 */
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -94,7 +92,6 @@
   background: var(--colori-neutri-white);
   box-shadow: 1px 2px 0px 0px rgba(17, 138, 178, 0.23);
   color: var(--secondary);
-  /* Body */
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
@@ -122,7 +119,6 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
-  /* border-bottom: 1px solid var(--colori-neutri-white); */
   padding-bottom: 8px;
 }
 

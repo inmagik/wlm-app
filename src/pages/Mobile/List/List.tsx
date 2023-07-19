@@ -72,7 +72,7 @@ export function ListMonuments({ filters }: Props) {
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
-          <Spinner />
+          <div className='loader' />
         </div>
       ) : (
         infiniteMonuments!.pages.map((list, i) => (
@@ -189,7 +189,7 @@ export default function List() {
         <Suspense
           fallback={
             <div className="d-flex align-items-center justify-content-center w-100 h-100">
-              <Spinner />
+              <div className='loader' />
             </div>
           }
         >

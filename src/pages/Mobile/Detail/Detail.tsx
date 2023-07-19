@@ -524,7 +524,7 @@ export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
     <Suspense
       fallback={
         <div className="d-flex justify-content-center align-items-center h-100">
-          <Spinner />
+          <div className='loader' />
         </div>
       }
     >
@@ -535,7 +535,7 @@ export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
       <Suspense
         fallback={
           <div className="d-flex justify-content-center align-items-center h-100">
-            <Spinner />
+            <div className='loader' />
           </div>
         }
       >
