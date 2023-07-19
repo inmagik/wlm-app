@@ -4,7 +4,8 @@ import GeoJSON from 'ol/format/GeoJSON.js'
 import { bbox, tile } from 'ol/loadingstrategy.js'
 import { transformExtent } from 'ol/proj'
 import TileGrid from 'ol/tilegrid/TileGrid.js'
-import { Fill, Stroke, Style, Circle, Text } from 'ol/style'
+import { Fill, Stroke, Style, Circle, Text, Icon } from 'ol/style'
+import { scaleLinear } from 'd3-scale'
 
 const format = new GeoJSON({
   //dataProjection: 'EPSG:4326',
@@ -37,9 +38,16 @@ export const vectorSource = new Vector({
   loader: (extent, resolution, projection, success, failure) => {
     const epsg4326Extent = transformExtent(extent, projection, 'EPSG:4326')
     const baseUrl = 'http://localhost:8000/api/app/cluster-monuments/'
+
+    const currentFilters = vectorSource.get('filters')  
+    console.log("filters in vectorSource", currentFilters)
+    const params = new URLSearchParams(currentFilters).toString()
+
+    console.log("pp", params)
+
     const url = `${baseUrl}?bbox=${epsg4326Extent.join(
       ','
-    )}&resolution=${resolution}`
+    )}&resolution=${resolution}&${params}`
 
     const xhr = new XMLHttpRequest()
     xhr.open('GET', url)
@@ -85,23 +93,41 @@ export const vectorSource = new Vector({
 })
 
 export const clusterSource = new Cluster({
-  distance: 20,
+  distance: 40,
   source: vectorSource,
 })
+
+
+const clusterScale = scaleLinear().domain([7, 45, 46]).range([12, 20, 20])
 
 const styleCache = {};
 export function getFeatureStyle(feature:any){
   
   const info = getFeatureInfo(feature);
+
+  if(info === 1){
+    const iconStyle = new Style({
+      image: new Icon({
+        anchor: [0.5, 46],
+        anchorXUnits: 'fraction',
+        anchorYUnits: 'pixels',
+        src: '/markers/Alberi/_10/Concorso.png',
+        width: 30,
+      }),
+    });
+    return iconStyle
+
+
+  }
+
+  
   const size = info.toString()
   let style = styleCache[size];
   if (!style) {
     style = new Style({
       image: new Circle({
-        radius: 10,
-        stroke: new Stroke({
-          color: '#fff',
-        }),
+        radius: clusterScale(info),
+        
         fill: new Fill({
           color: '#3399CC',
         }),

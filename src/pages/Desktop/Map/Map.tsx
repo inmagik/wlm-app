@@ -10,7 +10,7 @@ import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
 import { AnyclusterOpenLayers } from 'anycluster-openlayers'
 import VectorLayer from 'ol/layer/Vector'
-import { clusterSource, getFeatureInfo, getFeatureStyle } from '../../../lib/MagikCluster'
+import { clusterSource, getFeatureInfo, getFeatureStyle, vectorSource } from '../../../lib/MagikCluster'
 import { Stroke, Style, Circle, Fill } from 'ol/style'
 
 const getFilters = (params: URLSearchParams) => ({
@@ -31,10 +31,17 @@ export default function Map() {
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
-    zoom: 5,
+    zoom: 10,
     maxZoom: 18,
     minZoom: 5,
   })
+
+  useEffect(() => {
+    console.log("filters changed", filters)
+    vectorSource.set('filters', filters)
+    vectorSource.refresh()
+
+  }, [filters])
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -69,8 +76,14 @@ export default function Map() {
       if (initialMap.forEachFeatureAtPixel(evt.pixel,
         function(feature) {
           const info = getFeatureInfo(feature)
-          console.log(feature)
-          console.log("info", info)
+          if(info === 1){
+            const monument = feature.getProperties().features[0]
+            const id = monument.getProperties().id
+            
+            console.info("xxx", id)
+
+          }
+          
         })
       ) {
         console.log("boo")
