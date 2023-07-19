@@ -9,7 +9,7 @@ import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
 import VectorLayer from 'ol/layer/Vector'
-import { clusterSource } from '../../../lib/MagikCluster'
+import { clusterSource, getFeatureInfo, getFeatureStyle, vectorSource } from '../../../lib/MagikCluster'
 import { Stroke, Style, Circle, Fill } from 'ol/style'
 
 const getFilters = (params: URLSearchParams) => ({
@@ -30,7 +30,7 @@ export default function Map() {
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
-    zoom: 5,
+    zoom: 10,
     maxZoom: 18,
     minZoom: 5,
   })
@@ -38,16 +38,18 @@ export default function Map() {
   console.log(clusterSource, 'clusterSource')
 
   useEffect(() => {
+    console.log("filters changed", filters)
+    vectorSource.set('filters', filters)
+    vectorSource.refresh()
+
+  }, [filters])
+
+  useEffect(() => {
     if (!mapElement.current) return
 
     const featureOverlay = new VectorLayer({
       source: clusterSource,
-      style: new Style({
-        image: new Circle({
-          radius: 10,
-          fill: new Fill({ color: 'red' }),
-        }),
-      }),
+      style: getFeatureStyle
     })
 
     const initialMap = new MapOl({
@@ -63,10 +65,18 @@ export default function Map() {
       view: new View(mapState),
     })
 
-    initialMap.on('click', function (evt) {
-      if (
-        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
-          console.log(feature)
+    initialMap.on('click', function(evt) {
+      if (initialMap.forEachFeatureAtPixel(evt.pixel,
+        function(feature) {
+          const info = getFeatureInfo(feature)
+          if(info === 1){
+            const monument = feature.getProperties().features[0]
+            const id = monument.getProperties().id
+            
+            console.info("xxx", id)
+
+          }
+          
         })
       ) {
         console.log('boo')
