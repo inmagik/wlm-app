@@ -8,7 +8,6 @@ import OSM from 'ol/source/OSM'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
-import { AnyclusterOpenLayers } from 'anycluster-openlayers'
 import VectorLayer from 'ol/layer/Vector'
 import { clusterSource } from '../../../lib/MagikCluster'
 import { Stroke, Style, Circle, Fill } from 'ol/style'
@@ -36,6 +35,8 @@ export default function Map() {
     minZoom: 5,
   })
 
+  console.log(clusterSource, 'clusterSource')
+
   useEffect(() => {
     if (!mapElement.current) return
 
@@ -44,16 +45,14 @@ export default function Map() {
       style: new Style({
         image: new Circle({
           radius: 10,
-          fill: new Fill({color: "red"}),
+          fill: new Fill({ color: 'red' }),
         }),
-      })
+      }),
+    })
 
-      
-    });
-    
     const initialMap = new MapOl({
       target: mapElement.current,
-      
+
       layers: [
         new TileLayer({
           source: new OSM(),
@@ -64,16 +63,16 @@ export default function Map() {
       view: new View(mapState),
     })
 
-    initialMap.on('click', function(evt) {
-      if (initialMap.forEachFeatureAtPixel(evt.pixel,
-        function(feature) {
+    initialMap.on('click', function (evt) {
+      if (
+        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
           console.log(feature)
         })
       ) {
-        console.log("boo")
+        console.log('boo')
       }
-    });
-    
+    })
+
     setMap(initialMap)
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [mapState])
