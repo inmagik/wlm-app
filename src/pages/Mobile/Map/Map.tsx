@@ -12,7 +12,16 @@ import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
 import VectorLayer from 'ol/layer/Vector'
 import { Stroke, Style } from 'ol/style'
-import { vectorSource } from '../../../lib/MagikCluster'
+import {
+  clusterSource,
+  getFeatureInfo,
+  getFeatureStyle,
+  vectorSource,
+} from '../../../lib/MagikCluster'
+import { useCategoriesDomain } from '../../../hooks/monuments'
+import { useNavigate } from 'react-router-dom'
+import { smartSlug } from '../../../utils'
+import { useTranslation } from 'react-i18next'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -29,6 +38,9 @@ export default function Map() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
+  const { data: categories } = useCategoriesDomain()
+  const navigate = useNavigate()
+  const { i18n } = useTranslation()
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -57,20 +69,22 @@ export default function Map() {
   }
 
   useEffect(() => {
+    vectorSource.set('filters', filters)
+    vectorSource.set('categories', categories)
+    vectorSource.refresh()
+  }, [filters])
+
+  useEffect(() => {
     if (!mapElement.current) return
 
     const featureOverlay = new VectorLayer({
-      source: vectorSource,
-      style: new Style({
-        stroke: new Stroke({
-          color: 'rgba(255, 255, 255, 0.7)',
-          width: 2,
-        }),
-      }),
-    });
-    
+      source: clusterSource,
+      style: getFeatureStyle,
+    })
+
     const initialMap = new MapOl({
       target: mapElement.current,
+
       layers: [
         new TileLayer({
           source: new OSM(),
@@ -81,21 +95,23 @@ export default function Map() {
       view: new View(mapState),
     })
 
-    
-
-
-
-
-
-
-
-
-
-
-    
+    initialMap.on('click', function (evt) {
+      if (
+        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
+          const info = getFeatureInfo(feature)
+          if (info === 1) {
+            const monument = feature.getProperties().features[0].getProperties()
+            const id = monument.id
+            const label = monument.label
+            navigate(`/${i18n.language}/mappa/${smartSlug(id, label)})}`)
+          }
+        })
+      ) {
+        console.log('boo')
+      }
+    })
 
     setMap(initialMap)
-
     return () => initialMap.setTarget(undefined as unknown as HTMLElement)
   }, [mapState])
 
