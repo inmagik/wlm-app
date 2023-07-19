@@ -10,7 +10,7 @@ import styles from './Map.module.css'
 import { MonumentList } from '../../../types'
 import { AnyclusterOpenLayers } from 'anycluster-openlayers'
 import VectorLayer from 'ol/layer/Vector'
-import { clusterSource } from '../../../lib/MagikCluster'
+import { clusterSource, getFeatureInfo, getFeatureStyle } from '../../../lib/MagikCluster'
 import { Stroke, Style, Circle, Fill } from 'ol/style'
 
 const getFilters = (params: URLSearchParams) => ({
@@ -41,12 +41,13 @@ export default function Map() {
 
     const featureOverlay = new VectorLayer({
       source: clusterSource,
-      style: new Style({
-        image: new Circle({
-          radius: 10,
-          fill: new Fill({color: "red"}),
-        }),
-      })
+      // style: new Style({
+      //   image: new Circle({
+      //     radius: 10,
+      //     fill: new Fill({color: "red"}),
+      //   }),
+      // })
+      style: getFeatureStyle,
 
       
     });
@@ -67,7 +68,9 @@ export default function Map() {
     initialMap.on('click', function(evt) {
       if (initialMap.forEachFeatureAtPixel(evt.pixel,
         function(feature) {
+          const info = getFeatureInfo(feature)
           console.log(feature)
+          console.log("info", info)
         })
       ) {
         console.log("boo")
