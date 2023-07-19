@@ -79,7 +79,7 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
-  border-bottom: 1px solid var(--colori-neutri-white);
+  /* border-bottom: 1px solid var(--colori-neutri-white); */
 }
 
 .InputComune {
@@ -122,7 +122,7 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
-  border-bottom: 1px solid var(--colori-neutri-white);
+  /* border-bottom: 1px solid var(--colori-neutri-white); */
   padding-bottom: 8px;
 }
 
@@ -140,11 +140,11 @@
   padding: 8px 0px 8px 24px;
   cursor: pointer;
   align-items: center;
-  gap: 32px;
+  gap: 10px;
   align-self: stretch;
   border-radius: 5px;
   background: var(--colori-neutri-white);
-  color: var(--primary-color, #118ab2);
+  color: var(--primary);
   text-align: center;
   /* Body */
   font-family: var(--font-roboto-slab);
@@ -153,6 +153,11 @@
   font-weight: 400;
   width: 100%;
   line-height: normal;
+}
+
+.FilterItemTitle {
+    display: flex;
+    align-items: center;
 }
 
 .FilterItemActive {
@@ -177,7 +182,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid var(--colori-neutri-white);
+  /* border-bottom: 1px solid var(--colori-neutri-white); */
 }
 
 .ComuniList {

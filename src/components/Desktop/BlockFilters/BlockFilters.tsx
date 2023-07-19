@@ -9,6 +9,11 @@ import { useEffect, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import ReactSwitch from 'react-switch'
 import { useComuni } from '../../../hooks/comuni'
+import CastelloIcon from '../../Icons/CastelloIcon'
+import EdificioReligiosoIcon from '../../Icons/EdificioReligiosoIcon'
+import AltroMonumentoIcon from '../../Icons/AltroMonumentoIcon'
+import MuseoIcon from '../../Icons/MuseoIcon'
+import AlberoMonumentaleIcon from '../../Icons/AlberoMonumentaleIcon'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -162,7 +167,14 @@ export default function BlockFilters({
                 <UncheckOrderingIcon />
               )}
             </div>
-            <div className={styles.FilterItemTitle}>{t('castelli')}</div>
+            <div className={styles.FilterItemTitle}>
+              <CastelloIcon
+                fill={
+                  filters.category === 'Castelli' ? '#fff' : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('castelli')}</span>
+            </div>
           </div>
           <div
             className={classNames(styles.FilterItem, {
@@ -185,7 +197,14 @@ export default function BlockFilters({
               )}
             </div>
             <div className={styles.FilterItemTitle}>
-              {t('edifici_religiosi')}
+              <EdificioReligiosoIcon
+                fill={
+                  filters.category === 'Edifici religiosi'
+                    ? '#fff'
+                    : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('edifici_religiosi')}</span>
             </div>
           </div>
           <div
@@ -207,7 +226,16 @@ export default function BlockFilters({
                 <UncheckOrderingIcon />
               )}
             </div>
-            <div className={styles.FilterItemTitle}>{t('altri_monumenti')}</div>
+            <div className={styles.FilterItemTitle}>
+              <AltroMonumentoIcon
+                fill={
+                  filters.category === 'Altri monumenti'
+                    ? '#fff'
+                    : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('altri_monumenti')}</span>
+            </div>
           </div>
           <div
             className={classNames(styles.FilterItem, {
@@ -228,7 +256,12 @@ export default function BlockFilters({
                 <UncheckOrderingIcon />
               )}
             </div>
-            <div className={styles.FilterItemTitle}>{t('musei')}</div>
+            <div className={styles.FilterItemTitle}>
+              <MuseoIcon
+                fill={filters.category === 'Musei' ? '#fff' : 'var(--primary)'}
+              />
+              <span className="ms-2">{t('musei')}</span>
+            </div>
           </div>
           <div
             className={classNames(styles.FilterItem, {
@@ -251,7 +284,14 @@ export default function BlockFilters({
               )}
             </div>
             <div className={styles.FilterItemTitle}>
-              {t('alberi_monumentali')}
+              <AlberoMonumentaleIcon
+                fill={
+                  filters.category === 'Alberi monumentali'
+                    ? '#fff'
+                    : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('alberi_monumentali')}</span>
             </div>
           </div>
         </div>
@@ -259,7 +299,7 @@ export default function BlockFilters({
       <div className={styles.Filter}>
         <div className={styles.FilterTitle}>{t('tutti_i_monumenti')}</div>
         <div className="d-flex align-items-center">
-          <div className='d-flex align-items-center'>
+          <div className="d-flex align-items-center">
             <ReactSwitch
               offColor="#D0DFE4"
               size={15}
@@ -280,7 +320,7 @@ export default function BlockFilters({
       <div className={styles.Filter}>
         <div className={styles.FilterTitle}>{t('monumenti_senza_foto')}</div>
         <div className="d-flex align-items-center">
-          <div className='d-flex align-items-center'>
+          <div className="d-flex align-items-center">
             <ReactSwitch
               offColor="#D0DFE4"
               size={15}
