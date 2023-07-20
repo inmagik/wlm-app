@@ -108,7 +108,7 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
-
+            setDetail(monument.id)
             setInfoMarker({
               id: monument.id,
               label: monument.label,
@@ -118,7 +118,7 @@ export default function Map() {
               in_contest: monument.in_contest,
             })
 
-            setDetail(monument.id)
+            
           }
         })
       ) {
@@ -146,6 +146,12 @@ export default function Map() {
       })
     }
   }, [])
+
+  useEffect(() => {
+    if(!detail){
+      setInfoMarker(null)
+    }
+  }, [detail])
 
   return (
     <Layout>
