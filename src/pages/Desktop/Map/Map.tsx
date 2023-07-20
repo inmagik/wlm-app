@@ -78,10 +78,10 @@ export default function Map() {
   }
 
   useEffect(() => {
-    if(categories){
-    vectorSource.set('filters', filters)
-    vectorSource.set('categories', categories)
-    vectorSource.refresh()
+    if (categories) {
+      vectorSource.set('filters', filters)
+      vectorSource.set('categories', categories)
+      vectorSource.refresh()
     }
   }, [filters, categories])
 
@@ -103,12 +103,10 @@ export default function Map() {
         featureOverlay,
       ],
       controls: [
-        new Zoom(
-          {
-            zoomInClassName: styles.ZoomIn,
-            zoomOutClassName: styles.ZoomOut,
-          }
-        ),
+        new Zoom({
+          zoomInClassName: styles.ZoomIn,
+          zoomOutClassName: styles.ZoomOut,
+        }),
       ],
       view: new View(mapState),
     })
@@ -119,9 +117,13 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
-            const categoriesFeature = feature.getProperties().features[0].getProperties().categories
+            const categoriesFeature = feature
+              .getProperties()
+              .features[0].getProperties().categories
             const category = categoriesFeature[0]
-            const appCategory = categories?.find((c: any) => c.categories.includes(category))?.name ?? ''
+            const appCategory =
+              categories?.find((c: any) => c.categories.includes(category))
+                ?.name ?? ''
             setDetail(monument.id)
             setInfoMarker({
               id: monument.id,
@@ -131,8 +133,6 @@ export default function Map() {
               app_category: appCategory,
               in_contest: monument.in_contest,
             })
-
-            
           }
         })
       ) {
@@ -162,7 +162,7 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if(!detail){
+    if (!detail) {
       setInfoMarker(null)
     }
   }, [detail])
@@ -182,6 +182,7 @@ export default function Map() {
           handleLocationClick={handleLocationClick}
           infoMarker={infoMarker}
           legend={legend}
+          detail={detail}
           setLegend={setLegend}
         />
         {detail && (

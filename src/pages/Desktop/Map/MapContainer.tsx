@@ -5,7 +5,6 @@ import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import Legend from '../../../components/Desktop/Legend'
-import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
 import IconMonument from '../../../components/IconMonument'
 
 interface MapContainerProps {
@@ -14,6 +13,7 @@ interface MapContainerProps {
   infoMarker: MarkerProps | null
   legend: boolean
   setLegend: (legend: boolean) => void
+  detail: number | null
 }
 
 export default function MapContainer({
@@ -22,6 +22,7 @@ export default function MapContainer({
   infoMarker,
   legend,
   setLegend,
+  detail,
 }: MapContainerProps) {
   return (
     <div className={styles.MapContainer}>
@@ -53,39 +54,54 @@ export default function MapContainer({
           </button>
         </div>
         {infoMarker && (
-          <div
-            style={{
-              position: 'absolute',
-              top: infoMarker.coords[1] - 35,
-              left: infoMarker.coords[0] - 80,
-              zIndex: 1,
-              backgroundColor:
-                infoMarker.pictures_wlm_count === 0
-                  ? 'var(--tertiary)'
-                  : infoMarker.pictures_wlm_count > 0 &&
-                    infoMarker.pictures_wlm_count <= 10
-                  ? 'var(--monumento-poche-foto)'
-                  : 'var(--monumento-tante-foto)',
-            }}
-            className={styles.DetailMarker}
-          >
-            <div>
-              <IconMonument
-                monument={{
-                  in_contest: infoMarker.in_contest,
-                  pictures_wlm_count: infoMarker.pictures_wlm_count,
-                  app_category: infoMarker.app_category,
-                }}
-              />
-            </div>
-            <div className={styles.TitleMarker}>{infoMarker.label}</div>
-            <div className={styles.TextMarker}>
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                top: infoMarker.coords[1] - 80,
+                left: infoMarker.coords[0] - 80,
+                zIndex: 1,
+                backgroundColor:
+                  infoMarker.pictures_wlm_count === 0
+                    ? 'var(--tertiary)'
+                    : infoMarker.pictures_wlm_count > 0 &&
+                      infoMarker.pictures_wlm_count <= 10
+                    ? 'var(--monumento-poche-foto)'
+                    : 'var(--monumento-tante-foto)',
+              }}
+              className={styles.DetailMarker}
+            >
               <div>
-                <CameraTransparent />
+                <IconMonument
+                  monument={{
+                    in_contest: infoMarker.in_contest,
+                    pictures_wlm_count: infoMarker.pictures_wlm_count,
+                    app_category: infoMarker.app_category,
+                  }}
+                />
               </div>
-              <div className="ms-2 mt-1">{infoMarker.pictures_wlm_count}</div>
+              <div className={styles.TitleMarker}>{infoMarker.label}</div>
+              <div className={styles.TextMarker}>
+                <div>
+                  <CameraTransparent />
+                </div>
+                <div className="ms-2 mt-1">{infoMarker.pictures_wlm_count}</div>
+              </div>
+              <div
+                className={styles.PinMarker}
+                style={{
+                  borderTop:
+                    '10px solid ' +
+                    (infoMarker.pictures_wlm_count === 0
+                      ? 'var(--tertiary)'
+                      : infoMarker.pictures_wlm_count > 0 &&
+                        infoMarker.pictures_wlm_count <= 10
+                      ? 'var(--monumento-poche-foto)'
+                      : 'var(--monumento-tante-foto)'),
+                }}
+              ></div>
             </div>
-          </div>
+          </>
         )}
       </div>
       <Legend legend={legend} />

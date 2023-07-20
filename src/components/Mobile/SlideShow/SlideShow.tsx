@@ -2,7 +2,10 @@ import { useRef } from 'react'
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import { Monument } from '../../../types'
 import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
+import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import styles from './SlideShow.module.css'
+import IconMonument from '../../IconMonument'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   monument: Monument
@@ -27,6 +30,7 @@ export default function SlideShow({
       acc[picture.id] = picture
       return acc
     }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
+  const { t } = useTranslation()
   return (
     <div className={styles.SlideShow}>
       <Swiper
@@ -64,8 +68,26 @@ export default function SlideShow({
                 transition: 'all 0.5s ease-in-out',
               }}
             >
-              <div className={styles.InfoBlockSlideShowTitle}>
-                {monument?.label}
+              <div className="d-flex">
+                <div>
+                  <IconMonument monument={monument} />
+                </div>
+                <div className="ms-3">
+                  <div className={styles.InfoBlockSlideShowTitle}>
+                    {monument?.label}
+                  </div>
+                  <div className="d-flex align-items-center mt-1">
+                    <div className={styles.Municipality}>
+                      {monument.municipality_label}
+                    </div>
+                    <div className="ms-2">
+                      <CameraTransparent />
+                    </div>
+                    <div className={styles.PicturesCount}>
+                      {monument.pictures_wlm_count} {t('foto')}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </SwiperSlide>
