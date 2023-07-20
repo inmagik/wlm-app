@@ -30,51 +30,101 @@ export default function IconMonument({ monument }: Props) {
     >
       {category === 'Castelli' &&
         (inContest ? (
-          <img src={'/Icons/Castelli/Icona/Concorso.png'} width="14" alt={'Castello'} />
+          <img
+            src={'/Icons/Castelli/Icona/Concorso.png'}
+            width="14"
+            alt={'Castello'}
+          />
         ) : (
-          <img src={'/Icons/Castelli/Icona/NOConcorso.png'} width="14" alt={'Castello'} />
+          <img
+            src={'/Icons/Castelli/Icona/NOConcorso.png'}
+            width="14"
+            alt={'Castello'}
+          />
         ))}
       {category === 'Comune' &&
         (inContest ? (
-          <img src={'/Icons/Comuni/Icona/Concorso.png'} width="14" alt={'Comune'} />
+          <img
+            src={'/Icons/Comuni/Icona/Concorso.png'}
+            width="14"
+            alt={'Comune'}
+          />
         ) : (
-          <img src={'/Icons/Comuni/Icona/NOConcorso.png'} width="14" alt={'Comune'} />
+          <img
+            src={'/Icons/Comuni/Icona/NOConcorso.png'}
+            width="14"
+            alt={'Comune'}
+          />
         ))}
       {category === 'Alberi monumentali' &&
         (inContest ? (
-          <img src={'/Icons/Alberi/Icona/Concorso.png'} width="14" alt={'Albero Monumentale'} />
+          <img
+            src={'/Icons/Alberi/Icona/Concorso.png'}
+            width="14"
+            alt={'Albero Monumentale'}
+          />
         ) : (
           <img
             src={'/Icons/Alberi/Icona/NOConcorso.png'}
-            width="14" alt={'Albero Monumentale'}
+            width="14"
+            alt={'Albero Monumentale'}
           />
         ))}
       {category === 'Musei' &&
         (inContest ? (
-          <img src={'/Icons/Musei/Icona/Concorso.png'} width="14" alt={'Museo'} />
+          <img
+            src={'/Icons/Musei/Icona/Concorso.png'}
+            width="14"
+            alt={'Museo'}
+          />
         ) : (
-          <img src={'/Icons/Musei/Icona/NOConcorso.png'} width="14" alt={'Museo'} />
+          <img
+            src={'/Icons/Musei/Icona/NOConcorso.png'}
+            width="14"
+            alt={'Museo'}
+          />
         ))}
       {category === 'Edifici religiosi' &&
         (inContest ? (
-          <img src={'/Icons/Chiese/Icona/Concorso.png'} width="14" alt={'Edificio Religioso'} />
+          <img
+            src={'/Icons/Chiese/Icona/Concorso.png'}
+            width="14"
+            alt={'Edificio Religioso'}
+          />
         ) : (
           <img
             src={'/Icons/Chiese/Icona/NOConcorso.png'}
-            width="14" alt={'Edificio Religioso'}
+            width="14"
+            alt={'Edificio Religioso'}
           />
         ))}
       {category === 'Altri monumenti' &&
         (inContest ? (
-          <img src={'/Icons/AltriMonumenti/Icona/Concorso.png'} width="14" alt={'Altro Monumento'} />
+          <img
+            src={'/Icons/AltriMonumenti/Icona/Concorso.png'}
+            width="14"
+            alt={'Altro Monumento'}
+          />
         ) : (
-          <img src={'/Icons/AltriMonumenti/Icona/NOConcorso.png'} width="14" alt={'Altro Monumento'} />
+          <img
+            src={'/Icons/AltriMonumenti/Icona/NOConcorso.png'}
+            width="14"
+            alt={'Altro Monumento'}
+          />
         ))}
       {!category &&
         (inContest ? (
-          <img src={'/Icons/AltriMonumenti/Icona/Concorso.png'} width="14" alt={'Altro Monumento'} />
+          <img
+            src={'/Icons/AltriMonumenti/Icona/Concorso.png'}
+            width="14"
+            alt={'Altro Monumento'}
+          />
         ) : (
-          <img src={'/Icons/AltriMonumenti/Icona/NOConcorso.png'} width="14" alt={'Altro Monumento'} />
+          <img
+            src={'/Icons/AltriMonumenti/Icona/NOConcorso.png'}
+            width="14"
+            alt={'Altro Monumento'}
+          />
         ))}
     </div>
   )

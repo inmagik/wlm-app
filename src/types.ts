@@ -6,6 +6,16 @@ export interface PaginatedDJResponse<TRecord = any> {
   results: TRecord[]
 }
 
+export interface PictureData {
+  Artist: string | TrustedHTML
+  DateTime: string
+  DateTimeOriginal: string
+  ImageDescription: string | TrustedHTML
+  License: string
+  pageid: number
+  title: string
+}
+
 export interface Picture {
   id: number
   image_date: string
@@ -14,6 +24,7 @@ export interface Picture {
   image_url: string
   relevant_image: boolean
   wlm_image: boolean
+  data?: PictureData
 }
 
 

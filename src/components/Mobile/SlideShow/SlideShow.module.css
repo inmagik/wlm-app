@@ -70,6 +70,60 @@
   margin-left: 4px;
 }
 
+.Artist > a {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 4px;
+  color: white;
+  padding-right: 8px;
+  border-right: 2px solid white;
+}
+
+.DateImage {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 8px;
+  margin-top: 2px;
+}
+
+.License {
+  color: var(--colori-neutri-white);
+  margin-top: 4px;
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.Description {
+  color: var(--colori-neutri-white);
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  margin-top: 4px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.Description > a {
+  color: var(--colori-neutri-white);
+  text-decoration: underline;
+}
+
 @media screen and (min-width: 768px) {
   .SlideShowImage {
     height: 80%;

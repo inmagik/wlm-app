@@ -1,9 +1,4 @@
-import React, {
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -78,6 +73,8 @@ export default function Map() {
       center: fromLonLat([longitude, latitude]),
       zoom: 14,
     })
+    setInfoMarker(null)
+    setDetail(null)
   }
 
   function error() {
@@ -125,6 +122,7 @@ export default function Map() {
             const categoriesFeature = feature
               .getProperties()
               .features[0].getProperties().categories
+            console.log(monument, 'monument')
             const category = categoriesFeature[0]
             const appCategory =
               categories?.find((c: any) => c.categories.includes(category))
@@ -199,14 +197,24 @@ export default function Map() {
             setFilters={setFilters}
           />
         </div>
-        <MapContainer
-          mapElement={mapElement}
-          handleLocationClick={handleLocationClick}
-          infoMarker={infoMarker}
-          legend={legend}
-          detail={detail}
-          setLegend={setLegend}
-        />
+        <Suspense
+          fallback={
+            <div className={styles.CardLegend}>
+              <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                <div className="loader" />
+              </div>
+            </div>
+          }
+        >
+          <MapContainer
+            mapElement={mapElement}
+            handleLocationClick={handleLocationClick}
+            infoMarker={infoMarker}
+            legend={legend}
+            detail={detail}
+            setLegend={setLegend}
+          />
+        </Suspense>
         {detail && (
           <Suspense
             fallback={

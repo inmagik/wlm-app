@@ -75,18 +75,7 @@ function AppRoutes() {
               )
             }
           />
-          <Route
-            path="mappa"
-            element={
-              isMobile ? (
-                <Map />
-              ) : (
-                <NavigationWrapperDesktop>
-                  <MapDesktop />
-                </NavigationWrapperDesktop>
-              )
-            }
-          />
+          <Route path="mappa" element={isMobile ? <Map /> : <MapDesktop />} />
           <Route
             path="mappa/:slug"
             element={

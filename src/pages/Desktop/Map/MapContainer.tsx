@@ -45,7 +45,7 @@ export default function MapContainer({
             <MyLocation />
           </button>
           <button
-            className={styles.LegendButton}
+            className={legend ? styles.LegendButtonActive : styles.LegendButton}
             onClick={() => {
               setLegend(!legend)
             }}

@@ -2,7 +2,7 @@ import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
@@ -31,6 +31,8 @@ const getFilters = (params: URLSearchParams) => ({
   only_without_pictures: params.get('only_without_pictures') ?? '',
   user_lat: params.get('user_lat') ?? '',
   user_lon: params.get('user_lon') ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
 })
 
 export default function Map() {
@@ -76,7 +78,6 @@ export default function Map() {
 
   useEffect(() => {
     if (!mapElement.current) return
-
     const featureOverlay = new VectorLayer({
       source: clusterSource,
       style: getFeatureStyle,
@@ -120,31 +121,50 @@ export default function Map() {
     map.updateSize()
   }, [map])
 
+  useEffect(() => {
+    if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
+      setMapState({
+        ...mapState,
+        center: fromLonLat([filters.monument_lon, filters.monument_lat]),
+        zoom: 16,
+      })
+    }
+  }, [filters.monument_lat, filters.monument_lon])
+
   return (
     <Layout>
       <div className="w-100 h-100">
-        <div ref={mapElement} id="map" className="w-100 h-100">
-          <button
-            className={styles.ButtonFilter}
-            onClick={() => {
-              setFiltersOpen(!filtersOpen)
-            }}
-          >
-            <FilterIcon />
-          </button>
-          <div className={styles.ContainerButtons}>
-            <button className={styles.ButtonMappe}>
-              <Mappe />
-            </button>
+        <Suspense
+          fallback={
+            <div className="w-100 h-100">
+              <div className="loader"></div>
+            </div>
+          }
+        >
+          <div ref={mapElement} id="map" className="w-100 h-100">
             <button
-              className={styles.ButtonMyLocation}
-              onClick={handleLocationClick}
+              className={styles.ButtonFilter}
+              onClick={() => {
+                setFiltersOpen(!filtersOpen)
+              }}
             >
-              <MyLocation />
+              <FilterIcon />
             </button>
+            <div className={styles.ContainerButtons}>
+              <button className={styles.ButtonMappe}>
+                <Mappe />
+              </button>
+              <button
+                className={styles.ButtonMyLocation}
+                onClick={handleLocationClick}
+              >
+                <MyLocation />
+              </button>
+            </div>
           </div>
-        </div>
+        </Suspense>
       </div>
+
       <BlockFilters
         filters={filters}
         setFilters={setFilters}

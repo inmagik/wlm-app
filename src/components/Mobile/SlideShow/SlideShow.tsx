@@ -6,6 +6,7 @@ import { ReactComponent as CameraTransparent } from '../../../assets/camera-tran
 import styles from './SlideShow.module.css'
 import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
 
 interface Props {
   monument: Monument
@@ -87,6 +88,28 @@ export default function SlideShow({
                       {monument.pictures_wlm_count} {t('foto')}
                     </div>
                   </div>
+                  <div className="d-flex align-items-center">
+                    {picture.data?.Artist && (
+                      <div
+                        className={styles.Artist}
+                        dangerouslySetInnerHTML={{
+                          __html: picture.data?.Artist,
+                        }}
+                      ></div>
+                    )}
+                    <div className={styles.DateImage}>
+                      {dayjs(picture.data?.DateTime).format('DD/MM/YYYY')}
+                    </div>
+                  </div>
+                  <div className={styles.License}>{picture.data?.License}</div>
+                  {picture.data?.ImageDescription && (
+                    <div
+                      className={styles.Description}
+                      dangerouslySetInnerHTML={{
+                        __html: picture.data?.ImageDescription,
+                      }}
+                    ></div>
+                  )}
                 </div>
               </div>
             </div>
