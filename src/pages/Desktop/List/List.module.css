@@ -250,3 +250,35 @@
 .NameItem {
   margin-left: 4px;
 }
+
+.BlockLegendColors {
+  padding-left: 16px;
+  display: flex;
+  width: 320px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  color: var(--primary);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.ItemCardColor {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  text-align: center;
+  margin-right: 8px;
+}
+
+.CardMinorPadding{
+    display: flex;
+}

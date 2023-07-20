@@ -6,11 +6,15 @@ import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
+import { ReactComponent as MonumentoNoFoto } from '../../../assets/monumento-no-foto.svg'
+import { ReactComponent as Monumento1a10 } from '../../../assets/monumento-1a10.svg'
+import { ReactComponent as MonumentoMaggiore10 } from '../../../assets/monumento-maggiore-10.svg'
+import { ReactComponent as MonumentoConcorso } from '../../../assets/monumento-concorso.svg'
+import { ReactComponent as MonumentoNoConcorso } from '../../../assets/monumento-no-concorso.svg'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
 import styles from './List.module.css'
 import { useInfiniteMomuments } from '../../../hooks/monuments'
-import { Spinner } from 'react-bootstrap'
 import { Waypoint } from 'react-waypoint'
 import IconMonument from '../../../components/IconMonument'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -318,6 +322,42 @@ export default function List() {
               <div className={styles.ItemCardLast}>
                 <AltroMonumentoIcon fill="var(--primary)" />
                 <span className={styles.NameItem}>{t('altro_monumento')}</span>
+              </div>
+            </div>
+            <div className={styles.BlockLegendColors}>
+              <div className={`${styles.CardMinorPadding} mt-2`}>
+                <div className={styles.ItemCardColor}>
+                  <MonumentoNoFoto />
+                  <span className={styles.NameItem}>
+                    {t('non_ha_foto')}
+                  </span>
+                </div>
+                <div className={styles.ItemCardColor}>
+                  <Monumento1a10 />
+                  <span className={styles.NameItem}>
+                    {t('da_1_a_10_foto')}
+                  </span>
+                </div>
+                <div className={styles.ItemCardColor}>
+                  <MonumentoMaggiore10 />
+                  <span className={styles.NameItem}>
+                    {t('piu_di_10_foto')}
+                  </span>
+                </div>
+              </div>
+              <div className={`${styles.CardMinorPadding} ms-4 mt-2`}>
+                <div className={styles.ItemCardColor}>
+                  <MonumentoConcorso />
+                  <span className={styles.NameItem}>
+                    {t('in_concorso')}
+                  </span>
+                </div>
+                <div className={styles.ItemCardColor}>
+                  <MonumentoNoConcorso />
+                  <span className={styles.NameItem}>
+                    {t('non_in_concorso')}
+                  </span>
+                </div>
               </div>
             </div>
           </div>

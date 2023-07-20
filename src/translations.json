@@ -64,7 +64,12 @@
             "vedi_monumenti": "See monuments",
             "wiki_loves_monuments": "Wiki Loves Monuments",
             "concorso_wiki_loves_monuments_1_30_settembre": "Competion Wiki Loves Monuments 1-30 September",
-            "filtri": "Filters"
+            "filtri": "Filters",
+            "non_ha_foto": "No photos",
+            "da_1_a_10_foto": "From 1 to 10 photos",
+            "piu_di_10_foto": "More than 10 photos",
+            "in_concorso": "In competition",
+            "non_in_concorso": "Not in competition"
         }
     },
     "it": {
@@ -132,7 +137,12 @@
             "vedi_monumenti": "Vedi Monumenti",
             "wiki_loves_monuments": "Wiki Loves Monuments",
             "concorso_wiki_loves_monuments_1_30_settembre": "Concorso Wiki Loves Monuments 1-30 Settembre",
-            "filtri": "Filtri"
+            "filtri": "Filtri",
+            "non_ha_foto": "Non ha foto",
+            "da_1_a_10_foto": "Da 1 a 10 foto",
+            "piu_di_10_foto": "Più di 10 foto",
+            "in_concorso": "In concorso",
+            "non_in_concorso": "Non in concorso"
         }
     }
 }
