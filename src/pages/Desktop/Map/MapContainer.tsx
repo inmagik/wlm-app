@@ -3,21 +3,29 @@ import styles from './Map.module.css'
 import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
+import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
+import Legend from '../../../components/Desktop/Legend'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
   handleLocationClick: () => void
   infoMarker: MarkerProps | null
+  legend: boolean
+  setLegend: (legend: boolean) => void
 }
 
 export default function MapContainer({
   mapElement,
   handleLocationClick,
   infoMarker,
+  legend,
+  setLegend,
 }: MapContainerProps) {
   return (
     <div className={styles.MapContainer}>
-      <div ref={mapElement} id="map" className="w-100 h-100">
+      <div ref={mapElement} id="map" className="w-100 position-relative" style={{
+        height: legend ? 'calc(100% - 200px)' : '100%'
+      }}>
         <div className={styles.ContainerButtons}>
           <button className={styles.ButtonMappe}>
             <Mappe />
@@ -27,6 +35,14 @@ export default function MapContainer({
             onClick={handleLocationClick}
           >
             <MyLocation />
+          </button>
+          <button
+            className={styles.LegendButton}
+            onClick={() => {
+              setLegend(!legend)
+            }}
+          >
+            <LiveHelp />
           </button>
         </div>
         {infoMarker && (
@@ -49,6 +65,7 @@ export default function MapContainer({
           </div>
         )}
       </div>
+      <Legend legend={legend} />
     </div>
   )
 }

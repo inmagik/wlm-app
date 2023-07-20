@@ -45,6 +45,7 @@ export default function Map() {
   const { data: categories } = useCategoriesDomain()
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
+  const [legend, setLegend] = useState<boolean>(false)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -167,6 +168,8 @@ export default function Map() {
           mapElement={mapElement}
           handleLocationClick={handleLocationClick}
           infoMarker={infoMarker}
+          legend={legend}
+          setLegend={setLegend}
         />
         {detail && (
           <Suspense
