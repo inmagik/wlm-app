@@ -167,6 +167,12 @@ export default function Map() {
     }
   }, [detail])
 
+  useEffect(() => {
+    map?.getView().on('change:resolution', (event) => {
+      setInfoMarker(null)
+      setDetail(null)
+    })
+  }, [map])
 
   return (
     <Layout>

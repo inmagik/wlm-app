@@ -21,6 +21,7 @@ import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMediaQuery } from 'usehooks-ts'
 import NavigationWrapper from './components/Mobile/NavigationWrapper'
+import NavigationWrapperDesktop from './components/Desktop/NavigationWrapper'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -74,14 +75,25 @@ function AppRoutes() {
               )
             }
           />
-          <Route path="mappa" element={isMobile ? <Map /> : <MapDesktop />} />
+          <Route
+            path="mappa"
+            element={
+              isMobile ? (
+                <Map />
+              ) : (
+                <NavigationWrapperDesktop>
+                  <MapDesktop />
+                </NavigationWrapperDesktop>
+              )
+            }
+          />
           <Route
             path="mappa/:slug"
             element={
               isMobile ? (
-              <NavigationWrapper>
-                <Detail />
-              </NavigationWrapper>
+                <NavigationWrapper>
+                  <Detail />
+                </NavigationWrapper>
               ) : (
                 <ListDesktop />
               )
