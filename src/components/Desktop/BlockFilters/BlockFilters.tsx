@@ -55,7 +55,18 @@ export default function BlockFilters({
           <div className={styles.FilterLabelFiltri}>{t('filtri')}</div>
         </div>
         <div
-          className={styles.ResetButton}
+          className={classNames({
+            [styles.ResetButton]:
+              filters.category !== '' ||
+              filters.municipality !== '' ||
+              filters.in_contest !== 'true' ||
+              filters.only_without_pictures !== '',
+            [styles.ResetButtonDisabled]:
+              filters.category === '' &&
+              filters.municipality === '' &&
+              filters.in_contest === 'true' &&
+              filters.only_without_pictures === '',
+          })}
           onClick={() => {
             setFilters({
               category: '',
@@ -63,6 +74,7 @@ export default function BlockFilters({
               in_contest: 'true',
               only_without_pictures: '',
             })
+            setSearchComune('')
           }}
         >
           {t('reset')}
