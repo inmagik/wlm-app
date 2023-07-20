@@ -250,20 +250,22 @@ export default function BlockFilters({
           </div>
         </div>
         <div className={styles.ListComuni} ref={parentRef}>
-          {openComuni && searchComune.length > 0 && comuniFiltered?.map((comune) => {
-            return (
-              <div
-                className={styles.FilterItemComune}
-                key={comune.code}
-                onClick={() => {
-                  setFilters({ municipality: comune.code })
-                  setFilterComuneOpen(false)
-                }}
-              >
-                <Flag className="me-2" /> {comune.label}
-              </div>
-            )
-          })}
+          {openComuni &&
+            searchComune.length > 0 &&
+            comuniFiltered?.map((comune) => {
+              return (
+                <div
+                  className={styles.FilterItemComune}
+                  key={comune.code}
+                  onClick={() => {
+                    setFilters({ municipality: comune.code })
+                    setFilterComuneOpen(false)
+                  }}
+                >
+                  <Flag className="me-2" /> {comune.label}
+                </div>
+              )
+            })}
         </div>
       </div>
       <div

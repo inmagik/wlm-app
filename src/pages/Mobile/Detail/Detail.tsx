@@ -220,13 +220,13 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               }}
               className={styles.Swiper}
             >
-              {monument?.pictures.map((picture) => (
+              {monument?.pictures.map((picture, k) => (
                 <SwiperSlide
                   onClick={() => {
                     setShowAllImages(true)
                     setSlideShowActive(picture.id)
                   }}
-                  key={picture.id}
+                  key={k}
                 >
                   <div
                     className={styles.BlockImage}
@@ -312,7 +312,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 groupsOf12Pictures.map((group, index) => (
                   <Fragment key={index}>
                     {group.length > 0 && (
-                      <SwiperSlide>
+                      <SwiperSlide key={index}>
                         <div className={styles.ContainerImages}>
                           {group.map((picture: any, k: number) => (
                             <div
