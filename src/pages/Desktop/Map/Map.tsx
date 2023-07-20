@@ -167,6 +167,7 @@ export default function Map() {
     }
   }, [detail])
 
+
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
