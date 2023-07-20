@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -16,8 +16,7 @@ import {
 } from '../../../lib/MagikCluster'
 import { useCategoriesDomain } from '../../../hooks/monuments'
 import Detail from '../../Mobile/Detail'
-import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
-import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
+const MapContainer = React.lazy(() => import('./MapContainer'))
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -30,13 +29,22 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
 })
 
+export interface MarkerProps {
+  id: number
+  label: string
+  pictures_wlm_count: number
+  app_category: string
+  in_contest: boolean
+  coords: number[]
+}
+
 export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const { data: categories } = useCategoriesDomain()
   const [detail, setDetail] = useState<number | null>(null)
-  console.log(detail)
+  const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -66,7 +74,6 @@ export default function Map() {
   function error() {
     console.log('Unable to retrieve your location')
   }
-
 
   useEffect(() => {
     vectorSource.set('filters', filters)
@@ -101,9 +108,17 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
-            const id = monument.id
 
-            setDetail(id)
+            setInfoMarker({
+              id: monument.id,
+              label: monument.label,
+              pictures_wlm_count: monument.pictures_wlm_count,
+              coords: evt.pixel,
+              app_category: '',
+              in_contest: monument.in_contest,
+            })
+
+            setDetail(monument.id)
           }
         })
       ) {
@@ -142,21 +157,11 @@ export default function Map() {
             setFilters={setFilters}
           />
         </div>
-        <div className={styles.MapContainer}>
-          <div ref={mapElement} id="map" className="w-100 h-100">
-            <div className={styles.ContainerButtons}>
-              <button className={styles.ButtonMappe}>
-                <Mappe />
-              </button>
-              <button
-                className={styles.ButtonMyLocation}
-                onClick={handleLocationClick}
-              >
-                <MyLocation />
-              </button>
-            </div>
-          </div>
-        </div>
+        <MapContainer
+          mapElement={mapElement}
+          handleLocationClick={handleLocationClick}
+          infoMarker={infoMarker}
+        />
         {detail && (
           <Suspense
             fallback={

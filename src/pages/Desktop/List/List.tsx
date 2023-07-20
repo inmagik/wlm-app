@@ -4,6 +4,7 @@ import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
+import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -16,6 +17,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Detail from '../../Mobile/Detail'
 import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
+import EdificioReligiosoIcon from '../../../components/Icons/EdificioReligiosoIcon'
+import CastelloIcon from '../../../components/Icons/CastelloIcon'
+import AlberoMonumentaleIcon from '../../../components/Icons/AlberoMonumentaleIcon'
+import MuseoIcon from '../../../components/Icons/MuseoIcon'
+import AltroMonumentoIcon from '../../../components/Icons/AltroMonumentoIcon'
+import ComuneIcon from '../../../components/Icons/ComuneIcon'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -80,7 +87,8 @@ export function ListMonuments({ filters, setDetail, detail }: Props) {
                   key={k}
                   className={classNames({
                     [styles.MonumentCard]: !detail || detail !== monument.id,
-                    [styles.MonumentCardWithDetail]: detail && detail === monument.id,
+                    [styles.MonumentCardWithDetail]:
+                      detail && detail === monument.id,
                   })}
                   onClick={() => {
                     setDetail(monument.id)
@@ -131,6 +139,8 @@ export function ListMonuments({ filters, setDetail, detail }: Props) {
 export default function List() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const [detail, setDetail] = useState<number | null>(null)
+  const [legend, setLegend] = useState(false)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (navigator.geolocation && !filters.user_lat && !filters.user_lon) {
@@ -170,89 +180,146 @@ export default function List() {
             setDetail={setDetail}
           />
         </div>
-        <div
-          className={styles.CardContainerList}
-          style={{
-            width: detail ? 'calc(100% - 401px - 348px)' : 'calc(100% - 348px)',
-            transition: 'width 0.5s ease-in-out',
-          }}
-        >
+        <div className="d-flex flex-column h-100 w-100">
           <div
-            className={classNames({
-              [styles.MonumentsBlock]: !detail,
-              [styles.MonumentsBlockWithDetail]: detail,
-            })}
+            className={styles.CardContainerList}
+            style={{
+              width: 'calc(100% - 8px)',
+              height: legend ? 'calc(100% - 204px)' : '100%',
+              transition: 'width 0.5s ease-in-out',
+            }}
           >
-            <div className="w-100 position-relative">
-              <input
-                onChange={(e) => {
-                  setFilters({ search: e.target.value })
-                }}
-                value={filters.search}
-                className={styles.InputSearch}
-                type="text"
-              />
-              <div className={styles.SearchIcon}>
-                <Search />
-              </div>
-              {filters.search && (
-                <div
-                  className={styles.ClearSearch}
-                  onClick={() => {
-                    if (slug) {
-                      navigate(
-                        '/' +
-                          i18n.language +
-                          '/lista' +
-                          '?search=&ordering=' +
-                          filters.ordering +
-                          '&municipality=' +
-                          filters.municipality +
-                          '&category=' +
-                          filters.category +
-                          '&in_contest=' +
-                          filters.in_contest +
-                          '&only_without_pictures=' +
-                          filters.only_without_pictures
-                      )
-                      setDetail(null)
-                    } else {
-                      setFilters({
-                        ...filters,
-                        search: '',
-                      })
-                    }
-                  }}
-                >
-                  <CloseSecondary />
-                </div>
-              )}
-            </div>
-            <Suspense
-              fallback={
-                <div
-                  style={{
-                    height: 'calc(100% - 64px)',
-                  }}
-                  className={
-                    'w-100 d-flex align-items-center justify-content-center'
-                  }
-                >
-                  <div className="loader" />
-                </div>
-              }
+            <div
+              className={classNames({
+                [styles.MonumentsBlock]: !detail,
+                [styles.MonumentsBlockWithDetail]: detail,
+              })}
             >
-              <ListMonuments
-                detail={detail}
-                setDetail={setDetail}
-                filters={filters}
-              />
-            </Suspense>
+              <div className="w-100 position-relative">
+                <input
+                  onChange={(e) => {
+                    setFilters({ search: e.target.value })
+                  }}
+                  value={filters.search}
+                  className={styles.InputSearch}
+                  type="text"
+                />
+                <div className={styles.SearchIcon}>
+                  <Search />
+                </div>
+                {filters.search && (
+                  <div
+                    className={styles.ClearSearch}
+                    onClick={() => {
+                      if (slug) {
+                        navigate(
+                          '/' +
+                            i18n.language +
+                            '/lista' +
+                            '?search=&ordering=' +
+                            filters.ordering +
+                            '&municipality=' +
+                            filters.municipality +
+                            '&category=' +
+                            filters.category +
+                            '&in_contest=' +
+                            filters.in_contest +
+                            '&only_without_pictures=' +
+                            filters.only_without_pictures
+                        )
+                        setDetail(null)
+                      } else {
+                        setFilters({
+                          ...filters,
+                          search: '',
+                        })
+                      }
+                    }}
+                  >
+                    <CloseSecondary />
+                  </div>
+                )}
+              </div>
+              <Suspense
+                fallback={
+                  <div
+                    style={{
+                      height: 'calc(100% - 64px)',
+                    }}
+                    className={
+                      'w-100 d-flex align-items-center justify-content-center'
+                    }
+                  >
+                    <div className="loader" />
+                  </div>
+                }
+              >
+                <ListMonuments
+                  detail={detail}
+                  setDetail={setDetail}
+                  filters={filters}
+                />
+              </Suspense>
+            </div>
+            <div className={'h-100 position-relative'}>
+              {!detail && (
+                <BlockOrdering filters={filters} setFilters={setFilters} />
+              )}
+              <button
+                className={classNames({
+                  [styles.LegendButton]: !legend,
+                  [styles.LegendButtonActive]: legend,
+                })}
+                onClick={() => {
+                  setLegend(!legend)
+                }}
+              >
+                <LiveHelp />
+              </button>
+            </div>
           </div>
-          <div className={'h-100'}>
-            {!detail && (
-              <BlockOrdering filters={filters} setFilters={setFilters} />
-            )}
+          <div
+            className={styles.Legend}
+            style={{
+              height: legend ? '200px' : '0px',
+              padding: legend ? '16px 24px' : '0px',
+              zIndex: legend ? 1 : -1,
+              // transition: 'height 0.5s ease-in-out',
+            }}
+          >
+            <div className={styles.LegendTitle}>{t('legenda')}</div>
+            <div className={styles.MonumentType}>
+              <div className={styles.ItemCard}>
+                <ComuneIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>
+                  {t('comuni_vedute_d_insieme')}
+                </span>
+              </div>
+              <div className={styles.ItemCard}>
+                <EdificioReligiosoIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>
+                  {t('edifici_religiosi')}
+                </span>
+              </div>
+              <div className={styles.ItemCard}>
+                <CastelloIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>{t('castelli')}</span>
+              </div>
+              <div className={styles.ItemCard}>
+                <AlberoMonumentaleIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>
+                  {t('alberi_monumentali')}
+                </span>
+              </div>
+              <div className={styles.ItemCard}>
+                <MuseoIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>{t('musei')}</span>
+              </div>
+              <div className={styles.ItemCardLast}>
+                <AltroMonumentoIcon fill="var(--primary)" />
+                <span className={styles.NameItem}>{t('altro_monumento')}</span>
+              </div>
+            </div>
           </div>
         </div>
         {detail && (

@@ -4,6 +4,7 @@
   border-radius: 30px;
   margin-left: 8px;
   position: relative;
+  overflow: hidden;
 }
 
 .CardDetail {
@@ -63,4 +64,42 @@
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
   margin-bottom: 16px;
   border: none;
+}
+
+.DetailMarker {
+  display: flex;
+  width: 160px;
+  height: 71px;
+  padding: 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: var(--monumento-poche-foto);
+  /* Markers */
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.TitleMarker {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* H2 */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.TextMarker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--colori-neutri-white, #fff);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

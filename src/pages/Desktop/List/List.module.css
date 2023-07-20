@@ -1,24 +1,27 @@
 .CardContainerList {
   display: flex;
-  height: 100%;
+  /* height: 100%; */
   padding: 24px;
   align-items: center;
   flex-shrink: 0;
   border-radius: 30px;
   background: var(--colori-neutri-background);
   margin-left: 8px;
+  transition: all 0.5s ease-in-out;
 }
 
 .MonumentsBlock {
-  width: calc(100% - 225px);
+  /* width: calc(100% - 225px); */
   height: 100%;
-  transition: all 0.5s ease-in-out;
+  width: 100%;
+  /* transition: all 0.5s ease-in-out; */
 }
 
 .MonumentsBlockWithDetail {
-  width: calc(100%);
+  /* width: calc(100%); */
   height: 100%;
-  transition: all 0.5s ease-in-out;
+  width: 100%;
+  /* transition: all 0.5s ease-in-out; */
 }
 
 .InputSearch {
@@ -158,4 +161,92 @@
   border-radius: 30px;
   background: var(--colori-neutri-background);
   margin-left: 8px;
+}
+
+.LegendButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  border-radius: 30px;
+  background: var(--primary);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+}
+
+.LegendButton:hover {
+  background: rgba(17, 138, 178, 0.8);
+  cursor: pointer;
+}
+
+.LegendButtonActive {
+  border-radius: 30px;
+  border: 3px solid var(--secondary);
+  background: var(--primary);
+  box-shadow: 0px 0px 10px 0px #bdecff;
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.Legend {
+  display: flex;
+  z-index: -1;
+  margin-left: 8px;
+  margin-top: 8px;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border-radius: 30px;
+  background: var(--overlay);
+  box-shadow: 0px 0px 8px 0px rgba(197, 197, 197, 0.1);
+}
+
+.LegendTitle {
+  color: var(--primary);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: normal;
+  border-right: 0.5px solid var(--primary);
+  padding-right: 16px;
+}
+
+.MonumentType {
+  padding-left: 24px;
+  color: var(--primary);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-right: 0.5px solid var(--primary);
+  padding-right: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.ItemCard {
+  margin-bottom: 4px;
+}
+
+.NameItem {
+  margin-left: 4px;
 }
