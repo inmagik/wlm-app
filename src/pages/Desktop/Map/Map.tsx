@@ -1,4 +1,9 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, {
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -28,6 +33,8 @@ const getFilters = (params: URLSearchParams) => ({
   category: params.get('category') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
 })
 
 export interface MarkerProps {
@@ -78,12 +85,10 @@ export default function Map() {
   }
 
   useEffect(() => {
-    if (categories) {
-      vectorSource.set('filters', filters)
-      vectorSource.set('categories', categories)
-      vectorSource.refresh()
-    }
-  }, [filters, categories])
+    vectorSource.set('filters', filters)
+    vectorSource.set('categories', categories)
+    vectorSource.refresh()
+  }, [filters])
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -173,6 +178,16 @@ export default function Map() {
       setDetail(null)
     })
   }, [map])
+
+  useEffect(() => {
+    if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
+      setMapState({
+        ...mapState,
+        center: fromLonLat([filters.monument_lon, filters.monument_lat]),
+        zoom: 16,
+      })
+    }
+  }, [filters.monument_lat, filters.monument_lon])
 
   return (
     <Layout>

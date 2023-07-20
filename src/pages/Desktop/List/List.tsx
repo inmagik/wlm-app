@@ -28,6 +28,8 @@ const getFilters = (params: URLSearchParams) => ({
   category: params.get('category') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
 })
 
 interface Props {

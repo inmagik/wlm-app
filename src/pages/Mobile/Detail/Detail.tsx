@@ -64,6 +64,8 @@ const getFilters = (params: URLSearchParams) => ({
   category: params.get('category') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
 })
 
 function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
@@ -133,7 +135,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         src: getMarkerMap({
           monument: monument!,
         }),
-        scale: 0.2
+        scale: 0.2,
       }),
     })
 
@@ -339,7 +341,22 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         <div className={styles.MapContainer}>
           <div className={styles.Map} ref={mapElement}></div>
           {monument?.position?.coordinates && (
-            <button className={styles.GuardaInMappa}>
+            <button
+              className={styles.GuardaInMappa}
+              onClick={() => {
+                navigate(
+                  `/${i18n.language}/mappa?monument_lat=${monument?.position?.coordinates[1]}&monument_lon=${monument?.position?.coordinates[0]}&zoom=16&${
+                    new URLSearchParams({
+                      only_without_pictures: filters.only_without_pictures,
+                      in_contest: filters.in_contest,
+                      category: filters.category,
+                      search: filters.search,
+                      municipality: filters.municipality,
+                    }).toString()
+                  }`
+                )
+              }}
+            >
               <MapIcon /> {t('guarda_in_mappa')}
             </button>
           )}
@@ -524,7 +541,7 @@ export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
     <Suspense
       fallback={
         <div className="d-flex justify-content-center align-items-center h-100">
-          <div className='loader' />
+          <div className="loader" />
         </div>
       }
     >
@@ -535,7 +552,7 @@ export default function Detail({ monumentId, setDetail, isDesktop }: Props) {
       <Suspense
         fallback={
           <div className="d-flex justify-content-center align-items-center h-100">
-            <div className='loader' />
+            <div className="loader" />
           </div>
         }
       >
