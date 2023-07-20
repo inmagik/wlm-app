@@ -5,6 +5,7 @@ import { useQsFilters } from '../../../hooks/filters'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
+import { Zoom } from 'ol/control'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import VectorLayer from 'ol/layer/Vector'
@@ -77,10 +78,12 @@ export default function Map() {
   }
 
   useEffect(() => {
+    if(categories){
     vectorSource.set('filters', filters)
     vectorSource.set('categories', categories)
     vectorSource.refresh()
-  }, [filters])
+    }
+  }, [filters, categories])
 
   useEffect(() => {
     if (!mapElement.current) return
@@ -99,7 +102,14 @@ export default function Map() {
         }),
         featureOverlay,
       ],
-      controls: [],
+      controls: [
+        new Zoom(
+          {
+            zoomInClassName: styles.ZoomIn,
+            zoomOutClassName: styles.ZoomOut,
+          }
+        ),
+      ],
       view: new View(mapState),
     })
 
@@ -109,13 +119,16 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
+            const categoriesFeature = feature.getProperties().features[0].getProperties().categories
+            const category = categoriesFeature[0]
+            const appCategory = categories?.find((c: any) => c.categories.includes(category))?.name ?? ''
             setDetail(monument.id)
             setInfoMarker({
               id: monument.id,
               label: monument.label,
               pictures_wlm_count: monument.pictures_wlm_count,
               coords: evt.pixel,
-              app_category: '',
+              app_category: appCategory,
               in_contest: monument.in_contest,
             })
 

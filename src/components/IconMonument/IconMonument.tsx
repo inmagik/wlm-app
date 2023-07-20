@@ -9,7 +9,11 @@ import EdificioReligiosoIcon from '../Icons/EdificioReligiosoIcon'
 import AltroMonumentoIcon from '../Icons/AltroMonumentoIcon'
 
 interface Props {
-  monument: MonumentList
+  monument: {
+    app_category: string
+    pictures_wlm_count: number
+    in_contest: boolean
+  }
 }
 
 export default function IconMonument({ monument }: Props) {

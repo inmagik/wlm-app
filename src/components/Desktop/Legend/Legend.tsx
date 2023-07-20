@@ -25,6 +25,8 @@ export default function Legend({ legend }: Props) {
         height: legend ? '200px' : '0px',
         padding: legend ? '16px 24px' : '0px',
         zIndex: legend ? 1 : -1,
+        width: legend ? '100%' : '0px',
+        opacity: legend ? '1' : '0',
         // transition: 'height 0.5s ease-in-out',
       }}
     >

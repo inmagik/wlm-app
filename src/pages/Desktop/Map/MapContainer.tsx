@@ -5,6 +5,8 @@ import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import Legend from '../../../components/Desktop/Legend'
+import getMarkerMap from '../../../components/MarkerMap/MarkerMap'
+import IconMonument from '../../../components/IconMonument'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
@@ -23,9 +25,14 @@ export default function MapContainer({
 }: MapContainerProps) {
   return (
     <div className={styles.MapContainer}>
-      <div ref={mapElement} id="map" className="w-100 position-relative" style={{
-        height: legend ? 'calc(100% - 200px)' : '100%'
-      }}>
+      <div
+        ref={mapElement}
+        id="map"
+        className="w-100 position-relative"
+        style={{
+          height: legend ? 'calc(100% - 200px)' : '100%',
+        }}
+      >
         <div className={styles.ContainerButtons}>
           <button className={styles.ButtonMappe}>
             <Mappe />
@@ -52,9 +59,25 @@ export default function MapContainer({
               top: infoMarker.coords[1] - 35,
               left: infoMarker.coords[0] - 80,
               zIndex: 1,
+              backgroundColor:
+                infoMarker.pictures_wlm_count === 0
+                  ? 'var(--tertiary)'
+                  : infoMarker.pictures_wlm_count > 0 &&
+                    infoMarker.pictures_wlm_count <= 10
+                  ? 'var(--monumento-poche-foto)'
+                  : 'var(--monumento-tante-foto)',
             }}
             className={styles.DetailMarker}
           >
+            <div>
+              <IconMonument
+                monument={{
+                  in_contest: infoMarker.in_contest,
+                  pictures_wlm_count: infoMarker.pictures_wlm_count,
+                  app_category: infoMarker.app_category,
+                }}
+              />
+            </div>
             <div className={styles.TitleMarker}>{infoMarker.label}</div>
             <div className={styles.TextMarker}>
               <div>
