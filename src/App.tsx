@@ -12,6 +12,7 @@ import { I18nextProvider, useTranslation } from 'react-i18next'
 import Map from './pages/Mobile/Map'
 import MapDesktop from './pages/Desktop/Map'
 import Profile from './pages/Mobile/Profile'
+import ProfileDesktop from './pages/Desktop/Profile'
 import NotFound from './pages/NotFound'
 import { LANGS } from './const'
 import { useEffect } from 'react'
@@ -21,7 +22,6 @@ import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMediaQuery } from 'usehooks-ts'
 import NavigationWrapper from './components/Mobile/NavigationWrapper'
-import NavigationWrapperDesktop from './components/Desktop/NavigationWrapper'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -88,7 +88,7 @@ function AppRoutes() {
               )
             }
           />
-          <Route path="profilo" element={<Profile />} />
+          <Route path="profilo" element={isMobile ? <Profile /> : <ProfileDesktop />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -83,12 +83,12 @@
   stroke: var(--primary);
 } */
 
-.ButtonFilters:focus {
+/* .ButtonFilters:focus {
   border: 1px solid var(--primary);
   background: var(--colori-neutri-gray-2);
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.15);
-}
+} */
 
-.ButtonFilters:focus svg {
+/* .ButtonFilters:focus svg {
   stroke: var(--primary);
-}
+} */
