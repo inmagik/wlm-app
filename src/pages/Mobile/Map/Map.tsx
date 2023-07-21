@@ -22,6 +22,7 @@ import { useCategoriesDomain } from '../../../hooks/monuments'
 import { useNavigate } from 'react-router-dom'
 import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
+import { Zoom } from 'ol/control'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -92,7 +93,12 @@ export default function Map() {
         }),
         featureOverlay,
       ],
-      controls: [],
+      controls: [
+        new Zoom({
+          zoomInClassName: styles.ZoomIn,
+          zoomOutClassName: styles.ZoomOut,
+        }),
+      ],
       view: new View(mapState),
     })
 

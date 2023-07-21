@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useEffect, useRef, useState } from 'react'
+import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Waypoint } from 'react-waypoint'
 import Layout from '../../../components/Mobile/Layout'
 import { useInfiniteMomuments } from '../../../hooks/monuments'
@@ -6,6 +6,7 @@ import styles from './List.module.css'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as OrderingIcon } from '../../../assets/ordering.svg'
+import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import { useQsFilters } from '../../../hooks/filters'
 import LangLink from '../../../components/LangLink'
 import { smartSlug } from '../../../utils'
@@ -71,7 +72,7 @@ export function ListMonuments({ filters }: Props) {
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
-          <div className='loader' />
+          <div className="loader" />
         </div>
       ) : (
         infiniteMonuments!.pages.map((list, i) => (
@@ -154,6 +155,20 @@ export default function List() {
     }
   }, [])
 
+  const areFiltersActive = useMemo(() => {
+    if (
+      filters.category !== '' ||
+      filters.in_contest !== 'true' ||
+      filters.municipality !== '' ||
+      filters.only_without_pictures !== '' ||
+      filters.search !== ''
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }, [filters])
+
   return (
     <Layout>
       <div className={styles.ContainerList}>
@@ -177,18 +192,22 @@ export default function List() {
             <OrderingIcon />
           </div>
           <div
-            className={styles.ButtonFilters}
+            className={
+              areFiltersActive
+                ? styles.ButtonFiltersActive
+                : styles.ButtonFilters
+            }
             onClick={() => {
               setFiltersOpen(!filtersOpen)
             }}
           >
-            <FiltersIcon />
+            {areFiltersActive ? <FiltersIcon /> : <FilterIconPrimary />}
           </div>
         </div>
         <Suspense
           fallback={
             <div className="d-flex align-items-center justify-content-center w-100 h-100">
-              <div className='loader' />
+              <div className="loader" />
             </div>
           }
         >

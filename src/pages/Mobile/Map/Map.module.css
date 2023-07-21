@@ -79,16 +79,38 @@
   right: 16px;
 }
 
-/* .ButtonFilters svg {
-  stroke: var(--primary);
-} */
+.ZoomIn {
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  margin-top: 8px;
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  font-size: 30px;
+  color: var(--primary);
+}
 
-/* .ButtonFilters:focus {
-  border: 1px solid var(--primary);
-  background: var(--colori-neutri-gray-2);
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.15);
-} */
-
-/* .ButtonFilters:focus svg {
-  stroke: var(--primary);
-} */
+.ZoomOut {
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  margin-top: 8px;
+  position: absolute;
+  left: 16px;
+  top: 64px;
+  font-size: 30px;
+  color: var(--primary);
+}
