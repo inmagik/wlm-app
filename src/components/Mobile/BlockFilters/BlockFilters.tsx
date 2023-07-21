@@ -313,27 +313,6 @@ export default function BlockFilters({
           </div>
           <div
             className={classNames(styles.OrderingItem, {
-              [styles.OrderingItemActive]: filters.category === 'Castelli',
-            })}
-            onClick={() => {
-              setFilters({
-                ...filters,
-                category: 'Castelli',
-              })
-              setFilterCategoriaOpen(false)
-            }}
-          >
-            <div>
-              {filters.category === 'Castelli' ? (
-                <CheckOrderingIcon />
-              ) : (
-                <UncheckOrderingIcon />
-              )}
-            </div>
-            <div className={styles.OrderingItemTitle}>{t('castelli')}</div>
-          </div>
-          <div
-            className={classNames(styles.OrderingItem, {
               [styles.OrderingItemActive]:
                 filters.category === 'Edifici religiosi',
             })}
@@ -358,27 +337,24 @@ export default function BlockFilters({
           </div>
           <div
             className={classNames(styles.OrderingItem, {
-              [styles.OrderingItemActive]:
-                filters.category === 'Altri monumenti',
+              [styles.OrderingItemActive]: filters.category === 'Castelli',
             })}
             onClick={() => {
               setFilters({
                 ...filters,
-                category: 'Altri monumenti',
+                category: 'Castelli',
               })
               setFilterCategoriaOpen(false)
             }}
           >
             <div>
-              {filters.category === 'Altri monumenti' ? (
+              {filters.category === 'Castelli' ? (
                 <CheckOrderingIcon />
               ) : (
                 <UncheckOrderingIcon />
               )}
             </div>
-            <div className={styles.OrderingItemTitle}>
-              {t('altri_monumenti')}
-            </div>
+            <div className={styles.OrderingItemTitle}>{t('castelli')}</div>
           </div>
           <div
             className={classNames(styles.OrderingItem, {
@@ -400,6 +376,30 @@ export default function BlockFilters({
               )}
             </div>
             <div className={styles.OrderingItemTitle}>{t('musei')}</div>
+          </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]:
+                filters.category === 'Altri monumenti',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Altri monumenti',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Altri monumenti' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('altri_monumenti')}
+            </div>
           </div>
           <div
             className={classNames(styles.OrderingItem, {

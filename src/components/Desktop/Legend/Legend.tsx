@@ -34,30 +34,30 @@ export default function Legend({ legend, detail }: Props) {
       <div className={styles.LegendTitle}>{t('legenda')}</div>
       <div className={styles.MonumentType}>
         <div className={styles.ItemCard}>
-          <ComuneIcon fill="var(--primary)" />
-          <span className={styles.NameItem}>
-            {t('comuni_vedute_d_insieme')}
-          </span>
-        </div>
-        <div className={styles.ItemCard}>
           <EdificioReligiosoIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('edifici_religiosi')}</span>
         </div>
         <div className={styles.ItemCard}>
           <CastelloIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('castelli')}</span>
+        </div>     
+        <div className={styles.ItemCard}>
+          <MuseoIcon fill="var(--primary)" />
+          <span className={styles.NameItem}>{t('musei')}</span>
+        </div>
+        <div className={styles.ItemCard}>
+          <AltroMonumentoIcon fill="var(--primary)" />
+          <span className={styles.NameItem}>{t('altro_monumento')}</span>
         </div>
         <div className={styles.ItemCard}>
           <AlberoMonumentaleIcon fill="var(--primary)" />
           <span className={styles.NameItem}>{t('alberi_monumentali')}</span>
         </div>
-        <div className={styles.ItemCard}>
-          <MuseoIcon fill="var(--primary)" />
-          <span className={styles.NameItem}>{t('musei')}</span>
-        </div>
         <div className={styles.ItemCardLast}>
-          <AltroMonumentoIcon fill="var(--primary)" />
-          <span className={styles.NameItem}>{t('altro_monumento')}</span>
+          <ComuneIcon fill="var(--primary)" />
+          <span className={styles.NameItem}>
+            {t('comuni_vedute_d_insieme')}
+          </span>
         </div>
       </div>
       <div

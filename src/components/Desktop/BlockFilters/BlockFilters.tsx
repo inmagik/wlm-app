@@ -168,34 +168,6 @@ export default function BlockFilters({
           </div>
           <div
             className={classNames(styles.FilterItem, {
-              [styles.FilterItemActive]: filters.category === 'Castelli',
-            })}
-            onClick={() => {
-              setDetail(null)
-              setFilters({
-                ...filters,
-                category: 'Castelli',
-              })
-            }}
-          >
-            <div>
-              {filters.category === 'Castelli' ? (
-                <CheckOrderingIcon />
-              ) : (
-                <UncheckOrderingIcon />
-              )}
-            </div>
-            <div className={styles.FilterItemTitle}>
-              <CastelloIcon
-                fill={
-                  filters.category === 'Castelli' ? '#fff' : 'var(--primary)'
-                }
-              />
-              <span className="ms-2">{t('castelli')}</span>
-            </div>
-          </div>
-          <div
-            className={classNames(styles.FilterItem, {
               [styles.FilterItemActive]:
                 filters.category === 'Edifici religiosi',
             })}
@@ -227,32 +199,30 @@ export default function BlockFilters({
           </div>
           <div
             className={classNames(styles.FilterItem, {
-              [styles.FilterItemActive]: filters.category === 'Altri monumenti',
+              [styles.FilterItemActive]: filters.category === 'Castelli',
             })}
             onClick={() => {
               setDetail(null)
               setFilters({
                 ...filters,
-                category: 'Altri monumenti',
+                category: 'Castelli',
               })
             }}
           >
             <div>
-              {filters.category === 'Altri monumenti' ? (
+              {filters.category === 'Castelli' ? (
                 <CheckOrderingIcon />
               ) : (
                 <UncheckOrderingIcon />
               )}
             </div>
             <div className={styles.FilterItemTitle}>
-              <AltroMonumentoIcon
+              <CastelloIcon
                 fill={
-                  filters.category === 'Altri monumenti'
-                    ? '#fff'
-                    : 'var(--primary)'
+                  filters.category === 'Castelli' ? '#fff' : 'var(--primary)'
                 }
               />
-              <span className="ms-2">{t('altri_monumenti')}</span>
+              <span className="ms-2">{t('castelli')}</span>
             </div>
           </div>
           <div
@@ -279,6 +249,36 @@ export default function BlockFilters({
                 fill={filters.category === 'Musei' ? '#fff' : 'var(--primary)'}
               />
               <span className="ms-2">{t('musei')}</span>
+            </div>
+          </div>
+          <div
+            className={classNames(styles.FilterItem, {
+              [styles.FilterItemActive]: filters.category === 'Altri monumenti',
+            })}
+            onClick={() => {
+              setDetail(null)
+              setFilters({
+                ...filters,
+                category: 'Altri monumenti',
+              })
+            }}
+          >
+            <div>
+              {filters.category === 'Altri monumenti' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.FilterItemTitle}>
+              <AltroMonumentoIcon
+                fill={
+                  filters.category === 'Altri monumenti'
+                    ? '#fff'
+                    : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('altri_monumenti')}</span>
             </div>
           </div>
           <div
