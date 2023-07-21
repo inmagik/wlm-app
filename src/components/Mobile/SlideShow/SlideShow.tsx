@@ -41,10 +41,7 @@ export default function SlideShow({
           swiperSlideShowRef.current = swiper
         }}
         modules={[Navigation]}
-        navigation={{
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        }}
+        navigation
         onSlideChange={(swiper) => {
           setSlideShowActive(swiper.activeIndex)
         }}

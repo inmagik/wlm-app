@@ -19,12 +19,14 @@ interface Props {
   setFilters: (filters: any) => void
   filters: Record<string, any>
   setDetail: (detail: any) => void
+  setComuneFilterCoords?: (coords: number[]) => void
 }
 
 export default function BlockFilters({
   setFilters,
   filters,
   setDetail,
+  setComuneFilterCoords,
 }: Props) {
   const { t } = useTranslation()
   const [searchComune, setSearchComune] = useState<string>('')
@@ -126,6 +128,10 @@ export default function BlockFilters({
                       ...filters,
                       municipality: comune.code,
                     })
+                    if (setComuneFilterCoords) {
+                      const coords = comune.centroid.coordinates
+                      setComuneFilterCoords(coords)
+                    }
                   }}
                 >
                   <div className={styles.ComuneItemTitle}>

@@ -51,6 +51,7 @@ export default function Map() {
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
   const [legend, setLegend] = useState<boolean>(false)
+  const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>()
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -208,6 +209,16 @@ export default function Map() {
     }
   }, [filters.monument_lat, filters.monument_lon])
 
+  useEffect(() => {
+    if (comuneFilterCoords) {
+      setMapState({
+        ...mapState,
+        center: fromLonLat(comuneFilterCoords),
+        zoom: 12,
+      })
+    }
+  }, [comuneFilterCoords])
+
   return (
     <Layout>
       <div className="d-flex h-100 w-100">
@@ -216,6 +227,7 @@ export default function Map() {
             setDetail={setDetail}
             filters={filters}
             setFilters={setFilters}
+            setComuneFilterCoords={setComuneFilterCoords}
           />
         </div>
         <Suspense
