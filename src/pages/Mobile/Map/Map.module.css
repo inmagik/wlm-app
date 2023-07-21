@@ -114,3 +114,20 @@
   font-size: 30px;
   color: var(--primary);
 }
+
+.LoadingButton{
+  display: flex;
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background: var(--colori-neutri-white);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  margin-bottom: 16px;
+  border: none;
+  position: absolute;
+  left: 16px;
+  top: 124px;
+  z-index: 1;
+}

@@ -23,6 +23,7 @@ import { useNavigate } from 'react-router-dom'
 import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import { Zoom } from 'ol/control'
+import { Spinner } from 'react-bootstrap'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -44,6 +45,7 @@ export default function Map() {
   const { data: categories } = useCategoriesDomain()
   const navigate = useNavigate()
   const { i18n } = useTranslation()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -79,6 +81,9 @@ export default function Map() {
 
   useEffect(() => {
     if (!mapElement.current) return
+
+    vectorSource.set('setLoading', setLoading)
+
     const featureOverlay = new VectorLayer({
       source: clusterSource,
       style: getFeatureStyle,
@@ -179,6 +184,16 @@ export default function Map() {
             </button>
           </div>
         </div>
+        {loading && (
+          <div className={styles.LoadingButton}>
+            <Spinner
+              style={{
+                color: 'var(--primary)',
+              }}
+              size="sm"
+            />
+          </div>
+        )}
       </div>
 
       <BlockFilters
