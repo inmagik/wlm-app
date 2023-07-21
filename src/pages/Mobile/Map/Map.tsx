@@ -2,16 +2,16 @@ import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
+import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
 import VectorLayer from 'ol/layer/Vector'
-import { Stroke, Style } from 'ol/style'
 import {
   clusterSource,
   getFeatureInfo,
@@ -131,6 +131,20 @@ export default function Map() {
     }
   }, [filters.monument_lat, filters.monument_lon])
 
+  const areFiltersActive = useMemo(() => {
+    if (
+      filters.category !== '' ||
+      filters.in_contest !== 'true' ||
+      filters.municipality !== '' ||
+      filters.only_without_pictures !== '' ||
+      filters.search !== ''
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }, [filters])
+
   return (
     <Layout>
       <div className="w-100 h-100">
@@ -143,12 +157,16 @@ export default function Map() {
         >
           <div ref={mapElement} id="map" className="w-100 h-100">
             <button
-              className={styles.ButtonFilter}
+              className={
+                areFiltersActive
+                  ? styles.ButtonFiltersActive
+                  : styles.ButtonFilters
+              }
               onClick={() => {
                 setFiltersOpen(!filtersOpen)
               }}
             >
-              <FilterIcon />
+              {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
             </button>
             <div className={styles.ContainerButtons}>
               <button className={styles.ButtonMappe}>

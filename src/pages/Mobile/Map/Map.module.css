@@ -43,7 +43,7 @@
   border: none;
 }
 
-.ButtonFilter {
+.ButtonFiltersActive {
   display: flex;
   width: 40px;
   height: 40px;
@@ -61,12 +61,34 @@
   z-index: 1;
 }
 
-.ButtonFilter:focus {
+.ButtonFilters {
+  border-radius: 10px;
+  border: 1px solid var(--primary-color, #118ab2);
+  background: var(--colori-neutri-gray-2, #d0dfe4);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/* .ButtonFilters svg {
+  stroke: var(--primary);
+} */
+
+.ButtonFilters:focus {
   border: 1px solid var(--primary);
   background: var(--colori-neutri-gray-2);
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.15);
 }
 
-.ButtonFilter:focus svg {
+.ButtonFilters:focus svg {
   stroke: var(--primary);
 }

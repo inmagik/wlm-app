@@ -439,7 +439,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             <div className="w-100">
               <LangLink
                 className="no-link"
-                to={'/lista/?municipality=' + monument?.municipality}
+                to={'/lista/?municipality=' + monument?.municipality+'&in_contest='}
               >
                 <div className={styles.ButtonShowMonumenti}>
                   {t('vedi_monumenti')}
