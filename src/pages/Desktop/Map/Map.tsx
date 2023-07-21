@@ -19,7 +19,7 @@ import { useCategoriesDomain } from '../../../hooks/monuments'
 import Detail from '../../Mobile/Detail'
 import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useParams } from 'react-router-dom'
-const MapContainer = React.lazy(() => import('./MapContainer'))
+import MapContainer from './MapContainer'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
