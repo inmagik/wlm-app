@@ -192,6 +192,13 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
+    map?.getView().on('change:center', (event) => {
+      setInfoMarker(null)
+      setDetail(null)
+    })
+  }, [map])
+
+  useEffect(() => {
     if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
       setMapState({
         ...mapState,
