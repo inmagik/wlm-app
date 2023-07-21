@@ -55,6 +55,7 @@ export default function Map() {
   const [comuneFilterCoords, setComuneFilterCoords] = useState<
     number[] | null
   >()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -107,6 +108,8 @@ export default function Map() {
 
   useEffect(() => {
     if (!mapElement.current) return
+    
+    vectorSource.set('setLoading', setLoading)
 
     const featureOverlay = new VectorLayer({
       source: clusterSource,
@@ -235,6 +238,7 @@ export default function Map() {
           detail={detail}
           setLegend={setLegend}
           map={map}
+          loading={loading}
         />
 
         {detail && (

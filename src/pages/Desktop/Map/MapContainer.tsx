@@ -7,6 +7,7 @@ import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import Legend from '../../../components/Desktop/Legend'
 import IconMonument from '../../../components/IconMonument'
 import { useCallback, useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
@@ -16,6 +17,7 @@ interface MapContainerProps {
   setLegend: (legend: boolean) => void
   detail: number | null
   map: any
+  loading: boolean
 }
 
 export default function MapContainer({
@@ -26,6 +28,7 @@ export default function MapContainer({
   setLegend,
   detail,
   map,
+  loading,
 }: MapContainerProps) {
   const [coords, setCoords] = useState<number[] | null>(null)
 
@@ -59,6 +62,21 @@ export default function MapContainer({
           height: legend ? 'calc(100% - 200px)' : '100%',
         }}
       >
+        {loading && (
+
+          <div
+            className={styles.LoadingButton}
+            style={{
+              top: 16,
+              left: 16,
+              zIndex: 1,
+            }}
+          >
+            <Spinner style={{
+              color: 'var(--primary)',
+            }} size='sm' />
+          </div>
+        )}
         <div className={styles.ContainerButtons}>
           <button className={styles.ButtonMappe}>
             <Mappe />

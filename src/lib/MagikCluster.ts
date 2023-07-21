@@ -24,6 +24,7 @@ export const vectorSource = new Vector({
     const epsg4326Extent = transformExtent(extent, projection, 'EPSG:4326')
     const baseUrl = `${API_URL}/cluster-monuments/`
     const currentFilters = vectorSource.get('filters')
+    const setLoading = vectorSource.get('setLoading')
     const params = new URLSearchParams(currentFilters).toString()
 
     const url = `${baseUrl}?bbox=${epsg4326Extent.join(
@@ -31,12 +32,15 @@ export const vectorSource = new Vector({
     )}&resolution=${resolution}&${params}`
 
     const xhr = new XMLHttpRequest()
+    setLoading(true)
     xhr.open('GET', url)
     const onError = function () {
+      setLoading(false)
       vectorSource.removeLoadedExtent(extent)
     }
     xhr.onerror = onError
     xhr.onload = function () {
+      setLoading(false)
       if (xhr.status == 200) {
         const features = format.readFeatures(xhr.responseText)
         vectorSource.clear()
