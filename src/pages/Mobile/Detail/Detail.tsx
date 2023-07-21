@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
 import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
@@ -158,6 +158,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
   const { slug } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <>
@@ -179,19 +180,35 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               onClick={() => {
                 if (slug) {
                   setDetail(null)
-                  navigate(
-                    `/${i18n.language}/lista/?${new URLSearchParams({
-                      search: '',
-                      municipality: filters.municipality,
-                      category: filters.category,
-                      in_contest: filters.in_contest,
-                      only_without_pictures: filters.only_without_pictures,
-                      user_lat: String(filters.user_lat),
-                      user_lon: String(filters.user_lon),
-                    })}`,
+                  if (location.pathname.indexOf('lista') > -1) {
+                    navigate(
+                      `/${i18n.language}/lista/?${new URLSearchParams({
+                        search: '',
+                        municipality: filters.municipality,
+                        category: filters.category,
+                        in_contest: filters.in_contest,
+                        only_without_pictures: filters.only_without_pictures,
+                        user_lat: String(filters.user_lat),
+                        user_lon: String(filters.user_lon),
+                      })}`,
 
-                    { replace: true }
-                  )
+                      { replace: true }
+                    )
+                  } else {
+                    navigate(
+                      `/${i18n.language}/mappa/?${new URLSearchParams({
+                        search: '',
+                        municipality: filters.municipality,
+                        category: filters.category,
+                        in_contest: filters.in_contest,
+                        only_without_pictures: filters.only_without_pictures,
+                        user_lat: String(filters.user_lat),
+                        user_lon: String(filters.user_lon),
+                      })}`,
+
+                      { replace: true }
+                    )
+                  }
                 } else {
                   setDetail(null)
                 }
@@ -345,15 +362,17 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               className={styles.GuardaInMappa}
               onClick={() => {
                 navigate(
-                  `/${i18n.language}/mappa?monument_lat=${monument?.position?.coordinates[1]}&monument_lon=${monument?.position?.coordinates[0]}&zoom=16&${
-                    new URLSearchParams({
-                      only_without_pictures: filters.only_without_pictures,
-                      in_contest: filters.in_contest,
-                      category: filters.category,
-                      search: filters.search,
-                      municipality: filters.municipality,
-                    }).toString()
-                  }`
+                  `/${i18n.language}/mappa?monument_lat=${
+                    monument?.position?.coordinates[1]
+                  }&monument_lon=${
+                    monument?.position?.coordinates[0]
+                  }&zoom=16&${new URLSearchParams({
+                    only_without_pictures: filters.only_without_pictures,
+                    in_contest: filters.in_contest,
+                    category: filters.category,
+                    search: filters.search,
+                    municipality: filters.municipality,
+                  }).toString()}`
                 )
               }}
             >

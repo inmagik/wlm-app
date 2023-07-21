@@ -42,6 +42,7 @@ interface Props {
     only_without_pictures: string
     user_lat: number
     user_lon: number
+    monument_lat: number
   }
   setDetail: (monument: number) => void
   detail: number | null

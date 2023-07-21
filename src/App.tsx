@@ -84,7 +84,7 @@ function AppRoutes() {
                   <Detail />
                 </NavigationWrapper>
               ) : (
-                <ListDesktop />
+                <MapDesktop />
               )
             }
           />

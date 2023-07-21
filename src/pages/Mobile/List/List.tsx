@@ -14,7 +14,6 @@ import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 import classNames from 'classnames'
-import { Spinner } from 'react-bootstrap'
 
 interface Props {
   filters: {

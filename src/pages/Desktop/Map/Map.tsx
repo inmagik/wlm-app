@@ -17,6 +17,8 @@ import {
 } from '../../../lib/MagikCluster'
 import { useCategoriesDomain } from '../../../hooks/monuments'
 import Detail from '../../Mobile/Detail'
+import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
+import { useParams } from 'react-router-dom'
 const MapContainer = React.lazy(() => import('./MapContainer'))
 
 const getFilters = (params: URLSearchParams) => ({
@@ -80,6 +82,18 @@ export default function Map() {
   function error() {
     console.log('Unable to retrieve your location')
   }
+
+  const { slug } = useParams()
+
+  useEffect(() => {
+    if (slug) {
+      setDetail(Number(parseSmartSlug(slug)))
+      setFilters({
+        ...filters,
+        search: getLabelFromSlug(slug),
+      })
+    }
+  }, [slug])
 
   useEffect(() => {
     vectorSource.set('filters', filters)
