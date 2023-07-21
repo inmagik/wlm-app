@@ -8,7 +8,7 @@ import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
-import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
+import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
 import VectorLayer from 'ol/layer/Vector'
@@ -154,39 +154,31 @@ export default function Map() {
   return (
     <Layout>
       <div className="w-100 h-100">
-        <Suspense
-          fallback={
-            <div className="w-100 h-100">
-              <div className="loader"></div>
-            </div>
-          }
-        >
-          <div ref={mapElement} id="map" className="w-100 h-100">
-            <button
-              className={
-                areFiltersActive
-                  ? styles.ButtonFiltersActive
-                  : styles.ButtonFilters
-              }
-              onClick={() => {
-                setFiltersOpen(!filtersOpen)
-              }}
-            >
-              {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
+        <div ref={mapElement} id="map" className="w-100 h-100">
+          <button
+            className={
+              areFiltersActive
+                ? styles.ButtonFiltersActive
+                : styles.ButtonFilters
+            }
+            onClick={() => {
+              setFiltersOpen(!filtersOpen)
+            }}
+          >
+            {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
+          </button>
+          <div className={styles.ContainerButtons}>
+            <button className={styles.ButtonMappe}>
+              <Mappe />
             </button>
-            <div className={styles.ContainerButtons}>
-              <button className={styles.ButtonMappe}>
-                <Mappe />
-              </button>
-              <button
-                className={styles.ButtonMyLocation}
-                onClick={handleLocationClick}
-              >
-                <MyLocation />
-              </button>
-            </div>
+            <button
+              className={styles.ButtonMyLocation}
+              onClick={handleLocationClick}
+            >
+              <MyLocation />
+            </button>
           </div>
-        </Suspense>
+        </div>
       </div>
 
       <BlockFilters
