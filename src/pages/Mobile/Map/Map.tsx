@@ -46,6 +46,7 @@ export default function Map() {
   const navigate = useNavigate()
   const { i18n } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
+  const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>(null)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -156,6 +157,16 @@ export default function Map() {
     }
   }, [filters])
 
+  useEffect(() => {
+    if (comuneFilterCoords) {
+      setMapState({
+        ...mapState,
+        center: fromLonLat(comuneFilterCoords),
+        zoom: 12,
+      })
+    }
+  }, [comuneFilterCoords])
+
   return (
     <Layout>
       <div className="w-100 h-100">
@@ -201,6 +212,7 @@ export default function Map() {
         setFilters={setFilters}
         filtersOpen={filtersOpen}
         setFiltersOpen={setFiltersOpen}
+        setComuneFilterCoords={setComuneFilterCoords}
       />
     </Layout>
   )

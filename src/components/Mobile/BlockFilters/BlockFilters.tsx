@@ -18,6 +18,7 @@ interface BlockFiltersProps {
   setFiltersOpen: (filtersOpen: boolean) => void
   setFilters: (filters: any) => void
   filters: Record<string, any>
+  setComuneFilterCoords?: (coords: number[]) => void
 }
 
 export default function BlockFilters({
@@ -25,6 +26,7 @@ export default function BlockFilters({
   setFiltersOpen,
   setFilters,
   filters,
+  setComuneFilterCoords,
 }: BlockFiltersProps) {
   const [searchComune, setSearchComune] = useState<string>('')
   const [filterComuneOpen, setFilterComuneOpen] = useState<boolean>(false)
@@ -260,6 +262,10 @@ export default function BlockFilters({
                   onClick={() => {
                     setFilters({ municipality: comune.code })
                     setFilterComuneOpen(false)
+                    if (setComuneFilterCoords) {
+                      const coords = comune.centroid.coordinates
+                      setComuneFilterCoords(coords)
+                    }
                   }}
                 >
                   <Flag className="me-2" /> {comune.label}
