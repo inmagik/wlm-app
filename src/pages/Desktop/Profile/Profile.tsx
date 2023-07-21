@@ -31,7 +31,7 @@ export default function Profile() {
             <LoginIcon />
             <div className={styles.TextLogin}>{t('testo_login')}</div>
           </div>
-          <div className="mt-2 w-100">
+          <div className="mt-2">
             <button className={styles.LoginButton}>
               <LoginWhite className="me-1" /> {t('login')}
             </button>
