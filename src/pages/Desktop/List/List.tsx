@@ -18,7 +18,6 @@ import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import Legend from '../../../components/Desktop/Legend'
 
-
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
@@ -276,7 +275,7 @@ export default function List() {
               </button>
             </div>
           </div>
-          <Legend legend={legend} />
+          <Legend detail={detail} legend={legend} />
         </div>
         {detail && (
           <Suspense

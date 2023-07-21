@@ -14,9 +14,10 @@ import styles from './Legend.module.css'
 
 interface Props {
   legend: boolean
+  detail: number | null
 }
 
-export default function Legend({ legend }: Props) {
+export default function Legend({ legend, detail }: Props) {
   const { t } = useTranslation()
   return (
     <div
@@ -59,27 +60,59 @@ export default function Legend({ legend }: Props) {
           <span className={styles.NameItem}>{t('altro_monumento')}</span>
         </div>
       </div>
-      <div className={styles.BlockLegendColors}>
-        <div className={`${styles.CardMinorPadding} mt-2`}>
-          <div className={styles.ItemCardColor}>
+      <div
+        className={
+          detail ? styles.BlockLegendColors : styles.BlockLegendColorsNoDetail
+        }
+      >
+        <div
+          className={
+            detail ? styles.CardMinorPaddingDetail : styles.CardMinorPadding
+          }
+        >
+          <div
+            className={
+              detail ? styles.ItemCardColor : styles.ItemCardColorColumn
+            }
+          >
             <MonumentoNoFoto />
             <span className={styles.NameItem}>{t('non_ha_foto')}</span>
           </div>
-          <div className={styles.ItemCardColor}>
+          <div
+            className={
+              detail ? styles.ItemCardColor : styles.ItemCardColorColumn
+            }
+          >
             <Monumento1a10 />
             <span className={styles.NameItem}>{t('da_1_a_10_foto')}</span>
           </div>
-          <div className={styles.ItemCardColor}>
+          <div
+            className={
+              detail ? styles.ItemCardColor : styles.ItemCardColorColumn
+            }
+          >
             <MonumentoMaggiore10 />
             <span className={styles.NameItem}>{t('piu_di_10_foto')}</span>
           </div>
         </div>
-        <div className={`${styles.CardMinorPadding} ms-4 mt-2`}>
-          <div className={styles.ItemCardColor}>
+        <div
+          className={
+            detail ? styles.CardMinorPaddingDetail : styles.CardMinorPadding
+          }
+        >
+          <div
+            className={
+              detail ? styles.ItemCardColor : styles.ItemCardColorColumn
+            }
+          >
             <MonumentoConcorso />
             <span className={styles.NameItem}>{t('in_concorso')}</span>
           </div>
-          <div className={styles.ItemCardColor}>
+          <div
+            className={
+              detail ? styles.ItemCardColor : styles.ItemCardColorColumn
+            }
+          >
             <MonumentoNoConcorso />
             <span className={styles.NameItem}>{t('non_in_concorso')}</span>
           </div>

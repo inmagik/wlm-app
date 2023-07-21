@@ -16,7 +16,6 @@
 .MonumentType {
   padding-left: 24px;
   color: var(--primary);
-  /* Body */
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
@@ -47,7 +46,22 @@
   align-items: center;
   height: 100%;
   color: var(--primary);
-  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.BlockLegendColorsNoDetail {
+  padding-left: 16px;
+  display: flex;
+  /* width: 320px; */
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  color: var(--primary);
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
@@ -66,8 +80,27 @@
   margin-right: 8px;
 }
 
+.ItemCardColorColumn {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 4px;
+  text-align: center;
+  margin-right: 8px;
+}
+
 .CardMinorPadding {
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-right: 30px;
+}
+
+.CardMinorPaddingDetail {
+  display: flex;
+  flex-direction: row;
 }
 
 .Legend {

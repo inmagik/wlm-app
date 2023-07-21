@@ -129,7 +129,7 @@ export default function MapContainer({
           </>
         )}
       </div>
-      <Legend legend={legend} />
+      <Legend detail={detail} legend={legend} />
     </div>
   )
 }
