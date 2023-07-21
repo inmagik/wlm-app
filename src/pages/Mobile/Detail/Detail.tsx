@@ -42,6 +42,7 @@ import { Monument, MonumentList } from '../../../types'
 import classNames from 'classnames'
 import { Spinner } from 'react-bootstrap'
 import { useQsFilters } from '../../../hooks/filters'
+import dayjs from 'dayjs'
 
 interface Props {
   monumentId?: number
@@ -250,7 +251,36 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     style={{
                       backgroundImage: `url("${picture.image_url}")`,
                     }}
-                  ></div>
+                  >
+                    <div className={styles.BlockImageOverlay}>
+                      <div className="d-flex align-items-center">
+                        <div className={styles.BlockImageOverlayText}>
+                          {picture.data?.Artist && (
+                            <div
+                              className={styles.BlockImageOverlayTextArtist}
+                              dangerouslySetInnerHTML={{
+                                __html: picture.data?.Artist,
+                              }}
+                            ></div>
+                          )}
+                        </div>
+                        <div>
+                          {picture.data?.DateTime && (
+                            <div className={styles.BlockImageOverlayTextDate}>
+                              {dayjs(picture.data?.DateTime).format(
+                                'DD/MM/YYYY'
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {picture.data?.License && (
+                        <div className={styles.CreditsImage}>
+                          {picture.data?.License}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -439,7 +469,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             <div className="w-100">
               <LangLink
                 className="no-link"
-                to={'/lista/?municipality=' + monument?.municipality+'&in_contest='}
+                to={
+                  '/lista/?municipality=' +
+                  monument?.municipality +
+                  '&in_contest='
+                }
               >
                 <div className={styles.ButtonShowMonumenti}>
                   {t('vedi_monumenti')}

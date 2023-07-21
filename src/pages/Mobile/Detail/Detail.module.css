@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.DettaglioContainerDesktop{
+.DettaglioContainerDesktop {
   padding: 0px;
   overflow-y: auto;
   height: 100%;
@@ -468,4 +468,50 @@
 .Close {
   margin-bottom: 16px;
   cursor: pointer;
+}
+
+.BlockImageOverlay {
+  border-radius: 0px 0px 5px 5px;
+  background: linear-gradient(180deg, rgba(31, 30, 28, 0) 0%, #1f1e1c 60.42%);
+  backdrop-filter: blur(1px);
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  height: 58px;
+  padding: 8px 16px;
+}
+
+.BlockImageOverlayTextArtist > a {
+  color: var(--colori-neutri-white);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding-right: 8px;
+  border-right: 2px solid var(--colori-neutri-white);
+}
+
+.BlockImageOverlayTextDate {
+  color: var(--colori-neutri-white);
+  /* Label */
+  font-family: var((--font-roboto-slab));
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 2px;
+  margin-left: 8px;
+}
+
+.CreditsImage {
+  color: var(--colori-neutri-white);
+  font-family: var(--font-roboto-slab);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 2px;
+  text-transform: uppercase;
 }

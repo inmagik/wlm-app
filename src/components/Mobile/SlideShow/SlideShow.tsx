@@ -7,6 +7,7 @@ import styles from './SlideShow.module.css'
 import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
+import { Navigation } from 'swiper'
 
 interface Props {
   monument: Monument
@@ -38,6 +39,11 @@ export default function SlideShow({
         className="h-100"
         onSwiper={(swiper) => {
           swiperSlideShowRef.current = swiper
+        }}
+        modules={[Navigation]}
+        navigation={{
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
         }}
         onSlideChange={(swiper) => {
           setSlideShowActive(swiper.activeIndex)
