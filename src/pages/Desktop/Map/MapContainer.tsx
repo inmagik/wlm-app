@@ -63,18 +63,13 @@ export default function MapContainer({
         }}
       >
         {loading && (
-
-          <div
-            className={styles.LoadingButton}
-            style={{
-              top: 16,
-              left: 16,
-              zIndex: 1,
-            }}
-          >
-            <Spinner style={{
-              color: 'var(--primary)',
-            }} size='sm' />
+          <div className={styles.LoadingButton}>
+            <Spinner
+              style={{
+                color: 'var(--primary)',
+              }}
+              size="sm"
+            />
           </div>
         )}
         <div className={styles.ContainerButtons}>
