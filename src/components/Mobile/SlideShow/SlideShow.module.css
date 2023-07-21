@@ -124,6 +124,27 @@
   text-decoration: underline;
 }
 
+.ButtonCloseSlideshow {
+  border-radius: 30px;
+  background: var(--primary);
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  margin-top: 8px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.ButtonCloseSlideshow:hover {
+  background: rgba(17, 138, 178, 0.8);
+  cursor: pointer;
+}
+
 @media screen and (min-width: 768px) {
   .SlideShowImage {
     height: 80%;

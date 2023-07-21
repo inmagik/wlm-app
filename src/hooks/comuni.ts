@@ -22,6 +22,7 @@ export function useComuni(params: Record<string, any> = {}) {
     ({ signal }) => getComuni(params, signal),
     {
       keepPreviousData: true,
+      suspense: false,
     }
   )
 }

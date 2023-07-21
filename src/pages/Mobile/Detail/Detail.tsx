@@ -287,7 +287,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           ) : (
             <>
               <div className={styles.BoxNoImages}>
-                <div>{t('ancora_nessuna_foto_all_orizzonte')}</div>
+                <div>{t('ancora_nessuna_foto')}</div>
                 <div>
                   <SmileBad className="mt-2" />
                 </div>

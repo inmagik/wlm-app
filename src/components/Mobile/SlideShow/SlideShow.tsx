@@ -119,13 +119,15 @@ export default function SlideShow({
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className={styles.SlideShowClose}>
-        <CloseWhite
-          onClick={() => {
-            setShowAllImages(false)
-            setInfoSlideSlideShow(false)
-          }}
-        />
+      <div
+        className={styles.SlideShowClose}
+        onClick={() => {
+          setShowAllImages(false)
+        }}
+      >
+        <button className={styles.ButtonCloseSlideshow}>
+          <CloseWhite />
+        </button>
       </div>
     </div>
   )

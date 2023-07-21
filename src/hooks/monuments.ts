@@ -72,5 +72,7 @@ export async function getCategoriesDomain(signal?: AbortSignal) {
 }
 
 export function useCategoriesDomain() {
-  return useQuery(['categories-domain'], () => getCategoriesDomain())
+  return useQuery(['categories-domain'], () => getCategoriesDomain(), {
+    suspense: false,
+  })
 }

@@ -41,6 +41,7 @@ export interface MarkerProps {
   app_category: string
   in_contest: boolean
   coords: number[]
+  feature: any
 }
 
 export default function Map() {
@@ -51,7 +52,9 @@ export default function Map() {
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
   const [legend, setLegend] = useState<boolean>(false)
-  const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>()
+  const [comuneFilterCoords, setComuneFilterCoords] = useState<
+    number[] | null
+  >()
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -137,7 +140,6 @@ export default function Map() {
             const categoriesFeature = feature
               .getProperties()
               .features[0].getProperties().categories
-            console.log(monument, 'monument')
             const category = categoriesFeature[0]
             const appCategory =
               categories?.find((c: any) => c.categories.includes(category))
@@ -150,6 +152,7 @@ export default function Map() {
               coords: evt.pixel,
               app_category: appCategory,
               in_contest: monument.in_contest,
+              feature: feature
             })
           }
         })
@@ -193,13 +196,6 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    map?.getView().on('change:center', (event) => {
-      setInfoMarker(null)
-      setDetail(null)
-    })
-  }, [map])
-
-  useEffect(() => {
     if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
       setMapState({
         ...mapState,
@@ -230,24 +226,17 @@ export default function Map() {
             setComuneFilterCoords={setComuneFilterCoords}
           />
         </div>
-        <Suspense
-          fallback={
-            <div className={styles.CardLegend}>
-              <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                <div className="loader" />
-              </div>
-            </div>
-          }
-        >
-          <MapContainer
-            mapElement={mapElement}
-            handleLocationClick={handleLocationClick}
-            infoMarker={infoMarker}
-            legend={legend}
-            detail={detail}
-            setLegend={setLegend}
-          />
-        </Suspense>
+
+        <MapContainer
+          mapElement={mapElement}
+          handleLocationClick={handleLocationClick}
+          infoMarker={infoMarker}
+          legend={legend}
+          detail={detail}
+          setLegend={setLegend}
+          map={map}
+        />
+
         {detail && (
           <Suspense
             fallback={

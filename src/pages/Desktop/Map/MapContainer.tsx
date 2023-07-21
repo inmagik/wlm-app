@@ -6,6 +6,7 @@ import { ReactComponent as CameraTransparent } from '../../../assets/camera-tran
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import Legend from '../../../components/Desktop/Legend'
 import IconMonument from '../../../components/IconMonument'
+import { useCallback, useEffect, useState } from 'react'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
@@ -14,6 +15,7 @@ interface MapContainerProps {
   legend: boolean
   setLegend: (legend: boolean) => void
   detail: number | null
+  map: any
 }
 
 export default function MapContainer({
@@ -23,7 +25,30 @@ export default function MapContainer({
   legend,
   setLegend,
   detail,
+  map,
 }: MapContainerProps) {
+  const [coords, setCoords] = useState<number[] | null>(null)
+
+  const refreshCoordinates = useCallback(() => {
+    if (infoMarker) {
+      const coordinates = infoMarker.feature.getGeometry().getCoordinates()
+      const pixel = map.getPixelFromCoordinate(coordinates)
+      setCoords(pixel)
+    }
+  }, [infoMarker, map])
+
+  useEffect(() => {
+    refreshCoordinates()
+  }, [infoMarker])
+
+  useEffect(() => {
+    map && map.on('rendercomplete', refreshCoordinates)
+
+    return () => {
+      map && map.un('rendercomplete', refreshCoordinates)
+    }
+  }, [map, refreshCoordinates])
+
   return (
     <div className={styles.MapContainer}>
       <div
@@ -53,13 +78,13 @@ export default function MapContainer({
             <LiveHelp />
           </button>
         </div>
-        {infoMarker && (
+        {infoMarker && coords && (
           <>
             <div
               style={{
                 position: 'absolute',
-                top: infoMarker.coords[1] - 80,
-                left: infoMarker.coords[0] - 80,
+                top: coords[1] - 60,
+                left: coords[0] - 80,
                 zIndex: 1,
                 backgroundColor:
                   infoMarker.pictures_wlm_count === 0
