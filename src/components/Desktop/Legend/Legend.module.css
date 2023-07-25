@@ -9,19 +9,16 @@
   justify-content: center;
   align-items: center;
   line-height: normal;
-  border-right: 0.5px solid var(--primary);
   padding-right: 16px;
 }
 
 .MonumentType {
-  padding-left: 24px;
   color: var(--primary);
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  border-right: 0.5px solid var(--primary);
   padding-right: 50px;
   display: flex;
   flex-direction: column;
@@ -37,12 +34,23 @@
   margin-left: 4px;
 }
 
+.NameItemWhite {
+  margin-left: 4px;
+  color: var(--colori-neutri-white);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .BlockLegendColors {
   padding-left: 16px;
   display: flex;
-  width: 320px;
+  width: 250px;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   height: 100%;
   color: var(--primary);
@@ -106,7 +114,6 @@
 .Legend {
   display: flex;
   z-index: -1;
-  margin-left: 8px;
   margin-top: 8px;
   align-items: center;
   gap: 8px;
@@ -114,4 +121,15 @@
   border-radius: 30px;
   background: var(--overlay);
   box-shadow: 0px 0px 8px 0px rgba(197, 197, 197, 0.1);
+}
+
+.BlockInConcorsoOrNot {
+  display: flex;
+  padding: 8px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 10px;
+  background: var(--colori-neutri-gray);
 }

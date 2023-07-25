@@ -177,12 +177,12 @@ export default function List() {
             setDetail={setDetail}
           />
         </div>
-        <div className="d-flex flex-column h-100 w-100">
+        <div className={styles.ListContainer}>
           <div
             className={styles.CardContainerList}
             style={{
-              width: 'calc(100% - 8px)',
-              height: legend ? 'calc(100% - 204px)' : '100%',
+              width: 'calc(100%)',
+              height: legend && detail ? 'calc(100% - 288px)' : legend && !detail ? 'calc(100% - 200px)' : '100%',
               transition: 'width 0.5s ease-in-out',
             }}
           >

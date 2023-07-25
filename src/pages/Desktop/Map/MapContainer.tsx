@@ -59,7 +59,7 @@ export default function MapContainer({
         id="map"
         className="w-100 position-relative"
         style={{
-          height: legend ? 'calc(100% - 200px)' : '100%',
+          height: legend && detail ? 'calc(100% - 288px)' : legend && !detail ? 'calc(100% - 200px)' : '100%',
         }}
       >
         {loading && (
