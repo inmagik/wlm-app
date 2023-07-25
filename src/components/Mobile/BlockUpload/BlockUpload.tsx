@@ -6,12 +6,15 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
 import classNames from 'classnames'
+import { useMediaQuery } from 'usehooks-ts'
+import { Monument } from '../../../types'
 
 interface BlockUploadProps {
   uploadOpen: boolean
   setUploadOpen: (uploadOpen: boolean) => void
   fileList: FileList | null
   setFileList: (file: FileList | null) => void
+  monument: Monument | null
 }
 
 export default function BlockUpload({
@@ -19,6 +22,7 @@ export default function BlockUpload({
   setUploadOpen,
   fileList,
   setFileList,
+  monument
 }: BlockUploadProps) {
   const { t } = useTranslation()
 
@@ -54,6 +58,8 @@ export default function BlockUpload({
 
   const [slideActive, setSlideActive] = useState<number>(0)
 
+  const isMobile = useMediaQuery('(max-width: 768px)')
+
   return (
     <div
       className={styles.ModalUpload}
@@ -70,6 +76,9 @@ export default function BlockUpload({
       }}
     >
       <div className={styles.ModalUploadContainer}>
+        <div className={styles.TitleUpload}>
+            {t('carica_immagini_per_il_monumento')} <strong>{monument?.label}</strong>
+        </div>
         <div className={styles.CloseModal}>
           <Close
             onClick={() => {

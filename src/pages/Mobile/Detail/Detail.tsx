@@ -570,6 +570,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       )}
       <BlockUpload
         fileList={imageUpload}
+        monument={monument}
         setUploadOpen={setShowModalUpload}
         uploadOpen={showModalUpload}
         setFileList={setImageUpload}

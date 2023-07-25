@@ -69,11 +69,11 @@ export const vectorSource = new Vector({
 })
 
 export const clusterSource = new Cluster({
-  distance: 40,
+  distance: 30,
   source: vectorSource,
 })
 
-const clusterScale = scaleLinear().domain([7, 45, 46]).range([12, 20, 20])
+const clusterScale = scaleLinear().domain([7, 45, 46]).range([9, 20, 20])
 
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {

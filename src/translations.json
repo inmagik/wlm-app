@@ -69,7 +69,8 @@
             "da_1_a_10_foto": "From 1 to 10 photos",
             "piu_di_10_foto": "More than 10 photos",
             "in_concorso": "In competition",
-            "non_in_concorso": "Not in competition"
+            "non_in_concorso": "Not in competition",
+            "carica_immagini_per_il_monumento": "Upload images for the monument"
         }
     },
     "it": {
@@ -142,7 +143,8 @@
             "da_1_a_10_foto": "Da 1 a 10 foto",
             "piu_di_10_foto": "Più di 10 foto",
             "in_concorso": "In concorso",
-            "non_in_concorso": "Non in concorso"
+            "non_in_concorso": "Non in concorso",
+            "carica_immagini_per_il_monumento": "Carica immagini per il monumento"
         }
     }
 }

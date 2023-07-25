@@ -150,3 +150,12 @@
   background-color: var(--primary);
   margin-right: 8px;
 }
+
+.TitleUpload {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: var(--colori-neutri-black);
+  margin-bottom: 16px;
+}
