@@ -57,7 +57,12 @@ export default function SlideShow({
         }}
       >
         {monument?.pictures.map((picture, i) => (
-          <SwiperSlide key={i}>
+          <SwiperSlide
+            onClick={() => {
+              setInfoSlide(!infoSlide)
+            }}
+            key={i}
+          >
             <div
               className={styles.SlideShowImage}
               style={{
@@ -65,9 +70,6 @@ export default function SlideShow({
               }}
             ></div>
             <div
-              onClick={() => {
-                setInfoSlide(!infoSlide)
-              }}
               className={styles.InfoBlockSlideShow}
               style={{
                 opacity: infoSlideSlideShow && infoSlide ? 1 : 0,

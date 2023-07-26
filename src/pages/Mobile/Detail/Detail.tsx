@@ -76,9 +76,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [slideShowActive, setSlideShowActive] = useState(0)
   const [infoSlideSlideShow, setInfoSlideSlideShow] = useState(false)
   const [slideActive, setSlideActive] = useState(0)
+  const [slideGroup12, setSlideGroup12] = useState(0)
   const { t, i18n } = useTranslation()
   const inputFileRef = useRef<HTMLInputElement>(null)
   const swiperRef = useRef<SwiperClass>()
+  const swiperBlock12 = useRef<SwiperClass>()
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
@@ -302,7 +304,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     }
                   />
                   <div className={styles.CurrentSlide}>
-                    {slideActive + 1} / {monument?.pictures.length}
+                    {slideGroup12 + 1} / {monument?.pictures.length}
                   </div>
                   <ArrowRightSlideShow
                     onClick={() => {
@@ -389,9 +391,13 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           <div className={styles.CardImages}>
             <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
             <Swiper
-              pagination={{ dynamicBullets: true }}
               className={styles.Swiper}
-              modules={[Pagination]}
+              onSwiper={(swiper) => {
+                swiperBlock12.current = swiper
+              }}
+              onSlideChange={(swiper) => {
+                setSlideGroup12(swiper.activeIndex)
+              }}
             >
               {groupsOf12Pictures &&
                 groupsOf12Pictures.map((group, index) => (
@@ -418,6 +424,43 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   </Fragment>
                 ))}
             </Swiper>
+            {groupsOf12Pictures && groupsOf12Pictures.length > 1 && (
+              <div className={styles.PaginationContainer}>
+                <ArrowLeftSlideShow
+                  onClick={() => {
+                    if (slideGroup12 > 0) {
+                      swiperBlock12.current?.slidePrev()
+                    }
+                  }}
+                  className={classNames('me-3', {
+                    pointer: slideGroup12 > 0,
+                  })}
+                  fill={
+                    slideGroup12 > 0
+                      ? 'var(--primary)'
+                      : 'var(--colori-neutri-gray-2)'
+                  }
+                />
+                <div className={styles.CurrentSlide}>
+                  {slideGroup12 + 1} / {groupsOf12Pictures?.length}
+                </div>
+                <ArrowRightSlideShow
+                  onClick={() => {
+                    if (slideGroup12 < groupsOf12Pictures?.length - 1) {
+                      swiperBlock12.current?.slideNext()
+                    }
+                  }}
+                  className={classNames('ms-3', {
+                    pointer: slideGroup12 < groupsOf12Pictures?.length - 1,
+                  })}
+                  fill={
+                    slideGroup12 < groupsOf12Pictures?.length - 1
+                      ? 'var(--primary)'
+                      : 'var(--colori-neutri-gray-2)'
+                  }
+                />
+              </div>
+            )}
             <button className={styles.ButtonShowAllImages}>
               {t('guarda_tutte_su_wikimediacommons')}
             </button>
