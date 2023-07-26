@@ -244,7 +244,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   <SwiperSlide
                     onClick={() => {
                       setShowAllImages(true)
-                      setSlideShowActive(picture.id)
+                      setSlideShowActive(
+                        monument?.pictures.findIndex(
+                          (p) => p.id === picture.id
+                        )
+                      )
                     }}
                     key={k}
                   >
