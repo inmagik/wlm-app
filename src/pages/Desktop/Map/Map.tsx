@@ -108,7 +108,7 @@ export default function Map() {
 
   useEffect(() => {
     if (!mapElement.current) return
-    
+
     vectorSource.set('setLoading', setLoading)
 
     const featureOverlay = new VectorLayer({
@@ -140,14 +140,40 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
+            console.log(monument, 'clicked on monument')
             const categoriesFeature = feature
               .getProperties()
               .features[0].getProperties().categories
-            const category = categoriesFeature[0]
-            const appCategory =
-              categories?.find((c: any) => c.categories.includes(category))
-                ?.name ?? ''
+            let appCategory = ''
+            if (categoriesFeature.length > 1) {
+              for (let i = 0; i < categoriesFeature.length; i++) {
+                appCategory =
+                  categories?.find((c: any) =>
+                    c.categories.includes(categoriesFeature[i])
+                  )?.name ?? ''
+                if (appCategory === 'Altri monumenti') {
+                  continue
+                } else {
+                  break
+                }
+              }
+              if (appCategory === '') {
+                appCategory = 'Altri monumenti'
+              }
+            } else {
+              appCategory =
+                categories?.find((c: any) =>
+                  c.categories.includes(categoriesFeature[0])
+                )?.name ?? ''
+            }
             setDetail(monument.id)
+            setMapState({
+              ...mapState,
+              center: fromLonLat([
+                monument.position.coordinates[0],
+                monument.position.coordinates[1],
+              ]),
+            })
             setInfoMarker({
               id: monument.id,
               label: monument.label,
@@ -155,7 +181,7 @@ export default function Map() {
               coords: evt.pixel,
               app_category: appCategory,
               in_contest: monument.in_contest,
-              feature: feature
+              feature: feature,
             })
           }
         })

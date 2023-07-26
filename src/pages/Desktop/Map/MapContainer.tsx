@@ -44,6 +44,19 @@ export default function MapContainer({
     refreshCoordinates()
   }, [infoMarker])
 
+  const pointerFeatures = useCallback(
+    (e: any) => {
+      if (!e.dragging) {
+        map.getTargetElement().style.cursor = map.hasFeatureAtPixel(
+          map.getEventPixel(e.originalEvent)
+        )
+          ? 'pointer'
+          : ''
+      }
+    },
+    [map]
+  )
+
   useEffect(() => {
     map && map.on('rendercomplete', refreshCoordinates)
 
@@ -52,6 +65,14 @@ export default function MapContainer({
     }
   }, [map, refreshCoordinates])
 
+  useEffect(() => {
+    map && map.on('pointermove', pointerFeatures)
+
+    return () => {
+      map && map.un('pointermove', pointerFeatures)
+    }
+  }, [map])
+
   return (
     <div className={styles.MapContainer}>
       <div
@@ -59,7 +80,12 @@ export default function MapContainer({
         id="map"
         className="w-100 position-relative"
         style={{
-          height: legend && detail ? 'calc(100% - 288px)' : legend && !detail ? 'calc(100% - 200px)' : '100%',
+          height:
+            legend && detail
+              ? 'calc(100% - 288px)'
+              : legend && !detail
+              ? 'calc(100% - 200px)'
+              : '100%',
         }}
       >
         {loading && (

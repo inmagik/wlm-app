@@ -40,7 +40,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./",
+  base: "/",
   plugins: [react(), svgrPlugin(), VitePWA(manifestForPlugin)],
   server: {
     host: true,
