@@ -81,10 +81,9 @@ export function getFeatureStyle(feature: any) {
   const categories = vectorSource.get('categories')
   if (info === 1) {
     const properties = feature.getProperties().features[0].getProperties()
-    const category = properties.categories[0]
     const categoriesFeature = feature
-              .getProperties()
-              .features[0].getProperties().categories
+      .getProperties()
+      .features[0].getProperties().categories
     let appCategory = ''
     if (categoriesFeature.length > 1) {
       for (let i = 0; i < categoriesFeature.length; i++) {

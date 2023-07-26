@@ -244,18 +244,14 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   <SwiperSlide
                     onClick={() => {
                       setShowAllImages(true)
-                      setSlideShowActive(
-                        monument?.pictures.findIndex(
-                          (p) => p.id === picture.id
-                        )
-                      )
+                      setSlideShowActive(k)
                     }}
                     key={k}
                   >
                     <div
                       className={styles.BlockImage}
                       style={{
-                        backgroundImage: `url("${picture.image_url}")`,
+                        backgroundImage: `url("${picture.image_url}?width=500")`,
                       }}
                     >
                       <div className={styles.BlockImageOverlay}>
@@ -415,10 +411,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                               className={styles.Image}
                               onClick={() => {
                                 setShowAllImages(true)
-                                setSlideShowActive(picture.id)
+                                setSlideShowActive(k)
                               }}
                               style={{
-                                backgroundImage: `url("${picture.image_url}")`,
+                                backgroundImage: `url("${picture.image_url}?width=300")`,
                               }}
                             ></div>
                           ))}

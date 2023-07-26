@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Monument } from '../../../types'
 import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
@@ -39,6 +39,23 @@ export default function SlideShow({
   const { t } = useTranslation()
   const [infoSlide, setInfoSlide] = useState<boolean>(true)
   const isMobile = useMediaQuery('(max-width: 767px)')
+
+  const handleCloseSlideShowOnEsc = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowAllImages(false)
+      }
+    },
+    [setSlideShowActive]
+  )
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleCloseSlideShowOnEsc)
+    return () => {
+      document.removeEventListener('keydown', handleCloseSlideShowOnEsc)
+    }
+  }, [handleCloseSlideShowOnEsc])
+
   return (
     <div className={styles.SlideShow}>
       <Swiper
@@ -53,7 +70,7 @@ export default function SlideShow({
         }}
         onInit={(swiper) => {
           swiper.slideTo(
-            Object.keys(picturesById).indexOf(String(slideShowActive)),
+            slideShowActive, 
             0
           )
           setTimeout(() => {
