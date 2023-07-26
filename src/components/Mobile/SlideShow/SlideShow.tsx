@@ -1,13 +1,17 @@
 import { useRef, useState } from 'react'
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Monument } from '../../../types'
 import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
+import { ReactComponent as ArrowLeftBig } from '../../../assets/arrow-left-big.svg'
+import { ReactComponent as ArrowRightBig } from '../../../assets/arrow-right-big.svg'
 import styles from './SlideShow.module.css'
 import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import { Navigation } from 'swiper'
+import { useMediaQuery } from 'usehooks-ts'
+import classNames from 'classnames'
 
 interface Props {
   monument: Monument
@@ -34,6 +38,7 @@ export default function SlideShow({
     }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
   const { t } = useTranslation()
   const [infoSlide, setInfoSlide] = useState<boolean>(true)
+  const isMobile = useMediaQuery('(max-width: 767px)')
   return (
     <div className={styles.SlideShow}>
       <Swiper
@@ -125,6 +130,40 @@ export default function SlideShow({
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className={styles.CurrentImage}>
+        {slideShowActive + 1} / {monument?.pictures.length}
+      </div>
+      {!isMobile && monument.pictures.length > 1 && (
+        <div className={styles.PrevArrow}>
+          <ArrowLeftBig
+            className={classNames({
+              pointer: slideShowActive > 0,
+            })}
+            fill={slideShowActive > 0 ? '#fff' : 'var(--colori-neutri-gray)'}
+            onClick={() => {
+              if (slideShowActive > 0) swiperSlideShowRef.current.slidePrev()
+            }}
+          />
+        </div>
+      )}
+      {!isMobile && monument.pictures.length > 1 && (
+        <div className={styles.NextArrow}>
+          <ArrowRightBig
+            className={classNames({
+              pointer: slideShowActive < monument?.pictures.length - 1,
+            })}
+            fill={
+              slideShowActive < monument?.pictures.length - 1
+                ? '#fff'
+                : 'var(--colori-neutri-gray)'
+            }
+            onClick={() => {
+              if (slideShowActive < monument?.pictures.length - 1)
+                swiperSlideShowRef.current.slideNext()
+            }}
+          />
+        </div>
+      )}
       <div
         className={styles.SlideShowClose}
         onClick={() => {

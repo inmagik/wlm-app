@@ -304,7 +304,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     }
                   />
                   <div className={styles.CurrentSlide}>
-                    {slideGroup12 + 1} / {monument?.pictures.length}
+                    {slideActive + 1} / {monument?.pictures.length}
                   </div>
                   <ArrowRightSlideShow
                     onClick={() => {
