@@ -73,7 +73,7 @@ export const clusterSource = new Cluster({
   source: vectorSource,
 })
 
-const clusterScale = scaleLinear().domain([7, 45, 46]).range([9, 20, 20])
+const clusterScale = scaleLinear().domain([9, 45, 46]).range([9, 20, 20])
 
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
@@ -82,6 +82,31 @@ export function getFeatureStyle(feature: any) {
   if (info === 1) {
     const properties = feature.getProperties().features[0].getProperties()
     const category = properties.categories[0]
+    const categoriesFeature = feature
+              .getProperties()
+              .features[0].getProperties().categories
+    let appCategory = ''
+    if (categoriesFeature.length > 1) {
+      for (let i = 0; i < categoriesFeature.length; i++) {
+        appCategory =
+          categories?.find((c: any) =>
+            c.categories.includes(categoriesFeature[i])
+          )?.name ?? ''
+        if (appCategory === 'Altri monumenti') {
+          continue
+        } else {
+          break
+        }
+      }
+      if (appCategory === '') {
+        appCategory = 'Altri monumenti'
+      }
+    } else {
+      appCategory =
+        categories?.find((c: any) =>
+          c.categories.includes(categoriesFeature[0])
+        )?.name ?? ''
+    }
     const iconStyle = new Style({
       image: new Icon({
         anchor: [0.5, 46],
@@ -90,7 +115,7 @@ export function getFeatureStyle(feature: any) {
         src: getMarkerMap({
           monument: {
             ...properties,
-            app_category: categories?.find((c: any) => c.categories.includes(category))?.name ?? '',
+            app_category: appCategory,
           },
         }),
         width: 30,

@@ -124,6 +124,7 @@ export default function MapContainer({
                 position: 'absolute',
                 top: coords[1] - 60,
                 left: coords[0] - 80,
+                opacity: coords ? 1 : 0,
                 zIndex: 1,
                 backgroundColor:
                   infoMarker.pictures_wlm_count === 0

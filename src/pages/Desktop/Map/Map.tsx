@@ -173,6 +173,7 @@ export default function Map() {
                 monument.position.coordinates[0],
                 monument.position.coordinates[1],
               ]),
+              zoom: mapState.zoom
             })
             setInfoMarker({
               id: monument.id,
