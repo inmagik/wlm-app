@@ -9,12 +9,12 @@
 }
 
 .SlideShowImage {
-  height: 80%;
+  height: 100%;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   width: 100%;
-  margin-top: 20%;
+  /* margin-top: 20%; */
 }
 
 .SlideShowClose {
@@ -39,6 +39,7 @@
   left: 0;
   z-index: 7;
   color: var(--colori-neutri-white);
+  cursor: pointer;
 }
 
 .InfoBlockSlideShowTitle {
@@ -147,10 +148,10 @@
 
 @media screen and (min-width: 768px) {
   .SlideShowImage {
-    height: 80%;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     width: 100%;
     margin-top: 0%;
   }

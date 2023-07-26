@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import { Monument } from '../../../types'
 import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
@@ -33,6 +33,7 @@ export default function SlideShow({
       return acc
     }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
   const { t } = useTranslation()
+  const [infoSlide, setInfoSlide] = useState<boolean>(true)
   return (
     <div className={styles.SlideShow}>
       <Swiper
@@ -64,11 +65,14 @@ export default function SlideShow({
               }}
             ></div>
             <div
+              onClick={() => {
+                setInfoSlide(!infoSlide)
+              }}
               className={styles.InfoBlockSlideShow}
               style={{
-                opacity: infoSlideSlideShow ? 1 : 0,
-                bottom: infoSlideSlideShow ? 0 : -100,
-                minHeight: infoSlideSlideShow ? 151 : 0,
+                opacity: infoSlideSlideShow && infoSlide ? 1 : 0,
+                // bottom: infoSlideSlideShow && infoSlide ? 0 : -100,
+                // minHeight: infoSlideSlideShow && infoSlide ? 151 : 0,
                 transition: 'all 0.5s ease-in-out',
               }}
             >
