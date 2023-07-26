@@ -15,6 +15,8 @@ import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { ReactComponent as Close } from '../../../assets/close.svg'
+import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slideshow-arrow.svg'
+import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperClass, { Pagination } from 'swiper'
@@ -227,13 +229,13 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           {monument && monument?.pictures.length > 0 ? (
             <>
               <Swiper
-                modules={[Pagination]}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper
                 }}
                 onSlideChange={(swiper) => {
                   setSlideActive(swiper.activeIndex)
                 }}
+                spaceBetween={10}
                 className={styles.Swiper}
               >
                 {monument?.pictures.map((picture, k) => (
@@ -283,8 +285,40 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 ))}
               </Swiper>
               {monument.pictures.length > 1 && (
-                <div className={styles.CurrentSlide}>
-                  {slideActive + 1} / {monument?.pictures.length}
+                <div className={styles.PaginationContainer}>
+                  <ArrowLeftSlideShow
+                    onClick={() => {
+                      if (slideActive > 0) {
+                        swiperRef.current?.slidePrev()
+                      }
+                    }}
+                    className={classNames('me-3', {
+                      pointer: slideActive > 0,
+                    })}
+                    fill={
+                      slideActive > 0
+                        ? 'var(--primary)'
+                        : 'var(--colori-neutri-gray-2)'
+                    }
+                  />
+                  <div className={styles.CurrentSlide}>
+                    {slideActive + 1} / {monument?.pictures.length}
+                  </div>
+                  <ArrowRightSlideShow
+                    onClick={() => {
+                      if (slideActive < monument?.pictures.length - 1) {
+                        swiperRef.current?.slideNext()
+                      }
+                    }}
+                    className={classNames('ms-3', {
+                      pointer: slideActive < monument?.pictures.length - 1,
+                    })}
+                    fill={
+                      slideActive < monument?.pictures.length - 1
+                        ? 'var(--primary)'
+                        : 'var(--colori-neutri-gray-2)'
+                    }
+                  />
                 </div>
               )}
             </>

@@ -518,13 +518,17 @@
 
 .CurrentSlide {
   color: var(--primary);
-  text-align: right;
   /* Body */
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+}
+
+.PaginationContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 16px;
   margin-bottom: 16px;
 }
