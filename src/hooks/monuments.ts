@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { API_URL } from '../const'
-import { Monument, MonumentList, PaginatedDJResponse } from '../types'
+import { CategoryDomain, Monument, MonumentList, PaginatedDJResponse } from '../types'
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 
@@ -58,10 +58,7 @@ export function useMonument(idOrSlug: string | number) {
   ).data!
 }
 
-interface CategoryDomain {
-  name: string
-  categories: number[]
-}
+
 
 export async function getCategoriesDomain(signal?: AbortSignal) {
   return (

@@ -6,6 +6,8 @@ import { Fill, Style, Circle, Text, Icon } from 'ol/style'
 import { scaleLinear } from 'd3-scale'
 import getMarkerMap from '../components/MarkerMap/MarkerMap'
 import { API_URL } from '../const'
+import { forEach, omit } from 'lodash'
+import { CategoryDomain } from '../types'
 
 const format = new GeoJSON()
 
@@ -78,34 +80,67 @@ const clusterScale = scaleLinear().domain([9, 45, 46]).range([9, 20, 20])
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
   const info = getFeatureInfo(feature)
-  const categories = vectorSource.get('categories')
+  const categories:CategoryDomain[] = vectorSource.get('categories')
   if (info === 1) {
     const properties = feature.getProperties().features[0].getProperties()
     const categoriesFeature = feature
       .getProperties()
       .features[0].getProperties().categories
-    let appCategory = ''
-    if (categoriesFeature.length > 1) {
-      for (let i = 0; i < categoriesFeature.length; i++) {
-        appCategory =
-          categories?.find((c: any) =>
-            c.categories.includes(categoriesFeature[i])
-          )?.name ?? ''
-        if (appCategory === 'Altri monumenti') {
-          continue
-        } else {
-          break
-        }
-      }
-      if (appCategory === '') {
-        appCategory = 'Altri monumenti'
-      }
-    } else {
-      appCategory =
-        categories?.find((c: any) =>
-          c.categories.includes(categoriesFeature[0])
-        )?.name ?? ''
+    if (properties.label === 'Porta San Giacomo') {
+      console.log(categoriesFeature, properties.label)
     }
+    let category = ''
+    const categoryLookup = {} as Record<number, string>
+    forEach(
+      categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
+      ({ name, categories: ids }) => {
+        ids.forEach((id: number) => {
+          categoryLookup[id] = name
+        })
+      }
+    )
+
+    category = categoriesFeature.reduce(
+      (acc: string, id: number) => acc ?? categoryLookup[id],
+      undefined
+    ) ?? ''
+
+    if (category === '') {
+      category = 'Altri monumenti'
+    }
+
+    // if (categoriesFeature.length > 1) {
+    //   if (properties.label === 'Porta San Giacomo') {
+    //     console.log('here')
+    //   }
+    //   for (let i = 0; i < categoriesFeature.length; i++) {
+    //     const foundCategory =
+    //       (categories &&
+    //         categories?.find((c: any) =>
+    //           c.categories.includes(categoriesFeature[i])
+    //         )?.name) ??
+    //       ''
+    //     if (foundCategory === 'Altri monumenti') {
+    //       continue
+    //     } else {
+    //       category = foundCategory
+    //       break
+    //     }
+    //   }
+    //   if (category === '') {
+    //     category = 'Altri monumenti'
+    //   }
+    // } else {
+    //   if (properties.label === 'Porta San Giacomo') {
+    //     console.log("there")
+    //   }
+    //   category =
+    //     categories?.find((c: any) =>
+    //       c.categories.includes(categoriesFeature[0])
+    //     )?.name ?? ''
+    // }
+
+    const appCategory = category
     const iconStyle = new Style({
       image: new Icon({
         anchor: [0.5, 46],

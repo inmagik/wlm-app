@@ -251,7 +251,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     <div
                       className={styles.BlockImage}
                       style={{
-                        backgroundImage: `url("${picture.image_url}?width=500")`,
+                        backgroundImage: `url("${picture.image_url}?width=700")`,
                       }}
                     >
                       <div className={styles.BlockImageOverlay}>
@@ -526,6 +526,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   type.categories__app_category__name &&
                   type.categories__app_category__name !== 'Comune' && (
                     <LangLink
+                      key={i}
                       className="no-link"
                       to={
                         '/lista/?category=' +

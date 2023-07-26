@@ -94,3 +94,8 @@ export interface Comune {
   province: number
   region: number
 }
+
+export interface CategoryDomain {
+  name: string
+  categories: number[]
+}

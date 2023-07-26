@@ -49,6 +49,7 @@ export default function Map() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const { data: categories } = useCategoriesDomain()
+  console.log(categories, 'categories')
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
   const [legend, setLegend] = useState<boolean>(false)
