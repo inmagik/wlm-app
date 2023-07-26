@@ -515,3 +515,30 @@
   margin-top: 2px;
   text-transform: uppercase;
 }
+
+.CurrentSlide {
+  color: var(--primary);
+  text-align: right;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+@media screen and (min-width: 768px) {
+  .BlockImage {
+    border-radius: 5px;
+    height: 300px;
+    width: 100%;
+    margin-top: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
+  
+}

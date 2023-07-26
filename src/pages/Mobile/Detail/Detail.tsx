@@ -225,65 +225,69 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </div>
           )}
           {monument && monument?.pictures.length > 0 ? (
-            <Swiper
-              pagination={{
-                dynamicBullets: true,
-              }}
-              modules={[Pagination]}
-              onSwiper={(swiper) => {
-                swiperRef.current = swiper
-              }}
-              onSlideChange={(swiper) => {
-                setSlideActive(swiper.activeIndex)
-              }}
-              className={styles.Swiper}
-            >
-              {monument?.pictures.map((picture, k) => (
-                <SwiperSlide
-                  onClick={() => {
-                    setShowAllImages(true)
-                    setSlideShowActive(picture.id)
-                  }}
-                  key={k}
-                >
-                  <div
-                    className={styles.BlockImage}
-                    style={{
-                      backgroundImage: `url("${picture.image_url}")`,
+            <>
+              <Swiper
+                modules={[Pagination]}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper
+                }}
+                onSlideChange={(swiper) => {
+                  setSlideActive(swiper.activeIndex)
+                }}
+                className={styles.Swiper}
+              >
+                {monument?.pictures.map((picture, k) => (
+                  <SwiperSlide
+                    onClick={() => {
+                      setShowAllImages(true)
+                      setSlideShowActive(picture.id)
                     }}
+                    key={k}
                   >
-                    <div className={styles.BlockImageOverlay}>
-                      <div className="d-flex align-items-center">
-                        <div className={styles.BlockImageOverlayText}>
-                          {picture.data?.Artist && (
-                            <div
-                              className={styles.BlockImageOverlayTextArtist}
-                              dangerouslySetInnerHTML={{
-                                __html: picture.data?.Artist,
-                              }}
-                            ></div>
-                          )}
+                    <div
+                      className={styles.BlockImage}
+                      style={{
+                        backgroundImage: `url("${picture.image_url}")`,
+                      }}
+                    >
+                      <div className={styles.BlockImageOverlay}>
+                        <div className="d-flex align-items-center">
+                          <div className={styles.BlockImageOverlayText}>
+                            {picture.data?.Artist && (
+                              <div
+                                className={styles.BlockImageOverlayTextArtist}
+                                dangerouslySetInnerHTML={{
+                                  __html: picture.data?.Artist,
+                                }}
+                              ></div>
+                            )}
+                          </div>
+                          <div>
+                            {picture.data?.DateTime && (
+                              <div className={styles.BlockImageOverlayTextDate}>
+                                {dayjs(picture.data?.DateTime).format(
+                                  'DD/MM/YYYY'
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                        <div>
-                          {picture.data?.DateTime && (
-                            <div className={styles.BlockImageOverlayTextDate}>
-                              {dayjs(picture.data?.DateTime).format(
-                                'DD/MM/YYYY'
-                              )}
-                            </div>
-                          )}
-                        </div>
+                        {picture.data?.License && (
+                          <div className={styles.CreditsImage}>
+                            {picture.data?.License}
+                          </div>
+                        )}
                       </div>
-                      {picture.data?.License && (
-                        <div className={styles.CreditsImage}>
-                          {picture.data?.License}
-                        </div>
-                      )}
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              {monument.pictures.length > 1 && (
+                <div className={styles.CurrentSlide}>
+                  {slideActive + 1} / {monument?.pictures.length}
+                </div>
+              )}
+            </>
           ) : (
             <>
               <div className={styles.BoxNoImages}>
