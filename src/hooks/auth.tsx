@@ -5,10 +5,12 @@ import { useSearchParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
 const loginCall = (params: Record<string, string>) =>
-  axios.get(`${API_URL}/oauth/redeem/?${new URLSearchParams(params).toString()}`).then((r) => ({
-    accessToken: r.data.access,
-    refreshToken: r.data.refresh,
-  }))
+  axios
+    .get(`${API_URL}/oauth/redeem/?${new URLSearchParams(params).toString()}`)
+    .then((r) => ({
+      accessToken: r.data.access,
+      refreshToken: r.data.refresh,
+    }))
 
 const meCall = (token: string) =>
   axios
@@ -42,11 +44,17 @@ function WatchToken() {
 }
 
 function Auth({ children }: { children: JSX.Element }) {
+  const [searchParams, setSearchParams] = useSearchParams()
   return (
     <EazyAuth
       loginCall={loginCall}
       meCall={meCall}
       refreshTokenCall={refreshTokenCall}
+      onAuthenticate={(user) => {
+        const x = new URLSearchParams(searchParams)
+        x.set('token', '')
+        setSearchParams(x)
+      }}
     >
       <WatchToken />
       {children}
