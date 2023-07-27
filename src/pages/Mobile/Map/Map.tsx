@@ -2,7 +2,14 @@ import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
@@ -46,7 +53,9 @@ export default function Map() {
   const navigate = useNavigate()
   const { i18n } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
-  const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>(null)
+  const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>(
+    null
+  )
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -116,7 +125,18 @@ export default function Map() {
             const monument = feature.getProperties().features[0].getProperties()
             const id = monument.id
             const label = monument.label
-            navigate(`/${i18n.language}/mappa/${smartSlug(id, label)})}`)
+            sessionStorage.setItem(
+              'map_state',
+              JSON.stringify({
+                center: initialMap.getView().getCenter(),
+                zoom: initialMap.getView().getZoom(),
+              })
+            )
+            navigate(
+              `/${i18n.language}/mappa/${smartSlug(id, label)})}?map_lon=${
+                mapState.center[0]
+              }&map_lat=${mapState.center[1]}&map_zoom=${mapState.zoom}`
+            )
           }
         })
       ) {
@@ -166,6 +186,21 @@ export default function Map() {
       })
     }
   }, [comuneFilterCoords])
+
+  useEffect(() => {
+    if (
+      sessionStorage.getItem('map_state')
+    ) {
+      const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
+      setMapState(mapState)
+    }
+  }, [])
+
+  console.log(
+    sessionStorage.getItem('map_lon'),
+    sessionStorage.getItem('map_lat'),
+    sessionStorage.getItem('map_zoom')
+  )
 
   return (
     <Layout>

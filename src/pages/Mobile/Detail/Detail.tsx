@@ -71,6 +71,9 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
+  map_zoom: Number(params.get('map_zoom')) ?? '',
+  map_lat: Number(params.get('map_lat')) ?? '',
+  map_lon: Number(params.get('map_lon')) ?? '',
 })
 
 function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
@@ -232,7 +235,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           >
             <CameraWhite className="me-2" width={14} />
             {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
-
           </button>
 
           {inContestMonument && (
