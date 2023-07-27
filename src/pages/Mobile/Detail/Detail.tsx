@@ -14,6 +14,7 @@ import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
 import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
+import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-dark.svg'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slideshow-arrow.svg'
 import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
@@ -391,7 +392,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                       setVeduteInsiemeOpen(!veduteInsiemeOpen)
                     }}
                   >
-                    <InfoVedute className="me-2" />
+                    {veduteInsiemeOpen ? (
+                      <InfoVeduteDark className="me-2" />
+                    ) : (
+                      <InfoVedute className="me-2" />
+                    )}
                   </div>
                 )}
               </div>
