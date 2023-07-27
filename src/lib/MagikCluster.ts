@@ -86,9 +86,6 @@ export function getFeatureStyle(feature: any) {
     const categoriesFeature = feature
       .getProperties()
       .features[0].getProperties().categories
-    if (properties.label === 'Porta San Giacomo') {
-      console.log(categoriesFeature, properties.label)
-    }
     let category = ''
     const categoryLookup = {} as Record<number, string>
     forEach(
@@ -108,38 +105,6 @@ export function getFeatureStyle(feature: any) {
     if (category === '') {
       category = 'Altri monumenti'
     }
-
-    // if (categoriesFeature.length > 1) {
-    //   if (properties.label === 'Porta San Giacomo') {
-    //     console.log('here')
-    //   }
-    //   for (let i = 0; i < categoriesFeature.length; i++) {
-    //     const foundCategory =
-    //       (categories &&
-    //         categories?.find((c: any) =>
-    //           c.categories.includes(categoriesFeature[i])
-    //         )?.name) ??
-    //       ''
-    //     if (foundCategory === 'Altri monumenti') {
-    //       continue
-    //     } else {
-    //       category = foundCategory
-    //       break
-    //     }
-    //   }
-    //   if (category === '') {
-    //     category = 'Altri monumenti'
-    //   }
-    // } else {
-    //   if (properties.label === 'Porta San Giacomo') {
-    //     console.log("there")
-    //   }
-    //   category =
-    //     categories?.find((c: any) =>
-    //       c.categories.includes(categoriesFeature[0])
-    //     )?.name ?? ''
-    // }
-
     const appCategory = category
     const iconStyle = new Style({
       image: new Icon({

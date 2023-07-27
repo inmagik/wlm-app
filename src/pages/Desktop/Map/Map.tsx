@@ -20,6 +20,7 @@ import Detail from '../../Mobile/Detail'
 import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useParams } from 'react-router-dom'
 import MapContainer from './MapContainer'
+import { forEach } from 'lodash'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -64,6 +65,8 @@ export default function Map() {
     maxZoom: 18,
     minZoom: 5,
   })
+
+  console.log(mapState)
 
   function handleLocationClick() {
     if (navigator.geolocation) {
@@ -145,28 +148,27 @@ export default function Map() {
             const categoriesFeature = feature
               .getProperties()
               .features[0].getProperties().categories
-            let appCategory = ''
-            if (categoriesFeature.length > 1) {
-              for (let i = 0; i < categoriesFeature.length; i++) {
-                appCategory =
-                  categories?.find((c: any) =>
-                    c.categories.includes(categoriesFeature[i])
-                  )?.name ?? ''
-                if (appCategory === 'Altri monumenti') {
-                  continue
-                } else {
-                  break
-                }
+            let category = ''
+            const categoryLookup = {} as Record<number, string>
+            forEach(
+              categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
+              ({ name, categories: ids }) => {
+                ids.forEach((id: number) => {
+                  categoryLookup[id] = name
+                })
               }
-              if (appCategory === '') {
-                appCategory = 'Altri monumenti'
-              }
-            } else {
-              appCategory =
-                categories?.find((c: any) =>
-                  c.categories.includes(categoriesFeature[0])
-                )?.name ?? ''
+            )
+
+            category =
+              categoriesFeature.reduce(
+                (acc: string, id: number) => acc ?? categoryLookup[id],
+                undefined
+              ) ?? ''
+
+            if (category === '') {
+              category = 'Altri monumenti'
             }
+            const appCategory = category
             setDetail(monument.id)
             setMapState({
               ...mapState,
@@ -174,7 +176,7 @@ export default function Map() {
                 monument.position.coordinates[0],
                 monument.position.coordinates[1],
               ]),
-              zoom: mapState.zoom
+              zoom: initialMap?.getView().getZoom() ?? 14,
             })
             setInfoMarker({
               id: monument.id,
