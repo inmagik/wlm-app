@@ -45,6 +45,7 @@ import classNames from 'classnames'
 import { Spinner } from 'react-bootstrap'
 import { useQsFilters } from '../../../hooks/filters'
 import dayjs from 'dayjs'
+import { useMediaQuery } from 'usehooks-ts'
 
 interface Props {
   monumentId?: number
@@ -164,6 +165,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const { slug } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
     <>
@@ -226,7 +228,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             }}
             className={styles.ButtonFixedCaricaFoto}
           >
-            <CameraWhite className='me-2' width={14} /> {t('carica_foto')}
+            <CameraWhite className="me-2" width={14} /> {t('carica_foto')}
           </button>
 
           {inContestMonument && (
@@ -386,7 +388,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   <div
                     className="pointer"
                     onClick={() => {
-                      setVeduteInsiemeOpen(true)
+                      setVeduteInsiemeOpen(!veduteInsiemeOpen)
                     }}
                   >
                     <InfoVedute className="me-2" />
@@ -395,6 +397,16 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </div>
+          {!isMobile && veduteInsiemeOpen && (
+            <div className={styles.VeduteInsieme}>
+              <div className={styles.VeduteInsiemeTitle}>
+                {t('vedute_insieme')}
+              </div>
+              <div className={styles.VeduteInsiemeText}>
+                {t('vedute_d_insieme_text')}
+              </div>
+            </div>
+          )}
         </div>
         {monument && monument?.pictures.length > 0 && (
           <div className={styles.CardImages}>
@@ -666,10 +678,12 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         uploadOpen={showModalUpload}
         setFileList={setImageUpload}
       />
-      <VeduteInsiemeModal
-        setVeduteInsiemeOpen={setVeduteInsiemeOpen}
-        veduteInsiemeOpen={veduteInsiemeOpen}
-      />
+      {isMobile && (
+        <VeduteInsiemeModal
+          setVeduteInsiemeOpen={setVeduteInsiemeOpen}
+          veduteInsiemeOpen={veduteInsiemeOpen}
+        />
+      )}
     </>
   )
 }
