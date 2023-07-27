@@ -93,7 +93,9 @@
   position: absolute;
   left: 16px;
   top: 8px;
-  font-size: 30px;
+  font-size: 22px;
+  line-height: 0px;
+  /* font-size: 30px; */
   color: var(--primary);
 }
 
@@ -106,12 +108,13 @@
   justify-content: center;
   width: 44px;
   height: 44px;
+  font-size: 22px;
   border: none;
   margin-top: 8px;
   position: absolute;
   left: 16px;
   top: 64px;
-  font-size: 30px;
+  /* font-size: 30px; */
   color: var(--primary);
 }
 

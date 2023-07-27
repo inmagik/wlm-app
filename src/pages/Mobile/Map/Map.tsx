@@ -166,7 +166,7 @@ export default function Map() {
       })
     }
   }, [comuneFilterCoords])
-  
+
   return (
     <Layout>
       <div className="w-100 h-100">
@@ -184,15 +184,15 @@ export default function Map() {
             {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
           </button>
           <div className={styles.ContainerButtons}>
-            <button className={styles.ButtonMappe}>
+            <div className={styles.ButtonMappe}>
               <Mappe />
-            </button>
-            <button
+            </div>
+            <div
               className={styles.ButtonMyLocation}
               onClick={handleLocationClick}
             >
               <MyLocation />
-            </button>
+            </div>
           </div>
         </div>
         {loading && (
