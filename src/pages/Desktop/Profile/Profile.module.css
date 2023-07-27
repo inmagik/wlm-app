@@ -87,3 +87,7 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.LoginButton:hover {
+  background: var(--primary);
+}

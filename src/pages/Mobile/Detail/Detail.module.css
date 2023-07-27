@@ -41,6 +41,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-top: 16px;
 }
 
 .BlockImage {
@@ -525,12 +526,16 @@
   font-weight: 400;
 }
 
-.PaginationContainer{
+.PaginationContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.ButtonFixedCaricaFoto{
+  display: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -544,5 +549,35 @@
     background-size: cover;
     cursor: pointer;
   }
-  
+
+  .ButtonFixedCaricaFoto {
+    color: var(--colori-neutri-white, #fff);
+    text-align: center;
+    /* CTA */
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 20px;
+    background: var(--secondary);
+    /* Shade Button Blu */
+    box-shadow: 1px 1px 0px 0px var(--primary);
+    position: fixed;
+    border: none;
+    right: 40px;
+    top: 90px;
+    width: 142px;
+    height: 50px;
+    z-index: 7;
+  }
+
+  .FixedButtonUpload{
+    display: none;
+  }
 }

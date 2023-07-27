@@ -6,6 +6,7 @@ import { ReactComponent as LoginIcon } from '../../../assets/login.svg'
 import { ReactComponent as LoginWhite } from '../../../assets/login-white.svg'
 import { useState } from 'react'
 import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
+import { API_URL } from '../../../const'
 
 export default function Profile() {
   const { t } = useTranslation()
@@ -32,7 +33,12 @@ export default function Profile() {
             <div className={styles.TextLogin}>{t('testo_login')}</div>
           </div>
           <div className="mt-2">
-            <button className={styles.LoginButton}>
+            <button
+              className={styles.LoginButton}
+              onClick={() => {
+                window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
+              }}
+            >
               <LoginWhite className="me-1" /> {t('login')}
             </button>
           </div>

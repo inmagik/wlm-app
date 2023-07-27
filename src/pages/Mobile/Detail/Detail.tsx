@@ -220,6 +220,15 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               }}
             />
           )}
+          <button
+            onClick={() => {
+              inputFileRef.current?.click()
+            }}
+            className={styles.ButtonFixedCaricaFoto}
+          >
+            <CameraWhite className='me-2' width={14} /> {t('carica_foto')}
+          </button>
+
           {inContestMonument && (
             <div className={styles.PresenzaInConcorso}>
               <Bell className="me-2" />
