@@ -73,7 +73,8 @@
             "carica_immagini_per_il_monumento": "Upload images for the monument",
             "vedute_d_insieme_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue.",
             "login_effettuato": "Login successful with Wikimedia Commons",
-            "logout": "Logout"
+            "logout": "Logout",
+            "fai_login_e_carica_foto": "Log in and upload photos"
         }
     },
     "it": {
@@ -150,7 +151,8 @@
             "carica_immagini_per_il_monumento": "Carica immagini per il monumento",
             "vedute_d_insieme_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue.",
             "login_effettuato": "Login effettuato con Wikimedia Commons",
-            "logout": "Logout"
+            "logout": "Logout",
+            "fai_login_e_carica_foto": "Fai il login e carica foto"
         }
     }
 }

@@ -46,6 +46,7 @@ import classNames from 'classnames'
 import { useQsFilters } from '../../../hooks/filters'
 import dayjs from 'dayjs'
 import { useMediaQuery } from 'usehooks-ts'
+import { useAuthUser } from 'use-eazy-auth'
 
 interface Props {
   monumentId?: number
@@ -166,6 +167,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const { user } = useAuthUser()
 
   return (
     <>
@@ -228,7 +230,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             }}
             className={styles.ButtonFixedCaricaFoto}
           >
-            <CameraWhite className="me-2" width={14} /> {t('carica_foto')}
+            <CameraWhite className="me-2" width={14} />
+            {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
+
           </button>
 
           {inContestMonument && (

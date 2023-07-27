@@ -560,7 +560,7 @@
     font-weight: 500;
     line-height: normal;
     display: flex;
-
+    padding: 4px 16px;
     justify-content: center;
     align-items: center;
     align-self: stretch;
@@ -572,8 +572,7 @@
     border: none;
     right: 40px;
     top: 90px;
-    width: 142px;
-    height: 50px;
+    width: max-content;
     z-index: 3;
   }
 
