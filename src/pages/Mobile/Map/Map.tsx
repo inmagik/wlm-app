@@ -2,7 +2,7 @@ import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
@@ -166,7 +166,7 @@ export default function Map() {
       })
     }
   }, [comuneFilterCoords])
-
+  
   return (
     <Layout>
       <div className="w-100 h-100">

@@ -81,3 +81,57 @@
   font-weight: 500;
   line-height: normal;
 }
+
+.UserLabel {
+  color: var(--colori-neutri-gray);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.NomeUtente {
+  color: var(--primary);
+  /* Body Desktop */
+  font-family: var(--font-roboto-slab);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.LogoutButton {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  background: var(--colori-neutri-white);
+  width: 100%;
+  border: none;
+  /* Shade Button Light */
+  box-shadow: 1px 1px 0px 0px rgba(17, 138, 178, 0.23);
+  color: var(--colori-neutri-gray);
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.LogoutButton:hover {
+  background: var(--primary);
+  color: var(--colori-neutri-white);
+}
+
+.LoginEffettuato {
+  color: var(--colori-neutri-gray);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

@@ -22,6 +22,7 @@ import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMediaQuery } from 'usehooks-ts'
 import NavigationWrapper from './components/Mobile/NavigationWrapper'
+import Auth from './hooks/auth'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -88,7 +89,10 @@ function AppRoutes() {
               )
             }
           />
-          <Route path="profilo" element={isMobile ? <Profile /> : <ProfileDesktop />} />
+          <Route
+            path="profilo"
+            element={isMobile ? <Profile /> : <ProfileDesktop />}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
@@ -122,7 +126,9 @@ function App() {
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
           <ErrorBoundary>
-            <AppRoutes />
+            <Auth>
+              <AppRoutes />
+            </Auth>
           </ErrorBoundary>
         </QueryClientProvider>
       </I18nextProvider>

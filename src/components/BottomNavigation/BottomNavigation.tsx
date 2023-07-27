@@ -2,13 +2,16 @@ import styles from './BottomNavigation.module.css'
 import { ReactComponent as Map } from '../../assets/map.svg'
 import { ReactComponent as List } from '../../assets/list.svg'
 import { ReactComponent as Profile } from '../../assets/profile.svg'
+import { ReactComponent as ProfileLogged } from '../../assets/profile-logged.svg'
 import { ReactComponent as MapActive } from '../../assets/map-active.svg'
 import { ReactComponent as ListActive } from '../../assets/list-active.svg'
 import { ReactComponent as ProfileActive } from '../../assets/profile-active.svg'
+import { ReactComponent as ProfileLoggedActive } from '../../assets/profile-active-logged.svg'
 import { useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LangLink from '../LangLink'
 import { useQsFilters } from '../../hooks/filters'
+import { useAuthUser } from 'use-eazy-auth'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -25,6 +28,7 @@ export default function BottomNavigation() {
   const { i18n, t } = useTranslation()
   const { filters } = useQsFilters(getFilters)
   const currentPath = location.pathname
+  const { user } = useAuthUser()
   return (
     <div className={styles.BottomNavigation}>
       <LangLink
@@ -63,7 +67,6 @@ export default function BottomNavigation() {
           only_without_pictures: filters.only_without_pictures,
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
-    
         })}`}
         className="no-link"
       >
@@ -77,9 +80,17 @@ export default function BottomNavigation() {
       <LangLink to="/profilo" className="no-link">
         <div className={styles.Profile}>
           {currentPath.indexOf('profilo') !== -1 ? (
-            <ProfileActive />
+            user ? (
+              <ProfileLoggedActive />
+            ) : (
+              <ProfileActive />
+            )
           ) : (
-            <Profile />
+            user ? (
+              <ProfileLogged />
+            ) : (
+              <Profile />
+            )
           )}
           {currentPath.indexOf('profilo') !== -1 && (
             <div className={styles.LabelActive}>{t('profilo')}</div>

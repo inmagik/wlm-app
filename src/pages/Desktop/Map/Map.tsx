@@ -50,7 +50,6 @@ export default function Map() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const { data: categories } = useCategoriesDomain()
-  console.log(categories, 'categories')
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
   const [legend, setLegend] = useState<boolean>(false)
@@ -65,8 +64,6 @@ export default function Map() {
     maxZoom: 18,
     minZoom: 5,
   })
-
-  console.log(mapState)
 
   function handleLocationClick() {
     if (navigator.geolocation) {
@@ -144,7 +141,6 @@ export default function Map() {
           const info = getFeatureInfo(feature)
           if (info === 1) {
             const monument = feature.getProperties().features[0].getProperties()
-            console.log(monument, 'clicked on monument')
             const categoriesFeature = feature
               .getProperties()
               .features[0].getProperties().categories
