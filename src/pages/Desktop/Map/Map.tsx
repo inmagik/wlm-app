@@ -61,7 +61,7 @@ export default function Map() {
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
     zoom: 6,
-    maxZoom: 18,
+    maxZoom: 20,
     minZoom: 5,
   })
 

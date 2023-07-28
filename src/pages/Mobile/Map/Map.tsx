@@ -60,6 +60,8 @@ export default function Map() {
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
     zoom: 6,
+    maxZoom: 20,
+    minZoom: 5,
   })
 
   function handleLocationClick() {
@@ -74,6 +76,7 @@ export default function Map() {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
     setMapState({
+      ...mapState,
       center: fromLonLat([longitude, latitude]),
       zoom: 16,
     })
