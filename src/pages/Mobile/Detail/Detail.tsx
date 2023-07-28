@@ -92,9 +92,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
+  const isMobile = useMediaQuery('(max-width: 768px)')
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
-    const groupIndex = Math.floor(index / 12)
+    const groupIndex = isMobile ? Math.floor(index / 12) : Math.floor(index / 18)
     if (!acc[groupIndex]) {
       acc[groupIndex] = []
     }
@@ -169,7 +170,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const { slug } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  
   const { user } = useAuthUser()
 
   return (

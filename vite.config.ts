@@ -29,8 +29,6 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
         purpose: 'apple touch icon',
       },
     ],
-    theme_color: '#118ab',
-    background_color: '#118ab',
     display: 'standalone',
     scope: '/',
     start_url: '/',
@@ -41,15 +39,14 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/",
-  plugins: [react(), svgrPlugin(), VitePWA(manifestForPlugin)],
+  // plugins: [react(), svgrPlugin(), VitePWA(manifestForPlugin)],
+  plugins: [react(), svgrPlugin(), VitePWA({
+    selfDestroying: true,
+  })],
   server: {
     host: true,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
-      },
-      '/anycluster': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },

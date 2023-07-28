@@ -613,4 +613,14 @@
     font-weight: 400;
     line-height: normal;
   }
+
+  .Image {
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+  }
 }

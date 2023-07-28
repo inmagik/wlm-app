@@ -2,7 +2,7 @@ import Vector from 'ol/source/Vector.js'
 import Cluster from 'ol/source/Cluster.js'
 import GeoJSON from 'ol/format/GeoJSON.js'
 import { transformExtent } from 'ol/proj'
-import { Fill, Style, Circle, Text, Icon } from 'ol/style'
+import { Fill, Style, Circle, Text, Icon, Stroke } from 'ol/style'
 import { scaleLinear } from 'd3-scale'
 import getMarkerMap from '../components/MarkerMap/MarkerMap'
 import { API_URL } from '../const'
@@ -71,11 +71,11 @@ export const vectorSource = new Vector({
 })
 
 export const clusterSource = new Cluster({
-  distance: 30,
+  distance: 40,
   source: vectorSource,
 })
 
-const clusterScale = scaleLinear().domain([9, 45, 46]).range([9, 20, 20])
+const clusterScale = scaleLinear().domain([9, 45, 46]).range([14, 24, 24])
 
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
@@ -132,6 +132,10 @@ export function getFeatureStyle(feature: any) {
         fill: new Fill({
           color: '#3399CC',
         }),
+        // stroke: new Stroke({
+        //   color: '#fff',
+        //   width: 2,
+        // })
       }),
       text: new Text({
         text: size.toString(),
