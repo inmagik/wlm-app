@@ -95,7 +95,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
-    const groupIndex = isMobile ? Math.floor(index / 12) : Math.floor(index / 18)
+    const groupIndex = isMobile
+      ? Math.floor(index / 12)
+      : Math.floor(index / 18)
     if (!acc[groupIndex]) {
       acc[groupIndex] = []
     }
@@ -170,7 +172,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const { slug } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   const { user } = useAuthUser()
 
   return (
@@ -493,9 +495,16 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 />
               </div>
             )}
-            <button className={styles.ButtonShowAllImages}>
+            <a
+              target={'_blank'}
+              href={
+                'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search="' +
+                monument?.wlm_n+'"'
+              }
+              className={styles.ButtonShowAllImages}
+            >
               {t('guarda_tutte_su_wikimediacommons')}
-            </button>
+            </a>
           </div>
         )}
         <div className={styles.MapContainer}>

@@ -79,6 +79,7 @@ export interface Monument {
   in_contest: boolean
   distance: number
   counts_comune_by_app_category: CountByCategory[]
+  wlm_n: string
 }
 
 export interface Comune {
