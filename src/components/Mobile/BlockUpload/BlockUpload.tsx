@@ -21,6 +21,18 @@ interface BlockUploadProps {
   monument: Monument | null
 }
 
+function ImageFile({ image }: { image: any }) {
+  return (
+    <div
+      className={styles.ImageToUpload}
+      key={image.file.name}
+      style={{
+        backgroundImage: `url("${URL.createObjectURL(image.file)}")`,
+      }}
+    />
+  )
+}
+
 export interface ImageInfo {
   title: string
   description: string
@@ -149,18 +161,7 @@ export default function BlockUpload({
                         </div>
                       )}
                     </div>
-                    <div>
-                      {image.file && (
-                        <div
-                          className={styles.ImageToUpload}
-                          style={{
-                            backgroundImage: `url("${URL.createObjectURL(
-                              image.file
-                            )}")`,
-                          }}
-                        />
-                      )}
-                    </div>
+                    <div>{image.file && <ImageFile image={image} />}</div>
                     <div className="mt-4">
                       <div className="d-flex align-items-center justify-content-between">
                         <div className={styles.LabelInput}>
