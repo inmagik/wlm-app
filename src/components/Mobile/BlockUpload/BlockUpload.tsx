@@ -1,13 +1,15 @@
 import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
+import { ReactComponent as DeleteImage } from '../../../assets/delete-image.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
-import classNames from 'classnames'
 import { useMediaQuery } from 'usehooks-ts'
 import { Monument } from '../../../types'
+import { uploadImages } from '../../../hooks/monuments'
+import dayjs from 'dayjs'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -15,6 +17,14 @@ interface BlockUploadProps {
   fileList: FileList | null
   setFileList: (file: FileList | null) => void
   monument: Monument | null
+}
+
+export interface ImageInfo {
+  title: string
+  description: string
+  file: File | null
+  date: string
+  monument_id?: number
 }
 
 export default function BlockUpload({
@@ -25,13 +35,6 @@ export default function BlockUpload({
   monument,
 }: BlockUploadProps) {
   const { t } = useTranslation()
-
-  interface ImageInfo {
-    title: string
-    description: string
-    file: File | null
-    date: string
-  }
 
   const [uploadState, setUploadState] = useState<ImageInfo[] | undefined>(
     undefined
@@ -47,12 +50,15 @@ export default function BlockUpload({
           title: '',
           description: '',
           file: fileList[i],
-          date: '',
+          date: dayjs().format('DD/MM/YYYY'),
+          monument_id: monument?.id,
         })
       }
       setUploadState(images)
     }
   }, [fileList])
+
+  console.log(uploadState)
 
   const swiperRef = useRef<SwiperRef>()
 
@@ -72,14 +78,17 @@ export default function BlockUpload({
         if (!uploadOpen) {
           setUploadState(undefined)
           setFileList(null)
+          setUploadOpen(false)
         }
       }}
     >
       <div className={styles.ModalUploadContainer}>
-        <div className={styles.TitleConcorso}>
-          {monument?.in_contest
-            ? t('la_tua_foto_sarà_in_concorso')
-            : t('la_tua_foto_non_sarà_in_concorso')}
+        <div className="d-flex align-items-center justify-content-between">
+          <div className={styles.TitleConcorso}>
+            {monument?.in_contest
+              ? t('la_tua_foto_sarà_in_concorso')
+              : t('la_tua_foto_non_sarà_in_concorso')}
+          </div>
         </div>
         <div className={styles.CloseModal}>
           <Close
@@ -105,9 +114,23 @@ export default function BlockUpload({
             uploadState.map((image, i) => (
               <SwiperSlide key={i}>
                 <div className={styles.CardImageToUpload}>
-                  <div className={styles.TitleUpload}>
-                    {t('caricamento_immagine')}:{' '}
-                    <strong>{monument?.label}</strong>
+                  <div className="d-flex align-items-center justify-content-between">
+                    <div className={styles.TitleUpload}>
+                      {t('caricamento_immagine')}:{' '}
+                      <strong>{monument?.label}</strong>
+                    </div>
+                    {uploadState.length > 1 && (
+                      <div
+                        className="pointer"
+                        onClick={() => {
+                          setUploadState(
+                            uploadState.filter((image, j) => i !== j)
+                          )
+                        }}
+                      >
+                        <DeleteImage />
+                      </div>
+                    )}
                   </div>
                   <div>
                     {image.file && (
@@ -122,8 +145,10 @@ export default function BlockUpload({
                     )}
                   </div>
                   <div className="mt-4">
-                    <div className={styles.LabelInput}>
-                      {t('titolo_immagine')}
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div className={styles.LabelInput}>
+                        {t('titolo_immagine')}
+                      </div>
                     </div>
                     <div>
                       <input
@@ -199,7 +224,7 @@ export default function BlockUpload({
                     <div className={styles.LabelInput}>{t('date')}</div>
                     <div>
                       <input
-                        type="date"
+                        // type="date"
                         className={styles.InputTitle}
                         value={uploadState[i].date}
                         onChange={(e) => {
@@ -265,7 +290,18 @@ export default function BlockUpload({
             hidden={true}
             accept="image/*"
           />
-          <button className={styles.ButtonUpload}>{t('carica_foto')}</button>
+          <button
+            className={styles.ButtonUpload}
+            onClick={() => {
+              console.log(uploadState, 'uploadState')
+              if (uploadState?.length === 0) return
+              if (uploadState !== undefined) {
+                uploadImages(uploadState)
+              }
+            }}
+          >
+            {t('carica_foto')}
+          </button>
         </div>
       </div>
     </div>

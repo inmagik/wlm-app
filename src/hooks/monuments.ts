@@ -1,8 +1,14 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { API_URL } from '../const'
-import { CategoryDomain, Monument, MonumentList, PaginatedDJResponse } from '../types'
+import {
+  CategoryDomain,
+  Monument,
+  MonumentList,
+  PaginatedDJResponse,
+} from '../types'
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
+import { ImageInfo } from '../components/Mobile/BlockUpload/BlockUpload'
 
 export async function getMonuments(
   params: Record<string, any> = {},
@@ -58,8 +64,6 @@ export function useMonument(idOrSlug: string | number) {
   ).data!
 }
 
-
-
 export async function getCategoriesDomain(signal?: AbortSignal) {
   return (
     await axios.get(`${API_URL}/categories-domain/`, {
@@ -73,3 +77,27 @@ export function useCategoriesDomain() {
     suspense: false,
   })
 }
+
+export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
+  console.log(images, 'images')
+  const formData = new FormData()
+  images.forEach((image, i) => {
+    formData.append(`image_${i}`, image.file as Blob)
+    formData.append(`image_${i}_title`, image.title)
+    formData.append(`image_${i}_description`, image.description)
+    formData.append(`image_${i}_date`, image.date)
+    formData.append(`image_${i}_monument_id`, String(image.monument_id))
+  })
+  console.log(formData, 'formData')
+  return (
+    await axios.post(`${API_URL}/upload-images/`, formData, {
+      signal,
+    })
+  ).data
+}
+
+// export async function useAddImages({ images }: { images: ImageProps[] }) {
+//   return useQuery(['add-images'], () => uploadImages(images), {
+//     suspense: false,
+//   })
+// }

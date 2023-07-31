@@ -54,6 +54,9 @@
   width: 100%;
   margin-top: 8px;
   margin-bottom: 8px;
+  font-family: var(--font-roboto-slab);
+  color: var(--primary);
+  font-size: 14px;
 }
 
 .InputTitle::placeholder {
@@ -194,7 +197,7 @@
   }
 
   .ContainerButtons {
-    margin-top: 0px;
+    margin-top: 8px;
     display: flex;
     justify-content: space-between;
   }
