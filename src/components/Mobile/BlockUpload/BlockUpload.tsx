@@ -398,11 +398,21 @@ export default function BlockUpload({
                 ) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
-                    uploadImages(uploadState, token).catch((err) => {
-                      setErrorServer(
-                        err.response?.data?.detail || 'Errore del server'
-                      )
-                    })
+                    uploadImages(uploadState, token)
+                      .then((res) => {
+                        if (res.status === 200) {
+                          setUploadOpen(false)
+                          setErrors([])
+                          setUploadState(undefined)
+                          setErrorServer(null)
+                          setResponseUploadOpen(true)
+                        }
+                      })
+                      .catch((err) => {
+                        setErrorServer(
+                          err.response?.data?.detail || 'Errore del server'
+                        )
+                      })
                   }
                 } else {
                   let errors = [] as any

@@ -20,7 +20,7 @@ import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slide
 import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperClass, { Pagination } from 'swiper'
+import SwiperClass from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
@@ -459,7 +459,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                               className={styles.Image}
                               onClick={() => {
                                 setShowAllImages(true)
-                                setSlideShowActive(k)
+                                setSlideShowActive(k + index * (isMobile ? 12 : 18 ))
                               }}
                               style={{
                                 backgroundImage: `url("${picture.image_url}?width=300")`,
