@@ -350,9 +350,11 @@ export default function BlockUpload({
                   if (uploadState !== undefined) {
                     uploadImages(uploadState, token).then((res) => {
                         console.log(res)
-                      setUploadOpen(false)
-                      setUploadState(undefined)
-                      setResponseUploadOpen(true)
+                    //   setUploadOpen(false)
+                    //   setUploadState(undefined)
+                    //   setResponseUploadOpen(true)
+                    }).catch((err) => {
+                        console.log(err)
                     })
                   }
                 } else {

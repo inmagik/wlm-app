@@ -82,28 +82,19 @@ export function useCategoriesDomain() {
 
 export async function uploadImages(images: ImageInfo[], token?: string) {
   const formData = new FormData()
-
-  console.log('images', images)
   
   images.forEach((image, i) => {
-    formData.append(`image`, image.file as Blob)
-    formData.append(`title`, image.title)
-    formData.append(`description`, image.description)
-    formData.append(`date`, image.date)
-    formData.append(`monument_id`, String(image.monument_id))
+    formData.append(`images[${i}]image`, image.file as Blob)
+    formData.append(`images[${i}]title`, image.title)
+    formData.append(`images[${i}]description`, image.description)
+    formData.append(`images[${i}]date`, image.date)
+    formData.append(`images[${i}]monument_id`, String(image.monument_id))
   })
   return (
     await axios.post(`${API_URL}/upload-images/`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${token}`,
       },
     })
-  ).data
+  )
 }
-
-// export async function useAddImages({ images }: { images: ImageProps[] }) {
-//   return useQuery(['add-images'], () => uploadImages(images), {
-//     suspense: false,
-//   })
-// }

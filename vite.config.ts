@@ -6,6 +6,10 @@ import { VitePWA, VitePWAOptions } from 'vite-plugin-pwa'
 const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: 'prompt',
   includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
+  workbox: {
+    navigateFallbackDenylist: [/^\/api/, /^\/admin/, /^\/login/],
+    cleanupOutdatedCaches: true,
+  },
   manifest: {
     name: 'WLM App',
     short_name: 'WLM App',
@@ -40,9 +44,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 export default defineConfig({
   base: "/",
   // plugins: [react(), svgrPlugin(), VitePWA(manifestForPlugin)],
-  plugins: [react(), svgrPlugin(), VitePWA({
-    selfDestroying: true,
-  })],
+  plugins: [react(), svgrPlugin()],
   server: {
     host: true,
     proxy: {
