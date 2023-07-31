@@ -6,15 +6,17 @@ import { ReactComponent as LoginIcon } from '../../../assets/login.svg'
 import { ReactComponent as LoginWhite } from '../../../assets/login-white.svg'
 import { ReactComponent as ProfileUser } from '../../../assets/profile-user.svg'
 import { ReactComponent as Logout } from '../../../assets/logout.svg'
+import { ReactComponent as WikiLogoMobile } from '../../../assets/wiki-logo-mobile.svg'
 import { useState } from 'react'
 import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
-import { API_URL } from '../../../const'
+import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
 
 export default function Profile() {
   const { t } = useTranslation()
   const [isOpenCambiaLingua, setIsOpenCambiaLingua] = useState<boolean>(false)
   const { user } = useAuthUser()
+  const username = user ? user.username.replace('mw--', ' ') : ''
   const { logout } = useAuthActions()
   return (
     <Layout>
@@ -35,7 +37,7 @@ export default function Profile() {
           </div>
           {user ? (
             <div>
-              <div className='text-center mb-4'>
+              <div className="text-center mb-4">
                 <ProfileUser />
               </div>
               <div className={styles.LoginEffettuato}>
@@ -59,6 +61,19 @@ export default function Profile() {
                   <Logout /> {t('logout')}
                 </button>
               </div>
+              {username && (
+                <div className="mt-3">
+                  <a
+                    href={`${URL_WIKI}/Special:ListFiles/${username.replace(
+                      ' ',
+                      '_'
+                    )}`}
+                    className={styles.ButtonImagesProfile}
+                  >
+                    <WikiLogoMobile /> {t('vedi_immagini_caricate')}
+                  </a>
+                </div>
+              )}
             </div>
           ) : (
             <>

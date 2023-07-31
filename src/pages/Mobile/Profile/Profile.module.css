@@ -135,3 +135,26 @@
   font-weight: 700;
   line-height: normal;
 }
+
+
+.ButtonImagesProfile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 24px;
+    height: 100%;
+    border-radius: 8px;
+    background: var(--secondary);
+    color: var(--colori-neutri-white);
+    border: none;
+    margin-top: 32px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .ButtonImagesProfile:hover {
+    background: var(--primary);
+  }
+  
