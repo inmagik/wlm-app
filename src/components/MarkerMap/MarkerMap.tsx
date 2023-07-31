@@ -1,5 +1,3 @@
-import { Monument } from '../../types'
-
 interface Props {
   monument: {
     app_category: string

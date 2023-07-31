@@ -56,6 +56,14 @@ export interface Monument {
     type: string
     coordinates: [number, number]
   }
+  cover_picture?: {
+    id: number
+    image_date: string
+    image_id: string
+    image_title: string
+    image_url: string
+    image_type: string
+  }
   wikidata_creation_date: string
   first_wlm_image_date: string | null
   first_commons_image_date: string | null

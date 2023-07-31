@@ -10,12 +10,16 @@ import { useState } from 'react'
 import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
 import { API_URL } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
+// import { useProfileImages } from '../../../hooks/profile'
 
 export default function Profile() {
   const { t } = useTranslation()
   const [isOpenCambiaLingua, setIsOpenCambiaLingua] = useState<boolean>(false)
   const { user } = useAuthUser()
+  const username = user ? user.username.replace('mw--', ' ') : ''
+  console.log('username', username)
   const { logout } = useAuthActions()
+//   const { data: profileImages } = useProfileImages('Inmagik')
   return (
     <Layout>
       <div className="w-100 h-100 d-flex justify-content-center position-relative">

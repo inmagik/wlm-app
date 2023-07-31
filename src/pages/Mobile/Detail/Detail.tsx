@@ -175,6 +175,15 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
   const { user } = useAuthUser()
 
+  const wikipediaLink = useMemo(() => {
+    if(monument?.app_category === 'Comune'){
+      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}`
+    } else {
+      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}_(${monument?.municipality_label})`
+    }
+  }, [monument])
+    
+
   return (
     <>
       <div
@@ -643,9 +652,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             className="no-link"
             target={'_blank'}
             rel="noreferrer"
-            href={`https://${
-              i18n.language
-            }.wikipedia.org/wiki/${monument?.label.replace(/ /g, '_')}`}
+            href={wikipediaLink}
           >
             <div className={styles.ExternalLink}>
               <div>

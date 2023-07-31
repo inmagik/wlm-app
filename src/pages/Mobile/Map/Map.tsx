@@ -192,18 +192,14 @@ export default function Map() {
 
   useEffect(() => {
     if (
-      sessionStorage.getItem('map_state')
+      sessionStorage.getItem('map_state') && 
+      !filters.monument_lat && 
+      !filters.monument_lon 
     ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       setMapState(mapState)
     }
   }, [])
-
-  console.log(
-    sessionStorage.getItem('map_lon'),
-    sessionStorage.getItem('map_lat'),
-    sessionStorage.getItem('map_zoom')
-  )
 
   return (
     <Layout>
