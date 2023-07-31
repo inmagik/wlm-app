@@ -74,7 +74,10 @@
             "vedute_d_insieme_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue.",
             "login_effettuato": "Login successful with Wikimedia Commons",
             "logout": "Logout",
-            "fai_login_e_carica_foto": "Log in and upload photos"
+            "fai_login_e_carica_foto": "Log in and upload photos",
+            "caricamento_immagine": "Image upload",
+            "la_tua_foto_non_sarà_in_concorso": "Your photo will not be in competition",
+            "la_tua_foto_sarà_in_concorso": "Your photo will be in competition"
         }
     },
     "it": {
@@ -152,7 +155,10 @@
             "vedute_d_insieme_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue.",
             "login_effettuato": "Login effettuato con Wikimedia Commons",
             "logout": "Logout",
-            "fai_login_e_carica_foto": "Fai il login e carica foto"
+            "fai_login_e_carica_foto": "Fai il login e carica foto",
+            "caricamento_immagine": "Caricamento immagine",
+            "la_tua_foto_sarà_in_concorso": "La tua foto sarà in concorso",
+            "la_tua_foto_non_sarà_in_concorso": "La tua foto non sarà in concorso"
         }
     }
 }

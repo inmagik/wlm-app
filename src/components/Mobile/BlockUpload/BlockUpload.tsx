@@ -22,7 +22,7 @@ export default function BlockUpload({
   setUploadOpen,
   fileList,
   setFileList,
-  monument
+  monument,
 }: BlockUploadProps) {
   const { t } = useTranslation()
 
@@ -76,8 +76,10 @@ export default function BlockUpload({
       }}
     >
       <div className={styles.ModalUploadContainer}>
-        <div className={styles.TitleUpload}>
-            {t('carica_immagini_per_il_monumento')} <strong>{monument?.label}</strong>
+        <div className={styles.TitleConcorso}>
+          {monument?.in_contest
+            ? t('la_tua_foto_sarà_in_concorso')
+            : t('la_tua_foto_non_sarà_in_concorso')}
         </div>
         <div className={styles.CloseModal}>
           <Close
@@ -103,6 +105,10 @@ export default function BlockUpload({
             uploadState.map((image, i) => (
               <SwiperSlide key={i}>
                 <div className={styles.CardImageToUpload}>
+                  <div className={styles.TitleUpload}>
+                    {t('caricamento_immagine')}:{' '}
+                    <strong>{monument?.label}</strong>
+                  </div>
                   <div>
                     {image.file && (
                       <div
@@ -125,17 +131,28 @@ export default function BlockUpload({
                         className={styles.InputTitle}
                         value={uploadState[i].title}
                         onChange={(e) => {
-                          setUploadState(
-                            uploadState.map((image, j) => {
-                              if (i === j) {
+                          if (i === 0) {
+                            setUploadState(
+                              uploadState.map((image, j) => {
                                 return {
                                   ...image,
                                   title: e.target.value,
                                 }
-                              }
-                              return image
-                            })
-                          )
+                              })
+                            )
+                          } else {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
+                                  return {
+                                    ...image,
+                                    title: e.target.value,
+                                  }
+                                }
+                                return image
+                              })
+                            )
+                          }
                         }}
                         placeholder={t('inserisci_titolo')}
                       />
@@ -148,20 +165,31 @@ export default function BlockUpload({
                     <div>
                       <textarea
                         className={styles.InputTitle}
-                        rows={5}
+                        rows={3}
                         value={uploadState[i].description}
                         onChange={(e) => {
-                          setUploadState(
-                            uploadState.map((image, j) => {
-                              if (i === j) {
+                          if (i === 0) {
+                            setUploadState(
+                              uploadState.map((image, j) => {
                                 return {
                                   ...image,
                                   description: e.target.value,
                                 }
-                              }
-                              return image
-                            })
-                          )
+                              })
+                            )
+                          } else {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
+                                  return {
+                                    ...image,
+                                    description: e.target.value,
+                                  }
+                                }
+                                return image
+                              })
+                            )
+                          }
                         }}
                         placeholder={t('inserisci_descrizione')}
                       />
@@ -174,19 +202,30 @@ export default function BlockUpload({
                         type="date"
                         className={styles.InputTitle}
                         value={uploadState[i].date}
-                        onChange={(e) =>
-                          setUploadState(
-                            uploadState.map((image, j) => {
-                              if (i === j) {
+                        onChange={(e) => {
+                          if (i === 0) {
+                            setUploadState(
+                              uploadState.map((image, j) => {
                                 return {
                                   ...image,
                                   date: e.target.value,
                                 }
-                              }
-                              return image
-                            })
-                          )
-                        }
+                              })
+                            )
+                          } else {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
+                                  return {
+                                    ...image,
+                                    date: e.target.value,
+                                  }
+                                }
+                                return image
+                              })
+                            )
+                          }
+                        }}
                         placeholder={t('inserisci_titolo')}
                       />
                     </div>

@@ -23,7 +23,6 @@
 .CardImageToUpload {
   padding: 16px;
   gap: 16px;
-  margin-top: 32px;
   align-self: stretch;
   border-radius: 5px;
   border: 1px solid var(--colori-neutri-white);
@@ -152,10 +151,51 @@
 }
 
 .TitleUpload {
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  color: var(--colori-neutri-black);
+  color: var(--primary);
   margin-bottom: 16px;
+}
+
+.TitleConcorso {
+  color: var(--secondary);
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@media screen and (min-width: 768px) {
+  .ModalUploadContainer {
+    width: 60%;
+    position: relative;
+
+    margin: 0 auto;
+  }
+
+  .CardImageToUpload {
+    border-radius: 30px;
+    margin-top: 0px;
+  }
+
+  .CloseModal {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 11;
+  }
+
+  .ContainerButtons {
+    margin-top: 0px;
+    display: flex;
+    justify-content: space-between;
+  }
 }
