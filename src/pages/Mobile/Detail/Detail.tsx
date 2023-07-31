@@ -182,6 +182,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}_(${monument?.municipality_label})`
     }
   }, [monument])
+
+  console.log(imageUpload, 'imageUpload')
     
 
   return (

@@ -78,7 +78,10 @@
             "caricamento_immagine": "Image upload",
             "la_tua_foto_non_sarà_in_concorso": "Your photo will not be in competition",
             "la_tua_foto_sarà_in_concorso": "Your photo will be in competition",
-            "upload_avvenuto_con_successo": "Upload successful!"
+            "upload_avvenuto_con_successo": "Upload successful!",
+            "descrizione_immagine_obbligatoria": "The description of the image is mandatory",
+            "titolo_immagine_obbligatorio": "The title of the image is mandatory",
+            "date_obblicatoria": "The date is mandatory"
         }
     },
     "it": {
@@ -160,7 +163,10 @@
             "caricamento_immagine": "Caricamento immagine",
             "la_tua_foto_sarà_in_concorso": "La tua foto sarà in concorso",
             "la_tua_foto_non_sarà_in_concorso": "La tua foto non sarà in concorso",
-            "upload_avvenuto_con_successo": "Upload avvenuto con successo!"
+            "upload_avvenuto_con_successo": "Upload avvenuto con successo!",
+            "titolo_immagine_obbligatorio": "Il titolo dell'immagine è obbligatorio",
+            "descrizione_immagine_obbligatoria": "La descrizione dell'immagine è obbligatoria",
+            "date_obblicatoria": "La data è obbligatoria"
         }
     }
 }

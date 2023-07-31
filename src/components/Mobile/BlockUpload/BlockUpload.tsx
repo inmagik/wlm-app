@@ -69,6 +69,10 @@ export default function BlockUpload({
 
   const isMobile = useMediaQuery('(max-width: 768px)')
 
+  const [errors, setErrors] = useState<any[]>()
+
+  console.log(errors)
+
   return (
     <>
       <div
@@ -97,7 +101,10 @@ export default function BlockUpload({
           <div className={styles.CloseModal}>
             <Close
               onClick={() => {
-                setUploadOpen(false)
+                setUploadState(undefined)
+                setFileList(null)
+                setUploadOpen(false)       
+                setErrors([])
               }}
             />
           </div>
@@ -158,6 +165,7 @@ export default function BlockUpload({
                       </div>
                       <div>
                         <input
+                          required
                           type="text"
                           className={styles.InputTitle}
                           value={uploadState[i].title}
@@ -188,6 +196,16 @@ export default function BlockUpload({
                           placeholder={t('inserisci_titolo')}
                         />
                       </div>
+                      {errors &&
+                        errors.find(
+                          (error) =>
+                            error.error === 'title' && error.index === i
+                        ) &&
+                        uploadState[i].title === '' && (
+                          <div className={styles.Error}>
+                            {t('titolo_immagine_obbligatorio')}
+                          </div>
+                        )}
                     </div>
                     <div className="mt-2">
                       <div className={styles.LabelInput}>
@@ -197,6 +215,7 @@ export default function BlockUpload({
                         <textarea
                           className={styles.InputTitle}
                           rows={3}
+                          required
                           value={uploadState[i].description}
                           onChange={(e) => {
                             if (i === 0) {
@@ -224,6 +243,16 @@ export default function BlockUpload({
                           }}
                           placeholder={t('inserisci_descrizione')}
                         />
+                        {errors &&
+                          errors.find(
+                            (error) =>
+                              error.error === 'description' && error.index === i
+                          ) &&
+                          uploadState[i].description === '' && (
+                            <div className={styles.Error}>
+                              {t('descrizione_immagine_obbligatoria')}
+                            </div>
+                          )}
                       </div>
                     </div>
                     <div className="mt-2">
@@ -259,6 +288,16 @@ export default function BlockUpload({
                           }}
                           placeholder={t('inserisci_titolo')}
                         />
+                        {errors &&
+                          errors.find(
+                            (error) =>
+                              error.error === 'date' && error.index === i
+                          ) &&
+                          uploadState[i].title === '' && (
+                            <div className={styles.Error}>
+                              {t('date_obbligatoria')}
+                            </div>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -299,14 +338,45 @@ export default function BlockUpload({
             <button
               className={styles.ButtonUpload}
               onClick={() => {
-                console.log(uploadState, 'uploadState')
-                if (uploadState?.length === 0) return
-                if (uploadState !== undefined) {
-                  uploadImages(uploadState).then((res) => {
-                    setUploadOpen(false)
-                    setUploadState(undefined)
-                    setResponseUploadOpen(true)
+                if (uploadState !== undefined && uploadState.every(
+                    (image) =>
+                      image.title !== '' &&
+                      image.description !== '' &&
+                      image.file !== null &&
+                      image.date !== ''
+                  )) {
+                  if (uploadState?.length === 0) return
+                  if (uploadState !== undefined) {
+                    uploadImages(uploadState).then((res) => {
+                      setUploadOpen(false)
+                      setUploadState(undefined)
+                      setResponseUploadOpen(true)
+                    })
+                  }
+                } else {
+                  let errors = [] as any
+                  uploadState?.map((image, i) => {
+                    if (image.title === '') {
+                      errors.push({
+                        index: i,
+                        error: 'title',
+                      })
+                    }
+                    if (image.description === '') {
+                      errors.push({
+                        index: i,
+                        error: 'description',
+                      })
+                    }
+                    if (image.date === '') {
+                      errors.push({
+                        index: i,
+                        error: 'date',
+                      })
+                    }
+                    return undefined
                   })
+                  setErrors(errors)
                 }
               }}
             >
