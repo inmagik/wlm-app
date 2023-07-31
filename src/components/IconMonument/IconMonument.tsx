@@ -1,12 +1,5 @@
 import classNames from 'classnames'
-import { Monument, MonumentList } from '../../types'
 import styles from './IconMonument.module.css'
-import CastelloIcon from '../Icons/CastelloIcon'
-import ComuneIcon from '../Icons/ComuneIcon'
-import AlberoMonumentaleIcon from '../Icons/AlberoMonumentaleIcon'
-import MuseoIcon from '../Icons/MuseoIcon'
-import EdificioReligiosoIcon from '../Icons/EdificioReligiosoIcon'
-import AltroMonumentoIcon from '../Icons/AltroMonumentoIcon'
 
 interface Props {
   monument: {

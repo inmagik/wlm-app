@@ -154,13 +154,11 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-
   margin-left: 8px;
   margin-top: 2px;
   position: absolute;
-  bottom: 120px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 30px;
+  left: 16px;
   z-index: 7;
 }
 
@@ -190,5 +188,25 @@
     background-size: contain;
     width: 100%;
     margin-top: 0%;
+  }
+
+  .CurrentImage {
+    color: var(--colori-neutri-white);
+    text-align: center;
+    /* H2 */
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  
+    margin-left: 8px;
+    margin-top: 2px;
+    position: absolute;
+    top: auto;
+    bottom: 120px;
+    left: auto;
+    right: 24px;
+    transform: translateX(-50%);
+    z-index: 7;
   }
 }

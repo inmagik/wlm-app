@@ -6,7 +6,7 @@
   height: 100%;
   z-index: 1000;
   background-color: var(--overlay);
-  padding: 24px 16px;
+  padding: 16px;
   overflow-y: auto;
 }
 

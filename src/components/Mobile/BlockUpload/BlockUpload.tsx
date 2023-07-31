@@ -85,6 +85,7 @@ export default function BlockUpload({
             setUploadState(undefined)
             setFileList(null)
             setUploadOpen(false)
+            setErrors([])
           }
         }}
       >
