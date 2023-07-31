@@ -102,7 +102,7 @@ export function getFeatureStyle(feature: any) {
       undefined
     ) ?? ''
 
-    if (category === '' && categoriesFeature.length > 0) {
+    if (category === '') {
       category = 'Altri monumenti'
     }
     const appCategory = category
