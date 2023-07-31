@@ -70,6 +70,11 @@ export default function BlockUpload({
 
   const [errors, setErrors] = useState<any[]>()
   const { token } = useAuthUser()
+  const [errorServer, setErrorServer] = useState<string | null>(null)
+
+  useEffect(() => {
+    setErrorServer(null)
+  }, [uploadState])
 
   return (
     <>
@@ -232,7 +237,8 @@ export default function BlockUpload({
                               errors &&
                               errors.find(
                                 (error) =>
-                                  error.error === 'description' && error.index === i
+                                  error.error === 'description' &&
+                                  error.index === i
                               ) &&
                               uploadState[i].description === ''
                                 ? '0px 0px 0px 1px #FF0000'
@@ -342,6 +348,9 @@ export default function BlockUpload({
                 </SwiperSlide>
               ))}
           </Swiper>
+          {errorServer && (
+            <div className={styles.ErrorServer}>{errorServer}</div>
+          )}
           <div className={styles.ContainerButtons}>
             <button
               className={styles.ButtonRiseleziona}
@@ -388,15 +397,11 @@ export default function BlockUpload({
                 ) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
-                    uploadImages(uploadState, token)
-                      .then((res) => {
-                        setUploadOpen(false)
-                        setUploadState(undefined)
-                        setResponseUploadOpen(true)
-                      })
-                      .catch((err) => {
-                        console.log(err)
-                      })
+                    uploadImages(uploadState, token).catch((err) => {
+                      setErrorServer(
+                        err.response?.data?.detail || 'Errore del server'
+                      )
+                    })
                   }
                 } else {
                   let errors = [] as any
