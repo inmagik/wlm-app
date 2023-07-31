@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
-import { useMonument } from '../../../hooks/monuments'
+import { uploadImages, useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
 import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
@@ -182,6 +182,12 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}_(${monument?.municipality_label})`
     }
   }, [monument])
+
+  useEffect(() => {
+    if(inputFileRef.current){
+      inputFileRef.current.value = ''
+    }
+  }, [showModalUpload])
 
   return (
     <>
@@ -676,6 +682,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             ref={inputFileRef}
             multiple
             onChange={(e) => {
+              console.log(e)
               if (e.target.files && e.target.files?.length > 0) {
                 setImageUpload(e.target.files)
                 setShowModalUpload(true)
