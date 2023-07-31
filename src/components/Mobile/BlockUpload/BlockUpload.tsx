@@ -11,6 +11,7 @@ import { useMediaQuery } from 'usehooks-ts'
 import { Monument } from '../../../types'
 import { uploadImages } from '../../../hooks/monuments'
 import dayjs from 'dayjs'
+import { useAuthUser } from 'use-eazy-auth'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -68,6 +69,7 @@ export default function BlockUpload({
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   const [errors, setErrors] = useState<any[]>()
+  const { token } = useAuthUser()
 
   return (
     <>
@@ -343,7 +345,8 @@ export default function BlockUpload({
                   )) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
-                    uploadImages(uploadState).then((res) => {
+                    uploadImages(uploadState, token).then((res) => {
+                        console.log(res)
                       setUploadOpen(false)
                       setUploadState(undefined)
                       setResponseUploadOpen(true)

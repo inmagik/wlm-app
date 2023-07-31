@@ -9,6 +9,7 @@ import {
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 import { ImageInfo } from '../components/Mobile/BlockUpload/BlockUpload'
+import { useAuthUser } from 'use-eazy-auth'
 
 export async function getMonuments(
   params: Record<string, any> = {},
@@ -78,8 +79,9 @@ export function useCategoriesDomain() {
   })
 }
 
-export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
+export async function uploadImages(images: ImageInfo[], token?: string) {
   const formData = new FormData()
+  
   images.forEach((image, i) => {
     formData.append(`image`, image.file as Blob)
     formData.append(`title`, image.title)
@@ -88,7 +90,12 @@ export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
     formData.append(`monument_id`, String(image.monument_id))
   })
   return (
-    await axios.post(`${API_URL}/upload-images/`, formData)
+    await axios.post(`${API_URL}/upload-images/`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
   ).data
 }
 
