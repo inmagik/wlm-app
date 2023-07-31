@@ -93,6 +93,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const [showLogin, setShowLogin] = useState(false)
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
     const groupIndex = isMobile
@@ -176,15 +177,21 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const { user } = useAuthUser()
 
   const wikipediaLink = useMemo(() => {
-    if(monument?.app_category === 'Comune'){
-      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}`
+    if (monument?.app_category === 'Comune') {
+      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(
+        / /g,
+        '_'
+      )}`
     } else {
-      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(/ /g, '_')}_(${monument?.municipality_label})`
+      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(
+        / /g,
+        '_'
+      )}_(${monument?.municipality_label})`
     }
   }, [monument])
 
   useEffect(() => {
-    if(inputFileRef.current){
+    if (inputFileRef.current) {
       inputFileRef.current.value = ''
     }
   }, [showModalUpload])
@@ -246,7 +253,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           )}
           <button
             onClick={() => {
-              inputFileRef.current?.click()
+              if (user) {
+                inputFileRef.current?.click()
+              } else {
+                navigate(`/${i18n.language}/profilo`)
+              }
             }}
             className={styles.ButtonFixedCaricaFoto}
           >
@@ -368,7 +379,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
               <button
                 onClick={() => {
-                  inputFileRef.current?.click()
+                  if (user) {
+                    inputFileRef.current?.click()
+                  } else {
+                    navigate(`/${i18n.language}/profilo`)
+                  }
                 }}
                 className={styles.ButtonCaricaFoto}
               >
@@ -459,7 +474,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                               className={styles.Image}
                               onClick={() => {
                                 setShowAllImages(true)
-                                setSlideShowActive(k + index * (isMobile ? 12 : 18 ))
+                                setSlideShowActive(
+                                  k + index * (isMobile ? 12 : 18)
+                                )
                               }}
                               style={{
                                 backgroundImage: `url("${picture.image_url}?width=300")`,
@@ -513,7 +530,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               target={'_blank'}
               href={
                 'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search="' +
-                monument?.wlm_n+'"'
+                monument?.wlm_n +
+                '"'
               }
               className={styles.ButtonShowAllImages}
             >
@@ -672,7 +690,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         <div className={styles.FixedButtonUpload}>
           <button
             onClick={() => {
-              inputFileRef.current?.click()
+              if (user) {
+                inputFileRef.current?.click()
+              } else {
+                navigate(`/${i18n.language}/profilo`)
+              }
             }}
             className={styles.ButtonUpload}
           >
