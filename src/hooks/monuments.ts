@@ -10,6 +10,7 @@ import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 import { ImageInfo } from '../components/Mobile/BlockUpload/BlockUpload'
 import { useAuthUser } from 'use-eazy-auth'
+import dayjs from 'dayjs'
 
 export async function getMonuments(
   params: Record<string, any> = {},
@@ -81,6 +82,8 @@ export function useCategoriesDomain() {
 
 export async function uploadImages(images: ImageInfo[], token?: string) {
   const formData = new FormData()
+
+  console.log('images', images)
   
   images.forEach((image, i) => {
     formData.append(`image`, image.file as Blob)
