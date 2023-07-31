@@ -101,7 +101,7 @@ export default function BlockUpload({
               onClick={() => {
                 setUploadState(undefined)
                 setFileList(null)
-                setUploadOpen(false)       
+                setUploadOpen(false)
                 setErrors([])
               }}
             />
@@ -157,8 +157,20 @@ export default function BlockUpload({
                     </div>
                     <div className="mt-4">
                       <div className="d-flex align-items-center justify-content-between">
-                        <div className={styles.LabelInput}>
-                          {t('titolo_immagine')}
+                        <div
+                          className={styles.LabelInput}
+                          style={{
+                            color:
+                              errors &&
+                              errors.find(
+                                (error) =>
+                                  error.error === 'title' && error.index === i
+                              )
+                                ? 'red'
+                                : 'inherit',
+                          }}
+                        >
+                          {t('titolo_immagine')} <span>*</span>
                         </div>
                       </div>
                       <div>
@@ -194,20 +206,23 @@ export default function BlockUpload({
                           placeholder={t('inserisci_titolo')}
                         />
                       </div>
-                      {errors &&
-                        errors.find(
-                          (error) =>
-                            error.error === 'title' && error.index === i
-                        ) &&
-                        uploadState[i].title === '' && (
-                          <div className={styles.Error}>
-                            {t('titolo_immagine_obbligatorio')}
-                          </div>
-                        )}
                     </div>
                     <div className="mt-2">
-                      <div className={styles.LabelInput}>
-                        {t('descrizione_immagine')}
+                      <div
+                        className={styles.LabelInput}
+                        style={{
+                          color:
+                            errors &&
+                            errors.find(
+                              (error) =>
+                                error.error === 'description' &&
+                                error.index === i
+                            ) 
+                              ? 'red'
+                              : 'inherit',
+                        }}
+                      >
+                        {t('descrizione_immagine')} <span>*</span>
                       </div>
                       <div>
                         <textarea
@@ -241,20 +256,26 @@ export default function BlockUpload({
                           }}
                           placeholder={t('inserisci_descrizione')}
                         />
-                        {errors &&
-                          errors.find(
-                            (error) =>
-                              error.error === 'description' && error.index === i
-                          ) &&
-                          uploadState[i].description === '' && (
-                            <div className={styles.Error}>
-                              {t('descrizione_immagine_obbligatoria')}
-                            </div>
-                          )}
                       </div>
                     </div>
                     <div className="mt-2">
-                      <div className={styles.LabelInput}>{t('date')}</div>
+                      <div
+                        className={styles.LabelInput}
+                        style={{
+                          color:
+                            errors &&
+                            errors.find(
+                              (error) =>
+                                error.error === 'date' &&
+                                error.index === i
+                            )
+                              ? 'red'
+                              : 'inherit',
+                        }}
+                      >
+                        {t('date')}
+                        <span>*</span>
+                      </div>
                       <div>
                         <input
                           // type="date"
@@ -286,16 +307,6 @@ export default function BlockUpload({
                           }}
                           placeholder={t('inserisci_titolo')}
                         />
-                        {errors &&
-                          errors.find(
-                            (error) =>
-                              error.error === 'date' && error.index === i
-                          ) &&
-                          uploadState[i].title === '' && (
-                            <div className={styles.Error}>
-                              {t('date_obbligatoria')}
-                            </div>
-                          )}
                       </div>
                     </div>
                   </div>
@@ -336,17 +347,20 @@ export default function BlockUpload({
             <button
               className={styles.ButtonUpload}
               onClick={() => {
-                if (uploadState !== undefined && uploadState.every(
+                if (
+                  uploadState !== undefined &&
+                  uploadState.every(
                     (image) =>
                       image.title !== '' &&
                       image.description !== '' &&
                       image.file !== null &&
                       image.date !== ''
-                  )) {
+                  )
+                ) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
                     uploadImages(uploadState, token).then((res) => {
-                        console.log(res)
+                      console.log(res)
                       setUploadOpen(false)
                       setUploadState(undefined)
                       setResponseUploadOpen(true)
