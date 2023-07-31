@@ -183,9 +183,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
     }
   }, [monument])
 
-  console.log(imageUpload, 'imageUpload')
-    
-
   return (
     <>
       <div

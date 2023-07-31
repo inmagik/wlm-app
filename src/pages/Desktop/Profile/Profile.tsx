@@ -17,7 +17,6 @@ export default function Profile() {
   const [isOpenCambiaLingua, setIsOpenCambiaLingua] = useState<boolean>(false)
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
-  console.log('username', username)
   const { logout } = useAuthActions()
 //   const { data: profileImages } = useProfileImages('Inmagik')
   return (

@@ -79,7 +79,6 @@ export function useCategoriesDomain() {
 }
 
 export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
-  console.log(images, 'images')
   const formData = new FormData()
   images.forEach((image, i) => {
     formData.append(`image`, image.file as Blob)
@@ -87,7 +86,6 @@ export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
     formData.append(`description`, image.description)
     formData.append(`date`, image.date)
     formData.append(`monument_id`, String(image.monument_id))
-    console.log(formData, 'formData')
   })
   return (
     await axios.post(`${API_URL}/upload-images/`, formData)

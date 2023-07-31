@@ -61,8 +61,6 @@ export default function BlockUpload({
     }
   }, [fileList])
 
-  console.log(uploadState)
-
   const swiperRef = useRef<SwiperRef>()
 
   const [slideActive, setSlideActive] = useState<number>(0)
@@ -70,8 +68,6 @@ export default function BlockUpload({
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   const [errors, setErrors] = useState<any[]>()
-
-  console.log(errors)
 
   return (
     <>
