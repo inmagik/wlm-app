@@ -91,9 +91,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
-  const { filters, setFilters } = useQsFilters(getFilters)
+  const { filters } = useQsFilters(getFilters)
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const [showLogin, setShowLogin] = useState(false)
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
     const groupIndex = isMobile
@@ -195,6 +194,20 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       inputFileRef.current.value = ''
     }
   }, [showModalUpload])
+
+  useEffect(() => {
+    if (monument) {
+      setSlideActive(0)
+      if (swiperRef.current) {
+        swiperRef.current.activeIndex = 0
+      }
+      setSlideGroup12(0)
+      if (swiperBlock12.current) {
+        swiperBlock12.current.activeIndex = 0
+      }
+      setSlideShowActive(0)
+    }
+  }, [monument])
 
   return (
     <>
