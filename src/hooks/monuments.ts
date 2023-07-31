@@ -87,8 +87,8 @@ export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
     formData.append(`image_${i}_description`, image.description)
     formData.append(`image_${i}_date`, image.date)
     formData.append(`image_${i}_monument_id`, String(image.monument_id))
+    console.log(formData, 'formData')
   })
-  console.log(formData, 'formData')
   return (
     await axios.post(`${API_URL}/upload-images/`, formData, {
       signal,

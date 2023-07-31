@@ -102,6 +102,8 @@ export default function BlockUpload({
           pagination={{
             dynamicBullets: true,
           }}
+          slidesPerView={isMobile ? 1 : 1.1}
+          spaceBetween={isMobile ? 0 : 20}
           onSwiper={(swiper) => {
             swiperRef.current = swiper
           }}
