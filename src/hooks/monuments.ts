@@ -82,17 +82,15 @@ export async function uploadImages(images: ImageInfo[], signal?: AbortSignal) {
   console.log(images, 'images')
   const formData = new FormData()
   images.forEach((image, i) => {
-    formData.append(`image_${i}`, image.file as Blob)
-    formData.append(`image_${i}_title`, image.title)
-    formData.append(`image_${i}_description`, image.description)
-    formData.append(`image_${i}_date`, image.date)
-    formData.append(`image_${i}_monument_id`, String(image.monument_id))
+    formData.append(`image`, image.file as Blob)
+    formData.append(`title`, image.title)
+    formData.append(`description`, image.description)
+    formData.append(`date`, image.date)
+    formData.append(`monument_id`, String(image.monument_id))
     console.log(formData, 'formData')
   })
   return (
-    await axios.post(`${API_URL}/upload-images/`, formData, {
-      signal,
-    })
+    await axios.post(`${API_URL}/upload-images/`, formData)
   ).data
 }
 

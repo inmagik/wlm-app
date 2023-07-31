@@ -1,6 +1,7 @@
 import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as DeleteImage } from '../../../assets/delete-image.svg'
+import { ReactComponent as UploadSuccess } from '../../../assets/upload-success.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -40,6 +41,8 @@ export default function BlockUpload({
     undefined
   )
 
+  const [responseUploadOpen, setResponseUploadOpen] = useState<boolean>(false)
+
   const inputFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -67,245 +70,303 @@ export default function BlockUpload({
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
-    <div
-      className={styles.ModalUpload}
-      style={{
-        opacity: uploadOpen ? 1 : 0,
-        pointerEvents: uploadOpen ? 'all' : 'none',
-        transition: 'all 0.5s ease-in-out',
-      }}
-      onTransitionEnd={() => {
-        if (!uploadOpen) {
-          setUploadState(undefined)
-          setFileList(null)
-          setUploadOpen(false)
-        }
-      }}
-    >
-      <div className={styles.ModalUploadContainer}>
-        <div className="d-flex align-items-center justify-content-between">
-          <div className={styles.TitleConcorso}>
-            {monument?.in_contest
-              ? t('la_tua_foto_sarà_in_concorso')
-              : t('la_tua_foto_non_sarà_in_concorso')}
+    <>
+      <div
+        className={styles.ModalUpload}
+        style={{
+          opacity: uploadOpen ? 1 : 0,
+          pointerEvents: uploadOpen ? 'all' : 'none',
+          transition: 'all 0.5s ease-in-out',
+        }}
+        onTransitionEnd={() => {
+          if (!uploadOpen) {
+            setUploadState(undefined)
+            setFileList(null)
+            setUploadOpen(false)
+          }
+        }}
+      >
+        <div className={styles.ModalUploadContainer}>
+          <div className="d-flex align-items-center justify-content-between">
+            <div className={styles.TitleConcorso}>
+              {monument?.in_contest
+                ? t('la_tua_foto_sarà_in_concorso')
+                : t('la_tua_foto_non_sarà_in_concorso')}
+            </div>
           </div>
-        </div>
-        <div className={styles.CloseModal}>
-          <Close
-            onClick={() => {
-              setUploadOpen(false)
+          <div className={styles.CloseModal}>
+            <Close
+              onClick={() => {
+                setUploadOpen(false)
+              }}
+            />
+          </div>
+          <Swiper
+            modules={[Pagination]}
+            pagination={{
+              dynamicBullets: true,
             }}
-          />
-        </div>
-        <Swiper
-          modules={[Pagination]}
-          pagination={{
-            dynamicBullets: true,
-          }}
-          slidesPerView={isMobile || uploadState?.length === 1 ? 1 : 1.1}
-          spaceBetween={isMobile || uploadState?.length === 1 ? 0 : 20}
-          onSwiper={(swiper) => {
-            swiperRef.current = swiper
-          }}
-          onSlideChange={(swiper) => {
-            setSlideActive(swiper.activeIndex)
-          }}
-          className={styles.Swiper}
-        >
-          {uploadState &&
-            uploadState.map((image, i) => (
-              <SwiperSlide key={i}>
-                <div className={styles.CardImageToUpload}>
-                  <div className="d-flex align-items-center justify-content-between">
-                    <div className={styles.TitleUpload}>
-                      {t('caricamento_immagine')}:{' '}
-                      <strong>{monument?.label}</strong>
-                    </div>
-                    {uploadState.length > 1 && (
-                      <div
-                        className="pointer"
-                        onClick={() => {
-                          setUploadState(
-                            uploadState.filter((image, j) => i !== j)
-                          )
-                        }}
-                      >
-                        <DeleteImage />
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    {image.file && (
-                      <div
-                        className={styles.ImageToUpload}
-                        style={{
-                          backgroundImage: `url("${URL.createObjectURL(
-                            image.file
-                          )}")`,
-                        }}
-                      />
-                    )}
-                  </div>
-                  <div className="mt-4">
+            slidesPerView={isMobile || uploadState?.length === 1 ? 1 : 1.1}
+            spaceBetween={isMobile || uploadState?.length === 1 ? 0 : 20}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper
+            }}
+            onSlideChange={(swiper) => {
+              setSlideActive(swiper.activeIndex)
+            }}
+            className={styles.Swiper}
+          >
+            {uploadState &&
+              uploadState.map((image, i) => (
+                <SwiperSlide key={i}>
+                  <div className={styles.CardImageToUpload}>
                     <div className="d-flex align-items-center justify-content-between">
-                      <div className={styles.LabelInput}>
-                        {t('titolo_immagine')}
+                      <div className={styles.TitleUpload}>
+                        {t('caricamento_immagine')}:{' '}
+                        <strong>{monument?.label}</strong>
                       </div>
+                      {uploadState.length > 1 && (
+                        <div
+                          className="pointer"
+                          onClick={() => {
+                            setUploadState(
+                              uploadState.filter((image, j) => i !== j)
+                            )
+                          }}
+                        >
+                          <DeleteImage />
+                        </div>
+                      )}
                     </div>
                     <div>
-                      <input
-                        type="text"
-                        className={styles.InputTitle}
-                        value={uploadState[i].title}
-                        onChange={(e) => {
-                          if (i === 0) {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                return {
-                                  ...image,
-                                  title: e.target.value,
-                                }
-                              })
-                            )
-                          } else {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                if (i === j) {
+                      {image.file && (
+                        <div
+                          className={styles.ImageToUpload}
+                          style={{
+                            backgroundImage: `url("${URL.createObjectURL(
+                              image.file
+                            )}")`,
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div className="mt-4">
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className={styles.LabelInput}>
+                          {t('titolo_immagine')}
+                        </div>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          className={styles.InputTitle}
+                          value={uploadState[i].title}
+                          onChange={(e) => {
+                            if (i === 0) {
+                              setUploadState(
+                                uploadState.map((image, j) => {
                                   return {
                                     ...image,
                                     title: e.target.value,
                                   }
-                                }
-                                return image
-                              })
-                            )
-                          }
-                        }}
-                        placeholder={t('inserisci_titolo')}
-                      />
+                                })
+                              )
+                            } else {
+                              setUploadState(
+                                uploadState.map((image, j) => {
+                                  if (i === j) {
+                                    return {
+                                      ...image,
+                                      title: e.target.value,
+                                    }
+                                  }
+                                  return image
+                                })
+                              )
+                            }
+                          }}
+                          placeholder={t('inserisci_titolo')}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="mt-2">
-                    <div className={styles.LabelInput}>
-                      {t('descrizione_immagine')}
-                    </div>
-                    <div>
-                      <textarea
-                        className={styles.InputTitle}
-                        rows={3}
-                        value={uploadState[i].description}
-                        onChange={(e) => {
-                          if (i === 0) {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                return {
-                                  ...image,
-                                  description: e.target.value,
-                                }
-                              })
-                            )
-                          } else {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                if (i === j) {
+                    <div className="mt-2">
+                      <div className={styles.LabelInput}>
+                        {t('descrizione_immagine')}
+                      </div>
+                      <div>
+                        <textarea
+                          className={styles.InputTitle}
+                          rows={3}
+                          value={uploadState[i].description}
+                          onChange={(e) => {
+                            if (i === 0) {
+                              setUploadState(
+                                uploadState.map((image, j) => {
                                   return {
                                     ...image,
                                     description: e.target.value,
                                   }
-                                }
-                                return image
-                              })
-                            )
-                          }
-                        }}
-                        placeholder={t('inserisci_descrizione')}
-                      />
+                                })
+                              )
+                            } else {
+                              setUploadState(
+                                uploadState.map((image, j) => {
+                                  if (i === j) {
+                                    return {
+                                      ...image,
+                                      description: e.target.value,
+                                    }
+                                  }
+                                  return image
+                                })
+                              )
+                            }
+                          }}
+                          placeholder={t('inserisci_descrizione')}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="mt-2">
-                    <div className={styles.LabelInput}>{t('date')}</div>
-                    <div>
-                      <input
-                        // type="date"
-                        className={styles.InputTitle}
-                        value={uploadState[i].date}
-                        onChange={(e) => {
-                          if (i === 0) {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                return {
-                                  ...image,
-                                  date: e.target.value,
-                                }
-                              })
-                            )
-                          } else {
-                            setUploadState(
-                              uploadState.map((image, j) => {
-                                if (i === j) {
+                    <div className="mt-2">
+                      <div className={styles.LabelInput}>{t('date')}</div>
+                      <div>
+                        <input
+                          // type="date"
+                          className={styles.InputTitle}
+                          value={uploadState[i].date}
+                          onChange={(e) => {
+                            if (i === 0) {
+                              setUploadState(
+                                uploadState.map((image, j) => {
                                   return {
                                     ...image,
                                     date: e.target.value,
                                   }
-                                }
-                                return image
-                              })
-                            )
-                          }
-                        }}
-                        placeholder={t('inserisci_titolo')}
-                      />
+                                })
+                              )
+                            } else {
+                              setUploadState(
+                                uploadState.map((image, j) => {
+                                  if (i === j) {
+                                    return {
+                                      ...image,
+                                      date: e.target.value,
+                                    }
+                                  }
+                                  return image
+                                })
+                              )
+                            }
+                          }}
+                          placeholder={t('inserisci_titolo')}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </SwiperSlide>
-            ))}
-        </Swiper>
-        <div className={styles.ContainerButtons}>
-          <button
-            className={styles.ButtonRiseleziona}
-            onClick={() => {
-              inputFileRef.current?.click()
-            }}
-          >
-            {t('riseleziona')}
-          </button>
-          <input
-            type="file"
-            className="d-none"
-            onChange={(e) => {
-              if (e.target.files) {
-                setUploadState(
-                  uploadState?.map((image, i) => {
-                    if (i === slideActive) {
-                      return {
-                        ...image,
-                        file: e.target.files![0],
+                </SwiperSlide>
+              ))}
+          </Swiper>
+          <div className={styles.ContainerButtons}>
+            <button
+              className={styles.ButtonRiseleziona}
+              onClick={() => {
+                inputFileRef.current?.click()
+              }}
+            >
+              {t('riseleziona')}
+            </button>
+            <input
+              type="file"
+              className="d-none"
+              onChange={(e) => {
+                if (e.target.files) {
+                  setUploadState(
+                    uploadState?.map((image, i) => {
+                      if (i === slideActive) {
+                        return {
+                          ...image,
+                          file: e.target.files![0],
+                        }
                       }
-                    }
-                    return image
+                      return image
+                    })
+                  )
+                }
+              }}
+              ref={inputFileRef}
+              hidden={true}
+              accept="image/*"
+            />
+            <button
+              className={styles.ButtonUpload}
+              onClick={() => {
+                console.log(uploadState, 'uploadState')
+                if (uploadState?.length === 0) return
+                if (uploadState !== undefined) {
+                  uploadImages(uploadState).then((res) => {
+                    setUploadOpen(false)
+                    setUploadState(undefined)
+                    setResponseUploadOpen(true)
                   })
-                )
-              }
-            }}
-            ref={inputFileRef}
-            hidden={true}
-            accept="image/*"
-          />
-          <button
-            className={styles.ButtonUpload}
-            onClick={() => {
-              console.log(uploadState, 'uploadState')
-              if (uploadState?.length === 0) return
-              if (uploadState !== undefined) {
-                uploadImages(uploadState)
-              }
-            }}
-          >
-            {t('carica_foto')}
-          </button>
+                }
+              }}
+            >
+              {t('carica_foto')}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {responseUploadOpen && !isMobile && (
+        <div
+          className={styles.ResponseOverlay}
+          onClick={() => {
+            setResponseUploadOpen(false)
+          }}
+        >
+          <div className={styles.ResponseContainer}>
+            <div
+              className="position-absolute pointer"
+              style={{
+                top: 20,
+                right: 20,
+              }}
+            >
+              <Close />
+            </div>
+            <div>
+              <UploadSuccess />
+            </div>
+            <div className={styles.UploadAvvenuto}>
+              {t('upload_avvenuto_con_successo')}
+            </div>
+          </div>
+        </div>
+      )}
+      {responseUploadOpen && isMobile && (
+        <div
+          className={styles.ResponseOverlay}
+          onClick={() => {
+            setResponseUploadOpen(false)
+          }}
+        >
+          <div className={styles.ResponseContainer}>
+            <div
+              className="position-absolute pointer"
+              style={{
+                top: 20,
+                right: 20,
+              }}
+            >
+              <Close />
+            </div>
+            <div>
+              <UploadSuccess />
+            </div>
+            <div className={styles.UploadAvvenuto}>
+              {t('upload_avvenuto_con_successo')}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }

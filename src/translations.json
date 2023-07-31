@@ -77,7 +77,8 @@
             "fai_login_e_carica_foto": "Log in and upload photos",
             "caricamento_immagine": "Image upload",
             "la_tua_foto_non_sarà_in_concorso": "Your photo will not be in competition",
-            "la_tua_foto_sarà_in_concorso": "Your photo will be in competition"
+            "la_tua_foto_sarà_in_concorso": "Your photo will be in competition",
+            "upload_avvenuto_con_successo": "Upload successful!"
         }
     },
     "it": {
@@ -158,7 +159,8 @@
             "fai_login_e_carica_foto": "Fai il login e carica foto",
             "caricamento_immagine": "Caricamento immagine",
             "la_tua_foto_sarà_in_concorso": "La tua foto sarà in concorso",
-            "la_tua_foto_non_sarà_in_concorso": "La tua foto non sarà in concorso"
+            "la_tua_foto_non_sarà_in_concorso": "La tua foto non sarà in concorso",
+            "upload_avvenuto_con_successo": "Upload avvenuto con successo!"
         }
     }
 }
