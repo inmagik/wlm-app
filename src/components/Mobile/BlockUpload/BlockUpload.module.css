@@ -218,11 +218,11 @@
 }
 
 .Error {
-  color: #b30000;
+  color: red;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   line-height: normal;
 }
 

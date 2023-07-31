@@ -101,7 +101,7 @@ export default function BlockUpload({
               onClick={() => {
                 setUploadState(undefined)
                 setFileList(null)
-                setUploadOpen(false)       
+                setUploadOpen(false)
                 setErrors([])
               }}
             />
@@ -165,6 +165,18 @@ export default function BlockUpload({
                         <input
                           required
                           type="text"
+                          style={{
+                            // border: '1px solid transparent',
+                            boxShadow:
+                              errors &&
+                              errors.find(
+                                (error) =>
+                                  error.error === 'title' && error.index === i
+                              ) &&
+                              uploadState[i].title === ''
+                                ? '0px 0px 0px 1px #FF0000'
+                                : '0px 0px 0px 1px #E5E5E5',
+                          }}
                           className={styles.InputTitle}
                           value={uploadState[i].title}
                           onChange={(e) => {
@@ -213,6 +225,18 @@ export default function BlockUpload({
                         <textarea
                           className={styles.InputTitle}
                           rows={3}
+                          style={{
+                            // border: '1px solid transparent',
+                            boxShadow:
+                              errors &&
+                              errors.find(
+                                (error) =>
+                                  error.error === 'description' && error.index === i
+                              ) &&
+                              uploadState[i].description === ''
+                                ? '0px 0px 0px 1px #FF0000'
+                                : '0px 0px 0px 1px #E5E5E5',
+                          }}
                           required
                           value={uploadState[i].description}
                           onChange={(e) => {
@@ -255,12 +279,24 @@ export default function BlockUpload({
                     </div>
                     <div className="mt-2">
                       <div className={styles.LabelInput}>
-                        {t('date')} 
-                        <span>*</span>    
+                        {t('date')}
+                        <span>*</span>
                       </div>
                       <div>
                         <input
                           // type="date"
+                          style={{
+                            // border: '1px solid transparent',
+                            boxShadow:
+                              errors &&
+                              errors.find(
+                                (error) =>
+                                  error.error === 'date' && error.index === i
+                              ) &&
+                              uploadState[i].date === ''
+                                ? '0px 0px 0px 1px #FF0000'
+                                : '0px 0px 0px 1px #E5E5E5',
+                          }}
                           className={styles.InputTitle}
                           value={uploadState[i].date}
                           onChange={(e) => {
@@ -339,23 +375,27 @@ export default function BlockUpload({
             <button
               className={styles.ButtonUpload}
               onClick={() => {
-                if (uploadState !== undefined && uploadState.every(
+                if (
+                  uploadState !== undefined &&
+                  uploadState.every(
                     (image) =>
                       image.title !== '' &&
                       image.description !== '' &&
                       image.file !== null &&
                       image.date !== ''
-                  )) {
+                  )
+                ) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
-                    uploadImages(uploadState, token).then((res) => {
-                        console.log(res)
-                    //   setUploadOpen(false)
-                    //   setUploadState(undefined)
-                    //   setResponseUploadOpen(true)
-                    }).catch((err) => {
+                    uploadImages(uploadState, token)
+                      .then((res) => {
+                        setUploadOpen(false)
+                        setUploadState(undefined)
+                        setResponseUploadOpen(true)
+                      })
+                      .catch((err) => {
                         console.log(err)
-                    })
+                      })
                   }
                 } else {
                   let errors = [] as any

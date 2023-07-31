@@ -10,6 +10,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     navigateFallbackDenylist: [/^\/api/, /^\/admin/, /^\/login/],
     cleanupOutdatedCaches: true,
   },
+  selfDestroying: true,
   manifest: {
     name: 'WLM App',
     short_name: 'WLM App',
@@ -44,7 +45,9 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 export default defineConfig({
   base: "/",
   // plugins: [react(), svgrPlugin(), VitePWA(manifestForPlugin)],
-  plugins: [react(), svgrPlugin()],
+  plugins: [react(), svgrPlugin(), VitePWA({
+    selfDestroying: true,
+  })],
   server: {
     host: true,
     proxy: {
