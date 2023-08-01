@@ -5,6 +5,7 @@ import {
   Monument,
   MonumentList,
   PaginatedDJResponse,
+  UploadedImage,
 } from '../types'
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
@@ -92,6 +93,17 @@ export async function uploadImages(images: ImageInfo[], token?: string) {
   })
   return (
     await axios.post(`${API_URL}/upload-images/`, formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+  )
+}
+
+
+export async function personalImages(token: string) {
+  return (
+    await axios.get<UploadedImage[]>(`${API_URL}/personal-contributions/`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },

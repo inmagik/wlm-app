@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
 import classNames from 'classnames'
+import { PersonalImages } from '../../../components/PersonalImages'
 
 export default function Profile() {
   const { t, i18n } = useTranslation()
@@ -28,7 +29,7 @@ export default function Profile() {
           className={styles.ProfileContent}
           style={{
             width: isOpenCambiaLingua ? 'max-content' : 532,
-            transition: 'width 0.3s ease-in-out'
+            transition: 'width 0.3s ease-in-out',
           }}
         >
           <div
@@ -78,6 +79,7 @@ export default function Profile() {
 
                 {username && (
                   <div className="mt-3">
+                    <PersonalImages rows={3} cols={5} />
                     <a
                       href={`${URL_WIKI}/Special:ListFiles/${username.replace(
                         ' ',
