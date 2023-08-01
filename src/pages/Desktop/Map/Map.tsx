@@ -166,13 +166,21 @@ export default function Map() {
             }
             const appCategory = category
             setDetail(monument.id)
-            setMapState({
-              ...mapState,
+            // setMapState({
+            //   ...mapState,
+            //   center: fromLonLat([
+            //     monument.position.coordinates[0],
+            //     monument.position.coordinates[1],
+            //   ]),
+            //   zoom: initialMap?.getView().getZoom() ?? 14,
+            // })
+            initialMap?.getView().animate({
               center: fromLonLat([
                 monument.position.coordinates[0],
                 monument.position.coordinates[1],
               ]),
               zoom: initialMap?.getView().getZoom() ?? 14,
+              duration: 500,
             })
             setInfoMarker({
               id: monument.id,

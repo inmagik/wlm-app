@@ -234,12 +234,23 @@
   bottom: 8px;
   left: 8px;
   border: none;
-  font-family: Montserrat;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   color: var(--colori-neutri-gray);
+  transition: all 0.3s ease-in-out;
+}
+
+.GuardaInMappa:hover {
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    #fff;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  color: var(--primary);
 }
 
 .Direction {
@@ -256,6 +267,12 @@
   gap: 8px;
   flex-shrink: 0;
   display: flex;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.Direction:hover {
+  background: var(--secondary);
 }
 
 .CardExternalLinks {
@@ -424,6 +441,11 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  transition: all 0.3s ease-in-out;
+}
+
+.ButtonCaricaFoto:hover {
+  background: var(--primary);
 }
 
 .NoMap {

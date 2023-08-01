@@ -198,7 +198,7 @@ export default function BlockUpload({
                                   error.error === 'title' && error.index === i
                               ) &&
                               uploadState[i].title === ''
-                                ? '0px 0px 0px 1px #FF0000'
+                                ? '0px 0px 0px 1px var(--tertiary)'
                                 : '0px 0px 0px 1px #E5E5E5',
                           }}
                           className={styles.InputTitle}
