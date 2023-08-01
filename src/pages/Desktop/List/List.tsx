@@ -135,7 +135,6 @@ export default function List() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const [detail, setDetail] = useState<number | null>(null)
   const [legend, setLegend] = useState(false)
-  const { t } = useTranslation()
 
   const { slug } = useParams()
 
