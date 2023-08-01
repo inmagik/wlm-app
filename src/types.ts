@@ -109,3 +109,18 @@ export interface CategoryDomain {
   name: string
   categories: number[]
 }
+
+export interface UploadedImage {
+  fake?: boolean
+  pageid: number
+  ns: number
+  title: string
+  imagerepository: string
+  imageinfo: {
+    timestamp: string,
+    user: string
+    url: string
+    descriptionurl: string
+    descriptionshorturl: string
+  }[]
+}

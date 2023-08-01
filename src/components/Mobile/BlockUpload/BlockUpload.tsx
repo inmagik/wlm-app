@@ -22,12 +22,29 @@ interface BlockUploadProps {
 }
 
 function ImageFile({ image }: { image: any }) {
+  const [url, setUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (image.file) {
+      setUrl((prev) => {
+        if (prev) {
+          URL.revokeObjectURL(prev)
+        }
+        return URL.createObjectURL(image.file)
+      })
+    }
+  }, [])
+
+  if (!url) {
+    return null
+  }
+
   return (
     <div
       className={styles.ImageToUpload}
       key={image.file.name}
       style={{
-        backgroundImage: `url("${URL.createObjectURL(image.file)}")`,
+        backgroundImage: `url("${url}")`,
       }}
     />
   )

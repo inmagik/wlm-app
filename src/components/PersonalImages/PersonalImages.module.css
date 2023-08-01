@@ -1,0 +1,19 @@
+.row {
+  display: grid;
+  row-gap: 8px;
+  column-gap: 8px;
+}
+
+.image {
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  border: 0;
+}
+
+.fakeImage {
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  background-color: white;
+}
