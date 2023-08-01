@@ -47,6 +47,7 @@ import { useQsFilters } from '../../../hooks/filters'
 import dayjs from 'dayjs'
 import { useMediaQuery } from 'usehooks-ts'
 import { useAuthUser } from 'use-eazy-auth'
+import IconCategory from '../../../components/IconCategory'
 
 interface Props {
   monumentId?: number
@@ -624,7 +625,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     >
                       <div key={i} className={styles.MonumentiComuneItem}>
                         <div className={styles.MonumentiComuneItemTitle}>
-                          {type.categories__app_category__name}
+                          <IconCategory
+                            appCategory={type.categories__app_category__name}
+                          />{' '}
+                          <span className='ms-2'>{type.categories__app_category__name}</span>
                         </div>
                         <div className={styles.MonumentiComuneItemValue}>
                           {type.count}
@@ -684,7 +688,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </a>
-          <a
+          {/* <a
             className="no-link"
             target={'_blank'}
             rel="noreferrer"
@@ -698,7 +702,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 <ArrowRight />
               </div>
             </div>
-          </a>
+          </a> */}
         </div>
         <div className={styles.FixedButtonUpload}>
           <button
