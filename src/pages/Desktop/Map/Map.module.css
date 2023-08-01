@@ -167,6 +167,18 @@
   color: var(--primary);
 }
 
+.ZoomIn:hover,
+.ZoomOut:hover {
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    ),
+    #fff;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
 .LegendButton:hover {
   background: rgba(17, 138, 178, 0.8);
   cursor: pointer;
