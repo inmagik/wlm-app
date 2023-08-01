@@ -40,6 +40,7 @@
   background: var(--colori-neutri-white);
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
   border: none;
+  transition: all 0.3s ease-in-out;
 }
 
 .ButtonMyLocation:hover,
@@ -127,6 +128,7 @@
   height: 44px;
   border: none;
   margin-top: 8px;
+  transition: all 0.3s ease-in-out;
 }
 
 .ZoomIn {
