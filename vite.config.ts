@@ -11,6 +11,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
     cleanupOutdatedCaches: true,
   },
   selfDestroying: true,
+  mode: 'development',
   manifest: {
     name: 'WLM App',
     short_name: 'WLM App',

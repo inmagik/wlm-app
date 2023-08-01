@@ -556,7 +556,6 @@
     color: var(--colori-neutri-white, #fff);
     text-align: center;
     /* CTA */
-    font-family: Montserrat;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -576,6 +575,10 @@
     top: 90px;
     width: max-content;
     z-index: 3;
+  }
+
+  .ButtonFixedCaricaFoto:hover {
+    background: var(--primary);
   }
 
   .FixedButtonUpload {
