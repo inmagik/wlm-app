@@ -12,6 +12,30 @@ interface Props {
 
 export default function BlockOrdering({ setFilters, filters }: Props) {
   const { t } = useTranslation()
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
+  }
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+  }
+
+  function error() {
+    console.log('Unable to retrieve your location')
+  }
+
   return (
     <div className={styles.BlockOrdering}>
       <div className={styles.TitleOrdering}>
@@ -86,6 +110,7 @@ export default function BlockOrdering({ setFilters, filters }: Props) {
             [styles.OrderingItemActive]: filters.ordering === 'distance',
           })}
           onClick={() => {
+            handleLocationClick()
             setFilters({
               ...filters,
               ordering: 'distance',

@@ -67,8 +67,6 @@ export function ListMonuments({ filters, setDetail, detail }: Props) {
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
-  const navigate = useNavigate()
-
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
@@ -138,18 +136,6 @@ export default function List() {
   const [detail, setDetail] = useState<number | null>(null)
   const [legend, setLegend] = useState(false)
   const { t } = useTranslation()
-
-  useEffect(() => {
-    if (navigator.geolocation && !filters.user_lat && !filters.user_lon) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setFilters({
-          ...filters,
-          user_lat: position.coords.latitude,
-          user_lon: position.coords.longitude,
-        })
-      })
-    }
-  }, [])
 
   const { slug } = useParams()
 

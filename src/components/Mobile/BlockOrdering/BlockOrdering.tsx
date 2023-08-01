@@ -7,7 +7,6 @@ import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-
 import { useTranslation } from 'react-i18next'
 import styles from './BlockOrdering.module.css'
 import classNames from 'classnames'
-import { fromLonLat } from 'ol/proj'
 
 interface BlockOrderingProps {
   orderingOpen: boolean
@@ -24,6 +23,29 @@ export default function BlockOrdering({
 }: BlockOrderingProps) {
   const [filterOrderingOpen, setFilterOrderingOpen] = useState<boolean>(false)
   const { t } = useTranslation()
+
+  function handleLocationClick() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
+  }
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+  }
+
+  function error() {
+    console.log('Unable to retrieve your location')
+  }
 
   const currentOrdering = useMemo(() => {
     const ordering = filters.ordering
@@ -176,6 +198,7 @@ export default function BlockOrdering({
               [styles.OrderingItemActive]: filters.ordering === 'distance',
             })}
             onClick={() => {
+              handleLocationClick()
               setFilters({
                 ...filters,
                 ordering: 'distance',

@@ -46,12 +46,14 @@
   line-height: normal;
   margin-bottom: 8px;
   width: 100%;
+  cursor: pointer;
 }
 
 .OrderingItemActive {
   background: var(--primary);
   color: var(--colori-neutri-white);
   width: 100%;
+  cursor: pointer;
 }
 
 .ListOrderingItems{

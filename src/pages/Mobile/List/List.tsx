@@ -144,17 +144,6 @@ export default function List() {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setFiltersDebounced({
-          user_lat: position.coords.latitude,
-          user_lon: position.coords.longitude,
-        })
-      })
-    }
-  }, [])
-
   const areFiltersActive = useMemo(() => {
     if (
       filters.category !== '' ||

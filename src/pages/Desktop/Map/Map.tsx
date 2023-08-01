@@ -200,18 +200,6 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if (navigator.geolocation && !filters.user_lat && !filters.user_lon) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setFilters({
-          ...filters,
-          user_lat: position.coords.latitude,
-          user_lon: position.coords.longitude,
-        })
-      })
-    }
-  }, [])
-
-  useEffect(() => {
     if (!detail) {
       setInfoMarker(null)
     }
