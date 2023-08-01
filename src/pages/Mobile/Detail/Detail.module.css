@@ -341,6 +341,11 @@
   line-height: normal;
   border: none;
   margin-top: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.ButtonShowMonumenti:hover {
+  background: var(--secondary);
 }
 
 .ExternalLinksTitle {
