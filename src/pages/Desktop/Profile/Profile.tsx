@@ -2,28 +2,35 @@ import { useTranslation } from 'react-i18next'
 import Layout from '../../../components/Desktop/Layout'
 import styles from './Profile.module.css'
 import { ReactComponent as World } from '../../../assets/world.svg'
+import { ReactComponent as Worldprimary } from '../../../assets/world-primary.svg'
 import { ReactComponent as LoginIcon } from '../../../assets/login.svg'
 import { ReactComponent as LoginWhite } from '../../../assets/login-white.svg'
 import { ReactComponent as ProfileUser } from '../../../assets/profile-user.svg'
 import { ReactComponent as Logout } from '../../../assets/logout.svg'
 import { ReactComponent as WikiLogoMobile } from '../../../assets/wiki-logo-mobile.svg'
+import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
+import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { useState } from 'react'
-import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
 import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
-// import { useProfileImages } from '../../../hooks/profile'
+import classNames from 'classnames'
 
 export default function Profile() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [isOpenCambiaLingua, setIsOpenCambiaLingua] = useState<boolean>(false)
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
   const { logout } = useAuthActions()
-  //   const { data: profileImages } = useProfileImages('Inmagik')
   return (
     <Layout>
       <div className="w-100 h-100 d-flex justify-content-center position-relative">
-        <div className={styles.ProfileContent}>
+        <div
+          className={styles.ProfileContent}
+          style={{
+            width: isOpenCambiaLingua ? 'max-content' : 532,
+            transition: 'width 0.3s ease-in-out'
+          }}
+        >
           <div
             className={
               user ? styles.ProfileContainerUser : styles.ProfileContainer
@@ -36,7 +43,7 @@ export default function Profile() {
               <button
                 className={styles.ButtonChangeLanguage}
                 onClick={() => {
-                  setIsOpenCambiaLingua(true)
+                  setIsOpenCambiaLingua(!isOpenCambiaLingua)
                 }}
               >
                 <World />
@@ -102,11 +109,56 @@ export default function Profile() {
               </>
             )}
           </div>
+          {isOpenCambiaLingua && (
+            <div className={styles.BlockCambioLingua}>
+              <div className={styles.TitoloCambiaLingua}>
+                <Worldprimary className="me-3" /> {t('cambio_lingua')}
+              </div>
+              <div className={styles.ListOrderingItems}>
+                <div
+                  className={classNames(styles.OrderingItem, {
+                    [styles.OrderingItemActive]: i18n.language === 'it',
+                  })}
+                  onClick={() => {
+                    i18n.changeLanguage('it')
+                  }}
+                >
+                  <div>
+                    {i18n.language === 'it' ? (
+                      <CheckOrderingIcon />
+                    ) : (
+                      <UncheckOrderingIcon />
+                    )}
+                  </div>
+                  <div className={styles.OrderingItemTitle}>
+                    {t('italiano')}
+                  </div>
+                </div>
+                <div
+                  className={classNames(styles.OrderingItem, {
+                    [styles.OrderingItemActive]: i18n.language === 'en',
+                  })}
+                  onClick={() => {
+                    i18n.changeLanguage('en')
+                  }}
+                >
+                  <div>
+                    {i18n.language === 'en' ? (
+                      <CheckOrderingIcon />
+                    ) : (
+                      <UncheckOrderingIcon />
+                    )}
+                  </div>
+                  <div className={styles.OrderingItemTitle}>{t('inglese')}</div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-        <BlockCambiaLingua
+        {/* <BlockCambiaLingua
           isOpenCambiaLingua={isOpenCambiaLingua}
           setIsOpenCambiaLingua={setIsOpenCambiaLingua}
-        />
+        /> */}
       </div>
     </Layout>
   )

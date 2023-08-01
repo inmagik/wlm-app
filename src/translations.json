@@ -82,7 +82,8 @@
             "descrizione_immagine_obbligatoria": "The description of the image is mandatory",
             "titolo_immagine_obbligatorio": "The title of the image is mandatory",
             "date_obblicatoria": "The date is mandatory",
-            "vedi_immagini_caricate": "See uploaded images to Wikimedia commons"
+            "vedi_immagini_caricate": "See uploaded images to Wikimedia commons",
+            "cambio_lingua": "Change language"
         }
     },
     "it": {
@@ -168,7 +169,8 @@
             "titolo_immagine_obbligatorio": "Il titolo dell'immagine è obbligatorio",
             "descrizione_immagine_obbligatoria": "La descrizione dell'immagine è obbligatoria",
             "date_obblicatoria": "La data è obbligatoria",
-            "vedi_immagini_caricate": "Vedi immagini caricate su Wikimedia"
+            "vedi_immagini_caricate": "Vedi immagini caricate su Wikimedia",
+            "cambio_lingua": "Cambio lingua"
         }
     }
 }
