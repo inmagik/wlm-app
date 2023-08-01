@@ -165,11 +165,11 @@
   top: 64px;
   font-size: 30px;
   color: var(--primary);
+  transition: all 0.3s ease-in-out;
 }
 
 .ZoomIn:hover,
 .ZoomOut:hover {
-  transition: all 0.3s ease-in-out;
   background: linear-gradient(
       0deg,
       rgba(0, 0, 0, 0.1) 0%,

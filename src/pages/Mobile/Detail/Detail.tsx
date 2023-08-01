@@ -401,7 +401,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 }}
                 className={styles.ButtonCaricaFoto}
               >
-                {t('carica_foto')}
+                {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
               </button>
             </>
           )}
