@@ -23,6 +23,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMediaQuery } from 'usehooks-ts'
 import NavigationWrapper from './components/Mobile/NavigationWrapper'
 import Auth from './hooks/auth'
+import RedirectLogin from './pages/RedirectLogin'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -60,6 +61,7 @@ function AppRoutes() {
         <Route path="*" element={<SyncLang />} />
       </Routes>
       <Routes location={location}>
+        <Route path="redirect-login" element={<RedirectLogin />} />
         <Route index element={isMobile ? <Map /> : <MapDesktop />} />
         <Route path={':lang/*'} element={<AvailablesLang />}>
           <Route index element={isMobile ? <Map /> : <MapDesktop />} />

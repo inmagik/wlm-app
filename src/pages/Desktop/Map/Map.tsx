@@ -33,6 +33,7 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
+  monument_id: Number(params.get('monument_id')) ?? '',
 })
 
 export interface MarkerProps {
@@ -165,6 +166,10 @@ export default function Map() {
               category = 'Altri monumenti'
             }
             const appCategory = category
+            setFilters({
+              ...filters,
+              monument_id: monument.id,
+            })
             setDetail(monument.id)
             // setMapState({
             //   ...mapState,
@@ -239,6 +244,12 @@ export default function Map() {
       })
     }
   }, [comuneFilterCoords])
+
+  useEffect(() => {
+    if(filters.monument_id) {
+      setDetail(filters.monument_id)
+    }
+  }, [filters.monument_id])
 
   return (
     <Layout>

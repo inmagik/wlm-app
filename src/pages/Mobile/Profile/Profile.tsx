@@ -13,7 +13,7 @@ import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
 
 export default function Profile() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [isOpenCambiaLingua, setIsOpenCambiaLingua] = useState<boolean>(false)
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
@@ -85,6 +85,10 @@ export default function Profile() {
                 <button
                   className={styles.LoginButton}
                   onClick={() => {
+                    localStorage.setItem(
+                      'redirectUrl',
+                      `${i18n.language}/profilo`
+                    )
                     window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                   }}
                 >

@@ -104,7 +104,6 @@ export default function Map() {
 
     const initialMap = new MapOl({
       target: mapElement.current,
-
       layers: [
         new TileLayer({
           source: new OSM(),

@@ -59,6 +59,7 @@ export default function BlockUpload({
   const inputFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    console.log('run effect')
     if (fileList) {
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
@@ -187,28 +188,17 @@ export default function BlockUpload({
                           className={styles.InputTitle}
                           value={uploadState[i].title}
                           onChange={(e) => {
-                            if (i === 0) {
-                              setUploadState(
-                                uploadState.map((image, j) => {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
                                   return {
                                     ...image,
                                     title: e.target.value,
                                   }
-                                })
-                              )
-                            } else {
-                              setUploadState(
-                                uploadState.map((image, j) => {
-                                  if (i === j) {
-                                    return {
-                                      ...image,
-                                      title: e.target.value,
-                                    }
-                                  }
-                                  return image
-                                })
-                              )
-                            }
+                                }
+                                return image
+                              })
+                            )
                           }}
                           placeholder={t('inserisci_titolo')}
                         />
@@ -248,28 +238,17 @@ export default function BlockUpload({
                           required
                           value={uploadState[i].description}
                           onChange={(e) => {
-                            if (i === 0) {
-                              setUploadState(
-                                uploadState.map((image, j) => {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
                                   return {
                                     ...image,
                                     description: e.target.value,
                                   }
-                                })
-                              )
-                            } else {
-                              setUploadState(
-                                uploadState.map((image, j) => {
-                                  if (i === j) {
-                                    return {
-                                      ...image,
-                                      description: e.target.value,
-                                    }
-                                  }
-                                  return image
-                                })
-                              )
-                            }
+                                }
+                                return image
+                              })
+                            )
                           }}
                           placeholder={t('inserisci_descrizione')}
                         />
@@ -308,28 +287,17 @@ export default function BlockUpload({
                           className={styles.InputTitle}
                           value={uploadState[i].date}
                           onChange={(e) => {
-                            if (i === 0) {
-                              setUploadState(
-                                uploadState.map((image, j) => {
+                            setUploadState(
+                              uploadState.map((image, j) => {
+                                if (i === j) {
                                   return {
                                     ...image,
                                     date: e.target.value,
                                   }
-                                })
-                              )
-                            } else {
-                              setUploadState(
-                                uploadState.map((image, j) => {
-                                  if (i === j) {
-                                    return {
-                                      ...image,
-                                      date: e.target.value,
-                                    }
-                                  }
-                                  return image
-                                })
-                              )
-                            }
+                                }
+                                return image
+                              })
+                            )
                           }}
                           placeholder={t('inserisci_titolo')}
                         />

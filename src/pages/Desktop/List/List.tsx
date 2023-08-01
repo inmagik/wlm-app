@@ -29,6 +29,7 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
+  monument_id: Number(params.get('monument_id')) ?? '',
 })
 
 interface Props {
@@ -42,12 +43,15 @@ interface Props {
     user_lat: number
     user_lon: number
     monument_lat: number
+    monument_lon: number
+    monument_id: number
   }
   setDetail: (monument: number) => void
   detail: number | null
+  setFilters: (filters: any) => void
 }
 
-export function ListMonuments({ filters, setDetail, detail }: Props) {
+export function ListMonuments({ filters, setDetail, detail, setFilters }: Props) {
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll
@@ -66,6 +70,12 @@ export function ListMonuments({ filters, setDetail, detail }: Props) {
   } = useInfiniteMomuments(filters)
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if(filters.monument_id) {
+      setDetail(filters.monument_id)
+    }
+  }, [filters.monument_id])
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
@@ -87,6 +97,10 @@ export function ListMonuments({ filters, setDetail, detail }: Props) {
                   })}
                   onClick={() => {
                     setDetail(monument.id)
+                    setFilters({
+                      ...filters,
+                      monument_id: monument.id,
+                    })
                   }}
                 >
                   <div className="d-flex">
@@ -240,6 +254,7 @@ export default function List() {
                   detail={detail}
                   setDetail={setDetail}
                   filters={filters}
+                  setFilters={setFilters}
                 />
               </Suspense>
             </div>

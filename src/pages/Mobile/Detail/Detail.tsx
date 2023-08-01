@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
-import { uploadImages, useMonument } from '../../../hooks/monuments'
+import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
 import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
@@ -11,7 +11,6 @@ import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
-import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-dark.svg'
@@ -48,6 +47,7 @@ import dayjs from 'dayjs'
 import { useMediaQuery } from 'usehooks-ts'
 import { useAuthUser } from 'use-eazy-auth'
 import IconCategory from '../../../components/IconCategory'
+import { API_URL } from '../../../const'
 
 interface Props {
   monumentId?: number
@@ -75,6 +75,7 @@ const getFilters = (params: URLSearchParams) => ({
   map_zoom: Number(params.get('map_zoom')) ?? '',
   map_lat: Number(params.get('map_lat')) ?? '',
   map_lon: Number(params.get('map_lon')) ?? '',
+  monument_id: Number(params.get('monument_id')) ?? '',
 })
 
 function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
@@ -92,7 +93,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [imageUpload, setImageUpload] = useState<FileList | null>(null)
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
-  const { filters } = useQsFilters(getFilters)
+  const { filters, setFilters } = useQsFilters(getFilters)
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
@@ -210,6 +211,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
     }
   }, [monument])
 
+  const { pathname, search } = useLocation()
+
   return (
     <>
       <div
@@ -260,6 +263,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     )
                   }
                 } else {
+                  setFilters({
+                    ...filters,
+                    monument_id: undefined,
+                  })
                   setDetail(null)
                 }
               }}
@@ -270,7 +277,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               if (user) {
                 inputFileRef.current?.click()
               } else {
-                navigate(`/${i18n.language}/profilo`)
+                localStorage.setItem('redirectUrl', pathname + search)
+                window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
               }
             }}
             className={styles.ButtonFixedCaricaFoto}
@@ -396,7 +404,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   if (user) {
                     inputFileRef.current?.click()
                   } else {
-                    navigate(`/${i18n.language}/profilo`)
+                    localStorage.setItem('redirectUrl', pathname + search)
+                    window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                   }
                 }}
                 className={styles.ButtonCaricaFoto}
@@ -628,7 +637,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           <IconCategory
                             appCategory={type.categories__app_category__name}
                           />{' '}
-                          <span className='ms-2'>{type.categories__app_category__name}</span>
+                          <span className="ms-2">
+                            {type.categories__app_category__name}
+                          </span>
                         </div>
                         <div className={styles.MonumentiComuneItemValue}>
                           {type.count}
