@@ -394,9 +394,8 @@ export default function BlockUpload({
                           setUploadState(undefined)
                           setErrorServer(null)
                           setResponseUploadOpen(true)
-                          queryClient.invalidateQueries(
-                            ['monument']
-                          )
+                          queryClient.invalidateQueries(['monument'])
+                          queryClient.invalidateQueries(['monuments'])
                         }
                       })
                       .catch((err) => {
