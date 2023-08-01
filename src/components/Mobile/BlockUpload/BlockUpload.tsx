@@ -12,6 +12,7 @@ import { Monument } from '../../../types'
 import { uploadImages } from '../../../hooks/monuments'
 import dayjs from 'dayjs'
 import { useAuthUser } from 'use-eazy-auth'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -101,6 +102,8 @@ export default function BlockUpload({
   const [errors, setErrors] = useState<any[]>()
   const { token } = useAuthUser()
   const [errorServer, setErrorServer] = useState<string | null>(null)
+
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     setErrorServer(null)
@@ -391,6 +394,8 @@ export default function BlockUpload({
                           setUploadState(undefined)
                           setErrorServer(null)
                           setResponseUploadOpen(true)
+                          queryClient.invalidateQueries(['monument'])
+                          queryClient.invalidateQueries(['monuments'])
                         }
                       })
                       .catch((err) => {

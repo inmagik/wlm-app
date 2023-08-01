@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { Fragment, Suspense, useEffect, useRef, useState } from 'react'
+import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import BlockOrdering from '../../../components/Desktop/BlockOrdering'
 import { ReactComponent as Search } from '../../../assets/search.svg'
@@ -60,6 +60,21 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
     }
   }, [])
 
+  const filtersForMonument = useMemo(() => {
+    return {
+      'search': filters.search,
+      'municipality': filters.municipality,
+      'ordering': filters.ordering,
+      'category': filters.category,
+      'in_contest': filters.in_contest,
+      'only_without_pictures': filters.only_without_pictures,
+      'user_lat': filters.user_lat,
+      'user_lon': filters.user_lon,
+      'monument_lat': filters.monument_lat,
+      'monument_lon': filters.monument_lon,
+    }
+  }, [filters])
+
   const {
     data: infiniteMonuments,
     hasNextPage,
@@ -67,7 +82,7 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
     isLoading,
     isFetching,
     fetchNextPage,
-  } = useInfiniteMomuments(filters)
+  } = useInfiniteMomuments(filtersForMonument)
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
@@ -146,7 +161,7 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
 }
 
 export default function List() {
-  const { filters, setFilters } = useQsFilters(getFilters)
+  const { uiFilters, filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
   const [detail, setDetail] = useState<number | null>(null)
   const [legend, setLegend] = useState(false)
 
@@ -194,9 +209,9 @@ export default function List() {
               <div className="w-100 position-relative">
                 <input
                   onChange={(e) => {
-                    setFilters({ search: e.target.value })
+                    setFiltersDebounced({ search: e.target.value })
                   }}
-                  value={filters.search}
+                  value={uiFilters.search}
                   className={styles.InputSearch}
                   type="text"
                 />
@@ -260,7 +275,7 @@ export default function List() {
             </div>
             <div className={'h-100 position-relative'}>
               {!detail && (
-                <BlockOrdering filters={filters} setFilters={setFilters} />
+                <BlockOrdering filters={uiFilters} setFilters={setFilters} />
               )}
               <button
                 className={classNames({
