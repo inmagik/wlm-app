@@ -101,8 +101,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
   const picturesToUse = useMemo(() => {
     if (monument && monument?.pictures_wlm_count > 0) {
+      console.log('wlm')
       return monument?.pictures.filter((p) => p.image_type === 'wlm')
     } else {
+      console.log('common')
       return monument?.pictures
     }
   }, [monument])
@@ -291,7 +293,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 : t('il_monumento_fa_parte_del_concorso')}
             </div>
           )}
-          {monument && monument?.pictures_wlm_count > 0 ? (
+          {monument && picturesToUse!.length > 0 ? (
             <>
               <Swiper
                 onSwiper={(swiper) => {
