@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Monument } from '../../../types'
 import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
@@ -31,11 +31,6 @@ export default function SlideShow({
   setShowAllImages,
 }: Props) {
   const swiperSlideShowRef = useRef<any>()
-  const picturesById =
-    monument?.pictures.reduce((acc, picture) => {
-      acc[picture.id] = picture
-      return acc
-    }, {} as Record<string, (typeof monument.pictures)[0]>) ?? {}
   const { t } = useTranslation()
   const [infoSlide, setInfoSlide] = useState<boolean>(true)
   const isMobile = useMediaQuery('(max-width: 767px)')
@@ -56,6 +51,14 @@ export default function SlideShow({
     }
   }, [handleCloseSlideShowOnEsc])
 
+  const picturesToUse = useMemo(() => {
+    if(monument && monument.pictures_wlm_count > 0){
+      return monument.pictures.filter((picture) => picture.image_type === 'wlm')
+    } else {
+      return monument.pictures
+    }
+  }, [monument])
+
   return (
     <div className={styles.SlideShow}>
       <Swiper
@@ -69,16 +72,13 @@ export default function SlideShow({
           setSlideShowActive(swiper.activeIndex)
         }}
         onInit={(swiper) => {
-          swiper.slideTo(
-            slideShowActive, 
-            0
-          )
+          swiper.slideTo(slideShowActive, 0)
           setTimeout(() => {
             setInfoSlideSlideShow(true)
           }, 100)
         }}
       >
-        {monument?.pictures.map((picture, i) => (
+        {picturesToUse.map((picture, i) => (
           <SwiperSlide
             onClick={() => {
               setInfoSlide(!infoSlide)
@@ -148,9 +148,9 @@ export default function SlideShow({
         ))}
       </Swiper>
       <div className={styles.CurrentImage}>
-        {slideShowActive + 1} / {monument?.pictures.length}
+        {slideShowActive + 1} / {picturesToUse.length}
       </div>
-      {!isMobile && monument.pictures.length > 1 && (
+      {!isMobile && picturesToUse.length > 1 && (
         <div className={styles.PrevArrow}>
           <ArrowLeftBig
             className={classNames({
@@ -163,19 +163,19 @@ export default function SlideShow({
           />
         </div>
       )}
-      {!isMobile && monument.pictures.length > 1 && (
+      {!isMobile && picturesToUse.length > 1 && (
         <div className={styles.NextArrow}>
           <ArrowRightBig
             className={classNames({
-              pointer: slideShowActive < monument?.pictures.length - 1,
+              pointer: slideShowActive < picturesToUse.length - 1,
             })}
             fill={
-              slideShowActive < monument?.pictures.length - 1
+              slideShowActive < picturesToUse.length - 1
                 ? '#fff'
                 : 'var(--colori-neutri-gray)'
             }
             onClick={() => {
-              if (slideShowActive < monument?.pictures.length - 1)
+              if (slideShowActive < picturesToUse.length - 1)
                 swiperSlideShowRef.current.slideNext()
             }}
           />
