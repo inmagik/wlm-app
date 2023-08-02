@@ -118,6 +118,20 @@ export default function Map() {
       ],
       view: new View(mapState),
     })
+    
+    function setClusterDistance(resolution:number){
+      if(resolution <= 300){
+        clusterSource.setDistance(40)
+      } else {
+        clusterSource.setDistance(0)
+      }
+    }
+    const v = initialMap.getView()
+    setClusterDistance(v.getResolution() || 1000)
+    v.on('change', function () {
+      const resolution = v.getResolution() || 1000
+      setClusterDistance(resolution)
+    })
 
     initialMap.on('click', function (evt) {
       if (

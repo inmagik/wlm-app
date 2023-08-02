@@ -102,9 +102,13 @@ export function getFeatureStyle(feature: any) {
       undefined
     ) ?? ''
 
+    console.log('category', category)
+
     if (category === '') {
       category = 'Altri monumenti'
     }
+    console.log('category', category, properties)
+
     const appCategory = category
     const iconStyle = new Style({
       image: new Icon({

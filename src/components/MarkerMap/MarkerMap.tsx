@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function getMarkerMap({ monument }: Props) {
-  const photosNumber = monument.pictures_wlm_count
+  const photosNumber = monument.pictures_wlm_count ?? 0
   const inContest = monument.in_contest
   const category = monument.app_category
   if (category === 'Castelli') {
