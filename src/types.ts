@@ -90,6 +90,7 @@ export interface Monument {
   wlm_n: string
   relevant_images: string[]
   location: string
+  article: string
 }
 
 export interface Comune {

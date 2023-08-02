@@ -11,6 +11,7 @@ import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
+import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-dark.svg'
@@ -712,21 +713,23 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </a>
-          {/* <a
-            className="no-link"
-            target={'_blank'}
-            rel="noreferrer"
-            href={wikipediaLink}
-          >
-            <div className={styles.ExternalLink}>
-              <div>
-                <Wikipedia className="me-1" />
+          {monument?.article && (
+            <a
+              className="no-link"
+              target={'_blank'}
+              rel="noreferrer"
+              href={monument.article}
+            >
+              <div className={styles.ExternalLink}>
+                <div>
+                  <Wikipedia className="me-1" />
+                </div>
+                <div>
+                  <ArrowRight />
+                </div>
               </div>
-              <div>
-                <ArrowRight />
-              </div>
-            </div>
-          </a> */}
+            </a>
+          )}
         </div>
         <div className={styles.FixedButtonUpload}>
           <button
