@@ -171,14 +171,6 @@ export default function Map() {
               monument_id: monument.id,
             })
             setDetail(monument.id)
-            // setMapState({
-            //   ...mapState,
-            //   center: fromLonLat([
-            //     monument.position.coordinates[0],
-            //     monument.position.coordinates[1],
-            //   ]),
-            //   zoom: initialMap?.getView().getZoom() ?? 14,
-            // })
             initialMap?.getView().animate({
               center: fromLonLat([
                 monument.position.coordinates[0],
@@ -246,7 +238,7 @@ export default function Map() {
   }, [comuneFilterCoords])
 
   useEffect(() => {
-    if(filters.monument_id) {
+    if (filters.monument_id) {
       setDetail(filters.monument_id)
     }
   }, [filters.monument_id])
