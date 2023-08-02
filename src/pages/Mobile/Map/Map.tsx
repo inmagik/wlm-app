@@ -328,8 +328,8 @@ export default function Map() {
                   sessionStorage.setItem(
                     'map_state',
                     JSON.stringify({
-                      center: mapState.center,
-                      zoom: mapState.zoom,
+                      center: map?.getView().getCenter(),
+                      zoom: map?.getView().getZoom(),
                     })
                   )
                   navigate(
