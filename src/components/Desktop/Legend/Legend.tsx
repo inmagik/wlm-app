@@ -8,8 +8,6 @@ import MuseoIcon from '../../Icons/MuseoIcon'
 import { ReactComponent as MonumentoNoFoto } from '../../../assets/monumento-no-foto.svg'
 import { ReactComponent as Monumento1a10 } from '../../../assets/monumento-1a10.svg'
 import { ReactComponent as MonumentoMaggiore10 } from '../../../assets/monumento-maggiore-10.svg'
-import { ReactComponent as MonumentoConcorso } from '../../../assets/monumento-concorso.svg'
-import { ReactComponent as MonumentoNoConcorso } from '../../../assets/monumento-no-concorso.svg'
 import styles from './Legend.module.css'
 
 interface Props {

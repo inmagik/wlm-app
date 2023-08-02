@@ -11,6 +11,7 @@ import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
+import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-dark.svg'
@@ -393,12 +394,22 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </>
           ) : (
             <>
-              <div className={styles.BoxNoImages}>
-                <div>{t('ancora_nessuna_foto')}</div>
-                <div>
-                  <SmileBad className="mt-2" />
+              {monument?.relevant_images &&
+              monument?.relevant_images?.length > 0 ? (
+                <div
+                  className={styles.BlockImageRelevant}
+                  style={{
+                    backgroundImage: `url("${monument.relevant_images[0]}?width=700")`,
+                  }}
+                ></div>
+              ) : (
+                <div className={styles.BoxNoImages}>
+                  <div>{t('ancora_nessuna_foto')}</div>
+                  <div>
+                    <SmileBad className="mt-2" />
+                  </div>
                 </div>
-              </div>
+              )}
               <button
                 onClick={() => {
                   if (user) {
@@ -430,6 +441,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </div>
                       )}
+                    {monument?.location && (
+                      <div className={styles.Comune}>{monument?.location}</div>
+                    )}
                     {monument?.app_category === 'Comune' && (
                       <div className="w-100 d-flex justify-content-between align-items-center">
                         <div className={styles.ComuneVedute}>
@@ -699,21 +713,23 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </a>
-          {/* <a
-            className="no-link"
-            target={'_blank'}
-            rel="noreferrer"
-            href={wikipediaLink}
-          >
-            <div className={styles.ExternalLink}>
-              <div>
-                <Wikipedia className="me-1" />
+          {monument?.article && (
+            <a
+              className="no-link"
+              target={'_blank'}
+              rel="noreferrer"
+              href={monument.article}
+            >
+              <div className={styles.ExternalLink}>
+                <div>
+                  <Wikipedia className="me-1" />
+                </div>
+                <div>
+                  <ArrowRight />
+                </div>
               </div>
-              <div>
-                <ArrowRight />
-              </div>
-            </div>
-          </a> */}
+            </a>
+          )}
         </div>
         <div className={styles.FixedButtonUpload}>
           <button

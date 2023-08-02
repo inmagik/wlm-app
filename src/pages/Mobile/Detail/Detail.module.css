@@ -55,6 +55,16 @@
   cursor: pointer;
 }
 
+.BlockImageRelevant{
+  border-radius: 5px;
+  height: 221px;
+  width: 100%;
+  margin-top: 8px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .CardInfoMonument {
   border-radius: 5px;
   background: var(--colori-neutri-white);
@@ -577,6 +587,16 @@
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
+  }
+
+  .BlockImageRelevant{
+    border-radius: 5px;
+    height: 300px;
+    width: 100%;
+    margin-top: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   .ButtonFixedCaricaFoto {
