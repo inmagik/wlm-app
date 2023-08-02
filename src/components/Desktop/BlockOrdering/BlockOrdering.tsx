@@ -4,6 +4,7 @@ import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-ch
 import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
+import { useEffect, useState } from 'react'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -13,8 +14,28 @@ interface Props {
 export default function BlockOrdering({ setFilters, filters }: Props) {
   const { t } = useTranslation()
 
+  const [geoPermission, setGeoPermission] = useState<string>('prompt')
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        console.log(
+          `geolocation permission status is ${permissionStatus.state}`
+        )
+        setGeoPermission(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+          console.log(
+            `geolocation permission status has changed to ${permissionStatus.state}`
+          )
+          setGeoPermission(permissionStatus.state)
+        }
+      })
+  }, [])
+
   function handleLocationClick() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && geoPermission !== 'denied') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
@@ -108,13 +129,16 @@ export default function BlockOrdering({ setFilters, filters }: Props) {
         <div
           className={classNames(styles.OrderingItem, {
             [styles.OrderingItemActive]: filters.ordering === 'distance',
+            [styles.OrderingItemDisabled]: geoPermission === 'denied',
           })}
           onClick={() => {
-            handleLocationClick()
-            setFilters({
-              ...filters,
-              ordering: 'distance',
-            })
+            if (geoPermission !== 'denied') {
+              handleLocationClick()
+              setFilters({
+                ...filters,
+                ordering: 'distance',
+              })
+            }
           }}
         >
           <div>

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as OrderingPrimaryIcon } from '../../../assets/ordering-primary.svg'
@@ -24,8 +24,28 @@ export default function BlockOrdering({
   const [filterOrderingOpen, setFilterOrderingOpen] = useState<boolean>(false)
   const { t } = useTranslation()
 
+  const [geoPermission, setGeoPermission] = useState<string>('prompt')
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        console.log(
+          `geolocation permission status is ${permissionStatus.state}`
+        )
+        setGeoPermission(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+          console.log(
+            `geolocation permission status has changed to ${permissionStatus.state}`
+          )
+          setGeoPermission(permissionStatus.state)
+        }
+      })
+  }, [])
+
   function handleLocationClick() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && geoPermission !== 'denied') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
@@ -57,7 +77,7 @@ export default function BlockOrdering({
       return t('meno_fotografati')
     } else if (ordering === 'distance') {
       return t('distanza')
-    } 
+    }
   }, [filters.ordering, t])
 
   return (
@@ -172,7 +192,8 @@ export default function BlockOrdering({
           </div>
           <div
             className={classNames(styles.OrderingItem, {
-              [styles.OrderingItemActive]: filters.ordering === 'pictures_wlm_count',
+              [styles.OrderingItemActive]:
+                filters.ordering === 'pictures_wlm_count',
             })}
             onClick={() => {
               setFilters({
@@ -196,14 +217,17 @@ export default function BlockOrdering({
           <div
             className={classNames(styles.OrderingItem, {
               [styles.OrderingItemActive]: filters.ordering === 'distance',
+              [styles.OrderingItemDisabled]: geoPermission === 'denied',
             })}
             onClick={() => {
-              handleLocationClick()
-              setFilters({
-                ...filters,
-                ordering: 'distance',
-              })
-              setFilterOrderingOpen(false)
+              if (geoPermission !== 'denied') {
+                handleLocationClick()
+                setFilters({
+                  ...filters,
+                  ordering: 'distance',
+                })
+                setFilterOrderingOpen(false)
+              }
             }}
           >
             <div>
@@ -213,9 +237,7 @@ export default function BlockOrdering({
                 <UncheckOrderingIcon />
               )}
             </div>
-            <div className={styles.OrderingItemTitle}>
-              {t('distanza')}
-            </div>
+            <div className={styles.OrderingItemTitle}>{t('distanza')}</div>
           </div>
         </div>
       </div>
