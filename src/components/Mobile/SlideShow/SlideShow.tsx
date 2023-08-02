@@ -22,6 +22,11 @@ interface Props {
   setShowAllImages: (showAllImages: boolean) => void
 }
 
+function cleanTitle(title: string) {
+  // removes the string "File:" and the extension from the title
+  return title.replace('File:', '').split('.')[0]
+}
+
 export default function SlideShow({
   monument,
   slideShowActive,
@@ -133,6 +138,8 @@ export default function SlideShow({
                     </div>
                   </div>
                   <div className={styles.License}>{picture.data?.License}</div>
+                  {picture.data?.title && <div className={styles.PictureTitle}>{cleanTitle(picture.data.title)}</div>}
+
                   {picture.data?.ImageDescription && (
                     <div
                       className={styles.Description}

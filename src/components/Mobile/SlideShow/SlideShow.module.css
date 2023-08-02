@@ -84,6 +84,16 @@
   border-right: 2px solid white;
 }
 
+.PictureTitle {
+  color: var(--colori-neutri-white);
+  /* Label */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .DateImage {
   color: var(--colori-neutri-white);
   text-align: center;
