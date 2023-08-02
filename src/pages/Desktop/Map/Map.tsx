@@ -103,8 +103,12 @@ export default function Map() {
   }, [slug])
 
   useEffect(() => {
-    vectorSource.set('filters', filters)
     vectorSource.set('categories', categories)
+    vectorSource.refresh()
+  }, [categories])
+
+  useEffect(() => {
+    vectorSource.set('filters', filters)
     vectorSource.refresh()
   }, [filters])
 
@@ -136,8 +140,8 @@ export default function Map() {
       view: new View(mapState),
     })
 
-    function setClusterDistance(resolution:number){
-      if(resolution <= 300){
+    function setClusterDistance(resolution: number) {
+      if (resolution <= 300) {
         clusterSource.setDistance(40)
       } else {
         clusterSource.setDistance(0)
@@ -223,7 +227,6 @@ export default function Map() {
       setInfoMarker(null)
     }
   }, [detail])
-
 
   // #TODO: fix this?
   useEffect(() => {

@@ -79,6 +79,7 @@ const clusterScale = scaleLinear().domain([9, 45, 46]).range([14, 24, 24])
 
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
+  console.log(feature, vectorSource.get('categories'))
   const info = getFeatureInfo(feature)
   const categories:CategoryDomain[] = vectorSource.get('categories')
   if (info === 1) {
