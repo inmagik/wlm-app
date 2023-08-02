@@ -122,7 +122,7 @@ export default function MapContainer({
             <div
               style={{
                 position: 'absolute',
-                top: coords[1] - 60,
+                top: coords[1] - 94,
                 left: coords[0] - 80,
                 opacity: coords ? 1 : 0,
                 zIndex: 1,

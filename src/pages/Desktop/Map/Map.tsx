@@ -155,61 +155,64 @@ export default function Map() {
     })
 
     initialMap.on('click', function (evt) {
-      if (
-        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
-          const info = getFeatureInfo(feature)
-          if (info === 1) {
-            const monument = feature.getProperties().features[0].getProperties()
-            const categoriesFeature = feature
-              .getProperties()
-              .features[0].getProperties().categories
-            let category = ''
-            const categoryLookup = {} as Record<number, string>
-            forEach(
-              categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
-              ({ name, categories: ids }) => {
-                ids.forEach((id: number) => {
-                  categoryLookup[id] = name
-                })
-              }
-            )
-
-            category =
-              categoriesFeature.reduce(
-                (acc: string, id: number) => acc ?? categoryLookup[id],
-                undefined
-              ) ?? ''
-
-            if (category === '') {
-              category = 'Altri monumenti'
+      let shouldCloseMarker = true
+      initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        const info = getFeatureInfo(feature)
+        
+        if (info === 1) {
+          const monument = feature.getProperties().features[0].getProperties()
+          const categoriesFeature = feature
+            .getProperties()
+            .features[0].getProperties().categories
+          let category = ''
+          const categoryLookup = {} as Record<number, string>
+          forEach(
+            categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
+            ({ name, categories: ids }) => {
+              ids.forEach((id: number) => {
+                categoryLookup[id] = name
+              })
             }
-            const appCategory = category
-            setFilters({
-              ...filters,
-              monument_id: monument.id,
-            })
-            setDetail(monument.id)
-            initialMap?.getView().animate({
-              center: fromLonLat([
-                monument.position.coordinates[0],
-                monument.position.coordinates[1],
-              ]),
-              zoom: initialMap?.getView().getZoom() ?? 14,
-              duration: 500,
-            })
-            setInfoMarker({
-              id: monument.id,
-              label: monument.label,
-              pictures_wlm_count: monument.pictures_wlm_count,
-              coords: evt.pixel,
-              app_category: appCategory,
-              in_contest: monument.in_contest,
-              feature: feature,
-            })
+          )
+
+          category =
+            categoriesFeature.reduce(
+              (acc: string, id: number) => acc ?? categoryLookup[id],
+              undefined
+            ) ?? ''
+
+          if (category === '') {
+            category = 'Altri monumenti'
           }
-        })
-      ) {
-        console.log('boo')
+          const appCategory = category
+          setFilters({
+            ...filters,
+            monument_id: monument.id,
+          })
+          setDetail(monument.id)
+          initialMap?.getView().animate({
+            center: fromLonLat([
+              monument.position.coordinates[0],
+              monument.position.coordinates[1],
+            ]),
+            zoom: initialMap?.getView().getZoom() ?? 14,
+            duration: 500,
+          })
+          setInfoMarker({
+            id: monument.id,
+            label: monument.label,
+            pictures_wlm_count: monument.pictures_wlm_count,
+            coords: evt.pixel,
+            app_category: appCategory,
+            in_contest: monument.in_contest,
+            feature: feature,
+          })
+          shouldCloseMarker = false 
+        }
+      })
+      if(shouldCloseMarker) {
+      setInfoMarker(null)
+      // setDetail(null)
       }
     })
 
@@ -229,12 +232,12 @@ export default function Map() {
   }, [detail])
 
   // #TODO: fix this?
-  useEffect(() => {
-    map?.getView().on('change:resolution', (event) => {
-      setInfoMarker(null)
-      setDetail(null)
-    })
-  }, [map])
+  // useEffect(() => {
+  //   map?.getView().on('change:resolution', (event) => {
+  //     setInfoMarker(null)
+  //     setDetail(null)
+  //   })
+  // }, [map])
 
   useEffect(() => {
     if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
