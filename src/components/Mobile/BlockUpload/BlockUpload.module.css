@@ -124,6 +124,34 @@
   transition: all 0.3s ease-in-out;
 }
 
+.ButtonUploadErrors {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  border-radius: 5px;
+  background: var(--tertiary);
+  /* Shade Button Blu */
+  box-shadow: 1px 1px 0px 0px var(--tertiary);
+  border: none;
+  margin-left: 8px;
+  color: var(--colori-neutri-white);
+  text-align: center;
+  /* CTA */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.3s ease-in-out;
+}
+
+.ButtonUploadErrors:hover {
+  background: var(--tertiary);
+  opacity: 0.8;
+}
+
 .ButtonUpload:hover {
   background: var(--primary);
 }
@@ -240,6 +268,28 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+.ErrorBlock {
+  background-color: var(--tertiary);
+  color: var(--colori-neutri-white);
+  padding: 16px 24px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.SuccessBlock {
+  background-color: var(--success);
+  color: var(--colori-neutri-white);
+  padding: 16px 24px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
 }
 
 @media screen and (min-width: 768px) {
