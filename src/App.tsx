@@ -61,11 +61,12 @@ function AppRoutes() {
         <Route path="*" element={<SyncLang />} />
       </Routes>
       <Routes location={location}>
-        <Route path="redirect-login" element={<RedirectLogin />} />
+        
         <Route index element={isMobile ? <Map /> : <MapDesktop />} />
         <Route path={':lang/*'} element={<AvailablesLang />}>
           <Route index element={isMobile ? <Map /> : <MapDesktop />} />
           <Route path="lista" element={isMobile ? <List /> : <ListDesktop />} />
+          <Route path="redirect-login" element={<RedirectLogin />} />
           <Route
             path="lista/:slug"
             element={

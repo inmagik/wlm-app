@@ -35,10 +35,9 @@ export function PersonalImages({ rows, cols }: { rows: number; cols: number }) {
           gridTemplateRows: `repeat(${rows}, 1fr)`,
         }}
       >
-        {images.map((image) => {
-          console.log(image)
+        {images.map((image, i) => {
           return (
-            <div>
+            <div key={i}>
               {!image.fake && (
                 <img
                   src={image.imageinfo[0].url}
