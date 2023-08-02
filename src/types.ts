@@ -89,6 +89,7 @@ export interface Monument {
   counts_comune_by_app_category: CountByCategory[]
   wlm_n: string
   relevant_images: string[]
+  location: string
 }
 
 export interface Comune {
