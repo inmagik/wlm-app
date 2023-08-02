@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -230,14 +230,6 @@ export default function Map() {
       setInfoMarker(null)
     }
   }, [detail])
-
-  // #TODO: fix this?
-  // useEffect(() => {
-  //   map?.getView().on('change:resolution', (event) => {
-  //     setInfoMarker(null)
-  //     setDetail(null)
-  //   })
-  // }, [map])
 
   useEffect(() => {
     if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {

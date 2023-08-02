@@ -13,6 +13,7 @@ import {
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
+import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
 import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
@@ -31,7 +32,10 @@ import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import { Zoom } from 'ol/control'
 import { Spinner } from 'react-bootstrap'
-import {defaults} from 'ol/interaction/defaults';
+import { defaults } from 'ol/interaction/defaults'
+import IconMonument from '../../../components/IconMonument'
+import { MarkerProps } from '../../Desktop/Map/Map'
+import { forEach } from 'lodash'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -57,6 +61,7 @@ export default function Map() {
   const [comuneFilterCoords, setComuneFilterCoords] = useState<number[] | null>(
     null
   )
+  const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
 
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
@@ -103,8 +108,10 @@ export default function Map() {
       style: getFeatureStyle,
     })
 
-    const interactions = defaults({altShiftDragRotate:false, pinchRotate:false}); 
-
+    const interactions = defaults({
+      altShiftDragRotate: false,
+      pinchRotate: false,
+    })
 
     const initialMap = new MapOl({
       target: mapElement.current,
@@ -123,9 +130,9 @@ export default function Map() {
       ],
       view: new View(mapState),
     })
-    
-    function setClusterDistance(resolution:number){
-      if(resolution <= 300){
+
+    function setClusterDistance(resolution: number) {
+      if (resolution <= 300) {
         clusterSource.setDistance(40)
       } else {
         clusterSource.setDistance(0)
@@ -139,29 +146,62 @@ export default function Map() {
     })
 
     initialMap.on('click', function (evt) {
-      if (
-        initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
-          const info = getFeatureInfo(feature)
-          if (info === 1) {
-            const monument = feature.getProperties().features[0].getProperties()
-            const id = monument.id
-            const label = monument.label
-            sessionStorage.setItem(
-              'map_state',
-              JSON.stringify({
-                center: initialMap.getView().getCenter(),
-                zoom: initialMap.getView().getZoom(),
+      let shouldCloseMarker = true
+      initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        const info = getFeatureInfo(feature)
+
+        if (info === 1) {
+          const monument = feature.getProperties().features[0].getProperties()
+          const categoriesFeature = feature
+            .getProperties()
+            .features[0].getProperties().categories
+          let category = ''
+          const categoryLookup = {} as Record<number, string>
+          forEach(
+            categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
+            ({ name, categories: ids }) => {
+              ids.forEach((id: number) => {
+                categoryLookup[id] = name
               })
-            )
-            navigate(
-              `/${i18n.language}/mappa/${smartSlug(id, label)})}?map_lon=${
-                mapState.center[0]
-              }&map_lat=${mapState.center[1]}&map_zoom=${mapState.zoom}`
-            )
+            }
+          )
+
+          category =
+            categoriesFeature.reduce(
+              (acc: string, id: number) => acc ?? categoryLookup[id],
+              undefined
+            ) ?? ''
+
+          if (category === '') {
+            category = 'Altri monumenti'
           }
-        })
-      ) {
-        console.log('boo')
+          const appCategory = category
+          setFilters({
+            ...filters,
+          })
+          initialMap?.getView().animate({
+            center: fromLonLat([
+              monument.position.coordinates[0],
+              monument.position.coordinates[1],
+            ]),
+            zoom: initialMap?.getView().getZoom() ?? 14,
+            duration: 500,
+          })
+          setInfoMarker({
+            id: monument.id,
+            label: monument.label,
+            pictures_wlm_count: monument.pictures_wlm_count,
+            coords: evt.pixel,
+            app_category: appCategory,
+            in_contest: monument.in_contest,
+            feature: feature,
+          })
+          shouldCloseMarker = false
+        }
+      })
+      if (shouldCloseMarker) {
+        setInfoMarker(null)
+        // setDetail(null)
       }
     })
 
@@ -210,14 +250,37 @@ export default function Map() {
 
   useEffect(() => {
     if (
-      sessionStorage.getItem('map_state') && 
-      !filters.monument_lat && 
-      !filters.monument_lon 
+      sessionStorage.getItem('map_state') &&
+      !filters.monument_lat &&
+      !filters.monument_lon
     ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       setMapState(mapState)
+      sessionStorage.removeItem('map_state')
     }
   }, [])
+
+  const [coords, setCoords] = useState<number[] | null>(null)
+
+  const refreshCoordinates = useCallback(() => {
+    if (infoMarker && map) {
+      const coordinates = infoMarker.feature.getGeometry().getCoordinates()
+      const pixel = map?.getPixelFromCoordinate(coordinates)
+      setCoords(pixel)
+    }
+  }, [infoMarker, map])
+
+  useEffect(() => {
+    refreshCoordinates()
+  }, [infoMarker])
+
+  useEffect(() => {
+    map && map.on('rendercomplete', refreshCoordinates)
+
+    return () => {
+      map && map.un('rendercomplete', refreshCoordinates)
+    }
+  }, [map, refreshCoordinates])
 
   return (
     <Layout>
@@ -256,6 +319,76 @@ export default function Map() {
               size="sm"
             />
           </div>
+        )}
+        {infoMarker && coords && (
+          <>
+            <div
+              onClick={(e) => {
+                if (infoMarker) {
+                  sessionStorage.setItem(
+                    'map_state',
+                    JSON.stringify({
+                      center: mapState.center,
+                      zoom: mapState.zoom,
+                    })
+                  )
+                  navigate(
+                    `/${i18n.language}/mappa/${smartSlug(
+                      infoMarker.id,
+                      infoMarker.label
+                    )})}?map_lon=${mapState.center[0]}&map_lat=${
+                      mapState.center[1]
+                    }&map_zoom=${mapState.zoom}`
+                  )
+                }
+              }}
+              style={{
+                position: 'absolute',
+                top: coords[1] - 94,
+                left: coords[0] - 80,
+                opacity: coords ? 1 : 0,
+                zIndex: 1,
+                backgroundColor:
+                  infoMarker.pictures_wlm_count === 0
+                    ? 'var(--tertiary)'
+                    : infoMarker.pictures_wlm_count > 0 &&
+                      infoMarker.pictures_wlm_count <= 10
+                    ? 'var(--monumento-poche-foto)'
+                    : 'var(--monumento-tante-foto)',
+              }}
+              className={styles.DetailMarker}
+            >
+              <div>
+                <IconMonument
+                  monument={{
+                    in_contest: infoMarker.in_contest,
+                    pictures_wlm_count: infoMarker.pictures_wlm_count,
+                    app_category: infoMarker.app_category,
+                  }}
+                />
+              </div>
+              <div className={styles.TitleMarker}>{infoMarker.label}</div>
+              <div className={styles.TextMarker}>
+                <div>
+                  <CameraTransparent />
+                </div>
+                <div className="ms-2 mt-1">{infoMarker.pictures_wlm_count}</div>
+              </div>
+              <div
+                className={styles.PinMarker}
+                style={{
+                  borderTop:
+                    '10px solid ' +
+                    (infoMarker.pictures_wlm_count === 0
+                      ? 'var(--tertiary)'
+                      : infoMarker.pictures_wlm_count > 0 &&
+                        infoMarker.pictures_wlm_count <= 10
+                      ? 'var(--monumento-poche-foto)'
+                      : 'var(--monumento-tante-foto)'),
+                }}
+              ></div>
+            </div>
+          </>
         )}
       </div>
 

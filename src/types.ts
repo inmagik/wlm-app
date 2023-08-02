@@ -23,7 +23,7 @@ export interface Picture {
   image_title: string
   image_url: string
   relevant_image: boolean
-  wlm_image: boolean
+  image_type: string
   data?: PictureData
 }
 

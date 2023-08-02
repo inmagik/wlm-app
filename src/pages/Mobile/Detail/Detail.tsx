@@ -11,7 +11,7 @@ import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
 import { ReactComponent as ArrowRight } from '../../../assets/arrow-right.svg'
 import { ReactComponent as Wikidata } from '../../../assets/wikidata.svg'
-import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
+import { ReactComponent as Wikipedia } from '../../../assets/wikipedia.svg'
 import { ReactComponent as NoCoordinates } from '../../../assets/no-coordinates.svg'
 import { ReactComponent as InfoVedute } from '../../../assets/info-vedute.svg'
 import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-dark.svg'
@@ -296,7 +296,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 : t('il_monumento_fa_parte_del_concorso')}
             </div>
           )}
-          {monument && monument?.pictures.length > 0 ? (
+          {monument && monument?.pictures_wlm_count > 0 ? (
             <>
               <Swiper
                 onSwiper={(swiper) => {
@@ -308,53 +308,57 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 spaceBetween={10}
                 className={styles.Swiper}
               >
-                {monument?.pictures.map((picture, k) => (
-                  <SwiperSlide
-                    onClick={() => {
-                      setShowAllImages(true)
-                      setSlideShowActive(k)
-                    }}
-                    key={k}
-                  >
-                    <div
-                      className={styles.BlockImage}
-                      style={{
-                        backgroundImage: `url("${picture.image_url}?width=700")`,
+                {monument?.pictures
+                  .filter((p) => p.image_type === 'wlm')
+                  .map((picture, k) => (
+                    <SwiperSlide
+                      onClick={() => {
+                        setShowAllImages(true)
+                        setSlideShowActive(k)
                       }}
+                      key={k}
                     >
-                      <div className={styles.BlockImageOverlay}>
-                        <div className="d-flex align-items-center">
-                          <div className={styles.BlockImageOverlayText}>
-                            {picture.data?.Artist && (
-                              <div
-                                className={styles.BlockImageOverlayTextArtist}
-                                dangerouslySetInnerHTML={{
-                                  __html: picture.data?.Artist,
-                                }}
-                              ></div>
-                            )}
+                      <div
+                        className={styles.BlockImage}
+                        style={{
+                          backgroundImage: `url("${picture.image_url}?width=700")`,
+                        }}
+                      >
+                        <div className={styles.BlockImageOverlay}>
+                          <div className="d-flex align-items-center">
+                            <div className={styles.BlockImageOverlayText}>
+                              {picture.data?.Artist && (
+                                <div
+                                  className={styles.BlockImageOverlayTextArtist}
+                                  dangerouslySetInnerHTML={{
+                                    __html: picture.data?.Artist,
+                                  }}
+                                ></div>
+                              )}
+                            </div>
+                            <div>
+                              {picture.data?.DateTime && (
+                                <div
+                                  className={styles.BlockImageOverlayTextDate}
+                                >
+                                  {dayjs(picture.data?.DateTime).format(
+                                    'DD/MM/YYYY'
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                          <div>
-                            {picture.data?.DateTime && (
-                              <div className={styles.BlockImageOverlayTextDate}>
-                                {dayjs(picture.data?.DateTime).format(
-                                  'DD/MM/YYYY'
-                                )}
-                              </div>
-                            )}
-                          </div>
+                          {picture.data?.License && (
+                            <div className={styles.CreditsImage}>
+                              {picture.data?.License}
+                            </div>
+                          )}
                         </div>
-                        {picture.data?.License && (
-                          <div className={styles.CreditsImage}>
-                            {picture.data?.License}
-                          </div>
-                        )}
                       </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
+                    </SwiperSlide>
+                  ))}
               </Swiper>
-              {monument.pictures.length > 1 && (
+              {monument.pictures_wlm_count > 1 && (
                 <div className={styles.PaginationContainer}>
                   <ArrowLeftSlideShow
                     onClick={() => {
@@ -372,19 +376,19 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     }
                   />
                   <div className={styles.CurrentSlide}>
-                    {slideActive + 1} / {monument?.pictures.length}
+                    {slideActive + 1} / {monument?.pictures_wlm_count}
                   </div>
                   <ArrowRightSlideShow
                     onClick={() => {
-                      if (slideActive < monument?.pictures.length - 1) {
+                      if (slideActive < monument?.pictures_wlm_count - 1) {
                         swiperRef.current?.slideNext()
                       }
                     }}
                     className={classNames('ms-3', {
-                      pointer: slideActive < monument?.pictures.length - 1,
+                      pointer: slideActive < monument?.pictures_wlm_count - 1,
                     })}
                     fill={
-                      slideActive < monument?.pictures.length - 1
+                      slideActive < monument?.pictures_wlm_count - 1
                         ? 'var(--primary)'
                         : 'var(--colori-neutri-gray-2)'
                     }
@@ -394,14 +398,40 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </>
           ) : (
             <>
-              {monument?.relevant_images &&
-              monument?.relevant_images?.length > 0 ? (
+              {monument?.pictures && monument?.pictures?.length > 0 ? (
                 <div
                   className={styles.BlockImageRelevant}
                   style={{
-                    backgroundImage: `url("${monument.relevant_images[0]}?width=700")`,
+                    backgroundImage: `url("${monument.pictures[0].image_url}?width=700")`,
                   }}
-                ></div>
+                >
+                  <div className={styles.BlockImageOverlay}>
+                    <div className="d-flex align-items-center">
+                      <div className={styles.BlockImageOverlayText}>
+                        {monument.pictures[0].data?.Artist && (
+                          <div
+                            className={styles.BlockImageOverlayTextArtist}
+                            dangerouslySetInnerHTML={{
+                              __html: monument.pictures[0].data?.Artist,
+                            }}
+                          ></div>
+                        )}
+                      </div>
+                      <div>
+                        {monument.pictures[0].data?.DateTime && (
+                          <div className={styles.BlockImageOverlayTextDate}>
+                            {dayjs(monument.pictures[0].data?.DateTime).format('DD/MM/YYYY')}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {monument.pictures[0].data?.License && (
+                      <div className={styles.CreditsImage}>
+                        {monument.pictures[0].data?.License}
+                      </div>
+                    )}
+                  </div>
+                </div>
               ) : (
                 <div className={styles.BoxNoImages}>
                   <div>{t('ancora_nessuna_foto')}</div>
@@ -748,7 +778,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             ref={inputFileRef}
             multiple
             onChange={(e) => {
-              console.log(e)
               if (e.target.files && e.target.files?.length > 0) {
                 setImageUpload(e.target.files)
                 setShowModalUpload(true)
