@@ -35,6 +35,8 @@ export const vectorSource = new Vector({
 
     const xhr = new XMLHttpRequest()
     setLoading(true)
+    vectorSource.set('currentUrl', url)
+    
     xhr.open('GET', url)
     const onError = function () {
       setLoading(false)
@@ -43,13 +45,20 @@ export const vectorSource = new Vector({
     xhr.onerror = onError
     xhr.onload = function () {
       setLoading(false)
-      if (xhr.status == 200) {
+      if (xhr.status == 200 ) {
         const features = format.readFeatures(xhr.responseText)
-        vectorSource.clear()
-        vectorSource.addFeatures(features)
-        success && success(features)
+        if(xhr.responseURL === vectorSource.get('currentUrl')) {
+          vectorSource.clear()
+          vectorSource.addFeatures(features)
+          success && success(features)
+          vectorSource.set('currentUrl', undefined)
+        }
+        
       } else {
         onError()
+        if(xhr.responseURL === vectorSource.get('currentUrl')) {
+          vectorSource.set('currentUrl', undefined)
+        }
         console.error('error loading json', xhr.status, xhr.statusText)
       }
     }

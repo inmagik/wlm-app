@@ -31,6 +31,7 @@ import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import { Zoom } from 'ol/control'
 import { Spinner } from 'react-bootstrap'
+import {defaults} from 'ol/interaction/defaults';
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -102,6 +103,9 @@ export default function Map() {
       style: getFeatureStyle,
     })
 
+    const interactions = defaults({altShiftDragRotate:false, pinchRotate:false}); 
+
+
     const initialMap = new MapOl({
       target: mapElement.current,
       layers: [
@@ -110,6 +114,7 @@ export default function Map() {
         }),
         featureOverlay,
       ],
+      interactions: interactions,
       controls: [
         new Zoom({
           zoomInClassName: styles.ZoomIn,
