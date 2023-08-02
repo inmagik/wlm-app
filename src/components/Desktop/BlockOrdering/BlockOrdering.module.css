@@ -56,6 +56,12 @@
   cursor: pointer;
 }
 
+.OrderingItemDisabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .ListOrderingItems{
     width: 100%;
 }
+

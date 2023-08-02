@@ -92,6 +92,26 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
     }
   }, [filters.monument_id])
 
+  const [geoPermission, setGeoPermission] = useState<string>('prompt')
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        console.log(
+          `geolocation permission status is ${permissionStatus.state}`
+        )
+        setGeoPermission(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+          console.log(
+            `geolocation permission status has changed to ${permissionStatus.state}`
+          )
+          setGeoPermission(permissionStatus.state)
+        }
+      })
+  }, [])
+
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {isFetching && !isFetchingNextPage ? (
@@ -136,7 +156,7 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
                       <div>{monument.pictures_wlm_count}</div>
                       <Camera className="ms-2" />
                     </div>
-                    {monument.distance && navigator.geolocation && (
+                    {monument.distance && geoPermission === 'granted' && (
                       <div className={styles.Distance}>
                         {monument.distance.toFixed(1)} Km
                       </div>

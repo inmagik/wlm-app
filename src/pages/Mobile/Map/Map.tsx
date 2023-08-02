@@ -70,8 +70,28 @@ export default function Map() {
     minZoom: 5,
   })
 
+  const [geoPermission, setGeoPermission] = useState<string>('prompt')
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        console.log(
+          `geolocation permission status is ${permissionStatus.state}`
+        )
+        setGeoPermission(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+          console.log(
+            `geolocation permission status has changed to ${permissionStatus.state}`
+          )
+          setGeoPermission(permissionStatus.state)
+        }
+      })
+  }, [])
+
   function handleLocationClick() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && geoPermission !== 'denied') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')

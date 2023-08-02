@@ -166,3 +166,10 @@
   background: var(--primary);
   color: var(--colori-neutri-white);
 }
+
+.OrderingItemDisabled {
+  /* background: var(--primary);
+  color: var(--colori-neutri-white); */
+  opacity: 0.4;
+  cursor: not-allowed;
+}

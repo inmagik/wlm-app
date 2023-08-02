@@ -36,7 +36,7 @@ export const vectorSource = new Vector({
     const xhr = new XMLHttpRequest()
     setLoading(true)
     vectorSource.set('currentUrl', url)
-    
+
     xhr.open('GET', url)
     const onError = function () {
       setLoading(false)
@@ -45,18 +45,17 @@ export const vectorSource = new Vector({
     xhr.onerror = onError
     xhr.onload = function () {
       setLoading(false)
-      if (xhr.status == 200 ) {
+      if (xhr.status == 200) {
         const features = format.readFeatures(xhr.responseText)
-        if(xhr.responseURL === vectorSource.get('currentUrl')) {
+        if (xhr.responseURL === vectorSource.get('currentUrl')) {
           vectorSource.clear()
           vectorSource.addFeatures(features)
           success && success(features)
           vectorSource.set('currentUrl', undefined)
         }
-        
       } else {
         onError()
-        if(xhr.responseURL === vectorSource.get('currentUrl')) {
+        if (xhr.responseURL === vectorSource.get('currentUrl')) {
           vectorSource.set('currentUrl', undefined)
         }
         console.error('error loading json', xhr.status, xhr.statusText)
@@ -88,9 +87,8 @@ const clusterScale = scaleLinear().domain([9, 45, 46]).range([14, 24, 24])
 
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
-  console.log(feature, vectorSource.get('categories'))
   const info = getFeatureInfo(feature)
-  const categories:CategoryDomain[] = vectorSource.get('categories')
+  const categories: CategoryDomain[] = vectorSource.get('categories')
   if (info === 1) {
     const properties = feature.getProperties().features[0].getProperties()
     const categoriesFeature = feature
@@ -107,17 +105,15 @@ export function getFeatureStyle(feature: any) {
       }
     )
 
-    category = categoriesFeature.reduce(
-      (acc: string, id: number) => acc ?? categoryLookup[id],
-      undefined
-    ) ?? ''
-
-    console.log('category', category)
+    category =
+      categoriesFeature.reduce(
+        (acc: string, id: number) => acc ?? categoryLookup[id],
+        undefined
+      ) ?? ''
 
     if (category === '') {
       category = 'Altri monumenti'
     }
-    console.log('category', category, properties)
 
     const appCategory = category
     const iconStyle = new Style({

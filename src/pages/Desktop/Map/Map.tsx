@@ -1,4 +1,10 @@
-import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -66,8 +72,28 @@ export default function Map() {
     minZoom: 5,
   })
 
+  const [geoPermission, setGeoPermission] = useState<string>('prompt')
+
+  useEffect(() => {
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((permissionStatus) => {
+        console.log(
+          `geolocation permission status is ${permissionStatus.state}`
+        )
+        setGeoPermission(permissionStatus.state)
+
+        permissionStatus.onchange = () => {
+          console.log(
+            `geolocation permission status has changed to ${permissionStatus.state}`
+          )
+          setGeoPermission(permissionStatus.state)
+        }
+      })
+  }, [])
+
   function handleLocationClick() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && geoPermission !== 'denied') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
@@ -158,7 +184,7 @@ export default function Map() {
       let shouldCloseMarker = true
       initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
         const info = getFeatureInfo(feature)
-        
+
         if (info === 1) {
           const monument = feature.getProperties().features[0].getProperties()
           const categoriesFeature = feature
@@ -207,12 +233,12 @@ export default function Map() {
             in_contest: monument.in_contest,
             feature: feature,
           })
-          shouldCloseMarker = false 
+          shouldCloseMarker = false
         }
       })
-      if(shouldCloseMarker) {
-      setInfoMarker(null)
-      // setDetail(null)
+      if (shouldCloseMarker) {
+        setInfoMarker(null)
+        // setDetail(null)
       }
     })
 
