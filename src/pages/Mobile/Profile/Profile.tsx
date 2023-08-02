@@ -11,6 +11,7 @@ import { useState } from 'react'
 import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
 import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
+import { PersonalImages } from '../../../components/PersonalImages'
 
 export default function Profile() {
   const { t, i18n } = useTranslation()
@@ -63,6 +64,7 @@ export default function Profile() {
               </div>
               {username && (
                 <div className="mt-3">
+                  <PersonalImages rows={3} cols={4} />
                   <a
                     href={`${URL_WIKI}/Special:ListFiles/${username.replace(
                       ' ',
