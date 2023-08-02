@@ -393,12 +393,22 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </>
           ) : (
             <>
-              <div className={styles.BoxNoImages}>
-                <div>{t('ancora_nessuna_foto')}</div>
-                <div>
-                  <SmileBad className="mt-2" />
+              {monument?.relevant_images &&
+              monument?.relevant_images?.length > 0 ? (
+                <div
+                  className={styles.BlockImageRelevant}
+                  style={{
+                    backgroundImage: `url("${monument.relevant_images[0]}?width=700")`,
+                  }}
+                ></div>
+              ) : (
+                <div className={styles.BoxNoImages}>
+                  <div>{t('ancora_nessuna_foto')}</div>
+                  <div>
+                    <SmileBad className="mt-2" />
+                  </div>
                 </div>
-              </div>
+              )}
               <button
                 onClick={() => {
                   if (user) {
