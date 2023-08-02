@@ -140,7 +140,7 @@ const getFilters = (params: URLSearchParams) => ({
 })
 
 export default function List() {
-  const { filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
+  const { filters, setFilters, setFiltersDebounced, uiFilters } = useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
@@ -164,9 +164,9 @@ export default function List() {
         <div className={styles.InputContainer}>
           <input
             className={styles.InputSearch}
-            value={filters.search}
+            value={uiFilters.search}
             onChange={(e) => {
-              setFilters({ search: e.target.value })
+              setFiltersDebounced({ search: e.target.value })
             }}
           />
           <div className={styles.SearchIcon}>
