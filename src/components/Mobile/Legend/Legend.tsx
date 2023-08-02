@@ -89,15 +89,17 @@ export default function Legend({ legend, setLegend }: Props) {
           </span>
         </div>
       </div>
-      <div className={`${styles.CardMinorPadding} mt-2`}>
+      <div className={`${styles.CardMinorPadding} mt-2`} style={{
+        background: 'var(--colori-neutri-gray-2)'
+      }}>
         <div className={styles.ItemCard}>
-          <MonumentoConcorso />
+          <img width={22} src="/in-concorso.png" alt="monumento-concorso" />
           <span className={styles.NameItem}>
             {t('il_monumento_e_in_concorso')}
           </span>
         </div>
         <div className={styles.ItemCardLast}>
-          <MonumentoNoConcorso />
+          <img width={22} src="/non-in-concorso.png" alt="monumento-concorso" />
           <span className={styles.NameItem}>
             {t('il_monumento_non_e_in_concorso')}
           </span>
