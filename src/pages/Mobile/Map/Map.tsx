@@ -319,9 +319,9 @@ export default function Map() {
             {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
           </button>
           <div className={styles.ContainerButtons}>
-            <div className={styles.ButtonMappe}>
+            {/* <div className={styles.ButtonMappe}>
               <Mappe />
-            </div>
+            </div> */}
             <div
               className={styles.ButtonMyLocation}
               onClick={handleLocationClick}

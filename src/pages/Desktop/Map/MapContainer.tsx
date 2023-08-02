@@ -99,9 +99,9 @@ export default function MapContainer({
           </div>
         )}
         <div className={styles.ContainerButtons}>
-          <button className={styles.ButtonMappe}>
+          {/* <button className={styles.ButtonMappe}>
             <Mappe />
-          </button>
+          </button> */}
           <button
             className={styles.ButtonMyLocation}
             onClick={handleLocationClick}
