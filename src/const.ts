@@ -7,4 +7,4 @@ export const API_URL_SECOND = import.meta.env.PROD
   ? 'https://wlm.inmagik.com/api'
   : 'http://localhost:8000/api'
 
-export const URL_WIKI = 'http://wlm.inmagik.com:8080/index.php'
+export const URL_WIKI = 'https://wikitest.inmagik.com/index.php'
