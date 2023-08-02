@@ -13,6 +13,7 @@ import { uploadImages } from '../../../hooks/monuments'
 import dayjs from 'dayjs'
 import { useAuthUser } from 'use-eazy-auth'
 import { useQueryClient } from '@tanstack/react-query'
+import { Spinner } from 'react-bootstrap'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -77,7 +78,6 @@ export default function BlockUpload({
   const inputFileRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    console.log('run effect')
     if (fileList) {
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
@@ -102,6 +102,8 @@ export default function BlockUpload({
   const [errors, setErrors] = useState<any[]>()
   const { token } = useAuthUser()
   const [errorServer, setErrorServer] = useState<string | null>(null)
+  const [mappedErrors, setMappedErrors] = useState<any[] | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const queryClient = useQueryClient()
 
@@ -124,6 +126,8 @@ export default function BlockUpload({
             setFileList(null)
             setUploadOpen(false)
             setErrors([])
+            setErrorServer(null)
+            setMappedErrors(null)
           }
         }}
       >
@@ -333,6 +337,19 @@ export default function BlockUpload({
                           )}
                       </div>
                     </div>
+                    {mappedErrors && mappedErrors[i] && (
+                      <div className="">
+                        {mappedErrors[i].error ? (
+                          <div className={styles.ErrorBlock}>
+                            {mappedErrors[i].message}
+                          </div>
+                        ) : (
+                          <div className={styles.SuccessBlock}>
+                            {t('upload_avvenuto_con_successo')}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </SwiperSlide>
               ))}
@@ -372,7 +389,12 @@ export default function BlockUpload({
               accept="image/*"
             />
             <button
-              className={styles.ButtonUpload}
+              className={
+                (mappedErrors !== undefined && mappedErrors!?.length > 0
+                  ? styles.ButtonUploadErrors
+                  : styles.ButtonUpload
+                )
+              }
               onClick={() => {
                 if (
                   uploadState !== undefined &&
@@ -386,8 +408,10 @@ export default function BlockUpload({
                 ) {
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
+                    setIsLoading(true)
                     uploadImages(uploadState, token)
                       .then((res) => {
+                        setIsLoading(false)
                         if (res.status === 200) {
                           setUploadOpen(false)
                           setErrors([])
@@ -399,9 +423,14 @@ export default function BlockUpload({
                         }
                       })
                       .catch((err) => {
-                        setErrorServer(
-                          err.response?.data?.detail || 'Errore del server'
-                        )
+                        setIsLoading(false)
+                        if (err.response?.status !== 418) {
+                          setErrorServer(
+                            err.response?.data?.detail || 'Errore del server'
+                          )
+                        } else {
+                          setMappedErrors(err.response?.data)
+                        }
                       })
                   }
                 } else {
@@ -431,7 +460,7 @@ export default function BlockUpload({
                 }
               }}
             >
-              {t('carica_foto')}
+              {isLoading && <Spinner size="sm" />} {t('carica_foto')}
             </button>
           </div>
         </div>

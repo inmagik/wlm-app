@@ -84,7 +84,9 @@
             "date_obblicatoria": "The date is mandatory",
             "vedi_immagini_caricate": "See uploaded images to Wikimedia commons",
             "cambio_lingua": "Change language",
-            "le_tue_foto_caricate": "Your uploaded photos"
+            "le_tue_foto_caricate": "Your uploaded photos",
+            "per_caricare_una_foto": "To log in you must accept the following conditions:",
+            "accetta": "Accept"
         }
     },
     "it": {
@@ -172,7 +174,9 @@
             "date_obblicatoria": "La data è obbligatoria",
             "vedi_immagini_caricate": "Vedi immagini caricate su Wikimedia",
             "cambio_lingua": "Cambio lingua",
-            "le_tue_foto_caricate": "Le tue foto caricate"
+            "le_tue_foto_caricate": "Le tue foto caricate",
+            "per_caricare_una_foto": "Per effettuare il Login è necessario accettare le seguenti condizioni:",
+            "accetta": "Accetta"
         }
     }
 }

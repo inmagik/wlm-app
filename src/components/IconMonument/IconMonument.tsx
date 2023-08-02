@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function IconMonument({ monument }: Props) {
-  const photosNumber = monument.pictures_wlm_count
+  const photosNumber = monument.pictures_wlm_count ?? 0
   const category = monument.app_category
   const inContest = monument.in_contest
   return (

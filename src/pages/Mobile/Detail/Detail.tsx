@@ -18,6 +18,7 @@ import { ReactComponent as InfoVeduteDark } from '../../../assets/info-vedute-da
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slideshow-arrow.svg'
 import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
+import { ReactComponent as License } from '../../../assets/icon-license.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperClass from 'swiper'
@@ -96,8 +97,17 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const [showLicenseModal, setShowLicenseModal] = useState(false)
 
-  const groupsOf12Pictures = monument?.pictures?.reduce((acc, curr, index) => {
+  const picturesToUse = useMemo(() => {
+    if (monument && monument?.pictures_wlm_count > 0) {
+      return monument?.pictures.filter((p) => p.image_type === 'wlm')
+    } else {
+      return monument?.pictures
+    }
+  }, [monument])
+
+  const groupsOf12Pictures = picturesToUse?.reduce((acc, curr, index) => {
     const groupIndex = isMobile
       ? Math.floor(index / 12)
       : Math.floor(index / 18)
@@ -177,20 +187,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const location = useLocation()
 
   const { user } = useAuthUser()
-
-  const wikipediaLink = useMemo(() => {
-    if (monument?.app_category === 'Comune') {
-      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(
-        / /g,
-        '_'
-      )}`
-    } else {
-      return `https://it.wikipedia.org/wiki/${monument?.label?.replace(
-        / /g,
-        '_'
-      )}_(${monument?.municipality_label})`
-    }
-  }, [monument])
 
   useEffect(() => {
     if (inputFileRef.current) {
@@ -278,8 +274,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               if (user) {
                 inputFileRef.current?.click()
               } else {
-                localStorage.setItem('redirectUrl', pathname + search)
-                window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
+                setShowLicenseModal(true)
               }
             }}
             className={styles.ButtonFixedCaricaFoto}
@@ -308,55 +303,51 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 spaceBetween={10}
                 className={styles.Swiper}
               >
-                {monument?.pictures
-                  .filter((p) => p.image_type === 'wlm')
-                  .map((picture, k) => (
-                    <SwiperSlide
-                      onClick={() => {
-                        setShowAllImages(true)
-                        setSlideShowActive(k)
+                {picturesToUse?.map((picture, k) => (
+                  <SwiperSlide
+                    onClick={() => {
+                      setShowAllImages(true)
+                      setSlideShowActive(k)
+                    }}
+                    key={k}
+                  >
+                    <div
+                      className={styles.BlockImage}
+                      style={{
+                        backgroundImage: `url("${picture.image_url}?width=700")`,
                       }}
-                      key={k}
                     >
-                      <div
-                        className={styles.BlockImage}
-                        style={{
-                          backgroundImage: `url("${picture.image_url}?width=700")`,
-                        }}
-                      >
-                        <div className={styles.BlockImageOverlay}>
-                          <div className="d-flex align-items-center">
-                            <div className={styles.BlockImageOverlayText}>
-                              {picture.data?.Artist && (
-                                <div
-                                  className={styles.BlockImageOverlayTextArtist}
-                                  dangerouslySetInnerHTML={{
-                                    __html: picture.data?.Artist,
-                                  }}
-                                ></div>
-                              )}
-                            </div>
-                            <div>
-                              {picture.data?.DateTime && (
-                                <div
-                                  className={styles.BlockImageOverlayTextDate}
-                                >
-                                  {dayjs(picture.data?.DateTime).format(
-                                    'DD/MM/YYYY'
-                                  )}
-                                </div>
-                              )}
-                            </div>
+                      <div className={styles.BlockImageOverlay}>
+                        <div className="d-flex align-items-center">
+                          <div className={styles.BlockImageOverlayText}>
+                            {picture.data?.Artist && (
+                              <div
+                                className={styles.BlockImageOverlayTextArtist}
+                                dangerouslySetInnerHTML={{
+                                  __html: picture.data?.Artist,
+                                }}
+                              ></div>
+                            )}
                           </div>
-                          {picture.data?.License && (
-                            <div className={styles.CreditsImage}>
-                              {picture.data?.License}
-                            </div>
-                          )}
+                          <div>
+                            {picture.data?.DateTime && (
+                              <div className={styles.BlockImageOverlayTextDate}>
+                                {dayjs(picture.data?.DateTime).format(
+                                  'DD/MM/YYYY'
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
+                        {picture.data?.License && (
+                          <div className={styles.CreditsImage}>
+                            {picture.data?.License}
+                          </div>
+                        )}
                       </div>
-                    </SwiperSlide>
-                  ))}
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
               {monument.pictures_wlm_count > 1 && (
                 <div className={styles.PaginationContainer}>
@@ -397,64 +388,26 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               )}
             </>
           ) : (
-            <>
-              {monument?.pictures && monument?.pictures?.length > 0 ? (
-                <div
-                  className={styles.BlockImageRelevant}
-                  style={{
-                    backgroundImage: `url("${monument.pictures[0].image_url}?width=700")`,
-                  }}
-                >
-                  <div className={styles.BlockImageOverlay}>
-                    <div className="d-flex align-items-center">
-                      <div className={styles.BlockImageOverlayText}>
-                        {monument.pictures[0].data?.Artist && (
-                          <div
-                            className={styles.BlockImageOverlayTextArtist}
-                            dangerouslySetInnerHTML={{
-                              __html: monument.pictures[0].data?.Artist,
-                            }}
-                          ></div>
-                        )}
-                      </div>
-                      <div>
-                        {monument.pictures[0].data?.DateTime && (
-                          <div className={styles.BlockImageOverlayTextDate}>
-                            {dayjs(monument.pictures[0].data?.DateTime).format('DD/MM/YYYY')}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    {monument.pictures[0].data?.License && (
-                      <div className={styles.CreditsImage}>
-                        {monument.pictures[0].data?.License}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                <div className={styles.BoxNoImages}>
-                  <div>{t('ancora_nessuna_foto')}</div>
-                  <div>
-                    <SmileBad className="mt-2" />
-                  </div>
-                </div>
-              )}
-              <button
-                onClick={() => {
-                  if (user) {
-                    inputFileRef.current?.click()
-                  } else {
-                    localStorage.setItem('redirectUrl', pathname + search)
-                    window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
-                  }
-                }}
-                className={styles.ButtonCaricaFoto}
-              >
-                {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
-              </button>
-            </>
+            <div className={styles.BoxNoImages}>
+              <div>{t('ancora_nessuna_foto')}</div>
+              <div>
+                <SmileBad className="mt-2" />
+              </div>
+            </div>
           )}
+          <button
+            onClick={() => {
+              if (user) {
+                inputFileRef.current?.click()
+              } else {
+                setShowLicenseModal(true)
+              }
+            }}
+            className={styles.ButtonCaricaFoto}
+          >
+            {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
+          </button>
+
           <div className={styles.CardInfoMonument}>
             <div className="d-flex justify-content-between w-100">
               <div className="d-flex">
@@ -471,8 +424,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </div>
                       )}
-                    {monument?.location && (
-                      <div className={styles.Comune}>{monument?.location}</div>
+                    {monument?.location && monument.location !== monument.municipality_label && monument.app_category !== 'Comune' && (
+                      <div className={styles.Comune}>Loc. {monument?.location}</div>
                     )}
                     {monument?.app_category === 'Comune' && (
                       <div className="w-100 d-flex justify-content-between align-items-center">
@@ -517,7 +470,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </div>
           )}
         </div>
-        {monument && monument?.pictures.length > 0 && (
+        {monument && monument?.pictures_wlm_count > 0 && (
           <div className={styles.CardImages}>
             <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
             <Swiper
@@ -767,7 +720,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               if (user) {
                 inputFileRef.current?.click()
               } else {
-                navigate(`/${i18n.language}/profilo`)
+                setShowLicenseModal(true)
               }
             }}
             className={styles.ButtonUpload}
@@ -806,6 +759,53 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         uploadOpen={showModalUpload}
         setFileList={setImageUpload}
       />
+      {showLicenseModal && (
+        <div
+          className={styles.ResponseOverlay}
+          onClick={() => {
+            setShowLicenseModal(false)
+          }}
+        >
+          <div className={styles.ResponseContainer}>
+            <div
+              className="position-absolute pointer"
+              style={{
+                top: 20,
+                right: 20,
+              }}
+            >
+              <Close />
+            </div>
+            <div>
+              <License />
+            </div>
+            <div className={styles.TextBeforeLogin}>
+              {t('per_caricare_una_foto')}
+            </div>
+            <div className={styles.License}>
+              <input
+                checked
+                className="me-2"
+                type="checkbox"
+                onChange={() => {}}
+              />
+              Accetto di condividere le immagini con la Licenza CC BY-SA 4.0
+            </div>
+            <div className="w-100">
+              <button
+                className={styles.ButtonAccetta}
+                // disabled
+                onClick={() => {
+                  localStorage.setItem('redirectUrl', pathname + search)
+                  window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
+                }}
+              >
+                {t('accetta')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {isMobile && (
         <VeduteInsiemeModal
           setVeduteInsiemeOpen={setVeduteInsiemeOpen}
