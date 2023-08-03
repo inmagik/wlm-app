@@ -262,10 +262,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                       )
                     }
                   } else {
-                    setFilters({
-                      ...filters,
-                      monument_id: undefined,
-                    })
+                    sessionStorage.removeItem('monument_id')
                     setDetail(null)
                   }
                 }}

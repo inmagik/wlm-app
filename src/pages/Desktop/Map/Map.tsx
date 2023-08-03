@@ -212,10 +212,7 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
-          setFilters({
-            ...filters,
-            monument_id: monument.id,
-          })
+          sessionStorage.setItem('monument_id', monument.id)
           setDetail(monument.id)
           initialMap?.getView().animate({
             center: fromLonLat([
@@ -280,10 +277,10 @@ export default function Map() {
   }, [comuneFilterCoords])
 
   useEffect(() => {
-    if (filters.monument_id) {
-      setDetail(filters.monument_id)
+    if (sessionStorage.getItem('monument_id')) {
+      setDetail(Number(sessionStorage.getItem('monument_id')))
     }
-  }, [filters.monument_id])
+  }, [])
 
   return (
     <Layout>
