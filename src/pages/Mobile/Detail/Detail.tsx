@@ -227,49 +227,50 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           })}
         >
           {isDesktop && setDetail && (
-            <Close
-              className={styles.Close}
-              onClick={() => {
-                if (slug) {
-                  setDetail(null)
-                  if (location.pathname.indexOf('lista') > -1) {
-                    navigate(
-                      `/${i18n.language}/lista/?${new URLSearchParams({
-                        search: '',
-                        municipality: filters.municipality,
-                        category: filters.category,
-                        in_contest: filters.in_contest,
-                        only_without_pictures: filters.only_without_pictures,
-                        user_lat: String(filters.user_lat),
-                        user_lon: String(filters.user_lon),
-                      })}`,
+            <div className={styles.Close}>
+              <Close       
+                onClick={() => {
+                  if (slug) {
+                    setDetail(null)
+                    if (location.pathname.indexOf('lista') > -1) {
+                      navigate(
+                        `/${i18n.language}/lista/?${new URLSearchParams({
+                          search: '',
+                          municipality: filters.municipality,
+                          category: filters.category,
+                          in_contest: filters.in_contest,
+                          only_without_pictures: filters.only_without_pictures,
+                          user_lat: String(filters.user_lat),
+                          user_lon: String(filters.user_lon),
+                        })}`,
 
-                      { replace: true }
-                    )
+                        { replace: true }
+                      )
+                    } else {
+                      navigate(
+                        `/${i18n.language}/mappa/?${new URLSearchParams({
+                          search: '',
+                          municipality: filters.municipality,
+                          category: filters.category,
+                          in_contest: filters.in_contest,
+                          only_without_pictures: filters.only_without_pictures,
+                          user_lat: String(filters.user_lat),
+                          user_lon: String(filters.user_lon),
+                        })}`,
+
+                        { replace: true }
+                      )
+                    }
                   } else {
-                    navigate(
-                      `/${i18n.language}/mappa/?${new URLSearchParams({
-                        search: '',
-                        municipality: filters.municipality,
-                        category: filters.category,
-                        in_contest: filters.in_contest,
-                        only_without_pictures: filters.only_without_pictures,
-                        user_lat: String(filters.user_lat),
-                        user_lon: String(filters.user_lon),
-                      })}`,
-
-                      { replace: true }
-                    )
+                    setFilters({
+                      ...filters,
+                      monument_id: undefined,
+                    })
+                    setDetail(null)
                   }
-                } else {
-                  setFilters({
-                    ...filters,
-                    monument_id: undefined,
-                  })
-                  setDetail(null)
-                }
-              }}
-            />
+                }}
+              />
+            </div>
           )}
           <button
             onClick={() => {
@@ -426,9 +427,13 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </div>
                       )}
-                    {monument?.location && monument.location !== monument.municipality_label && monument.app_category !== 'Comune' && (
-                      <div className={styles.Comune}>Loc. {monument?.location}</div>
-                    )}
+                    {monument?.location &&
+                      monument.location !== monument.municipality_label &&
+                      monument.app_category !== 'Comune' && (
+                        <div className={styles.Comune}>
+                          Loc. {monument?.location}
+                        </div>
+                      )}
                     {monument?.app_category === 'Comune' && (
                       <div className="w-100 d-flex justify-content-between align-items-center">
                         <div className={styles.ComuneVedute}>
