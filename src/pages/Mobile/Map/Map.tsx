@@ -113,8 +113,12 @@ export default function Map() {
   }
 
   useEffect(() => {
-    vectorSource.set('filters', filters)
     vectorSource.set('categories', categories)
+    vectorSource.refresh()
+  }, [categories])
+
+  useEffect(() => {
+    vectorSource.set('filters', filters)
     vectorSource.refresh()
   }, [filters])
 
