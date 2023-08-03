@@ -5,7 +5,7 @@
   right: 0;
   bottom: 0;
   top: 0;
-  z-index: 2;
+  z-index: 10;
   padding: 32px 24px;
 }
 
@@ -22,5 +22,27 @@
 .WikiLoveLabel {
   font-size: 16px;
   font-style: normal;
+  font-weight: 700;
+}
+
+.TextWikiLove {
+  color: var(--colori-neutri-gray);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.TextWikiLove > p > a {
+  color: var(--primary);
+  font-family: var(--font-montserrat);
+  font-weight: 700;
+}
+
+.TextWikiLove > p > strong {
+  color: var(--primary);
+  font-family: var(--font-montserrat);
   font-weight: 700;
 }
