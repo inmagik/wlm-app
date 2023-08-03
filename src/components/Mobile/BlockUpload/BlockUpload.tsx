@@ -83,7 +83,7 @@ export default function BlockUpload({
       for (let i = 0; i < fileList.length; i++) {
         images.push({
           title: `${monument?.label}_${dayjs().format('YYYY-MM-DD')}_${(i + 1).toString().padStart(3, '0')}`,
-          description: '',
+          description: monument?.label || '',
           file: fileList[i],
           date: dayjs().format('YYYY-MM-DD'),
           monument_id: monument?.id,
