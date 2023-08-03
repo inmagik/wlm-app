@@ -546,7 +546,6 @@
   padding: 8px 16px;
 }
 
-
 .ResponseContainer {
   display: flex;
   width: 100%;
@@ -681,7 +680,7 @@
 @media screen and (min-width: 768px) {
   .BlockImage {
     border-radius: 5px;
-    height: 300px;
+    height: 270px;
     width: 100%;
     margin-top: 8px;
     background-position: center;
@@ -798,18 +797,18 @@
     cursor: pointer;
   }
 
-.ResponseContainer {
-  display: flex;
-  width: 629px;
-  height: 592px;
-  padding: 16px 64px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  gap: 71px;
-  flex-shrink: 0;
-  border-radius: 5px;
-  background: var(--overlay);
-}
+  .ResponseContainer {
+    display: flex;
+    width: 629px;
+    height: 592px;
+    padding: 16px 64px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 71px;
+    flex-shrink: 0;
+    border-radius: 5px;
+    background: var(--overlay);
+  }
 }
