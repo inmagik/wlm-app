@@ -100,14 +100,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {
-    if (monument && monument?.pictures_count > 0) {
-      console.log('wlm')
-      return monument?.pictures.filter((p) => p.image_type === 'wlm')
-    } else {
-      console.log('common')
-      return monument?.pictures
-    }
+    return monument?.pictures
   }, [monument])
+  
 
   const groupsOf12Pictures = picturesToUse?.reduce((acc, curr, index) => {
     const groupIndex = isMobile
@@ -228,7 +223,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
         >
           {isDesktop && setDetail && (
             <div className={styles.Close}>
-              <Close       
+              <Close
                 onClick={() => {
                   if (slug) {
                     setDetail(null)

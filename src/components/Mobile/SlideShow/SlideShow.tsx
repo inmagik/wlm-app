@@ -57,11 +57,7 @@ export default function SlideShow({
   }, [handleCloseSlideShowOnEsc])
 
   const picturesToUse = useMemo(() => {
-    if(monument && monument.pictures_count > 0){
-      return monument.pictures.filter((picture) => picture.image_type === 'wlm')
-    } else {
-      return monument.pictures
-    }
+    return monument.pictures
   }, [monument])
 
   return (
@@ -138,7 +134,11 @@ export default function SlideShow({
                     </div>
                   </div>
                   <div className={styles.License}>{picture.data?.License}</div>
-                  {picture.data?.title && <div className={styles.PictureTitle}>{cleanTitle(picture.data.title)}</div>}
+                  {picture.data?.title && (
+                    <div className={styles.PictureTitle}>
+                      {cleanTitle(picture.data.title)}
+                    </div>
+                  )}
 
                   {picture.data?.ImageDescription && (
                     <div
