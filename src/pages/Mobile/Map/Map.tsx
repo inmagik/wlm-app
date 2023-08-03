@@ -211,6 +211,7 @@ export default function Map() {
             id: monument.id,
             label: monument.label,
             pictures_wlm_count: monument.pictures_wlm_count,
+            pictures_count: monument.pictures_count,
             coords: evt.pixel,
             app_category: appCategory,
             in_contest: monument.in_contest,
@@ -369,10 +370,10 @@ export default function Map() {
                 opacity: coords ? 1 : 0,
                 zIndex: 1,
                 backgroundColor:
-                  infoMarker.pictures_wlm_count === 0
+                  infoMarker.pictures_count === 0
                     ? 'var(--tertiary)'
-                    : infoMarker.pictures_wlm_count > 0 &&
-                      infoMarker.pictures_wlm_count <= 10
+                    : infoMarker.pictures_count > 0 &&
+                      infoMarker.pictures_count <= 10
                     ? 'var(--monumento-poche-foto)'
                     : 'var(--monumento-tante-foto)',
               }}
@@ -382,7 +383,7 @@ export default function Map() {
                 <IconMonument
                   monument={{
                     in_contest: infoMarker.in_contest,
-                    pictures_wlm_count: infoMarker.pictures_wlm_count,
+                    pictures_count: infoMarker.pictures_count,
                     app_category: infoMarker.app_category,
                   }}
                 />
@@ -392,17 +393,17 @@ export default function Map() {
                 <div>
                   <CameraTransparent />
                 </div>
-                <div className="ms-2 mt-1">{infoMarker.pictures_wlm_count}</div>
+                <div className="ms-2 mt-1">{infoMarker.pictures_count}</div>
               </div>
               <div
                 className={styles.PinMarker}
                 style={{
                   borderTop:
                     '10px solid ' +
-                    (infoMarker.pictures_wlm_count === 0
+                    (infoMarker.pictures_count === 0
                       ? 'var(--tertiary)'
-                      : infoMarker.pictures_wlm_count > 0 &&
-                        infoMarker.pictures_wlm_count <= 10
+                      : infoMarker.pictures_count > 0 &&
+                        infoMarker.pictures_count <= 10
                       ? 'var(--monumento-poche-foto)'
                       : 'var(--monumento-tante-foto)'),
                 }}

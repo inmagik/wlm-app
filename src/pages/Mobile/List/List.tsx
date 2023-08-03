@@ -120,7 +120,7 @@ export function ListMonuments({ filters }: Props) {
                     </div>
                     <div className="d-flex align-items-center flex-column">
                       <div className={styles.NumberPhoto}>
-                        <div>{monument.pictures_wlm_count}</div>
+                        <div>{monument.pictures_count}</div>
                         <Camera className="ms-2" />
                       </div>
                       {monument.distance && geoPermission === 'granted' && (

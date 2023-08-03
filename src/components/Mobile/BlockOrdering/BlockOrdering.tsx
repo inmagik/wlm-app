@@ -73,7 +73,7 @@ export default function BlockOrdering({
       return t('alfabetico_a_z')
     } else if (ordering === '-label') {
       return t('alfabetico_z_a')
-    } else if (ordering === 'pictures_wlm_count') {
+    } else if (ordering === 'pictures_count') {
       return t('meno_fotografati')
     } else if (ordering === 'distance') {
       return t('distanza')
@@ -193,18 +193,18 @@ export default function BlockOrdering({
           <div
             className={classNames(styles.OrderingItem, {
               [styles.OrderingItemActive]:
-                filters.ordering === 'pictures_wlm_count',
+                filters.ordering === 'pictures_count',
             })}
             onClick={() => {
               setFilters({
                 ...filters,
-                ordering: 'pictures_wlm_count',
+                ordering: 'pictures_count',
               })
               setFilterOrderingOpen(false)
             }}
           >
             <div>
-              {filters.ordering === 'pictures_wlm_count' ? (
+              {filters.ordering === 'pictures_count' ? (
                 <CheckOrderingIcon />
               ) : (
                 <UncheckOrderingIcon />

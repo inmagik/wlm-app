@@ -57,7 +57,7 @@ export default function SlideShow({
   }, [handleCloseSlideShowOnEsc])
 
   const picturesToUse = useMemo(() => {
-    if(monument && monument.pictures_wlm_count > 0){
+    if(monument && monument.pictures_count > 0){
       return monument.pictures.filter((picture) => picture.image_type === 'wlm')
     } else {
       return monument.pictures
@@ -121,7 +121,7 @@ export default function SlideShow({
                       <CameraTransparent />
                     </div>
                     <div className={styles.PicturesCount}>
-                      {monument.pictures_wlm_count} {t('foto')}
+                      {monument.pictures_count} {t('foto')}
                     </div>
                   </div>
                   <div className="d-flex align-items-center">

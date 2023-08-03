@@ -36,6 +36,7 @@ export interface MonumentList {
   municipality_label: string
   municipality: number
   pictures_wlm_count: number
+  pictures_count: number
   distance: number
 }
 

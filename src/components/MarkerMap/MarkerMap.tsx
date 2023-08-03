@@ -1,13 +1,13 @@
 interface Props {
   monument: {
     app_category: string
-    pictures_wlm_count: number
+    pictures_count: number
     in_contest: boolean
   }
 }
 
 export default function getMarkerMap({ monument }: Props) {
-  const photosNumber = monument.pictures_wlm_count ?? 0
+  const photosNumber = monument.pictures_count ?? 0
   const inContest = monument.in_contest
   const category = monument.app_category
   if (category === 'Castelli') {

@@ -100,7 +100,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {
-    if (monument && monument?.pictures_wlm_count > 0) {
+    if (monument && monument?.pictures_count > 0) {
       console.log('wlm')
       return monument?.pictures.filter((p) => p.image_type === 'wlm')
     } else {
@@ -351,7 +351,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              {monument.pictures_wlm_count > 1 && (
+              {monument.pictures_count > 1 && (
                 <div className={styles.PaginationContainer}>
                   <ArrowLeftSlideShow
                     onClick={() => {
@@ -369,19 +369,19 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     }
                   />
                   <div className={styles.CurrentSlide}>
-                    {slideActive + 1} / {monument?.pictures_wlm_count}
+                    {slideActive + 1} / {monument?.pictures_count}
                   </div>
                   <ArrowRightSlideShow
                     onClick={() => {
-                      if (slideActive < monument?.pictures_wlm_count - 1) {
+                      if (slideActive < monument?.pictures_count - 1) {
                         swiperRef.current?.slideNext()
                       }
                     }}
                     className={classNames('ms-3', {
-                      pointer: slideActive < monument?.pictures_wlm_count - 1,
+                      pointer: slideActive < monument?.pictures_count - 1,
                     })}
                     fill={
-                      slideActive < monument?.pictures_wlm_count - 1
+                      slideActive < monument?.pictures_count - 1
                         ? 'var(--primary)'
                         : 'var(--colori-neutri-gray-2)'
                     }
@@ -442,7 +442,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
               <div className={styles.PicturesCount}>
                 <div className="d-flex align-items-center">
-                  {monument?.pictures_wlm_count} <Camera className="ms-1" />
+                  {monument?.pictures_count} <Camera className="ms-1" />
                 </div>
                 {monument?.app_category === 'Comune' && (
                   <div
@@ -472,7 +472,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             </div>
           )}
         </div>
-        {monument && monument?.pictures_wlm_count > 0 && (
+        {monument && monument?.pictures_count > 0 && (
           <div className={styles.CardImages}>
             <div className={styles.ImmaginiWlmTitle}>{t('immagini_wlm')}</div>
             <Swiper

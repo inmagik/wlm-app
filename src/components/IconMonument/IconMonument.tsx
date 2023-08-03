@@ -4,13 +4,13 @@ import styles from './IconMonument.module.css'
 interface Props {
   monument: {
     app_category: string
-    pictures_wlm_count: number
+    pictures_count: number
     in_contest: boolean
   }
 }
 
 export default function IconMonument({ monument }: Props) {
-  const photosNumber = monument.pictures_wlm_count ?? 0
+  const photosNumber = monument.pictures_count ?? 0
   const category = monument.app_category
   const inContest = monument.in_contest
   return (

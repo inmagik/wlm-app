@@ -46,6 +46,7 @@ export interface MarkerProps {
   id: number
   label: string
   pictures_wlm_count: number
+  pictures_count: number
   app_category: string
   in_contest: boolean
   coords: number[]
@@ -228,6 +229,7 @@ export default function Map() {
             id: monument.id,
             label: monument.label,
             pictures_wlm_count: monument.pictures_wlm_count,
+            pictures_count: monument.pictures_count,
             coords: evt.pixel,
             app_category: appCategory,
             in_contest: monument.in_contest,

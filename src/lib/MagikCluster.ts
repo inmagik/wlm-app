@@ -91,6 +91,7 @@ export function getFeatureStyle(feature: any) {
   const categories: CategoryDomain[] = vectorSource.get('categories')
   if (info === 1) {
     const properties = feature.getProperties().features[0].getProperties()
+    console.log(properties, 'properties')
     const categoriesFeature = feature
       .getProperties()
       .features[0].getProperties().categories

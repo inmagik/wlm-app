@@ -106,17 +106,17 @@ export default function BlockOrdering({ setFilters, filters }: Props) {
         <div
           className={classNames(styles.OrderingItem, {
             [styles.OrderingItemActive]:
-              filters.ordering === 'pictures_wlm_count',
+              filters.ordering === 'pictures_count',
           })}
           onClick={() => {
             setFilters({
               ...filters,
-              ordering: 'pictures_wlm_count',
+              ordering: 'pictures_count',
             })
           }}
         >
           <div>
-            {filters.ordering === 'pictures_wlm_count' ? (
+            {filters.ordering === 'pictures_count' ? (
               <CheckOrderingIcon />
             ) : (
               <UncheckOrderingIcon />
