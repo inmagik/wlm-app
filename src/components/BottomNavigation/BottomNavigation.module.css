@@ -38,6 +38,15 @@
   color: #ffffff;
 }
 
+.Label {
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  font-family: var(--font-roboto-slab);
+  color: #ffffff;
+}
+
 @media screen and (min-width: 768px) {
   .BottomNavigation {
     height: var(--bottom-desktop-navigation-height);

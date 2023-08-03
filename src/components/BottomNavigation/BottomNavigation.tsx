@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next'
 import LangLink from '../LangLink'
 import { useQsFilters } from '../../hooks/filters'
 import { useAuthUser } from 'use-eazy-auth'
+import classNames from 'classnames'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -51,11 +52,20 @@ export default function BottomNavigation() {
           ) : (
             <Map />
           )}
-          {(currentPath === '/' + i18n.language + '/' ||
-            currentPath === '/' ||
-            currentPath.indexOf('mappa') !== -1) && (
-            <div className={styles.LabelActive}>{t('mappa')}</div>
-          )}
+          <div
+            className={classNames({
+              [styles.LabelActive]:
+                currentPath === '/' + i18n.language + '/' ||
+                currentPath === '/' ||
+                currentPath.indexOf('mappa') !== -1,
+              [styles.Label]:
+                currentPath !== '/' + i18n.language + '/' &&
+                currentPath !== '/' &&
+                currentPath.indexOf('mappa') === -1,
+            })}
+          >
+            {t('mappa')}
+          </div>
         </div>
       </LangLink>
       <LangLink
@@ -72,9 +82,14 @@ export default function BottomNavigation() {
       >
         <div className={styles.List}>
           {currentPath.indexOf('lista') !== -1 ? <ListActive /> : <List />}
-          {currentPath.indexOf('lista') !== -1 && (
-            <div className={styles.LabelActive}>{t('lista')}</div>
-          )}
+          <div
+            className={classNames({
+              [styles.LabelActive]: currentPath.indexOf('lista') !== -1,
+              [styles.Label]: currentPath.indexOf('lista') === -1,
+            })}
+          >
+            {t('lista')}
+          </div>
         </div>
       </LangLink>
       <LangLink to="/profilo" className="no-link">
@@ -85,16 +100,15 @@ export default function BottomNavigation() {
             ) : (
               <ProfileActive />
             )
+          ) : user ? (
+            <ProfileLogged />
           ) : (
-            user ? (
-              <ProfileLogged />
-            ) : (
-              <Profile />
-            )
+            <Profile />
           )}
-          {currentPath.indexOf('profilo') !== -1 && (
-            <div className={styles.LabelActive}>{t('profilo')}</div>
-          )}
+          <div className={classNames({
+            [styles.LabelActive]: currentPath.indexOf('profilo') !== -1,
+            [styles.Label]: currentPath.indexOf('profilo') === -1,
+          })}>{t('profilo')}</div>
         </div>
       </LangLink>
     </div>
