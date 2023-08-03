@@ -164,9 +164,9 @@
 .ButtonUpload {
   border-radius: 48px;
   border: none;
-  background: var(--secondary);
+  background: var(--tertiary);
   /* Shade Button Blu */
-  box-shadow: 1px 1px 0px 0px var(--primary);
+  box-shadow: 1px 1px 0px 0px var(--tertiary-shadow);
   display: inline-flex;
   padding: 16px;
   justify-content: center;
@@ -422,7 +422,7 @@
   background: var(--colori-neutri-white);
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
   margin-top: 8px;
-  color: var(--primary-color, #118ab2);
+  color: var(--primary);
   text-align: center;
   /* Links */
   font-family: var(--font-roboto-slab);
@@ -734,9 +734,9 @@
     align-items: center;
     align-self: stretch;
     border-radius: 20px;
-    background: var(--secondary);
+    background: var(--tertiary);
     /* Shade Button Blu */
-    box-shadow: 1px 1px 0px 0px var(--primary);
+    box-shadow: 1px 1px 0px 0px var(--tertiary-shadow);
     position: fixed;
     border: none;
     right: 40px;
@@ -747,7 +747,7 @@
   }
 
   .ButtonFixedCaricaFoto:hover {
-    background: var(--primary);
+    background: var(--tertiary-hover);
   }
 
   .FixedButtonUpload {
