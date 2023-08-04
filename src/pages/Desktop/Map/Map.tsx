@@ -8,7 +8,7 @@ import React, {
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
-import { Map as MapOl, View } from 'ol'
+import { Feature, Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { Zoom } from 'ol/control'
@@ -27,6 +27,9 @@ import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useParams } from 'react-router-dom'
 import MapContainer from './MapContainer'
 import { forEach } from 'lodash'
+import VectorSource from 'ol/source/Vector'
+import { Point } from 'ol/geom'
+import { Circle, Fill, Icon, Style } from 'ol/style'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -53,6 +56,22 @@ export interface MarkerProps {
   feature: any
 }
 
+const vectorSourceMyLocation = new VectorSource({
+  features: [],
+})
+
+const myLocationLayer = new VectorLayer({
+  source: vectorSourceMyLocation,
+  style: new Style({
+    image: new Circle({
+      radius: 10,
+      fill: new Fill({
+        color: '#0B8927',
+      }),
+    }),
+  })
+})
+
 export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
   const mapElement = useRef<HTMLDivElement>(null)
@@ -72,6 +91,10 @@ export default function Map() {
     maxZoom: 20,
     minZoom: 5,
   })
+
+  const [myLocationCoords, setMyLocationCoords] = useState<number[] | null>(
+    null
+  )
 
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
@@ -104,6 +127,12 @@ export default function Map() {
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
+    setMyLocationCoords([longitude, latitude])
+    const featureMyLocation = new Feature({
+      geometry: new Point(fromLonLat([longitude, latitude])),
+    })
+    vectorSourceMyLocation.clear()
+    vectorSourceMyLocation.addFeature(featureMyLocation)
     setMapState({
       ...mapState,
       center: fromLonLat([longitude, latitude]),
@@ -157,6 +186,7 @@ export default function Map() {
           source: new OSM(),
         }),
         featureOverlay,
+        myLocationLayer
       ],
       controls: [
         new Zoom({
