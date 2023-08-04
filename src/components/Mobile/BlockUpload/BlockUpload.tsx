@@ -82,6 +82,10 @@ export default function BlockUpload({
       const categories = monument.in_contest
         ? monument.categories_urls?.uploadurl
         : monument.categories_urls?.nonwlmuploadurl
+      console.log(categories, 'categories')
+      if (!categories) {
+        return ''
+      }
       const url = new URL(categories || '')
       const params = new URLSearchParams(url.search)
       return params.get('categories') || ''
@@ -151,7 +155,12 @@ export default function BlockUpload({
               {monument?.in_contest
                 ? t('la_tua_foto_sarà_in_concorso')
                 : t('la_tua_foto_non_sarà_in_concorso')}{' '}
-              - {uploadCategories && <span className={styles.Categorie}>Categorie: {uploadCategories}</span>}
+              -{' '}
+              {uploadCategories && (
+                <span className={styles.Categorie}>
+                  Categorie: {uploadCategories}
+                </span>
+              )}
             </div>
             <div></div>
           </div>
@@ -189,7 +198,7 @@ export default function BlockUpload({
                         {t('caricamento_immagine')}:{' '}
                         <strong>{monument?.label}</strong>
                       </div>
-                      
+
                       {uploadState.length > 1 && (
                         <div
                           className="pointer"
