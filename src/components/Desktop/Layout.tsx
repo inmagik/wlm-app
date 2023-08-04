@@ -53,21 +53,23 @@ function SlidesPresentazione({
         onSlideChange={(swiper) => {
           setActiveSlide(swiper.activeIndex)
         }}
+        className="position-relative"
         // className="h-100 w-100"
         onSwiper={(swiper) => {
           sliderRef.current = swiper
         }}
         modules={[Navigation]}
+        spaceBetween={20}
         navigation
         onInit={(swiper) => {
           swiper.slideTo(activeSlide, 0)
         }}
         style={{
           height:
-            'calc(100% - var(--topbar-desktop-height) - var(--bottom-desktop-navigation-height))',
-          width: '80%',
+            'calc(100% - var(--topbar-desktop-height) - var(--bottom-desktop-navigation-height) - 32px)',
+          width: '70%',
 
-          marginTop: 'var(--topbar-desktop-height)',
+          marginTop: 'calc(var(--topbar-desktop-height) + 16px)',
           //   backgroundColor: 'rgba(0,0,0,0.2)',
           //   zIndex: 12,
         }}
@@ -82,14 +84,19 @@ function SlidesPresentazione({
                 }
               }}
               className="h-100 w-100"
-              style={{
-                backgroundImage: `url("${slide}")`,
-                backgroundSize: 'contain',
-                backgroundRepeat: 'no-repeat',
-                borderRadius: 10,
-                backgroundPosition: 'center',
-              }}
-            ></div>
+              
+            >
+                <img
+                src={slide}
+                alt=""
+                className="h-100 w-100"
+                style={{
+                    // objectFit: 'contain',
+                    borderRadius: 20,
+                    //   backgroundColor: 'rgba(0,0,0,0.2)',
+                }}
+                />
+            </div>
           </SwiperSlide>
         ))}
         <div
