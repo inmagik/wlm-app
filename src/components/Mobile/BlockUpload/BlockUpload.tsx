@@ -3,7 +3,7 @@ import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as DeleteImage } from '../../../assets/delete-image.svg'
 import { ReactComponent as UploadSuccess } from '../../../assets/upload-success.svg'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
@@ -77,12 +77,26 @@ export default function BlockUpload({
 
   const inputFileRef = useRef<HTMLInputElement>(null)
 
+  const uploadCategories = useMemo(() => {
+    if (monument) {
+      const categories = monument.in_contest
+        ? monument.categories_urls?.uploadurl
+        : monument.categories_urls?.nonwlmuploadurl
+      const url = new URL(categories || '')
+      const params = new URLSearchParams(url.search)
+      return params.get('categories') || ''
+    }
+    return ''
+  }, [monument])
+
   useEffect(() => {
     if (fileList) {
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
         images.push({
-          title: `${monument?.label}_${dayjs().format('YYYY-MM-DD')}_${(i + 1).toString().padStart(3, '0')}`,
+          title: `${monument?.label}_${dayjs().format('YYYY-MM-DD')}_${(i + 1)
+            .toString()
+            .padStart(3, '0')}`,
           description: monument?.label || '',
           file: fileList[i],
           date: dayjs().format('YYYY-MM-DD'),
@@ -136,8 +150,10 @@ export default function BlockUpload({
             <div className={styles.TitleConcorso}>
               {monument?.in_contest
                 ? t('la_tua_foto_sarà_in_concorso')
-                : t('la_tua_foto_non_sarà_in_concorso')}
+                : t('la_tua_foto_non_sarà_in_concorso')}{' '}
+              - {uploadCategories && <span className={styles.Categorie}>Categorie: {uploadCategories}</span>}
             </div>
+            <div></div>
           </div>
           <div className={styles.CloseModal}>
             <Close
@@ -173,6 +189,7 @@ export default function BlockUpload({
                         {t('caricamento_immagine')}:{' '}
                         <strong>{monument?.label}</strong>
                       </div>
+                      
                       {uploadState.length > 1 && (
                         <div
                           className="pointer"
@@ -245,7 +262,7 @@ export default function BlockUpload({
                       <div>
                         <textarea
                           className={styles.InputTitle}
-                          rows={3}
+                          rows={2}
                           style={{
                             // border: '1px solid transparent',
                             boxShadow:
@@ -390,10 +407,9 @@ export default function BlockUpload({
             />
             <button
               className={
-                (mappedErrors !== undefined && mappedErrors!?.length > 0
+                mappedErrors !== undefined && mappedErrors!?.length > 0
                   ? styles.ButtonUploadErrors
                   : styles.ButtonUpload
-                )
               }
               onClick={() => {
                 if (

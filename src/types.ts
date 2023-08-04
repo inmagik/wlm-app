@@ -92,6 +92,10 @@ export interface Monument {
   relevant_images: string[]
   location: string
   article: string
+  categories_urls?: {
+    nonwlmuploadurl: string
+    uploadurl: string
+  }
 }
 
 export interface Comune {

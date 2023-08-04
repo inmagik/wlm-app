@@ -10,8 +10,6 @@ import {
 import axios from 'axios'
 import { getNextPageParam, serializeQueryParams } from './utils'
 import { ImageInfo } from '../components/Mobile/BlockUpload/BlockUpload'
-import { useAuthUser } from 'use-eazy-auth'
-import dayjs from 'dayjs'
 
 export async function getMonuments(
   params: Record<string, any> = {},
