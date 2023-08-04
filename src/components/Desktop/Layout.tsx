@@ -41,12 +41,12 @@ function SlidesPresentazione({
         bottom: 0,
         right: 0,
         zIndex: 12,
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: 'rgba(0,0,0,0.6)',
       }}
-      onClick={() => {
-        setPresentazione(false)
-        localStorage.setItem('presentazione', 'true')
-      }}
+    //   onClick={() => {
+    //     setPresentazione(false)
+    //     localStorage.setItem('presentazione', 'true')
+    //   }}
     >
       <Swiper
         slidesPerView={1}
