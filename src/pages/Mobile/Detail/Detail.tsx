@@ -100,7 +100,17 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {
-    return monument?.pictures
+    return monument?.pictures.sort((a, b) => {
+
+      const relevantImages = monument?.relevant_images
+      const aIsRelevant = relevantImages?.includes(a.image_url)
+      const bIsRelevant = relevantImages?.includes(b.image_url)
+      if(aIsRelevant && !bIsRelevant) return -1
+      if(!aIsRelevant && bIsRelevant) return 1
+      return a.image_date > b.image_date ? -1 : 1
+
+
+    })
   }, [monument])
   
 
