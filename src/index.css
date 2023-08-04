@@ -158,8 +158,8 @@ body,
   border: none;
   margin-top: 8px;
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 0px;
+  right: 54px;
   transition: all 0.3s ease-in-out;
   z-index: 999;
 }

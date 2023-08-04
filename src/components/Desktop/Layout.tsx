@@ -32,13 +32,28 @@ function SlidesPresentazione({
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const sliderRef = useRef<any>()
   return (
-    <div className="w-100 h-100">
+    <div
+      className="w-100 h-100"
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        zIndex: 12,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+      }}
+      onClick={() => {
+        setPresentazione(false)
+        localStorage.setItem('presentazione', 'true')
+      }}
+    >
       <Swiper
-        className="h-100 w-100 position-absolute"
         slidesPerView={1}
         onSlideChange={(swiper) => {
           setActiveSlide(swiper.activeIndex)
         }}
+        // className="h-100 w-100"
         onSwiper={(swiper) => {
           sliderRef.current = swiper
         }}
@@ -48,16 +63,17 @@ function SlidesPresentazione({
           swiper.slideTo(activeSlide, 0)
         }}
         style={{
-          zIndex: 12,
-          left: 0,
-          top: 0,
-          bottom: 0,
-          right: 0,
-          background: 'var(--colori-neutri-gray-2)',
+          height:
+            'calc(100% - var(--topbar-desktop-height) - var(--bottom-desktop-navigation-height))',
+          width: '80%',
+
+          marginTop: 'var(--topbar-desktop-height)',
+          //   backgroundColor: 'rgba(0,0,0,0.2)',
+          //   zIndex: 12,
         }}
       >
         {slides.map((slide, i) => (
-          <SwiperSlide key={i} className="w-100 h-100">
+          <SwiperSlide key={i}>
             <div
               onClick={() => {
                 if (activeSlide === slides.length - 1) {
@@ -70,6 +86,7 @@ function SlidesPresentazione({
                 backgroundImage: `url("${slide}")`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',
+                borderRadius: 10,
                 backgroundPosition: 'center',
               }}
             ></div>
@@ -91,7 +108,8 @@ function SlidesPresentazione({
             pointer: activeSlide > 0,
           })}
           fill={activeSlide > 0 ? 'var(--primary)' : '#fff'}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             if (activeSlide > 0) sliderRef.current.slidePrev()
           }}
         />
@@ -103,7 +121,8 @@ function SlidesPresentazione({
             pointer: activeSlide < slides.length - 1,
           })}
           fill={activeSlide < slides.length - 1 ? 'var(--primary)' : '#fff'}
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             if (activeSlide < slides.length - 1) sliderRef.current.slideNext()
           }}
         />
