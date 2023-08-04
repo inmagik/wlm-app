@@ -1,6 +1,5 @@
 import { MarkerProps } from './Map'
 import styles from './Map.module.css'
-import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
