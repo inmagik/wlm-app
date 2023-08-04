@@ -50,6 +50,7 @@ import { useMediaQuery } from 'usehooks-ts'
 import { useAuthUser } from 'use-eazy-auth'
 import IconCategory from '../../../components/IconCategory'
 import { API_URL } from '../../../const'
+import { replace } from 'lodash'
 
 interface Props {
   monumentId?: number
@@ -101,18 +102,16 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
   const picturesToUse = useMemo(() => {
     return monument?.pictures.sort((a, b) => {
-
-      const relevantImages = monument?.relevant_images
+      const relevantImages = monument?.relevant_images.map((i) =>
+        replace(replace(decodeURI(i), 'http', 'https'), 'FilePath', 'Filepath')
+      )
       const aIsRelevant = relevantImages?.includes(a.image_url)
       const bIsRelevant = relevantImages?.includes(b.image_url)
-      if(aIsRelevant && !bIsRelevant) return -1
-      if(!aIsRelevant && bIsRelevant) return 1
+      if (aIsRelevant && !bIsRelevant) return -1
+      if (!aIsRelevant && bIsRelevant) return 1
       return a.image_date > b.image_date ? -1 : 1
-
-
     })
   }, [monument])
-  
 
   const groupsOf12Pictures = picturesToUse?.reduce((acc, curr, index) => {
     const groupIndex = isMobile
