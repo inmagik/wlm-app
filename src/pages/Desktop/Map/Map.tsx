@@ -195,9 +195,6 @@ export default function Map() {
         }),
         new Attribution({
           collapsible: false,
-          // className: styles.Attribution,
-          // collapsible: false,
-          // className: styles.Attribution,
         }),
       ],
       view: new View(mapState),

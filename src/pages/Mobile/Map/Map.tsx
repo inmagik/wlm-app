@@ -2,8 +2,8 @@ import Layout from '../../../components/Mobile/Layout'
 import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
+import 'ol/ol.css'
 import {
-  Suspense,
   useCallback,
   useEffect,
   useMemo,
@@ -29,7 +29,7 @@ import { useCategoriesDomain } from '../../../hooks/monuments'
 import { useNavigate } from 'react-router-dom'
 import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
-import { Zoom } from 'ol/control'
+import { Attribution, Zoom } from 'ol/control'
 import { Spinner } from 'react-bootstrap'
 import { defaults } from 'ol/interaction/defaults'
 import IconMonument from '../../../components/IconMonument'
@@ -150,6 +150,9 @@ export default function Map() {
         new Zoom({
           zoomInClassName: styles.ZoomIn,
           zoomOutClassName: styles.ZoomOut,
+        }),
+        new Attribution({
+          collapsible: false,
         }),
       ],
       view: new View(mapState),
