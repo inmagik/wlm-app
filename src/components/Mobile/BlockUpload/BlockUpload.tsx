@@ -82,7 +82,6 @@ export default function BlockUpload({
       const categories = monument.in_contest
         ? monument.categories_urls?.uploadurl
         : monument.categories_urls?.nonwlmuploadurl
-      console.log(categories, 'categories')
       if (!categories) {
         return ''
       }

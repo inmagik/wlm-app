@@ -467,7 +467,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </div>
-          {!isMobile && veduteInsiemeOpen && (
+          {!isMobile && veduteInsiemeOpen && monument?.app_category === 'Comune' && (
             <div className={styles.VeduteInsieme}>
               <div className={styles.VeduteInsiemeTitle}>
                 {t('vedute_insieme')}
@@ -814,7 +814,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           </div>
         </div>
       )}
-      {isMobile && (
+      {isMobile && monument?.app_category === 'Comune' && (
         <VeduteInsiemeModal
           setVeduteInsiemeOpen={setVeduteInsiemeOpen}
           veduteInsiemeOpen={veduteInsiemeOpen}
