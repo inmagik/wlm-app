@@ -17,6 +17,8 @@ body,
   --monumento-tante-foto: #12aaff;
   --monumento-poche-foto: #973fff;
   --concorso: #fed169;
+  --concorso-hover: rgba(254, 209, 105, 0.7);
+  --concorso-shadow: #FFB200;
   --overlay: #e9f1f3;
   --success: #0b8927;
   --success-shadow: #06701f;

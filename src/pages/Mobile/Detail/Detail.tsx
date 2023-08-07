@@ -4,8 +4,9 @@ import { useMonument } from '../../../hooks/monuments'
 import { parseSmartSlug } from '../../../utils'
 import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
+import { ReactComponent as CameraDark } from '../../../assets/camera-dark.svg'
+import { ReactComponent as CameraDarkBig } from '../../../assets/camera-dark-big.svg'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
-import { ReactComponent as CameraWhite } from '../../../assets/camera-white.svg'
 import { ReactComponent as Direction } from '../../../assets/direction.svg'
 import { ReactComponent as SmileBad } from '../../../assets/smile-bad.svg'
 import { ReactComponent as Reasonator } from '../../../assets/reasonetor.svg'
@@ -283,7 +284,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             }}
             className={styles.ButtonFixedCaricaFoto}
           >
-            <CameraWhite className="me-2" width={14} />
+            <CameraDark className="me-2" width={14} />
             {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
           </button>
 
@@ -738,7 +739,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             }}
             className={styles.ButtonUpload}
           >
-            <CameraWhite />
+            <CameraDarkBig />
           </button>
           <input
             ref={inputFileRef}
