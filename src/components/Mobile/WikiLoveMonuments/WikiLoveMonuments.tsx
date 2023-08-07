@@ -44,7 +44,7 @@ export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
             <p>
               Wiki Loves Monuments è{' '}
               <strong>il più grande concorso fotografico al mondo</strong>. Il
-              suo obiettivo è coinvolgere le persone nella
+              suo obiettivo è coinvolgere le persone nella{' '}
               <strong>documentazione del patrimonio culturale</strong> italiano
               con immagini pubblicate con licenza libera, che potranno essere
               utilizzate anche per illustrare le voci di{' '}
