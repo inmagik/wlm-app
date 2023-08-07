@@ -47,7 +47,7 @@
   color: #ffffff;
 }
 
-@media screen and (min-width: 768px) {
+@media (hover: hover) {
   .BottomNavigation {
     height: var(--bottom-desktop-navigation-height);
   }

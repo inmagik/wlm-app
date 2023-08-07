@@ -53,7 +53,7 @@ function AvailablesLang() {
 
 function AppRoutes() {
   const location = useLocation()
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(hover: none)')
   return (
     <>
       <Routes location={location}>
