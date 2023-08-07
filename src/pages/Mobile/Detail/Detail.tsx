@@ -328,7 +328,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                               <div
                                 className={styles.BlockImageOverlayTextArtist}
                                 dangerouslySetInnerHTML={{
-                                  __html: picture.data?.Artist,
+                                  __html: String(picture.data?.Artist).replace(
+                                    /(<([^>]+)>)/gi,
+                                    ''
+                                  ) || '',
                                 }}
                               ></div>
                             )}
@@ -467,16 +470,18 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               </div>
             </div>
           </div>
-          {!isMobile && veduteInsiemeOpen && monument?.app_category === 'Comune' && (
-            <div className={styles.VeduteInsieme}>
-              <div className={styles.VeduteInsiemeTitle}>
-                {t('vedute_insieme')}
+          {!isMobile &&
+            veduteInsiemeOpen &&
+            monument?.app_category === 'Comune' && (
+              <div className={styles.VeduteInsieme}>
+                <div className={styles.VeduteInsiemeTitle}>
+                  {t('vedute_insieme')}
+                </div>
+                <div className={styles.VeduteInsiemeText}>
+                  {t('vedute_d_insieme_text')}
+                </div>
               </div>
-              <div className={styles.VeduteInsiemeText}>
-                {t('vedute_d_insieme_text')}
-              </div>
-            </div>
-          )}
+            )}
         </div>
         {monument && monument?.pictures_count > 0 && (
           <div className={styles.CardImages}>

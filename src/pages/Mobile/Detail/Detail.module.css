@@ -120,7 +120,6 @@
   background-color: var(--overlay);
   padding: 16px;
   border-radius: 5px;
-  margin: 16px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -562,7 +561,7 @@
   background: var(--overlay);
 }
 
-.BlockImageOverlayTextArtist > a {
+.BlockImageOverlayTextArtist {
   color: var(--colori-neutri-white);
   text-align: center;
   font-size: 14px;
