@@ -97,7 +97,7 @@ export default function BlockUpload({
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
         images.push({
-          title: `${monument?.label}_${dayjs().format('YYYY-MM-DD')}_${(i + 1)
+          title: `${monument?.label}_${dayjs().format('YYYY-MM-DDHH:mm:ss')}_${(i + 1)
             .toString()
             .padStart(3, '0')}`,
           description: monument?.label || '',
@@ -219,9 +219,9 @@ export default function BlockUpload({
                         </div>
                       </div>
                       <div>
-                        <input
+                        <textarea
                           required
-                          type="text"
+                          rows={2}
                           style={{
                             // border: '1px solid transparent',
                             boxShadow:

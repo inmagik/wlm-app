@@ -298,7 +298,7 @@
   font-weight: 500;
 }
 
-@media (hover: none) {
+@media (hover: hover) {
   .ModalUploadContainer {
     width: 60%;
     position: relative;

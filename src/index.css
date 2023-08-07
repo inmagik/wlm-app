@@ -14,11 +14,11 @@ body,
   --secondary: #40baec;
   --secondary-variant: #eff8fb;
   --tertiary: #cf4130;
-  --monumento-tante-foto: #12AAFF;
-  --monumento-poche-foto: #973FFF;
+  --monumento-tante-foto: #12aaff;
+  --monumento-poche-foto: #973fff;
   --concorso: #fed169;
   --overlay: #e9f1f3;
-  --success: #0B8927;
+  --success: #0b8927;
   --success-shadow: #06701f;
   --success-hover: #0aaf31;
   --colori-neutri-white: #ffffff;
@@ -45,7 +45,8 @@ body,
 
 .block-content-desktop {
   height: calc(
-    100% - var(--topbar-desktop-height) - var(--bottom-desktop-navigation-height)
+    100% - var(--topbar-desktop-height) -
+      var(--bottom-desktop-navigation-height)
   );
   margin-top: var(--topbar-desktop-height);
   position: relative;
@@ -67,12 +68,15 @@ body,
   flex: 1;
 }
 
-.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
   position: relative;
   margin-top: 20px;
 }
 
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background: var(--primary);
 }
 
@@ -121,7 +125,7 @@ body,
   }
 
   50% {
-    transform: translateY(18px) scale(1, .9) rotate(45deg);
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
     border-bottom-right-radius: 40px;
   }
 
@@ -135,9 +139,8 @@ body,
 }
 
 @keyframes shadow324 {
-
   0%,
-    100% {
+  100% {
     transform: scale(1, 1);
   }
 
@@ -202,3 +205,9 @@ body,
 /* .ol-control {
   position: relative !important;
 } */
+
+@media (hover: none) {
+  .ol-attribution {
+    left: 0px !important;
+  }
+}
