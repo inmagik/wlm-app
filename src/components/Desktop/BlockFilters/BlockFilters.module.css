@@ -228,14 +228,17 @@
   border: 0.5px solid var(--overlay);
   background: var(--colori-neutri-white);
   color: var(--primary);
-  text-align: center;
-  /* Body */
   font-family: var(--font-roboto-slab);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
+}
+
+.ComuneItemTitle{
+    display: flex;
+    align-items: center;
 }
 
 .CloseIconWrapper {

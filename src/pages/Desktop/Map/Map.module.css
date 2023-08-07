@@ -132,51 +132,52 @@
 }
 
 .ZoomIn {
-  border-radius: 30px;
-  background: var(--colori-neutri-white);
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  margin-top: 8px;
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  font-size: 30px;
-  color: var(--primary);
+  border-radius: 30px !important;
+  background: var(--colori-neutri-white) !important;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: none !important;
+  margin-top: 8px !important;
+  position: absolute !important;
+  right: 24px !important;
+  top: 16px !important;
+  font-size: 30px !important;
+  color: var(--primary) !important;
+  font-weight: normal !important;
+  cursor: pointer !important;
 }
 
 .ZoomOut {
-  border-radius: 30px;
-  background: var(--colori-neutri-white);
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  margin-top: 8px;
-  position: absolute;
-  right: 16px;
-  top: 64px;
-  font-size: 30px;
-  color: var(--primary);
-  transition: all 0.3s ease-in-out;
+  border-radius: 30px !important;
+  background: var(--colori-neutri-white) !important;
+  font-weight: normal !important;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: none !important;
+  margin-top: 8px !important;
+  position: absolute !important;
+  right: 24px !important;
+  top: 64px !important;
+  font-size: 30px !important;
+  color: var(--primary) !important;
+  transition: all 0.3s ease-in-out !important;
+  cursor: pointer !important;
 }
 
 .ZoomIn:hover,
 .ZoomOut:hover {
-  background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.1) 0%,
-      rgba(0, 0, 0, 0.1) 100%
-    ),
-    #fff;
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  background: rgb(208, 223, 228) !important;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  border: transparent !important;
+  outline: none !important;
 }
 
 .LegendButton:hover {
@@ -214,17 +215,4 @@
   left: 16px;
   top: 16px;
   z-index: 1;
-}
-
-.Attribution {
-  bottom: 0px;
-  left: 0px;
-}
-
-.Attribution > ul {
-    list-style: none;
-}
-
-.Attribution > button {
-    display: none;
 }

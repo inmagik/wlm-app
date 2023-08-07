@@ -191,6 +191,14 @@ body,
   left: 5px !important;
   position: absolute !important;
   width: max-content;
-  /* border-radius: 30px !important; */
-  padding-left: 10px;
+  bottom: 0px !important;
+  padding-left: 10px !important;
 }
+
+.ol-zoom {
+  position: relative;
+}
+
+/* .ol-control {
+  position: relative !important;
+} */

@@ -33,6 +33,8 @@ export interface MonumentList {
   app_category: string
   in_contest: boolean
   label: string
+  address?: string
+  location: string
   municipality_label: string
   municipality: number
   pictures_wlm_count: number
@@ -74,6 +76,7 @@ export interface Monument {
   province: number
   region: number
   categories: number[]
+  address?: string
   snapshot: number
   municipality_label: string
   province_label: string

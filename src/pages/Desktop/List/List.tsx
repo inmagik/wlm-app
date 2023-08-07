@@ -51,7 +51,12 @@ interface Props {
   setFilters: (filters: any) => void
 }
 
-export function ListMonuments({ filters, setDetail, detail, setFilters }: Props) {
+export function ListMonuments({
+  filters,
+  setDetail,
+  detail,
+  setFilters,
+}: Props) {
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll
@@ -62,16 +67,16 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
 
   const filtersForMonument = useMemo(() => {
     return {
-      'search': filters.search,
-      'municipality': filters.municipality,
-      'ordering': filters.ordering,
-      'category': filters.category,
-      'in_contest': filters.in_contest,
-      'only_without_pictures': filters.only_without_pictures,
-      'user_lat': filters.user_lat,
-      'user_lon': filters.user_lon,
-      'monument_lat': filters.monument_lat,
-      'monument_lon': filters.monument_lon,
+      search: filters.search,
+      municipality: filters.municipality,
+      ordering: filters.ordering,
+      category: filters.category,
+      in_contest: filters.in_contest,
+      only_without_pictures: filters.only_without_pictures,
+      user_lat: filters.user_lat,
+      user_lon: filters.user_lon,
+      monument_lat: filters.monument_lat,
+      monument_lon: filters.monument_lon,
     }
   }, [filters])
 
@@ -87,7 +92,7 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if(filters.monument_id) {
+    if (filters.monument_id) {
       setDetail(filters.monument_id)
     }
   }, [filters.monument_id])
@@ -148,6 +153,9 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
                       </div>
                       <div className={styles.City}>
                         {monument.municipality_label}
+                        {monument.location &&
+                          monument.location !== monument.municipality_label &&
+                          `, Loc: ${monument.location}`}
                       </div>
                     </div>
                   </div>
@@ -181,7 +189,8 @@ export function ListMonuments({ filters, setDetail, detail, setFilters }: Props)
 }
 
 export default function List() {
-  const { uiFilters, filters, setFilters, setFiltersDebounced } = useQsFilters(getFilters)
+  const { uiFilters, filters, setFilters, setFiltersDebounced } =
+    useQsFilters(getFilters)
   const [detail, setDetail] = useState<number | null>(null)
   const [legend, setLegend] = useState(false)
 
@@ -216,7 +225,12 @@ export default function List() {
             className={styles.CardContainerList}
             style={{
               width: 'calc(100%)',
-              height: legend && detail ? 'calc(100% - 288px)' : legend && !detail ? 'calc(100% - 200px)' : '100%',
+              height:
+                legend && detail
+                  ? 'calc(100% - 288px)'
+                  : legend && !detail
+                  ? 'calc(100% - 200px)'
+                  : '100%',
               transition: 'width 0.5s ease-in-out',
             }}
           >
