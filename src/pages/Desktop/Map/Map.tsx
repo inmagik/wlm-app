@@ -34,7 +34,7 @@ import { Circle, Fill, Icon, Style } from 'ol/style'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  ordering: params.get('ordering') ?? 'label',
+  ordering: params.get('ordering') ?? 'distance',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',

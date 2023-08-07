@@ -14,7 +14,6 @@ import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
-import { ReactComponent as Mappe } from '../../../assets/mappe.svg'
 import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
 import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
@@ -41,6 +40,7 @@ const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
   category: params.get('category') ?? '',
+  ordering: params.get('ordering') ?? 'distance',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   user_lat: params.get('user_lat') ?? '',

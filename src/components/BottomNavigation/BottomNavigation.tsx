@@ -22,6 +22,7 @@ const getFilters = (params: URLSearchParams) => ({
   only_without_pictures: params.get('only_without_pictures') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
+  ordering: params.get('ordering') ?? 'distance',
 })
 
 export default function BottomNavigation() {
@@ -41,6 +42,7 @@ export default function BottomNavigation() {
           only_without_pictures: filters.only_without_pictures,
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
+          ordering: filters.ordering,
         })}`}
         className="no-link"
       >
@@ -77,6 +79,7 @@ export default function BottomNavigation() {
           only_without_pictures: filters.only_without_pictures,
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
+          ordering: filters.ordering,
         })}`}
         className="no-link"
       >
