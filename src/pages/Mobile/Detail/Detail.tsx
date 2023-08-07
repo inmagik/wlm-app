@@ -326,15 +326,28 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                         <div className="d-flex align-items-center">
                           <div className={styles.BlockImageOverlayText}>
                             {picture.data?.Artist && (
-                              <div
-                                className={styles.BlockImageOverlayTextArtist}
-                                dangerouslySetInnerHTML={{
-                                  __html: String(picture.data?.Artist).replace(
+                              <a
+                                href={
+                                  'https://commons.wikimedia.org/wiki/User:' +
+                                  String(picture.data?.Artist).replace(
                                     /(<([^>]+)>)/gi,
                                     ''
-                                  ) || '',
-                                }}
-                              ></div>
+                                  ).replace(' ', '_')
+                                }
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <div
+                                  className={styles.BlockImageOverlayTextArtist}
+                                  dangerouslySetInnerHTML={{
+                                    __html:
+                                      String(picture.data?.Artist).replace(
+                                        /(<([^>]+)>)/gi,
+                                        ''
+                                      ) || '',
+                                  }}
+                                ></div>
+                              </a>
                             )}
                           </div>
                           <div>

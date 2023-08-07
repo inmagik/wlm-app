@@ -1,9 +1,4 @@
-import {
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -30,6 +25,7 @@ import { forEach } from 'lodash'
 import VectorSource from 'ol/source/Vector'
 import { Point } from 'ol/geom'
 import { Circle, Fill, Icon, Style } from 'ol/style'
+import { useComuni } from '../../../hooks/comuni'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -69,7 +65,7 @@ const myLocationLayer = new VectorLayer({
         color: '#0B8927',
       }),
     }),
-  })
+  }),
 })
 
 export default function Map() {
@@ -77,6 +73,7 @@ export default function Map() {
   const mapElement = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapOl | null>(null)
   const { data: categories } = useCategoriesDomain()
+  const { data: comuni } = useComuni()
   const [detail, setDetail] = useState<number | null>(null)
   const [infoMarker, setInfoMarker] = useState<MarkerProps | null>(null)
   const [legend, setLegend] = useState<boolean>(false)
@@ -138,6 +135,11 @@ export default function Map() {
       center: fromLonLat([longitude, latitude]),
       zoom: 14,
     })
+    setFilters({
+      ...filters,
+      user_lat: latitude,
+      user_lon: longitude,
+    })
     setInfoMarker(null)
     setDetail(null)
   }
@@ -186,7 +188,7 @@ export default function Map() {
           source: new OSM(),
         }),
         featureOverlay,
-        myLocationLayer
+        myLocationLayer,
       ],
       controls: [
         new Zoom({
@@ -201,10 +203,9 @@ export default function Map() {
     })
 
     function setClusterDistance(resolution: number) {
-      if(resolution < 0.1){
+      if (resolution < 0.1) {
         clusterSource.setDistance(0)
-      }
-      else if (resolution <= 300) {
+      } else if (resolution <= 300) {
         clusterSource.setDistance(40)
       } else {
         clusterSource.setDistance(0)
@@ -324,7 +325,25 @@ export default function Map() {
       setDetail(Number(sessionStorage.getItem('monument_id')))
     }
   }, [])
-  
+
+  useEffect(() => {
+    if (filters.municipality) {
+      console.log(filters.municipality, 'filters.municipality')
+      const coordinates = comuni?.find((c) => c.code === Number(filters.municipality))
+        ?.centroid.coordinates
+      console.log(coordinates, 'coordinates')
+      if(!coordinates) return
+      setComuneFilterCoords(
+        coordinates ? [coordinates[0], coordinates[1]] : null
+      )
+      console.log(coordinates, 'coordinates')
+      mapElement.current?.animate({
+        center: fromLonLat([coordinates[0], coordinates[1]]),
+        zoom: 18,
+        duration: 500,
+      })
+    }
+  }, [filters.municipality, comuni])
 
   return (
     <Layout>

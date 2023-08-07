@@ -570,6 +570,8 @@
   line-height: normal;
   padding-right: 8px;
   border-right: 2px solid var(--colori-neutri-white);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .BlockImageOverlayTextDate {
