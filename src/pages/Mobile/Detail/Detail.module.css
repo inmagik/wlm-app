@@ -521,7 +521,7 @@
   border: none;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  z-index: 7;
+  z-index: 5;
 }
 
 .Close:hover,
