@@ -160,7 +160,8 @@ const getFilters = (params: URLSearchParams) => ({
 })
 
 export default function List() {
-  const { filters, setFilters, setFiltersDebounced, uiFilters } = useQsFilters(getFilters)
+  const { filters, setFilters, setFiltersDebounced, uiFilters } =
+    useQsFilters(getFilters)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
@@ -210,7 +211,8 @@ export default function List() {
               setFiltersOpen(!filtersOpen)
             }}
           >
-            {areFiltersActive ? <FiltersIcon /> : <FilterIconPrimary />}
+            <FiltersIcon />
+            {areFiltersActive && <div className={styles.Badge} />}
           </div>
         </div>
         <Suspense
