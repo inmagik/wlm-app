@@ -113,7 +113,7 @@ const queryClient = new QueryClient({
       refetchIntervalInBackground: false,
       networkMode: 'always',
       refetchOnMount: false,
-      staleTime: 300,
+      // staleTime: 300,
       retry: false,
       suspense: true,
       structuralSharing: false,

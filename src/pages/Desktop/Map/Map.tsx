@@ -1,6 +1,5 @@
-import React, {
+import {
   Suspense,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -10,6 +9,7 @@ import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
 import { Feature, Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
+import 'ol/ol.css'
 import OSM from 'ol/source/OSM'
 import { Attribution, Zoom } from 'ol/control'
 import { fromLonLat } from 'ol/proj'
@@ -88,7 +88,7 @@ export default function Map() {
   const [mapState, setMapState] = useState({
     center: fromLonLat([12.56738, 41.87194]),
     zoom: 6,
-    maxZoom: 20,
+    maxZoom: 22,
     minZoom: 5,
   })
 
@@ -195,7 +195,9 @@ export default function Map() {
         }),
         new Attribution({
           collapsible: false,
-          className: styles.Attribution,
+          // className: styles.Attribution,
+          // collapsible: false,
+          // className: styles.Attribution,
         }),
       ],
       view: new View(mapState),
@@ -319,6 +321,7 @@ export default function Map() {
       setDetail(Number(sessionStorage.getItem('monument_id')))
     }
   }, [])
+  
 
   return (
     <Layout>

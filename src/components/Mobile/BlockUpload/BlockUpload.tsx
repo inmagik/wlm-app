@@ -433,7 +433,11 @@ export default function BlockUpload({
                   if (uploadState?.length === 0) return
                   if (uploadState !== undefined) {
                     setIsLoading(true)
-                    uploadImages(uploadState, token)
+                    uploadImages(
+                      uploadState,
+                      isMobile ? 'mobile' : 'desktop',
+                      token
+                    )
                       .then((res) => {
                         setIsLoading(false)
                         if (res.status === 200) {

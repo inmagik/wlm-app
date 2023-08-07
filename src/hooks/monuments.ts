@@ -47,6 +47,8 @@ export function useInfiniteMomuments(params: Record<string, any> = {}) {
     {
       keepPreviousData: true,
       getNextPageParam: getNextPageParam,
+      cacheTime: 1000 * 60 * 6,
+      staleTime: 300,
     }
   )
 }
@@ -79,7 +81,7 @@ export function useCategoriesDomain() {
   })
 }
 
-export async function uploadImages(images: ImageInfo[], token?: string) {
+export async function uploadImages(images: ImageInfo[], platform: string, token?: string) {
   const formData = new FormData()
   
   images.forEach((image, i) => {
@@ -89,6 +91,7 @@ export async function uploadImages(images: ImageInfo[], token?: string) {
     formData.append(`images[${i}]date`, image.date)
     formData.append(`images[${i}]monument_id`, String(image.monument_id))
   })
+  formData.append('platform', platform)
   return (
     await axios.post(`${API_URL}/upload-images/`, formData, {
       headers: {

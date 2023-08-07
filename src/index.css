@@ -186,3 +186,11 @@ body,
   z-index: 999;
   cursor: pointer;
 }
+
+.ol-attribution {
+  left: 5px !important;
+  position: absolute !important;
+  width: max-content;
+  /* border-radius: 30px !important; */
+  padding-left: 10px;
+}
