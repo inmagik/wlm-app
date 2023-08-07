@@ -273,6 +273,12 @@ export default function Map() {
             feature: feature,
           })
           shouldCloseMarker = false
+        } else {
+          setMapState({
+            ...mapState,
+            zoom: mapState.zoom + 1,
+            center: evt.coordinate,
+          })
         }
       })
       if (shouldCloseMarker) {
