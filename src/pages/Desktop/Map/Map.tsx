@@ -11,7 +11,7 @@ import { useQsFilters } from '../../../hooks/filters'
 import { Feature, Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { Zoom } from 'ol/control'
+import { Attribution, Zoom } from 'ol/control'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import VectorLayer from 'ol/layer/Vector'
@@ -192,6 +192,10 @@ export default function Map() {
         new Zoom({
           zoomInClassName: styles.ZoomIn,
           zoomOutClassName: styles.ZoomOut,
+        }),
+        new Attribution({
+          collapsible: false,
+          className: styles.Attribution,
         }),
       ],
       view: new View(mapState),

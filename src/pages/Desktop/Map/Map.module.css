@@ -215,3 +215,19 @@
   top: 16px;
   z-index: 1;
 }
+
+.Attribution {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.Attribution > ul {
+    list-style: none;
+}
+
+.Attribution > button {
+    display: none;
+}

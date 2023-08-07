@@ -5,10 +5,12 @@ import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import { useState } from 'react'
 import Legend from '../Legend'
 import WikiLoveMonuments from '../WikiLoveMonuments'
+import { useTranslation } from 'react-i18next'
 
 export default function Topbar() {
   const [legend, setLegend] = useState(false)
   const [infoWiki, setInfoWiki] = useState(false)
+  const { t } = useTranslation()
   return (
     <>
       <div className={styles.TopBar}>
@@ -21,7 +23,7 @@ export default function Topbar() {
           <Logo />
         </div>
         <div className={styles.ContainerTitle}>
-          <Bell /> <span className={styles.Title}>Concorso WLM</span>
+          <Bell /> <span className={styles.Title}>{t('concorso')} WLM</span>
         </div>
         <div
           className="pointer"
