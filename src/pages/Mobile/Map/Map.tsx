@@ -3,13 +3,7 @@ import { Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import 'ol/ol.css'
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
@@ -35,6 +29,8 @@ import { defaults } from 'ol/interaction/defaults'
 import IconMonument from '../../../components/IconMonument'
 import { MarkerProps } from '../../Desktop/Map/Map'
 import { forEach } from 'lodash'
+import { useComuni } from '../../../hooks/comuni'
+import FiltersIcon from '../../../components/Icons/FiltersIcon'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -55,6 +51,7 @@ export default function Map() {
   const [map, setMap] = useState<MapOl | null>(null)
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const { data: categories } = useCategoriesDomain()
+  const { data: comuni } = useComuni()
   const navigate = useNavigate()
   const { i18n } = useTranslation()
   const [loading, setLoading] = useState<boolean>(false)
@@ -203,9 +200,6 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
-          setFilters({
-            ...filters,
-          })
           initialMap?.getView().animate({
             center: fromLonLat([
               monument.position.coordinates[0],
@@ -213,6 +207,11 @@ export default function Map() {
             ]),
             zoom: initialMap?.getView().getZoom() ?? 14,
             duration: 500,
+          })
+          setFilters({
+            ...filters,
+            monument_lat: monument.position.coordinates[1],
+            monument_lon: monument.position.coordinates[0],
           })
           setInfoMarker({
             id: monument.id,
@@ -243,7 +242,7 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
+    if (filters.monument_lat && filters.monument_lon) {
       setMapState({
         ...mapState,
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
@@ -278,15 +277,25 @@ export default function Map() {
 
   useEffect(() => {
     if (
-      sessionStorage.getItem('map_state') &&
+      filters.municipality &&
       !filters.monument_lat &&
-      !filters.monument_lon
+      !filters.monument_lon &&
+      !sessionStorage.getItem('map_state')
     ) {
-      const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
-      setMapState(mapState)
-      sessionStorage.removeItem('map_state')
+      const coordinates = comuni?.find(
+        (c) => c.code === Number(filters.municipality)
+      )?.centroid.coordinates
+      if (!coordinates) return
+      setComuneFilterCoords(
+        coordinates ? [coordinates[0], coordinates[1]] : null
+      )
+      mapElement.current?.animate({
+        center: fromLonLat([coordinates[0], coordinates[1]]),
+        zoom: 18,
+        duration: 500,
+      })
     }
-  }, [])
+  }, [filters.municipality, comuni])
 
   const [coords, setCoords] = useState<number[] | null>(null)
 
@@ -310,11 +319,28 @@ export default function Map() {
     }
   }, [map, refreshCoordinates])
 
+  useEffect(() => {
+    if (
+      sessionStorage.getItem('map_state') &&
+      !filters.monument_lat &&
+      !filters.monument_lon
+    ) {
+      const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
+      // console.log(mapState, 'mapState')
+      map?.getView().animate({
+        center: fromLonLat([mapState.center[0], mapState.center[1]]),
+        zoom: mapState.zoom,
+        duration: 500,
+      })
+      sessionStorage.removeItem('map_state')
+    }
+  }, [])
+
   return (
     <Layout>
       <div className="w-100 h-100">
         <div ref={mapElement} id="map" className="w-100 h-100">
-          <button
+          <div
             className={
               areFiltersActive
                 ? styles.ButtonFiltersActive
@@ -324,8 +350,9 @@ export default function Map() {
               setFiltersOpen(!filtersOpen)
             }}
           >
-            {areFiltersActive ? <FilterIcon /> : <FilterIconPrimary />}
-          </button>
+            <FiltersIcon />
+            {areFiltersActive && <div className={styles.Badge} />}
+          </div>
           <div className={styles.ContainerButtons}>
             {/* <div className={styles.ButtonMappe}>
               <Mappe />
@@ -360,13 +387,12 @@ export default function Map() {
                       zoom: map?.getView().getZoom(),
                     })
                   )
+                  console.log(sessionStorage.getItem('map_state'))
                   navigate(
                     `/${i18n.language}/mappa/${smartSlug(
                       infoMarker.id,
                       infoMarker.label
-                    )})}?map_lon=${mapState.center[0]}&map_lat=${
-                      mapState.center[1]
-                    }&map_zoom=${mapState.zoom}`
+                    )}`
                   )
                 }
               }}

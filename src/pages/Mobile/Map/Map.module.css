@@ -62,11 +62,6 @@
 }
 
 .ButtonFilters {
-  border-radius: 10px;
-  border: 1px solid var(--primary-color, #118ab2);
-  background: var(--colori-neutri-gray-2, #d0dfe4);
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.15);
-  z-index: 1;
   display: flex;
   width: 40px;
   height: 40px;
@@ -77,6 +72,11 @@
   position: absolute;
   top: 16px;
   right: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+  z-index: 1;
 }
 
 .ZoomIn {
@@ -182,4 +182,14 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.Badge{
+  position: absolute;
+  top: -3px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tertiary);
 }
