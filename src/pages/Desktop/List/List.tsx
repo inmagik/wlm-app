@@ -187,12 +187,13 @@ export function ListMonuments({
                         {monument.label}
                       </div>
                       <div className={styles.City}>
-                        {monument.municipality_label}
-                        {monument.location &&
-                          monument.location !== monument.municipality_label && (
-                            <div>, Loc: ${monument.location}</div>
-                          )}
-                      </div>
+                          {monument.municipality_label}
+                          {monument.location &&
+                            monument.location !==
+                              monument.municipality_label && (
+                              <div>Loc: {monument.location}</div>
+                            )}
+                        </div>
                     </div>
                   </div>
                   <div className="d-flex align-items-center flex-column">
