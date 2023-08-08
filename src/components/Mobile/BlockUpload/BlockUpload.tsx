@@ -83,16 +83,13 @@ export default function BlockUpload({
   const uploadCategories = useMemo(() => {
     if (monument) {
       const categories = monument.in_contest
-        ? monument.categories_urls?.uploadurl
-        : monument.categories_urls?.nonwlmuploadurl
-      if (!categories) {
-        return ''
-      }
-      const url = new URL(categories || '')
-      const params = new URLSearchParams(url.search)
-      return params.get('categories') || ''
+        ? monument.categories_urls?.wlm_categories ?? []
+        : monument.categories_urls?.non_wlm_categories ?? []
+
+      return categories
+      
     }
-    return ''
+    return []
   }, [monument])
 
   useEffect(() => {
@@ -419,10 +416,10 @@ export default function BlockUpload({
             {uploadCategories && (
               <span className={styles.Categorie}>
                 <strong>{t('categorie')}:</strong>
-                {uploadCategories.split('|').map((c, i) => (
+                {uploadCategories.map((c, i) => (
                   <div className='py-2' style={{
                     borderBottom: '1px solid var(--primary)',
-                  }} key={i}>{c}</div>
+                  }} key={i}>{c.replace(/\+/g, " ")}</div>
                 ))}
               </span>
             )}
