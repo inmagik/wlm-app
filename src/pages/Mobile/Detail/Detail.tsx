@@ -295,14 +295,19 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             {user ? t('carica_foto') : t('fai_login_e_carica_foto')}
           </button>
 
-          {inContestMonument && (
+          {inContestMonument ? (
             <div className={styles.PresenzaInConcorso}>
               <Bell className="me-2" />
               {monument?.app_category === 'Comune'
                 ? t('il_comune_fa_parte_del_concorso')
                 : t('il_monumento_fa_parte_del_concorso')}
             </div>
+          ) : (
+            <div style={{
+              height: 40
+            }}></div>
           )}
+
           {monument && picturesToUse!.length > 0 ? (
             <>
               <Swiper
@@ -336,10 +341,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                               <a
                                 href={
                                   'https://commons.wikimedia.org/wiki/User:' +
-                                  String(picture.data?.Artist).replace(
-                                    /(<([^>]+)>)/gi,
-                                    ''
-                                  ).replace(' ', '_')
+                                  String(picture.data?.Artist)
+                                    .replace(/(<([^>]+)>)/gi, '')
+                                    .replace(' ', '_')
                                 }
                                 target="_blank"
                                 rel="noreferrer"
@@ -583,13 +587,14 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             <a
               target={'_blank'}
               href={
-                monument.data.commons_n.length > 0 ?
-                'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search=' +
-                'incategory:"' + monument.data.commons_n + '"'
-                :
-                'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search="' +
-                monument?.wlm_n +
-                '"'
+                monument.data.commons_n.length > 0
+                  ? 'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search=' +
+                    'incategory:"' +
+                    monument.data.commons_n +
+                    '"'
+                  : 'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search="' +
+                    monument?.wlm_n +
+                    '"'
               }
               className={styles.ButtonShowAllImages}
             >
