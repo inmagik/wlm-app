@@ -455,7 +455,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                       monument.address !== monument.municipality_label &&
                       monument.app_category !== 'Comune' && (
                         <span className={styles.Comune}>
-                          {monument?.address}, 
+                          {monument?.address.split('-')[0]},{' '} 
                         </span>
                       )}
                     {monument?.municipality_label &&
