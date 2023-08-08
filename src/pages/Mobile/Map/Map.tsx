@@ -182,7 +182,9 @@ export default function Map() {
     })
 
     function setClusterDistance(resolution: number) {
-      if (resolution <= 300) {
+      if (resolution < 0.1) {
+        clusterSource.setDistance(0)
+      } else if (resolution <= 300) {
         clusterSource.setDistance(40)
       } else {
         clusterSource.setDistance(0)
