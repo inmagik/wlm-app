@@ -103,6 +103,9 @@ export interface Monument {
     nonwlmuploadurl: string
     uploadurl: string
   }
+  data: {
+    commons_n: string[]
+  }
 }
 
 export interface Comune {
