@@ -75,8 +75,6 @@ export function ListMonuments({
       only_without_pictures: filters.only_without_pictures,
       user_lat: filters.user_lat,
       user_lon: filters.user_lon,
-      monument_lat: filters.monument_lat,
-      monument_lon: filters.monument_lon,
     }
   }, [filters])
 
@@ -96,6 +94,12 @@ export function ListMonuments({
       setDetail(filters.monument_id)
     }
   }, [filters.monument_id])
+
+  useEffect(() => {
+    if(sessionStorage.getItem('monument_id')) {
+      setDetail(Number(sessionStorage.getItem('monument_id')))
+    }
+  }, [])
 
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
@@ -137,9 +141,12 @@ export function ListMonuments({
                   })}
                   onClick={() => {
                     setDetail(monument.id)
+                    sessionStorage.setItem('monument_id', monument.id.toString())
                     setFilters({
                       ...filters,
                       monument_id: monument.id,
+                      monument_lat: monument.position?.coordinates[1],
+                      monument_lon: monument.position?.coordinates[0],
                     })
                   }}
                 >

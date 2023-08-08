@@ -237,6 +237,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 onClick={() => {
                   if (slug) {
                     setDetail(null)
+                    sessionStorage.removeItem('monument_id')
                     if (location.pathname.indexOf('lista') > -1) {
                       navigate(
                         `/${i18n.language}/lista/?${new URLSearchParams({
@@ -268,6 +269,12 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     }
                   } else {
                     sessionStorage.removeItem('monument_id')
+                    setFilters({
+                      ...filters,
+                      monument_id: undefined,
+                      monument_lat: undefined,
+                      monument_lon: undefined,
+                    })
                     setDetail(null)
                   }
                 }}
@@ -824,6 +831,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 // disabled
                 onClick={() => {
                   localStorage.setItem('redirectUrl', pathname + search)
+                  localStorage.setItem('monument', JSON.stringify(monument))
                   window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                 }}
               >

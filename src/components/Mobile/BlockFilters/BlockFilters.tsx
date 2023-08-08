@@ -266,6 +266,7 @@ export default function BlockFilters({
                       const coords = comune.centroid.coordinates
                       setComuneFilterCoords(coords)
                     }
+                    sessionStorage.removeItem('monument_id')
                   }}
                 >
                   <Flag className="me-2" /> {comune.label}

@@ -23,6 +23,9 @@ const getFilters = (params: URLSearchParams) => ({
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
   ordering: params.get('ordering') ?? 'distance',
+  monument_id: params.get('monument_id') ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
 })
 
 export default function BottomNavigation() {
@@ -43,6 +46,9 @@ export default function BottomNavigation() {
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
           ordering: filters.ordering,
+          monument_id: filters.monument_id,
+          monument_lat: String(filters.monument_lat),
+          monument_lon: String(filters.monument_lon),
         })}`}
         className="no-link"
       >
@@ -72,7 +78,7 @@ export default function BottomNavigation() {
       </LangLink>
       <LangLink
         to={`/lista?${new URLSearchParams({
-          search: filters.search,
+          search: '',
           municipality: filters.municipality,
           category: filters.category,
           in_contest: filters.in_contest,
@@ -80,6 +86,9 @@ export default function BottomNavigation() {
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
           ordering: filters.ordering,
+          monument_id: filters.monument_id,
+          monument_lat: String(filters.monument_lat),
+          monument_lon: String(filters.monument_lon),
         })}`}
         className="no-link"
       >

@@ -252,6 +252,13 @@ export default function Map() {
           const appCategory = category
           sessionStorage.setItem('monument_id', monument.id)
           setDetail(monument.id)
+          setFilters({
+            ...filters,
+            monument_id: monument.id,
+            search: monument.label,
+            monument_lat: monument.position.coordinates[1],
+            monument_lon: monument.position.coordinates[0],
+          })
           initialMap?.getView().animate({
             center: fromLonLat([
               monument.position.coordinates[0],
@@ -301,14 +308,14 @@ export default function Map() {
   }, [detail])
 
   useEffect(() => {
-    if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
+    if (filters.monument_lat && filters.monument_lon ) {
       setMapState({
         ...mapState,
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
         zoom: 16,
       })
     }
-  }, [filters.monument_lat, filters.monument_lon])
+  }, [])
 
   useEffect(() => {
     if (comuneFilterCoords) {
@@ -327,16 +334,14 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if (filters.municipality) {
-      console.log(filters.municipality, 'filters.municipality')
-      const coordinates = comuni?.find((c) => c.code === Number(filters.municipality))
-        ?.centroid.coordinates
-      console.log(coordinates, 'coordinates')
-      if(!coordinates) return
+    if (filters.municipality && !filters.monument_lat && !filters.monument_lon) {
+      const coordinates = comuni?.find(
+        (c) => c.code === Number(filters.municipality)
+      )?.centroid.coordinates
+      if (!coordinates) return
       setComuneFilterCoords(
         coordinates ? [coordinates[0], coordinates[1]] : null
       )
-      console.log(coordinates, 'coordinates')
       mapElement.current?.animate({
         center: fromLonLat([coordinates[0], coordinates[1]]),
         zoom: 18,
@@ -344,6 +349,22 @@ export default function Map() {
       })
     }
   }, [filters.municipality, comuni])
+
+  useEffect(() => {
+    if (localStorage.getItem('monument')) {
+      const monument = JSON.parse(localStorage.getItem('monument') as string)
+      setDetail(monument.id)
+      setMapState({
+        ...mapState,
+        center: fromLonLat([
+          monument.position.coordinates[0],
+          monument.position.coordinates[1],
+        ]),
+        zoom: 16,
+      })
+    }
+    localStorage.removeItem('monument')
+  }, [])
 
   return (
     <Layout>

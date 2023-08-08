@@ -40,6 +40,10 @@ export interface MonumentList {
   pictures_wlm_count: number
   pictures_count: number
   distance: number
+  position?: {
+    type: string
+    coordinates: [number, number]
+  }
 }
 
 export interface CountByCategory {
