@@ -114,6 +114,11 @@ export function ListMonuments({ filters }: Props) {
                           {monument.label}
                         </div>
                         <div className={styles.City}>
+                          {monument?.address &&
+                            monument.address !== monument.municipality_label &&
+                            monument.app_category !== 'Comune' && (
+                              <span>{monument?.address},</span>
+                            )}
                           {monument.municipality_label}
                           {monument.location &&
                             monument.location !== monument.municipality_label &&
