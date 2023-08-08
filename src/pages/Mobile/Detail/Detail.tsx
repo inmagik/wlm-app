@@ -348,6 +348,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                                     .replace(' ', '_')
                                     .split('(')[0]
                                 }
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                }}
                                 target="_blank"
                                 rel="noreferrer"
                               >

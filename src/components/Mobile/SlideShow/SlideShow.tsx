@@ -133,10 +133,9 @@ export default function SlideShow({
                           className={styles.Artist}
                           dangerouslySetInnerHTML={{
                             __html:
-                              String(picture.data?.Artist).replace(
-                                /(<([^>]+)>)/gi,
-                                ''
-                              ) || '',
+                              String(picture.data?.Artist)
+                                .replace(/(<([^>]+)>)/gi, '')
+                                .split('(')[0] || '',
                           }}
                         ></div>
                       )}
