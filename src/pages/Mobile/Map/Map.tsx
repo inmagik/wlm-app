@@ -226,8 +226,12 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
-          console.log(
-            initialMap?.getView().getZoom()
+          sessionStorage.setItem(
+            'map_state',
+            JSON.stringify({
+              center: map?.getView().getCenter(),
+              zoom: map?.getView().getZoom(),
+            })
           )
           initialMap?.getView().animate({
             center: fromLonLat([
