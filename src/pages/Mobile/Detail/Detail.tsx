@@ -303,9 +303,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 : t('il_monumento_fa_parte_del_concorso')}
             </div>
           ) : (
-            <div style={{
-              height: 40
-            }}></div>
+            <div
+              style={{
+                height: 40,
+              }}
+            ></div>
           )}
 
           {monument && picturesToUse!.length > 0 ? (
@@ -449,13 +451,21 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     <div className={styles.MonumentTitle}>
                       {monument?.label}
                     </div>
+                    {monument?.address &&
+                      monument.address !== monument.municipality_label &&
+                      monument.app_category !== 'Comune' && (
+                        <span className={styles.Comune}>
+                          {monument?.address}, 
+                        </span>
+                      )}
                     {monument?.municipality_label &&
                       monument?.app_category !== 'Comune' && (
-                        <div className={styles.Comune}>
+                        <span className={styles.Comune}>
                           {monument?.municipality_label} (
                           {monument?.province_label})
-                        </div>
+                        </span>
                       )}
+
                     {monument?.location &&
                       monument.location !== monument.municipality_label &&
                       monument.app_category !== 'Comune' && (
