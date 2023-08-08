@@ -226,12 +226,15 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
+          console.log(
+            initialMap?.getView().getZoom()
+          )
           initialMap?.getView().animate({
             center: fromLonLat([
               monument.position.coordinates[0],
               monument.position.coordinates[1],
             ]),
-            zoom: initialMap?.getView().getZoom() ?? 14,
+            zoom: initialMap?.getView().getZoom(),
             duration: 500,
           })
           setFilters({
@@ -352,7 +355,6 @@ export default function Map() {
       !filters.monument_lon
     ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
-      // console.log(mapState, 'mapState')
       map?.getView().animate({
         center: fromLonLat([mapState.center[0], mapState.center[1]]),
         zoom: mapState.zoom,
