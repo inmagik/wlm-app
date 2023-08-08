@@ -100,8 +100,8 @@ export interface Monument {
   location: string
   article: string
   categories_urls?: {
-    nonwlmuploadurl: string
-    uploadurl: string
+    non_wlm_categories: string[]
+    wlm_categories: string[]
   }
   data: {
     commons_n: string[]
