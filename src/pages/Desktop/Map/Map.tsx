@@ -87,7 +87,6 @@ export default function Map() {
     minZoom: 5,
   })
 
-
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
@@ -245,10 +244,10 @@ export default function Map() {
           const appCategory = category
           sessionStorage.setItem('monument_id', monument.id)
           setDetail(monument.id)
+          console.log(filters, 'filters')
           setFilters({
-            ...filters,
             monument_id: monument.id,
-            search: monument.label,
+            // search: monument.label,
             monument_lat: monument.position.coordinates[1],
             monument_lon: monument.position.coordinates[0],
           })
@@ -301,11 +300,16 @@ export default function Map() {
   }, [detail])
 
   useEffect(() => {
-    if (filters.monument_lat && filters.monument_lon ) {
+    if (filters.monument_lat && filters.monument_lat !== 0 && filters.monument_lon && filters.monument_lon !== 0) {
+      map?.getView().animate({
+        center: fromLonLat([filters.monument_lon, filters.monument_lat]),
+        zoom: 19,
+        duration: 500,
+      })
       setMapState({
         ...mapState,
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
-        zoom: 16,
+        zoom: 19,
       })
     }
   }, [])
@@ -327,7 +331,11 @@ export default function Map() {
   }, [filters.monument_id])
 
   useEffect(() => {
-    if (filters.municipality && !filters.monument_lat && !filters.monument_lon) {
+    if (
+      filters.municipality &&
+      (!filters.monument_lat && filters.monument_lat !== 0) &&
+      (!filters.monument_lon && filters.monument_lon !== 0)
+    ) {
       const coordinates = comuni?.find(
         (c) => c.code === Number(filters.municipality)
       )?.centroid.coordinates
@@ -353,7 +361,15 @@ export default function Map() {
           monument.position.coordinates[0],
           monument.position.coordinates[1],
         ]),
-        zoom: 16,
+        zoom: 20,
+      })
+      mapElement.current?.animate({
+        center: fromLonLat([
+          monument.position.coordinates[0],
+          monument.position.coordinates[1],
+        ]),
+        zoom: 18,
+        duration: 500,
       })
     }
     localStorage.removeItem('monument')

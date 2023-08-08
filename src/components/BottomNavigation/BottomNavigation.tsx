@@ -24,8 +24,8 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: Number(params.get('user_lon')) ?? '',
   ordering: params.get('ordering') ?? 'distance',
   monument_id: params.get('monument_id') ?? '',
-  monument_lat: Number(params.get('monument_lat')) ?? '',
-  monument_lon: Number(params.get('monument_lon')) ?? '',
+  monument_lat: params.get('monument_lat') ?? '',
+  monument_lon: params.get('monument_lon') ?? '',
 })
 
 export default function BottomNavigation() {
@@ -46,9 +46,9 @@ export default function BottomNavigation() {
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
           ordering: filters.ordering,
-          monument_id: filters.monument_id,
-          monument_lat: String(filters.monument_lat),
-          monument_lon: String(filters.monument_lon),
+          monument_id: filters.monument_id || '',
+          monument_lat: filters.monument_lat || '',
+          monument_lon: filters.monument_lon || '',
         })}`}
         className="no-link"
       >
@@ -86,9 +86,9 @@ export default function BottomNavigation() {
           user_lat: String(filters.user_lat),
           user_lon: String(filters.user_lon),
           ordering: filters.ordering,
-          monument_id: filters.monument_id,
-          monument_lat: String(filters.monument_lat),
-          monument_lon: String(filters.monument_lon),
+          monument_id: filters.monument_id || '',
+          monument_lat: filters.monument_lat || '',
+          monument_lon: filters.monument_lon || '',
         })}`}
         className="no-link"
       >
