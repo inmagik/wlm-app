@@ -6,7 +6,7 @@ import { Fill, Style, Circle, Text, Icon } from 'ol/style'
 import { scaleLinear } from 'd3-scale'
 import getMarkerMap from '../components/MarkerMap/MarkerMap'
 import { API_URL } from '../const'
-import { forEach, omit } from 'lodash'
+import { forEach } from 'lodash'
 import { CategoryDomain } from '../types'
 
 const format = new GeoJSON()

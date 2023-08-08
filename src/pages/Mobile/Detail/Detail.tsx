@@ -215,6 +215,12 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
     }
   }, [monument])
 
+  useEffect(() => {
+    if (monument) {
+      sessionStorage.setItem('municipality', monument.municipality.toString())
+    }
+  }, [monument])
+
   const { pathname, search } = useLocation()
 
   return (

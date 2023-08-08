@@ -44,6 +44,7 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: params.get('user_lon') ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
+  map_zoom: Number(params.get('map_zoom')) ?? '',
 })
 
 const vectorSourceMyLocation = new VectorSource({
@@ -235,18 +236,19 @@ export default function Map() {
               zoom: map?.getView().getZoom(),
             })
           )
+          setFilters({
+            ...filters,
+            monument_lat: monument.position.coordinates[1],
+            monument_lon: monument.position.coordinates[0],
+            map_zoom: initialMap?.getView().getZoom(),
+          })
           initialMap?.getView().animate({
             center: fromLonLat([
               monument.position.coordinates[0],
               monument.position.coordinates[1],
             ]),
-            zoom: initialMap?.getView().getZoom(),
+            // zoom: initialMap?.getView().getZoom(),
             duration: 500,
-          })
-          setFilters({
-            ...filters,
-            monument_lat: monument.position.coordinates[1],
-            monument_lon: monument.position.coordinates[0],
           })
           setInfoMarker({
             id: monument.id,
@@ -277,11 +279,11 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if (filters.monument_lat && filters.monument_lon) {
+    if (filters.monument_lat !== 0 && filters.monument_lon !== 0) {
       setMapState({
         ...mapState,
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
-        zoom: 16,
+        zoom: filters.map_zoom ? filters.map_zoom : 16,
       })
     }
   }, [filters.monument_lat, filters.monument_lon])
@@ -357,16 +359,18 @@ export default function Map() {
   useEffect(() => {
     if (
       sessionStorage.getItem('map_state') &&
-      !filters.monument_lat &&
-      !filters.monument_lon
+      filters.monument_lat !== 0 &&
+      filters.monument_lon !== 0
     ) {
+      // console.log('setting map state', mapState)
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
-      map?.getView().animate({
-        center: fromLonLat([mapState.center[0], mapState.center[1]]),
-        zoom: mapState.zoom,
-        duration: 500,
-      })
-      sessionStorage.removeItem('map_state')
+      // console.log('setting map state', mapState)
+      map?.getView().setZoom(mapState.zoom)
+      map?.getView().setCenter(mapState.center)
+      setMapState(mapState)
+      setTimeout(() => {
+        sessionStorage.removeItem('map_state')
+      }, 1000)
     }
   }, [])
 
@@ -379,7 +383,7 @@ export default function Map() {
           monument.position.coordinates[0],
           monument.position.coordinates[1],
         ]),
-        zoom: 18,
+        zoom: 20,
       })
       sessionStorage.removeItem('monument')
     }

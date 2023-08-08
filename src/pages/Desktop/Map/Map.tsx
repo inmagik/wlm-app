@@ -209,7 +209,6 @@ export default function Map() {
     setClusterDistance(v.getResolution() || 1000)
     v.on('change', function () {
       const resolution = v.getResolution() || 1000
-      console.log(resolution, 'resolution')
       setClusterDistance(resolution)
     })
 

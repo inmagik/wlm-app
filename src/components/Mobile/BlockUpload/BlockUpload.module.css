@@ -350,7 +350,7 @@
     display: flex;
     position: sticky;
     width: 100%;
-    bottom: 0px;
+    bottom: 4px;
     justify-content: space-between;
   }
 

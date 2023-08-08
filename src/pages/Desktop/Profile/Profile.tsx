@@ -15,6 +15,7 @@ import { API_URL, URL_WIKI } from '../../../const'
 import { useAuthActions, useAuthUser } from 'use-eazy-auth'
 import classNames from 'classnames'
 import { PersonalImages } from '../../../components/PersonalImages'
+import { useLocation } from 'react-router-dom'
 
 export default function Profile() {
   const { t, i18n } = useTranslation()
@@ -22,6 +23,7 @@ export default function Profile() {
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
   const { logout } = useAuthActions()
+  const { pathname } = useLocation()
   return (
     <Layout>
       <div className="w-100 h-100 d-flex justify-content-center position-relative">
@@ -102,6 +104,7 @@ export default function Profile() {
                   <button
                     className={styles.LoginButton}
                     onClick={() => {
+                      localStorage.setItem('redirectUrl', pathname)
                       window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                     }}
                   >
@@ -157,10 +160,6 @@ export default function Profile() {
             </div>
           )}
         </div>
-        {/* <BlockCambiaLingua
-          isOpenCambiaLingua={isOpenCambiaLingua}
-          setIsOpenCambiaLingua={setIsOpenCambiaLingua}
-        /> */}
       </div>
     </Layout>
   )
