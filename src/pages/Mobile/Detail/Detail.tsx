@@ -237,7 +237,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 onClick={() => {
                   if (slug) {
                     setDetail(null)
-                    sessionStorage.removeItem('monument_id')
+                    // sessionStorage.removeItem('monument_id')
                     if (location.pathname.indexOf('lista') > -1) {
                       navigate(
                         `/${i18n.language}/lista/?${new URLSearchParams({
@@ -268,7 +268,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                       )
                     }
                   } else {
-                    sessionStorage.removeItem('monument_id')
+                    // sessionStorage.removeItem('monument_id')
                     setFilters({
                       ...filters,
                       monument_id: undefined,

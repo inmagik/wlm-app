@@ -328,10 +328,10 @@ export default function Map() {
   }, [comuneFilterCoords])
 
   useEffect(() => {
-    if (sessionStorage.getItem('monument_id')) {
-      setDetail(Number(sessionStorage.getItem('monument_id')))
+    if (filters.monument_id) {
+      setDetail(filters.monument_id)
     }
-  }, [])
+  }, [filters.monument_id])
 
   useEffect(() => {
     if (filters.municipality && !filters.monument_lat && !filters.monument_lon) {

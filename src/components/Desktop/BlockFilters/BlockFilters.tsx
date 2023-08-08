@@ -132,7 +132,7 @@ export default function BlockFilters({
                       const coords = comune.centroid.coordinates
                       setComuneFilterCoords(coords)
                     }
-                    sessionStorage.removeItem('monument_id')
+                    // sessionStorage.removeItem('monument_id')
                   }}
                 >
                   <div className={styles.ComuneItemTitle}>

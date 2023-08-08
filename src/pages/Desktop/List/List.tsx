@@ -95,11 +95,11 @@ export function ListMonuments({
     }
   }, [filters.monument_id])
 
-  useEffect(() => {
-    if(sessionStorage.getItem('monument_id')) {
-      setDetail(Number(sessionStorage.getItem('monument_id')))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(sessionStorage.getItem('monument_id')) {
+  //     setDetail(Number(sessionStorage.getItem('monument_id')))
+  //   }
+  // }, [])
 
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
@@ -141,7 +141,7 @@ export function ListMonuments({
                   })}
                   onClick={() => {
                     setDetail(monument.id)
-                    sessionStorage.setItem('monument_id', monument.id.toString())
+                    // sessionStorage.setItem('monument_id', monument.id.toString())
                     setFilters({
                       ...filters,
                       monument_id: monument.id,
