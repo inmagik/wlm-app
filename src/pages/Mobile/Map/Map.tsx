@@ -336,6 +336,21 @@ export default function Map() {
     }
   }, [])
 
+  useEffect(() => {
+    if (sessionStorage.getItem('monument')) {
+      const monument = JSON.parse(sessionStorage.getItem('monument')!)
+      setMapState({
+        ...mapState,
+        center: fromLonLat([
+          monument.position.coordinates[0],
+          monument.position.coordinates[1],
+        ]),
+        zoom: 18,
+      })
+      sessionStorage.removeItem('monument')
+    }
+  }, [])
+
   return (
     <Layout>
       <div className="w-100 h-100">

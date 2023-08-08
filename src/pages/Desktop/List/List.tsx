@@ -111,7 +111,6 @@ export function ListMonuments({
           `geolocation permission status is ${permissionStatus.state}`
         )
         setGeoPermission(permissionStatus.state)
-
         permissionStatus.onchange = () => {
           console.log(
             `geolocation permission status has changed to ${permissionStatus.state}`
@@ -119,6 +118,35 @@ export function ListMonuments({
           setGeoPermission(permissionStatus.state)
         }
       })
+  }, [])
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+  }
+
+  function error() {
+    setFilters({
+      ...filters,
+      ordering: 'label',
+      user_lat: 0,
+      user_lon: 0,
+    })
+    console.log('Unable to retrieve your location')
+  }
+  
+  useEffect(() => {
+    if (navigator.geolocation && geoPermission !== 'denied') {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
   }, [])
 
   return (
@@ -216,6 +244,7 @@ export default function List() {
   const navigate = useNavigate()
 
   const { i18n } = useTranslation()
+  
 
   return (
     <Layout>

@@ -127,6 +127,9 @@ export default function BlockFilters({
                     setFilters({
                       ...filters,
                       municipality: comune.code,
+                      monument_id: '',
+                      monument_lat: '',
+                      monument_lon: '',
                     })
                     if (setComuneFilterCoords) {
                       const coords = comune.centroid.coordinates

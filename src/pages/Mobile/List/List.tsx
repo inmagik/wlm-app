@@ -6,15 +6,15 @@ import styles from './List.module.css'
 import { ReactComponent as Camera } from '../../../assets/camera.svg'
 import { ReactComponent as Search } from '../../../assets/search.svg'
 import { ReactComponent as OrderingIcon } from '../../../assets/ordering.svg'
-import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import { useQsFilters } from '../../../hooks/filters'
-import LangLink from '../../../components/LangLink'
 import { smartSlug } from '../../../utils'
 import IconMonument from '../../../components/IconMonument'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 import classNames from 'classnames'
+import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   filters: {
@@ -27,10 +27,20 @@ interface Props {
     user_lat: number
     user_lon: number
   }
+  setFilters: (filters: {
+    search: string
+    municipality: string
+    ordering: string
+    category: string
+    in_contest: string
+    only_without_pictures: string
+    user_lat: number
+    user_lon: number
+  }) => void
   isDesktop?: boolean
 }
 
-export function ListMonuments({ filters }: Props) {
+export function ListMonuments({ filters, setFilters }: Props) {
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll
@@ -78,6 +88,9 @@ export function ListMonuments({ filters }: Props) {
           `geolocation permission status is ${permissionStatus.state}`
         )
         setGeoPermission(permissionStatus.state)
+        if (permissionStatus.state === 'granted') {
+          navigator.geolocation.getCurrentPosition(success, error)
+        }
 
         permissionStatus.onchange = () => {
           console.log(
@@ -86,6 +99,43 @@ export function ListMonuments({ filters }: Props) {
           setGeoPermission(permissionStatus.state)
         }
       })
+  }, [])
+
+  function success(position: any) {
+    const latitude = position.coords.latitude
+    const longitude = position.coords.longitude
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+  }
+
+  function error() {
+    setFilters({
+      ...filters,
+      ordering: 'label',
+      user_lat: 0,
+      user_lon: 0,
+    })
+    console.log('Unable to retrieve your location')
+  }
+
+  useEffect(() => {
+    if (navigator.geolocation && geoPermission !== 'denied') {
+      navigator.geolocation.getCurrentPosition(success, error)
+    } else {
+      console.log('Geolocation not supported')
+    }
+  }, [])
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (sessionStorage.getItem('monument')) {
+      sessionStorage.removeItem('monument')
+    }
   }, [])
 
   return (
@@ -99,10 +149,14 @@ export function ListMonuments({ filters }: Props) {
           <Fragment key={i}>
             {list.results.map((monument, k) => {
               return (
-                <LangLink
+                <div
                   key={k}
-                  to={`/lista/${smartSlug(monument.id, monument.label)}`}
-                  className="no-link"
+                  onClick={() => {
+                    sessionStorage.setItem('monument', JSON.stringify(monument))
+                    console.log('monument', monument)
+                    navigate(`${smartSlug(monument.id, monument.label)}`)
+                  }}
+                  className="no-link pointer"
                 >
                   <div className={styles.MonumentCard}>
                     <div className="d-flex">
@@ -133,7 +187,7 @@ export function ListMonuments({ filters }: Props) {
                       )}
                     </div>
                   </div>
-                </LangLink>
+                </div>
               )
             })}
           </Fragment>
@@ -225,7 +279,7 @@ export default function List() {
             </div>
           }
         >
-          <ListMonuments filters={filters} />
+          <ListMonuments setFilters={setFilters} filters={filters} />
         </Suspense>
       </div>
       <BlockFilters

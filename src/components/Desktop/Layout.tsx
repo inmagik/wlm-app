@@ -108,7 +108,7 @@ function SlidesPresentazione({
           className={classNames({
             pointer: activeSlide > 0,
           })}
-          fill={activeSlide > 0 ? 'var(--primary)' : '#fff'}
+          fill={activeSlide > 0 ? 'var(--secondary)' : '#fff'}
           onClick={(e) => {
             e.stopPropagation()
             if (activeSlide > 0) sliderRef.current.slidePrev()
@@ -121,7 +121,7 @@ function SlidesPresentazione({
           className={classNames({
             pointer: activeSlide < slides.length - 1,
           })}
-          fill={activeSlide < slides.length - 1 ? 'var(--primary)' : '#fff'}
+          fill={activeSlide < slides.length - 1 ? 'var(--secondary)' : '#fff'}
           onClick={(e) => {
             e.stopPropagation()
             if (activeSlide < slides.length - 1) sliderRef.current.slideNext()
