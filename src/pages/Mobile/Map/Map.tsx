@@ -200,69 +200,81 @@ export default function Map() {
 
     initialMap.on('click', function (evt) {
       let shouldCloseMarker = true
-      initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
-        const info = getFeatureInfo(feature)
+      initialMap.forEachFeatureAtPixel(
+        evt.pixel,
+        function (feature) {
+          const info = getFeatureInfo(feature)
 
-        if (info === 1) {
-          const monument = feature.getProperties().features[0].getProperties()
-          const categoriesFeature = feature
-            .getProperties()
-            .features[0].getProperties().categories
-          let category = ''
-          const categoryLookup = {} as Record<number, string>
-          forEach(
-            categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
-            ({ name, categories: ids }) => {
-              ids.forEach((id: number) => {
-                categoryLookup[id] = name
-              })
+          if (info === 1) {
+            const monument = feature.getProperties().features[0].getProperties()
+            const categoriesFeature = feature
+              .getProperties()
+              .features[0].getProperties().categories
+            let category = ''
+            const categoryLookup = {} as Record<number, string>
+            forEach(
+              categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
+              ({ name, categories: ids }) => {
+                ids.forEach((id: number) => {
+                  categoryLookup[id] = name
+                })
+              }
+            )
+
+            category =
+              categoriesFeature.reduce(
+                (acc: string, id: number) => acc ?? categoryLookup[id],
+                undefined
+              ) ?? ''
+
+            if (category === '') {
+              category = 'Altri monumenti'
             }
-          )
-
-          category =
-            categoriesFeature.reduce(
-              (acc: string, id: number) => acc ?? categoryLookup[id],
-              undefined
-            ) ?? ''
-
-          if (category === '') {
-            category = 'Altri monumenti'
-          }
-          const appCategory = category
-          sessionStorage.setItem(
-            'map_state',
-            JSON.stringify({
-              center: map?.getView().getCenter(),
-              zoom: map?.getView().getZoom(),
+            const appCategory = category
+            sessionStorage.setItem(
+              'map_state',
+              JSON.stringify({
+                center: map?.getView().getCenter(),
+                zoom: map?.getView().getZoom(),
+              })
+            )
+            setFilters({
+              ...filters,
+              monument_lat: monument.position.coordinates[1],
+              monument_lon: monument.position.coordinates[0],
+              map_zoom: initialMap?.getView().getZoom(),
             })
-          )
-          setFilters({
-            ...filters,
-            monument_lat: monument.position.coordinates[1],
-            monument_lon: monument.position.coordinates[0],
-            map_zoom: initialMap?.getView().getZoom(),
-          })
-          initialMap?.getView().animate({
-            center: fromLonLat([
-              monument.position.coordinates[0],
-              monument.position.coordinates[1],
-            ]),
-            // zoom: initialMap?.getView().getZoom(),
-            duration: 500,
-          })
-          setInfoMarker({
-            id: monument.id,
-            label: monument.label,
-            pictures_wlm_count: monument.pictures_wlm_count,
-            pictures_count: monument.pictures_count,
-            coords: evt.pixel,
-            app_category: appCategory,
-            in_contest: monument.in_contest,
-            feature: feature,
-          })
-          shouldCloseMarker = false
+            initialMap?.getView().animate({
+              center: fromLonLat([
+                monument.position.coordinates[0],
+                monument.position.coordinates[1],
+              ]),
+              // zoom: initialMap?.getView().getZoom(),
+              duration: 500,
+            })
+            setInfoMarker({
+              id: monument.id,
+              label: monument.label,
+              pictures_wlm_count: monument.pictures_wlm_count,
+              pictures_count: monument.pictures_count,
+              coords: evt.pixel,
+              app_category: appCategory,
+              in_contest: monument.in_contest,
+              feature: feature,
+            })
+            shouldCloseMarker = false
+          } else {
+            setMapState({
+              ...mapState,
+              zoom: mapState.zoom + 1,
+              center: evt.coordinate,
+            })
+          }
+        },
+        {
+          hitTolerance: 30,
         }
-      })
+      )
       if (shouldCloseMarker) {
         setInfoMarker(null)
         // setDetail(null)
