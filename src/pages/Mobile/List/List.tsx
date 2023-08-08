@@ -172,7 +172,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
                           {monument.location &&
                             monument.location !==
                               monument.municipality_label && (
-                              <div>, Loc: ${monument.location}</div>
+                              <div>Loc: {monument.location}</div>
                             )}
                         </div>
                       </div>
