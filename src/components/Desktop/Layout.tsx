@@ -16,12 +16,6 @@ const slides = [
   '/slides/desktop/slide5.png',
   '/slides/desktop/slide6.png',
   '/slides/desktop/slide7.png',
-  '/slides/desktop/slide8.png',
-  '/slides/desktop/slide9.png',
-  '/slides/desktop/slide11.png',
-  '/slides/desktop/slide10.png',
-  '/slides/desktop/slide12.png',
-  '/slides/desktop/slide13.png',
 ]
 
 function SlidesPresentazione({
@@ -149,9 +143,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="h-100 w-100">
-      {/* {presentazione && (
+      {presentazione && (
         <SlidesPresentazione setPresentazione={setPresentazione} />
-      )} */}
+      )}
       <Topbar />
       <div className="block-content-desktop">{children}</div>
       <BottomNavigation />
