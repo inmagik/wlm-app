@@ -346,6 +346,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                                   String(picture.data?.Artist)
                                     .replace(/(<([^>]+)>)/gi, '')
                                     .replace(' ', '_')
+                                    .split('(')[0]
                                 }
                                 target="_blank"
                                 rel="noreferrer"
@@ -357,7 +358,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                                       String(picture.data?.Artist).replace(
                                         /(<([^>]+)>)/gi,
                                         ''
-                                      ) || '',
+                                      ).split(
+                                        '('
+                                      )[0] || '',
                                   }}
                                 ></div>
                               </a>
