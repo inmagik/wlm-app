@@ -87,7 +87,8 @@
             "le_tue_foto_caricate": "Your uploaded photos",
             "per_caricare_una_foto": "To log in you must accept the following conditions:",
             "accetta": "Accept",
-            "concorso": "Contest"
+            "concorso": "Contest",
+            "categorie": "Categories"
         }
     },
     "it": {
@@ -178,7 +179,8 @@
             "le_tue_foto_caricate": "Le tue foto caricate",
             "per_caricare_una_foto": "Per effettuare il Login è necessario accettare le seguenti condizioni:",
             "accetta": "Accetta",
-            "concorso": "Concorso"
+            "concorso": "Concorso",
+            "categorie": "Categorie"
         }
     }
 }

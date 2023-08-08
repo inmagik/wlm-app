@@ -2,10 +2,12 @@ import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
 import { ReactComponent as DeleteImage } from '../../../assets/delete-image.svg'
 import { ReactComponent as UploadSuccess } from '../../../assets/upload-success.svg'
+import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slideshow-arrow.svg'
+import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Pagination, type Swiper as SwiperRef } from 'swiper'
+import { type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
 import { useMediaQuery } from 'usehooks-ts'
 import { Monument } from '../../../types'
@@ -14,6 +16,7 @@ import dayjs from 'dayjs'
 import { useAuthUser } from 'use-eazy-auth'
 import { useQueryClient } from '@tanstack/react-query'
 import { Spinner } from 'react-bootstrap'
+import classNames from 'classnames'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -97,7 +100,9 @@ export default function BlockUpload({
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
         images.push({
-          title: `${monument?.label}_${dayjs().format('YYYY-MM-DDHH:mm:ss')}_${(i + 1)
+          title: `${monument?.label}_${dayjs().format('YYYY-MM-DDHH:mm:ss')}_${(
+            i + 1
+          )
             .toString()
             .padStart(3, '0')}`,
           description: monument?.label || '',
@@ -149,35 +154,29 @@ export default function BlockUpload({
         }}
       >
         <div className={styles.ModalUploadContainer}>
-          <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex py-2 align-items-center justify-content-between position-sticky" style={{
+            top: 0,
+            zIndex: 100,
+            backgroundColor: 'var(--overlay)',
+          }}>
             <div className={styles.TitleConcorso}>
               {monument?.in_contest
                 ? t('la_tua_foto_sarà_in_concorso')
                 : t('la_tua_foto_non_sarà_in_concorso')}{' '}
-              -{' '}
-              {uploadCategories && (
-                <span className={styles.Categorie}>
-                  Categorie: {uploadCategories}
-                </span>
-              )}
             </div>
-            <div></div>
+            <div className={styles.Close}>
+              <Close
+                onClick={() => {
+                  setUploadState(undefined)
+                  setFileList(null)
+                  setUploadOpen(false)
+                  setErrors([])
+                }}
+              />
+            </div>
           </div>
-          <div className={styles.CloseModal}>
-            <Close
-              onClick={() => {
-                setUploadState(undefined)
-                setFileList(null)
-                setUploadOpen(false)
-                setErrors([])
-              }}
-            />
-          </div>
+          <div className={styles.CloseModal}></div>
           <Swiper
-            modules={[Pagination]}
-            pagination={{
-              dynamicBullets: true,
-            }}
             slidesPerView={isMobile || uploadState?.length === 1 ? 1 : 1.1}
             spaceBetween={isMobile || uploadState?.length === 1 ? 0 : 20}
             onSwiper={(swiper) => {
@@ -221,7 +220,7 @@ export default function BlockUpload({
                       <div>
                         <textarea
                           required
-                          rows={2}
+                          rows={isMobile ? 2 : 1}
                           style={{
                             // border: '1px solid transparent',
                             boxShadow:
@@ -379,6 +378,55 @@ export default function BlockUpload({
                 </SwiperSlide>
               ))}
           </Swiper>
+          {uploadState && uploadState?.length > 1 && (
+            <div className={styles.PaginationContainer}>
+              <ArrowLeftSlideShow
+                onClick={() => {
+                  if (slideActive > 0) {
+                    swiperRef.current?.slidePrev()
+                  }
+                }}
+                className={classNames('me-3', {
+                  pointer: slideActive > 0,
+                })}
+                fill={
+                  slideActive > 0
+                    ? 'var(--primary)'
+                    : 'var(--colori-neutri-gray-2)'
+                }
+              />
+              <div className={styles.CurrentSlide}>
+                {slideActive + 1} / {uploadState?.length}
+              </div>
+              <ArrowRightSlideShow
+                onClick={() => {
+                  if (slideActive < uploadState?.length - 1) {
+                    swiperRef.current?.slideNext()
+                  }
+                }}
+                className={classNames('ms-3', {
+                  pointer: slideActive < uploadState?.length - 1,
+                })}
+                fill={
+                  slideActive < uploadState?.length - 1
+                    ? 'var(--primary)'
+                    : 'var(--colori-neutri-gray-2)'
+                }
+              />
+            </div>
+          )}
+          <div className={styles.CardImageToUpload}>
+            {uploadCategories && (
+              <span className={styles.Categorie}>
+                <strong>{t('categorie')}:</strong>
+                {uploadCategories.split('|').map((c, i) => (
+                  <div className='py-2' style={{
+                    borderBottom: '1px solid var(--primary)',
+                  }} key={i}>{c}</div>
+                ))}
+              </span>
+            )}
+          </div>
           {errorServer && (
             <div className={styles.ErrorServer}>{errorServer}</div>
           )}

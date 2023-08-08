@@ -6,7 +6,7 @@
   height: 100%;
   z-index: 1000;
   background-color: var(--overlay);
-  padding: 16px;
+  padding: 0px 16px 4px 16px;
   overflow-y: auto;
 }
 
@@ -78,6 +78,9 @@
   margin-top: 16px;
   display: flex;
   justify-content: space-between;
+  position: sticky;
+  width: 100%;
+  bottom: 0px;
 }
 
 .ButtonRiseleziona {
@@ -109,12 +112,12 @@
   gap: 8px;
   flex: 1 0 0;
   border-radius: 5px;
-  background: var(--secondary);
+  background: var(--concorso);
   /* Shade Button Blu */
-  box-shadow: 1px 1px 0px 0px var(--primary);
+  box-shadow: 1px 1px 0px 0px var(--concorso-shadow);
   border: none;
   margin-left: 8px;
-  color: var(--colori-neutri-white);
+  color: var(--colori-neutri-dark-gray);
   text-align: center;
   /* CTA */
   font-size: 12px;
@@ -153,7 +156,7 @@
 }
 
 .ButtonUpload:hover {
-  background: var(--primary);
+  background: var(--concorso-hover);
 }
 
 .ImageToUpload {
@@ -201,17 +204,22 @@
   color: var(--secondary);
   /* Label */
   font-family: var(--font-roboto-slab);
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  padding-top: 24px;
+  /* padding-top: 24px; */
 }
 
 .Categorie {
-  font-size: 12px;
-  color: var(--colori-neutri-dark-gray);
+  font-size: 14px;
+  color: var(--primary);
+  font-family: var(--font-roboto-slab);
+}
+
+.Close {
+    cursor: pointer;
 }
 
 .UploadAvvenuto {
@@ -298,6 +306,21 @@
   font-weight: 500;
 }
 
+.PaginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  color: var(--primary);
+  text-align: center;
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 @media (hover: hover) {
   .ModalUploadContainer {
     width: 60%;
@@ -309,6 +332,7 @@
   .CardImageToUpload {
     border-radius: 30px;
     margin-top: 0px;
+    overflow-y: auto;
   }
 
   .CloseModal {
@@ -324,6 +348,9 @@
   .ContainerButtons {
     margin-top: 8px;
     display: flex;
+    position: sticky;
+    width: 100%;
+    bottom: 0px;
     justify-content: space-between;
   }
 
