@@ -24,7 +24,7 @@ import MapContainer from './MapContainer'
 import { forEach } from 'lodash'
 import VectorSource from 'ol/source/Vector'
 import { Point } from 'ol/geom'
-import { Circle, Fill, Icon, Style } from 'ol/style'
+import { Icon, Style } from 'ol/style'
 import { useComuni } from '../../../hooks/comuni'
 
 const getFilters = (params: URLSearchParams) => ({
@@ -59,11 +59,9 @@ const vectorSourceMyLocation = new VectorSource({
 const myLocationLayer = new VectorLayer({
   source: vectorSourceMyLocation,
   style: new Style({
-    image: new Circle({
-      radius: 10,
-      fill: new Fill({
-        color: '#0B8927',
-      }),
+    image: new Icon({
+      src: '/markers/my-position.png',
+      scale: 0.2,
     }),
   }),
 })
@@ -89,9 +87,6 @@ export default function Map() {
     minZoom: 5,
   })
 
-  const [myLocationCoords, setMyLocationCoords] = useState<number[] | null>(
-    null
-  )
 
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
@@ -124,7 +119,6 @@ export default function Map() {
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    setMyLocationCoords([longitude, latitude])
     const featureMyLocation = new Feature({
       geometry: new Point(fromLonLat([longitude, latitude])),
     })
