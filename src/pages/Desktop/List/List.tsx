@@ -140,7 +140,7 @@ export function ListMonuments({
     })
     console.log('Unable to retrieve your location')
   }
-  
+
   useEffect(() => {
     if (navigator.geolocation && geoPermission !== 'denied') {
       navigator.geolocation.getCurrentPosition(success, error)
@@ -189,8 +189,9 @@ export function ListMonuments({
                       <div className={styles.City}>
                         {monument.municipality_label}
                         {monument.location &&
-                          monument.location !== monument.municipality_label &&
-                          `, Loc: ${monument.location}`}
+                          monument.location !== monument.municipality_label && (
+                            <div>, Loc: ${monument.location}</div>
+                          )}
                       </div>
                     </div>
                   </div>
@@ -244,7 +245,6 @@ export default function List() {
   const navigate = useNavigate()
 
   const { i18n } = useTranslation()
-  
 
   return (
     <Layout>

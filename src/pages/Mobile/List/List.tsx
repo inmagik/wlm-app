@@ -170,8 +170,10 @@ export function ListMonuments({ filters, setFilters }: Props) {
                         <div className={styles.City}>
                           {monument.municipality_label}
                           {monument.location &&
-                            monument.location !== monument.municipality_label &&
-                            `, Loc: ${monument.location}`}
+                            monument.location !==
+                              monument.municipality_label && (
+                              <div>, Loc: ${monument.location}</div>
+                            )}
                         </div>
                       </div>
                     </div>
