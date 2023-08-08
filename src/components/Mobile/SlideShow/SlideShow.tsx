@@ -5,6 +5,7 @@ import { ReactComponent as CloseWhite } from '../../../assets/close-white.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
 import { ReactComponent as ArrowLeftBig } from '../../../assets/arrow-left-big.svg'
 import { ReactComponent as ArrowRightBig } from '../../../assets/arrow-right-big.svg'
+import { ReactComponent as CommonLink } from '../../../assets/common-slideshow.svg'
 import styles from './SlideShow.module.css'
 import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
@@ -101,56 +102,78 @@ export default function SlideShow({
                 transition: 'all 0.5s ease-in-out',
               }}
             >
-              <div className="d-flex">
-                <div>
-                  <IconMonument monument={monument} />
-                </div>
-                <div className="ms-3">
-                  <div className={styles.InfoBlockSlideShowTitle}>
-                    {monument?.label}
+              <div className="d-flex align-items-center">
+                <div className="d-flex">
+                  <div>
+                    <IconMonument monument={monument} />
                   </div>
-                  <div className="d-flex align-items-center mt-1">
-                    <div className={styles.Municipality}>
-                      {monument.municipality_label}
+                  <div
+                    className="ms-3 border-end pe-4"
+                    style={{
+                      maxWidth: isMobile ? 'unset' : 'calc(500px)',
+                    }}
+                  >
+                    <div className={styles.InfoBlockSlideShowTitle}>
+                      {monument?.label}
                     </div>
-                    <div className="ms-2">
-                      <CameraTransparent />
+                    <div className="d-flex align-items-center mt-1">
+                      <div className={styles.Municipality}>
+                        {monument.municipality_label}
+                      </div>
+                      <div className="ms-2">
+                        <CameraTransparent />
+                      </div>
+                      <div className={styles.PicturesCount}>
+                        {monument.pictures_count} {t('foto')}
+                      </div>
                     </div>
-                    <div className={styles.PicturesCount}>
-                      {monument.pictures_count} {t('foto')}
+                    <div className="d-flex align-items-center">
+                      {picture.data?.Artist && (
+                        <div
+                          className={styles.Artist}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              String(picture.data?.Artist).replace(
+                                /(<([^>]+)>)/gi,
+                                ''
+                              ) || '',
+                          }}
+                        ></div>
+                      )}
+                      <div className={styles.DateImage}>
+                        {dayjs(picture.data?.DateTime).format('DD/MM/YYYY')}
+                      </div>
                     </div>
-                  </div>
-                  <div className="d-flex align-items-center">
-                    {picture.data?.Artist && (
+                    <div className={styles.License}>
+                      {picture.data?.License}
+                    </div>
+                    {picture.data?.title && (
+                      <div className={styles.PictureTitle}>
+                        {cleanTitle(picture.data.title)}
+                      </div>
+                    )}
+
+                    {picture.data?.ImageDescription && (
                       <div
-                        className={styles.Artist}
+                        className={styles.Description}
                         dangerouslySetInnerHTML={{
-                          __html: String(picture.data?.Artist).replace(
-                            /(<([^>]+)>)/gi,
-                            ''
-                          ) || '',
+                          __html: picture.data?.ImageDescription,
                         }}
                       ></div>
                     )}
-                    <div className={styles.DateImage}>
-                      {dayjs(picture.data?.DateTime).format('DD/MM/YYYY')}
-                    </div>
                   </div>
-                  <div className={styles.License}>{picture.data?.License}</div>
-                  {picture.data?.title && (
-                    <div className={styles.PictureTitle}>
-                      {cleanTitle(picture.data.title)}
-                    </div>
-                  )}
-
-                  {picture.data?.ImageDescription && (
-                    <div
-                      className={styles.Description}
-                      dangerouslySetInnerHTML={{
-                        __html: picture.data?.ImageDescription,
-                      }}
-                    ></div>
-                  )}
+                </div>
+                <div className="ms-3">
+                  <a
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
+                    href={`https://commons.wikimedia.org/wiki/${picture.data?.title}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <CommonLink />
+                  </a>
                 </div>
               </div>
             </div>
