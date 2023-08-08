@@ -78,7 +78,7 @@ export default function BottomNavigation() {
       </LangLink>
       <LangLink
         to={`/lista?${new URLSearchParams({
-          search: '',
+          search: filters.municipality ? filters.search : '',
           municipality: filters.municipality,
           category: filters.category,
           in_contest: filters.in_contest,

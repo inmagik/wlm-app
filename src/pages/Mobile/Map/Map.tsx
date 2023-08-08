@@ -1,5 +1,5 @@
 import Layout from '../../../components/Mobile/Layout'
-import { Map as MapOl, View } from 'ol'
+import { Feature, Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import 'ol/ol.css'
@@ -8,8 +8,6 @@ import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
-import { ReactComponent as FilterIcon } from '../../../assets/filter.svg'
-import { ReactComponent as FilterIconPrimary } from '../../../assets/filter-primary.svg'
 import BlockFilters from '../../../components/Mobile/BlockFilters'
 import { useQsFilters } from '../../../hooks/filters'
 import VectorLayer from 'ol/layer/Vector'
@@ -31,6 +29,9 @@ import { MarkerProps } from '../../Desktop/Map/Map'
 import { forEach } from 'lodash'
 import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
+import { Icon, Style } from 'ol/style'
+import VectorSource from 'ol/source/Vector'
+import { Point } from 'ol/geom'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -43,6 +44,20 @@ const getFilters = (params: URLSearchParams) => ({
   user_lon: params.get('user_lon') ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
+})
+
+const vectorSourceMyLocation = new VectorSource({
+  features: [],
+})
+
+const myLocationLayer = new VectorLayer({
+  source: vectorSourceMyLocation,
+  style: new Style({
+    image: new Icon({
+      src: '/markers/my-position.png',
+      scale: 0.2,
+    }),
+  }),
 })
 
 export default function Map() {
@@ -98,6 +113,16 @@ export default function Map() {
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
+    const featureMyLocation = new Feature({
+      geometry: new Point(fromLonLat([longitude, latitude])),
+    })
+    vectorSourceMyLocation.clear()
+    vectorSourceMyLocation.addFeature(featureMyLocation)
+    setFilters({
+      ...filters,
+      user_lat: latitude,
+      user_lon: longitude,
+    })
     setMapState({
       ...mapState,
       center: fromLonLat([longitude, latitude]),
@@ -141,6 +166,7 @@ export default function Map() {
           source: new OSM(),
         }),
         featureOverlay,
+        myLocationLayer,
       ],
       interactions: interactions,
       controls: [
@@ -156,7 +182,9 @@ export default function Map() {
     })
 
     function setClusterDistance(resolution: number) {
-      if (resolution <= 300) {
+      if (resolution < 0.1) {
+        clusterSource.setDistance(0)
+      } else if (resolution <= 300) {
         clusterSource.setDistance(40)
       } else {
         clusterSource.setDistance(0)
@@ -200,12 +228,19 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
+          sessionStorage.setItem(
+            'map_state',
+            JSON.stringify({
+              center: map?.getView().getCenter(),
+              zoom: map?.getView().getZoom(),
+            })
+          )
           initialMap?.getView().animate({
             center: fromLonLat([
               monument.position.coordinates[0],
               monument.position.coordinates[1],
             ]),
-            zoom: initialMap?.getView().getZoom() ?? 14,
+            zoom: initialMap?.getView().getZoom(),
             duration: 500,
           })
           setFilters({
@@ -326,7 +361,6 @@ export default function Map() {
       !filters.monument_lon
     ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
-      // console.log(mapState, 'mapState')
       map?.getView().animate({
         center: fromLonLat([mapState.center[0], mapState.center[1]]),
         zoom: mapState.zoom,
@@ -402,7 +436,6 @@ export default function Map() {
                       zoom: map?.getView().getZoom(),
                     })
                   )
-                  console.log(sessionStorage.getItem('map_state'))
                   navigate(
                     `/${i18n.language}/mappa/${smartSlug(
                       infoMarker.id,
