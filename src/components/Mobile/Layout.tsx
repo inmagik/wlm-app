@@ -35,6 +35,9 @@ function SlidesPresentazione({
         right: 0,
         zIndex: 12,
         backgroundColor: 'rgba(0,0,0,0.6)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       <Swiper
@@ -54,10 +57,15 @@ function SlidesPresentazione({
           swiper.slideTo(activeSlide, 0)
         }}
         style={{
-          height: 'calc(60%)',
+          height: '60%',
           width: '80%',
-
-          marginTop: '40%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          marginLeft: 'auto',
+          marginRight: 'auto',
           //   backgroundColor: 'rgba(0,0,0,0.2)',
           //   zIndex: 12,
         }}
@@ -78,7 +86,7 @@ function SlidesPresentazione({
                 alt=""
                 className="h-100 w-100"
                 style={{
-                  // objectFit: 'contain',
+                  objectFit: 'contain',
                   borderRadius: 20,
                   //   backgroundColor: 'rgba(0,0,0,0.2)',
                 }}
