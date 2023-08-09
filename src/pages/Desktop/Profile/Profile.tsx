@@ -89,7 +89,8 @@ export default function Profile() {
                       )}`}
                       className={styles.ButtonImagesProfile}
                     >
-                      <WikiLogoMobile /> {t('vedi_immagini_caricate')}
+                      <img width={16} src="/commons.png" alt="Commons" />{' '}
+                      {t('vedi_immagini_caricate')}
                     </a>
                   </div>
                 )}
