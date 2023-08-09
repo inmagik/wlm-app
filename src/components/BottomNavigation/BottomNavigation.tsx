@@ -22,7 +22,7 @@ const getFilters = (params: URLSearchParams) => ({
   only_without_pictures: params.get('only_without_pictures') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
-  ordering: params.get('ordering') ?? 'distance',
+  ordering: params.get('ordering') ?? '',
   monument_id: params.get('monument_id') ?? '',
   monument_lat: params.get('monument_lat') ?? '',
   monument_lon: params.get('monument_lon') ?? '',

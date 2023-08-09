@@ -21,7 +21,7 @@ import Legend from '../../../components/Desktop/Legend'
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  ordering: params.get('ordering') ?? 'label',
+  ordering: params.get('ordering') ?? '',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',
@@ -95,12 +95,6 @@ export function ListMonuments({
     }
   }, [filters.monument_id])
 
-  // useEffect(() => {
-  //   if(sessionStorage.getItem('monument_id')) {
-  //     setDetail(Number(sessionStorage.getItem('monument_id')))
-  //   }
-  // }, [])
-
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
@@ -125,7 +119,7 @@ export function ListMonuments({
     const longitude = position.coords.longitude
     setFilters({
       ...filters,
-      ordering: 'distance',
+      ordering: filters.ordering,
       user_lat: latitude,
       user_lon: longitude,
     })
