@@ -479,7 +479,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                             .charAt(0)
                             .toUpperCase() +
                             monument?.address.split('-')[0].slice(1)}
-                          ,{' '}
                         </div>
                       )}
                     {monument?.location &&
