@@ -6,11 +6,13 @@ import { useState } from 'react'
 import Legend from '../Legend'
 import WikiLoveMonuments from '../WikiLoveMonuments'
 import { useTranslation } from 'react-i18next'
+import { SlidesPresentazioneMobile } from '../Layout'
 
 export default function Topbar() {
   const [legend, setLegend] = useState(false)
   const [infoWiki, setInfoWiki] = useState(false)
   const { t } = useTranslation()
+  const [presentazione, setPresentazione] = useState(false)
   return (
     <>
       <div className={styles.TopBar}>
@@ -40,8 +42,15 @@ export default function Topbar() {
       />
       <WikiLoveMonuments
         infoWiki={infoWiki}
+        setPresentazione={setPresentazione}
         setInfoWiki={(infoWiki: boolean) => setInfoWiki(infoWiki)}
       />
+      {presentazione && (
+        <SlidesPresentazioneMobile
+          isFromPageWiki
+          setPresentazione={setPresentazione}
+        />
+      )}
     </>
   )
 }

@@ -6,9 +6,14 @@ import { useTranslation } from 'react-i18next'
 interface Props {
   infoWiki: boolean
   setInfoWiki: (infoWiki: boolean) => void
+  setPresentazione: (presentazione: boolean) => void
 }
 
-export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
+export default function WikiLoveMonuments({
+  infoWiki,
+  setInfoWiki,
+  setPresentazione,
+}: Props) {
   const { i18n } = useTranslation()
   return (
     <div
@@ -99,6 +104,16 @@ export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
               </a>
               .
             </p>
+            <div
+              className={styles.ButtonRivediTutorial}
+              onClick={() => {
+                setInfoWiki(false)
+                setPresentazione(true)
+              }}
+            >
+              <img className='me-2' src={'/commons.png'} width={16} alt='Commons' />
+              <strong>Rivedi il tutorial dell'app</strong>
+            </div>
           </div>
         ) : (
           <div className={styles.TextWikiLove}>
@@ -168,6 +183,15 @@ export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
               </a>
               .
             </p>
+            <div
+              className={styles.ButtonRivediTutorial}
+              onClick={() => {
+                setInfoWiki(false)
+                setPresentazione(true)
+              }}
+            >
+              <strong>Watch the app tutorial again</strong>
+            </div>
           </div>
         )}
       </div>

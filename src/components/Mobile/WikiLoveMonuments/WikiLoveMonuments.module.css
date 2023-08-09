@@ -46,3 +46,26 @@
   font-family: var(--font-montserrat);
   font-weight: 700;
 }
+
+.ButtonRivediTutorial {
+  background: var(--primary);
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: var(--colori-neutri-white);
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  width: max-content;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.ButtonRivediTutorial:hover {
+  background: var(--secondary);
+}

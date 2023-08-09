@@ -4,10 +4,12 @@ import { ReactComponent as Bell } from '../../../assets/bell-primary.svg'
 import { useTranslation } from 'react-i18next'
 import WikiLoveMonuments from '../../Mobile/WikiLoveMonuments'
 import { useState } from 'react'
+import { SlidesPresentazioneDesktop } from '../Layout'
 
 export default function Topbar() {
   const { t } = useTranslation()
   const [infoWiki, setInfoWiki] = useState(false)
+  const [presentazione, setPresentazione] = useState(false)
   return (
     <>
       <div className={styles.Topbar}>
@@ -28,8 +30,15 @@ export default function Topbar() {
       </div>
       <WikiLoveMonuments
         infoWiki={infoWiki}
+        setPresentazione={setPresentazione}
         setInfoWiki={(infoWiki: boolean) => setInfoWiki(infoWiki)}
       />
+      {presentazione && (
+        <SlidesPresentazioneDesktop
+          isFromPageWiki
+          setPresentazione={setPresentazione}
+        />
+      )}
     </>
   )
 }

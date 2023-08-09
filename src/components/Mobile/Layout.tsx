@@ -33,10 +33,12 @@ const slidesEn = [
   '/slides/mobile/en/slide9.png',
 ]
 
-function SlidesPresentazione({
+export function SlidesPresentazioneMobile({
   setPresentazione,
+  isFromPageWiki = false,
 }: {
   setPresentazione: (presentazione: boolean) => void
+  isFromPageWiki?: boolean
 }) {
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const sliderRef = useRef<any>()
@@ -107,8 +109,10 @@ function SlidesPresentazione({
       </Swiper>
       <div
         onClick={() => {
+          if (isFromPageWiki) {
+            localStorage.setItem('presentazione', 'true')
+          }
           setPresentazione(false)
-          localStorage.setItem('presentazione', 'true')
         }}
         className="button-close-slides-mobile"
       >
@@ -164,7 +168,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-100 w-100">
       {presentazione && (
-        <SlidesPresentazione setPresentazione={setPresentazione} />
+        <SlidesPresentazioneMobile setPresentazione={setPresentazione} />
       )}
       <Topbar />
       <div className="block-content">{children}</div>

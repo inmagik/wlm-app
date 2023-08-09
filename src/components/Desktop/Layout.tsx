@@ -29,10 +29,12 @@ const slidesEn = [
   '/slides/desktop/en/slide7.png',
 ]
 
-function SlidesPresentazione({
+export function SlidesPresentazioneDesktop({
   setPresentazione,
+  isFromPageWiki = false,
 }: {
   setPresentazione: (presentazione: boolean) => void
+  isFromPageWiki?: boolean
 }) {
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const sliderRef = useRef<any>()
@@ -86,12 +88,12 @@ function SlidesPresentazione({
         {slidesToUse.map((slide, i) => (
           <SwiperSlide key={i} className={'position-relative'}>
             <div
-            //   onClick={() => {
-            //     if (activeSlide === slidesToUse.length - 1) {
-            //       setPresentazione(false)
-            //       localStorage.setItem('presentazione', 'true')
-            //     }
-            //   }}
+              //   onClick={() => {
+              //     if (activeSlide === slidesToUse.length - 1) {
+              //       setPresentazione(false)
+              //       localStorage.setItem('presentazione', 'true')
+              //     }
+              //   }}
               className="h-100 w-100"
             >
               <img
@@ -110,8 +112,10 @@ function SlidesPresentazione({
       </Swiper>
       <div
         onClick={() => {
+          if (!isFromPageWiki) {
+            localStorage.setItem('presentazione', 'true')
+          }
           setPresentazione(false)
-          localStorage.setItem('presentazione', 'true')
         }}
         className="button-close-slides-mobile pointer"
       >
@@ -171,7 +175,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-100 w-100">
       {presentazione && (
-        <SlidesPresentazione setPresentazione={setPresentazione} />
+        <SlidesPresentazioneDesktop setPresentazione={setPresentazione} />
       )}
       <Topbar />
       <div className="block-content-desktop">{children}</div>
