@@ -118,7 +118,9 @@ function SlidesPresentazione({
             pointer: activeSlide > 0,
           })}
           fill={
-            activeSlide > 0 ? 'var(--colori-neutri-white)' : 'var(--colori-neutri-gray-2)'
+            activeSlide > 0
+              ? 'var(--colori-neutri-white)'
+              : 'var(--colori-neutri-gray-2)'
           }
         />
         <div className={'current-slide-onboarding'}>
@@ -140,31 +142,6 @@ function SlidesPresentazione({
           }
         />
       </div>
-      {/* <div className={'slider-prev-arrow'}>
-        <ArrowLeftBig
-          className={classNames({
-            pointer: activeSlide > 0,
-          })}
-          fill={activeSlide > 0 ? 'var(--primary)' : '#fff'}
-          onClick={(e) => {
-            e.stopPropagation()
-            if (activeSlide > 0) sliderRef.current.slidePrev()
-          }}
-        />
-      </div>
-
-      <div className={'slider-next-arrow'}>
-        <ArrowRightBig
-          className={classNames({
-            pointer: activeSlide < slides.length - 1,
-          })}
-          fill={activeSlide < slides.length - 1 ? 'var(--primary)' : '#fff'}
-          onClick={(e) => {
-            e.stopPropagation()
-            if (activeSlide < slides.length - 1) sliderRef.current.slideNext()
-          }}
-        />
-      </div> */}
     </div>
   )
 }

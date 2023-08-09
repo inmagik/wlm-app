@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { useEffect, useRef, useState } from 'react'
 import { SwiperSlide, Swiper } from 'swiper/react'
-import { ReactComponent as Close } from '../../assets/close-white.svg'
-import { ReactComponent as ArrowLeftBig } from '../../assets/arrow-left-big.svg'
-import { ReactComponent as ArrowRightBig } from '../../assets/arrow-right-big.svg'
+import { ReactComponent as Close } from '../../assets/close-onboarding.svg'
+import { ReactComponent as ArrowLeftSlideShow } from '../../assets/left-slideshow-arrow.svg'
+import { ReactComponent as ArrowRightSlideShow } from '../../assets/right-slideshow-arrow.svg'
 import BottomNavigation from '../BottomNavigation'
 import Topbar from './Topbar'
 import { Navigation } from 'swiper'
@@ -37,10 +37,10 @@ function SlidesPresentazione({
         zIndex: 12,
         backgroundColor: 'rgba(0,0,0,0.6)',
       }}
-    //   onClick={() => {
-    //     setPresentazione(false)
-    //     localStorage.setItem('presentazione', 'true')
-    //   }}
+      //   onClick={() => {
+      //     setPresentazione(false)
+      //     localStorage.setItem('presentazione', 'true')
+      //   }}
     >
       <Swiper
         slidesPerView={1}
@@ -69,7 +69,7 @@ function SlidesPresentazione({
         }}
       >
         {slides.map((slide, i) => (
-          <SwiperSlide key={i}>
+          <SwiperSlide key={i} className={'position-relative'}>
             <div
               onClick={() => {
                 if (activeSlide === slides.length - 1) {
@@ -78,54 +78,63 @@ function SlidesPresentazione({
                 }
               }}
               className="h-100 w-100"
-              
             >
-                <img
+              <img
                 src={slide}
                 alt=""
                 className="h-100 w-100"
                 style={{
-                    // objectFit: 'contain',
-                    borderRadius: 20,
-                    //   backgroundColor: 'rgba(0,0,0,0.2)',
+                  objectFit: 'contain',
+                  borderRadius: 20,
+                  //   backgroundColor: 'rgba(0,0,0,0.2)',
                 }}
-                />
+              />
             </div>
           </SwiperSlide>
         ))}
-        <div
-          onClick={() => {
-            setPresentazione(false)
-            localStorage.setItem('presentazione', 'true')
-          }}
-          className="button-close-slides"
-        >
-          <Close />
-        </div>
       </Swiper>
-      <div className={'slider-prev-arrow'}>
-        <ArrowLeftBig
-          className={classNames({
+      <div
+        onClick={() => {
+          setPresentazione(false)
+          localStorage.setItem('presentazione', 'true')
+        }}
+        className="button-close-slides-mobile pointer"
+      >
+        <Close />
+      </div>
+      <div className={'pagination-container-onboarding'}>
+        <ArrowLeftSlideShow
+          onClick={() => {
+            if (activeSlide > 0) {
+              sliderRef.current?.slidePrev()
+            }
+          }}
+          className={classNames('me-3', {
             pointer: activeSlide > 0,
           })}
-          fill={activeSlide > 0 ? 'var(--secondary)' : '#fff'}
-          onClick={(e) => {
-            e.stopPropagation()
-            if (activeSlide > 0) sliderRef.current.slidePrev()
-          }}
+          fill={
+            activeSlide > 0
+              ? 'var(--colori-neutri-white)'
+              : 'var(--colori-neutri-gray-2)'
+          }
         />
-      </div>
-
-      <div className={'slider-next-arrow'}>
-        <ArrowRightBig
-          className={classNames({
+        <div className={'current-slide-onboarding'}>
+          {activeSlide + 1} / {slides.length}
+        </div>
+        <ArrowRightSlideShow
+          onClick={() => {
+            if (activeSlide < slides.length - 1) {
+              sliderRef.current?.slideNext()
+            }
+          }}
+          className={classNames('ms-3', {
             pointer: activeSlide < slides.length - 1,
           })}
-          fill={activeSlide < slides.length - 1 ? 'var(--secondary)' : '#fff'}
-          onClick={(e) => {
-            e.stopPropagation()
-            if (activeSlide < slides.length - 1) sliderRef.current.slideNext()
-          }}
+          fill={
+            activeSlide < slides.length - 1
+              ? 'var(--colori-neutri-white)'
+              : 'var(--colori-neutri-gray-2)'
+          }
         />
       </div>
     </div>

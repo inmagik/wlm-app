@@ -171,21 +171,22 @@ body,
 }
 
 .button-close-slides {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
   border-radius: 30px;
-  background: var(--primary);
+  background: var(--colori-neutri-white);
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  z-index: 999;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border: none;
-  margin-top: 8px;
-  position: absolute;
-  top: 0px;
-  right: 8px;
-  transition: all 0.3s ease-in-out;
-  z-index: 999;
 }
 
 .button-close-slides:hover {
@@ -200,8 +201,11 @@ body,
   margin-top: 16px;
   margin-bottom: 16px;
   position: absolute;
-  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10%;
   color: white;
+  cursor: pointer;
 }
 
 .slider-next-arrow {
