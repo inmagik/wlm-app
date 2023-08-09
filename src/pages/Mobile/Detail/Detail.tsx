@@ -98,7 +98,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
-  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
+  const isMobile = useMediaQuery(
+    '((hover: none) and (pointer: coarse)) or (max-width: 1024px)'
+  )
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {
@@ -226,7 +228,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const addressCorrectFormatted = useMemo(() => {
     if (!monument) return ''
     const address = monument.address
-    if(!address) return ''
+    if (!address) return ''
     const addressWithoutCap = address.replace(/\d{5}/, '')
     const addressWithoutMunicipalityLabel = addressWithoutCap.replace(
       monument.municipality_label,
@@ -236,11 +238,16 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       monument.province_label,
       ''
     )
-    const addressOnlyWithLettersNumbersAndComma = addressWithoutProvinceLabel.replace(
-      /[^a-zA-Z0-9, ]/g,
+    const addressOnlyWithLettersNumbersAndComma =
+      addressWithoutProvinceLabel.replace(/[^a-zA-Z0-9, ]/g, '')
+    const addressFinal = addressOnlyWithLettersNumbersAndComma.split(',')
+    if (addressFinal.length === 1) return addressFinal[0]
+    const addressSplittedSecondPartWithoutLetters = addressFinal[1].replace(
+      /[^0-9]/g,
       ''
     )
-    return addressOnlyWithLettersNumbersAndComma
+    const addressToReturn = `${addressFinal[0]}, ${addressSplittedSecondPartWithoutLetters}`
+    return addressToReturn
   }, [monument])
 
   return (
@@ -490,7 +497,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </span>
                       )}
-                    {addressCorrectFormatted && monument &&
+                    {addressCorrectFormatted &&
+                      monument &&
                       monument.app_category !== 'Comune' && (
                         <div className={styles.Comune}>
                           {addressCorrectFormatted}
