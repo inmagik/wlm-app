@@ -463,13 +463,6 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           monument?.label.slice(1)}
                       </div>
                     )}
-                    {monument?.address &&
-                      monument.address !== monument.municipality_label &&
-                      monument.app_category !== 'Comune' && (
-                        <span className={styles.Comune}>
-                          {monument?.address.split('-')[0]},{' '}
-                        </span>
-                      )}
                     {monument?.municipality_label &&
                       monument?.app_category !== 'Comune' && (
                         <span className={styles.Comune}>
@@ -477,7 +470,18 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </span>
                       )}
-
+                    {monument?.address &&
+                      monument.address !== monument.municipality_label &&
+                      monument.app_category !== 'Comune' && (
+                        <div className={styles.Comune}>
+                          {monument?.address
+                            .split('-')[0]
+                            .charAt(0)
+                            .toUpperCase() +
+                            monument?.address.split('-')[0].slice(1)}
+                          ,{' '}
+                        </div>
+                      )}
                     {monument?.location &&
                       monument.location !== monument.municipality_label &&
                       monument.app_category !== 'Comune' && (

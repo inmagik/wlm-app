@@ -72,7 +72,7 @@ export default function WikiLoveMonuments({ infoWiki, setInfoWiki }: Props) {
               </a>
               , che ne consente il libero riutilizzo, per qualsiasi scopo,
               purché venga mantenuta la medesima licenza e ne vengano
-              riconosciuti autori e autrici originali..
+              riconosciuti autori e autrici originali.
             </p>{' '}
             <p>
               Puoi utilizzare questa webapp anche al di fuori del concorso Wiki
