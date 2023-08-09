@@ -88,7 +88,10 @@ export function ListMonuments({ filters, setFilters }: Props) {
           `geolocation permission status is ${permissionStatus.state}`
         )
         setGeoPermission(permissionStatus.state)
-        if (permissionStatus.state === 'granted') {
+        if (
+          (permissionStatus.state === 'granted' && filters.ordering === '') ||
+          filters.ordering === 'distance'
+        ) {
           navigator.geolocation.getCurrentPosition(success, error)
         }
 
@@ -104,12 +107,15 @@ export function ListMonuments({ filters, setFilters }: Props) {
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    setFilters({
-      ...filters,
-      ordering: 'distance',
-      user_lat: latitude,
-      user_lon: longitude,
-    })
+    console.log('success')
+    if (filters.ordering === '' || filters.ordering === 'distance') {
+      setFilters({
+        ...filters,
+        ordering: 'distance',
+        user_lat: latitude,
+        user_lon: longitude,
+      })
+    }
   }
 
   function error() {
@@ -165,7 +171,8 @@ export function ListMonuments({ filters, setFilters }: Props) {
                       </div>
                       <div className="ms-2">
                         <div className={styles.MonumentTitle}>
-                          {monument.label.charAt(0).toUpperCase() + monument.label.slice(1)}
+                          {monument.label.charAt(0).toUpperCase() +
+                            monument.label.slice(1)}
                         </div>
                         <div className={styles.City}>
                           {monument.municipality_label}
@@ -210,7 +217,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  ordering: params.get('ordering') ?? 'label',
+  ordering: params.get('ordering') ?? '',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',
