@@ -7,17 +7,30 @@ import BottomNavigation from '../BottomNavigation'
 import Topbar from './Topbar'
 import { Navigation } from 'swiper'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
-const slides = [
-  '/slides/mobile/slide1.png',
-  '/slides/mobile/slide2.png',
-  '/slides/mobile/slide3.png',
-  '/slides/mobile/slide4.png',
-  '/slides/mobile/slide5.png',
-  '/slides/mobile/slide6.png',
-  '/slides/mobile/slide7.png',
-  '/slides/mobile/slide8.png',
-  '/slides/mobile/slide9.png',
+const slidesIt = [
+  '/slides/mobile/it/slide1.png',
+  '/slides/mobile/it/slide2.png',
+  '/slides/mobile/it/slide3.png',
+  '/slides/mobile/it/slide4.png',
+  '/slides/mobile/it/slide5.png',
+  '/slides/mobile/it/slide6.png',
+  '/slides/mobile/it/slide7.png',
+  '/slides/mobile/it/slide8.png',
+  '/slides/mobile/it/slide9.png',
+]
+
+const slidesEn = [
+  '/slides/mobile/en/slide1.png',
+  '/slides/mobile/en/slide2.png',
+  '/slides/mobile/en/slide3.png',
+  '/slides/mobile/en/slide4.png',
+  '/slides/mobile/en/slide5.png',
+  '/slides/mobile/en/slide6.png',
+  '/slides/mobile/en/slide7.png',
+  '/slides/mobile/en/slide8.png',
+  '/slides/mobile/en/slide9.png',
 ]
 
 function SlidesPresentazione({
@@ -27,6 +40,8 @@ function SlidesPresentazione({
 }) {
   const [activeSlide, setActiveSlide] = useState<number>(0)
   const sliderRef = useRef<any>()
+  const { i18n } = useTranslation()
+  const slidesToUse = i18n.language === 'it' ? slidesIt : slidesEn
   return (
     <div
       className="w-100 h-100"
@@ -73,17 +88,9 @@ function SlidesPresentazione({
           //   zIndex: 12,
         }}
       >
-        {slides.map((slide, i) => (
+        {slidesToUse.map((slide, i) => (
           <SwiperSlide key={i}>
-            <div
-              onClick={() => {
-                if (activeSlide === slides.length - 1) {
-                  setPresentazione(false)
-                  localStorage.setItem('presentazione', 'true')
-                }
-              }}
-              className="h-100 w-100"
-            >
+            <div className="h-100 w-100">
               <img
                 src={slide}
                 alt=""
@@ -124,19 +131,19 @@ function SlidesPresentazione({
           }
         />
         <div className={'current-slide-onboarding'}>
-          {activeSlide + 1} / {slides.length}
+          {activeSlide + 1} / {slidesToUse.length}
         </div>
         <ArrowRightSlideShow
           onClick={() => {
-            if (activeSlide < slides.length - 1) {
+            if (activeSlide < slidesToUse.length - 1) {
               sliderRef.current?.slideNext()
             }
           }}
           className={classNames('ms-3', {
-            pointer: activeSlide < slides.length - 1,
+            pointer: activeSlide < slidesToUse.length - 1,
           })}
           fill={
-            activeSlide < slides.length - 1
+            activeSlide < slidesToUse.length - 1
               ? 'var(--colori-neutri-white)'
               : 'var(--colori-neutri-gray-2)'
           }

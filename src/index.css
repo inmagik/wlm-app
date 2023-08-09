@@ -206,6 +206,7 @@ body,
   bottom: 10%;
   color: white;
   cursor: pointer;
+  z-index: 999;
 }
 
 .slider-next-arrow {
