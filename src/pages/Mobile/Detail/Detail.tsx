@@ -223,6 +223,26 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
 
   const { pathname, search } = useLocation()
 
+  const addressCorrectFormatted = useMemo(() => {
+    if (!monument) return ''
+    const address = monument.address
+    if(!address) return ''
+    const addressWithoutCap = address.replace(/\d{5}/, '')
+    const addressWithoutMunicipalityLabel = addressWithoutCap.replace(
+      monument.municipality_label,
+      ''
+    )
+    const addressWithoutProvinceLabel = addressWithoutMunicipalityLabel.replace(
+      monument.province_label,
+      ''
+    )
+    const addressOnlyWithLettersNumbersAndComma = addressWithoutProvinceLabel.replace(
+      /[^a-zA-Z0-9, ]/g,
+      ''
+    )
+    return addressOnlyWithLettersNumbersAndComma
+  }, [monument])
+
   return (
     <>
       <div
@@ -470,15 +490,10 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                           {monument?.province_label})
                         </span>
                       )}
-                    {monument?.address &&
-                      monument.address !== monument.municipality_label &&
+                    {addressCorrectFormatted && monument &&
                       monument.app_category !== 'Comune' && (
                         <div className={styles.Comune}>
-                          {monument?.address
-                            .split('-')[0]
-                            .charAt(0)
-                            .toUpperCase() +
-                            monument?.address.split('-')[0].slice(1)}
+                          {addressCorrectFormatted}
                         </div>
                       )}
                     {monument?.location &&
