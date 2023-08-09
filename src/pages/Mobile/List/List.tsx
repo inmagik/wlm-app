@@ -88,10 +88,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
           `geolocation permission status is ${permissionStatus.state}`
         )
         setGeoPermission(permissionStatus.state)
-        if (
-          (permissionStatus.state === 'granted' && filters.ordering === '') ||
-          filters.ordering === 'distance'
-        ) {
+        if (permissionStatus.state === 'granted' && filters.ordering === '') {
           navigator.geolocation.getCurrentPosition(success, error)
         }
 
@@ -108,7 +105,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
     console.log('success')
-    if (filters.ordering === '' || filters.ordering === 'distance') {
+    if (filters.ordering === '') {
       setFilters({
         ...filters,
         ordering: 'distance',
@@ -217,7 +214,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
-  ordering: params.get('ordering') ?? '',
+  ordering: params.get('ordering') ?? 'distance',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',

@@ -246,6 +246,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       /[^0-9]/g,
       ''
     )
+    if(!addressSplittedSecondPartWithoutLetters) return addressFinal[0].replace(',', '')
     const addressToReturn = `${addressFinal[0]}, ${addressSplittedSecondPartWithoutLetters}`
     return addressToReturn
   }, [monument])

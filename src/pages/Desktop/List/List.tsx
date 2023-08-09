@@ -105,6 +105,9 @@ export function ListMonuments({
           `geolocation permission status is ${permissionStatus.state}`
         )
         setGeoPermission(permissionStatus.state)
+        if (permissionStatus.state === 'granted' && filters.ordering === '') {
+          navigator.geolocation.getCurrentPosition(success, error)
+        }
         permissionStatus.onchange = () => {
           console.log(
             `geolocation permission status has changed to ${permissionStatus.state}`
@@ -117,12 +120,14 @@ export function ListMonuments({
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    setFilters({
-      ...filters,
-      ordering: filters.ordering,
-      user_lat: latitude,
-      user_lon: longitude,
-    })
+    if (filters.ordering === '') {
+      setFilters({
+        ...filters,
+        ordering: 'distance',
+        user_lat: latitude,
+        user_lon: longitude,
+      })
+    }
   }
 
   function error() {
@@ -178,16 +183,16 @@ export function ListMonuments({
                     </div>
                     <div className="ms-2">
                       <div className={styles.MonumentTitle}>
-                        {monument.label.charAt(0).toUpperCase() + monument.label.slice(1)}
+                        {monument.label.charAt(0).toUpperCase() +
+                          monument.label.slice(1)}
                       </div>
                       <div className={styles.City}>
-                          {monument.municipality_label}
-                          {monument.location &&
-                            monument.location !==
-                              monument.municipality_label && (
-                              <div>Loc: {monument.location}</div>
-                            )}
-                        </div>
+                        {monument.municipality_label}
+                        {monument.location &&
+                          monument.location !== monument.municipality_label && (
+                            <div>Loc: {monument.location}</div>
+                          )}
+                      </div>
                     </div>
                   </div>
                   <div className="d-flex align-items-center flex-column">
