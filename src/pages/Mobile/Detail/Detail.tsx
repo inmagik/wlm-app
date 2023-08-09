@@ -98,7 +98,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
-  const isMobile = useMediaQuery('(hover: none)')
+  const isMobile = useMediaQuery('(hover: none) and (pointer: coarse)')
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {

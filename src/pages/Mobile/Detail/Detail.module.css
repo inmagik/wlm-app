@@ -680,7 +680,7 @@
   background: var(--concorso-hover);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .BlockImage {
     border-radius: 5px;
     height: 270px;

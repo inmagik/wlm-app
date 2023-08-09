@@ -321,7 +321,7 @@
   line-height: normal;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .ModalUploadContainer {
     width: 60%;
     position: relative;
