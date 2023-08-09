@@ -270,7 +270,7 @@ export default function Map() {
             feature: feature,
           })
           shouldCloseMarker = false
-        } else {
+        } else if (info > 1) {
           setMapState({
             ...mapState,
             zoom: mapState.zoom + 1,

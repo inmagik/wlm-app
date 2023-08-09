@@ -364,12 +364,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                                   className={styles.BlockImageOverlayTextArtist}
                                   dangerouslySetInnerHTML={{
                                     __html:
-                                      String(picture.data?.Artist).replace(
-                                        /(<([^>]+)>)/gi,
-                                        ''
-                                      ).split(
-                                        '('
-                                      )[0] || '',
+                                      String(picture.data?.Artist)
+                                        .replace(/(<([^>]+)>)/gi, '')
+                                        .split('(')[0] || '',
                                   }}
                                 ></div>
                               </a>
@@ -460,14 +457,17 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 {monument && <IconMonument monument={monument} />}
                 <div className="ms-2">
                   <div>
-                    <div className={styles.MonumentTitle}>
-                      {monument?.label}
-                    </div>
+                    {monument && (
+                      <div className={styles.MonumentTitle}>
+                        {monument?.label.charAt(0).toUpperCase() +
+                          monument?.label.slice(1)}
+                      </div>
+                    )}
                     {monument?.address &&
                       monument.address !== monument.municipality_label &&
                       monument.app_category !== 'Comune' && (
                         <span className={styles.Comune}>
-                          {monument?.address.split('-')[0]},{' '} 
+                          {monument?.address.split('-')[0]},{' '}
                         </span>
                       )}
                     {monument?.municipality_label &&

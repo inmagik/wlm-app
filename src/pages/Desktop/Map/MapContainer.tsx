@@ -144,7 +144,11 @@ export default function MapContainer({
                   }}
                 />
               </div>
-              <div className={styles.TitleMarker}>{infoMarker.label}</div>
+              <div className={styles.TitleMarker}>
+                {infoMarker.label.charAt(0).toUpperCase() +
+                  infoMarker.label.slice(1)}
+              </div>
+
               <div className={styles.TextMarker}>
                 <div>
                   <CameraTransparent />

@@ -114,7 +114,8 @@ export default function SlideShow({
                     }}
                   >
                     <div className={styles.InfoBlockSlideShowTitle}>
-                      {monument?.label}
+                      {monument?.label.charAt(0).toUpperCase() +
+                        monument?.label.slice(1)}
                     </div>
                     <div className="d-flex align-items-center mt-1">
                       <div className={styles.Municipality}>

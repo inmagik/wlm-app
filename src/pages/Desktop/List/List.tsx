@@ -184,7 +184,7 @@ export function ListMonuments({
                     </div>
                     <div className="ms-2">
                       <div className={styles.MonumentTitle}>
-                        {monument.label}
+                        {monument.label.charAt(0).toUpperCase() + monument.label.slice(1)}
                       </div>
                       <div className={styles.City}>
                           {monument.municipality_label}
