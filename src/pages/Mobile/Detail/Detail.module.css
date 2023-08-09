@@ -86,7 +86,7 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  max-width: 220px;
+  max-width: max-content;
 }
 
 .Comune {
