@@ -116,7 +116,7 @@ export default function BlockUpload({
 
   const [slideActive, setSlideActive] = useState<number>(0)
 
-  const isMobile = useMediaQuery('(hover: none)')
+  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
 
   const [errors, setErrors] = useState<any[]>()
   const { token } = useAuthUser()
