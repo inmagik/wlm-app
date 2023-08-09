@@ -47,7 +47,7 @@
   color: #ffffff;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: hover) and (pointer: fine)  {
   .BottomNavigation {
     height: var(--bottom-desktop-navigation-height);
   }
