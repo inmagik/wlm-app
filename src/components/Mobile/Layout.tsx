@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import { ReactComponent as Close } from '../../assets/close-onboarding.svg'
+import { ReactComponent as ArrowLeftSlideShow } from '../../assets/left-slideshow-arrow.svg'
+import { ReactComponent as ArrowRightSlideShow } from '../../assets/right-slideshow-arrow.svg'
 import BottomNavigation from '../BottomNavigation'
 import Topbar from './Topbar'
 import { Navigation } from 'swiper'
+import classNames from 'classnames'
 
 const slides = [
   '/slides/mobile/slide1.png',
@@ -103,6 +106,39 @@ function SlidesPresentazione({
         className="button-close-slides-mobile"
       >
         <Close />
+      </div>
+      <div className={'pagination-container-onboarding'}>
+        <ArrowLeftSlideShow
+          onClick={() => {
+            if (activeSlide > 0) {
+              sliderRef.current?.slidePrev()
+            }
+          }}
+          className={classNames('me-3', {
+            pointer: activeSlide > 0,
+          })}
+          fill={
+            activeSlide > 0 ? 'var(--colori-neutri-white)' : 'var(--colori-neutri-gray-2)'
+          }
+        />
+        <div className={'current-slide-onboarding'}>
+          {activeSlide + 1} / {slides.length}
+        </div>
+        <ArrowRightSlideShow
+          onClick={() => {
+            if (activeSlide < slides.length - 1) {
+              sliderRef.current?.slideNext()
+            }
+          }}
+          className={classNames('ms-3', {
+            pointer: activeSlide < slides.length - 1,
+          })}
+          fill={
+            activeSlide < slides.length - 1
+              ? 'var(--colori-neutri-white)'
+              : 'var(--colori-neutri-gray-2)'
+          }
+        />
       </div>
       {/* <div className={'slider-prev-arrow'}>
         <ArrowLeftBig

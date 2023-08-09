@@ -193,6 +193,17 @@ body,
   cursor: pointer;
 }
 
+.pagination-container-onboarding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  position: absolute;
+  bottom: 12%;
+  color: white;
+}
+
 .slider-next-arrow {
   position: absolute;
   top: 50%;
