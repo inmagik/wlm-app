@@ -33,7 +33,7 @@ export default function BottomNavigation() {
   const { i18n, t } = useTranslation()
   const { filters } = useQsFilters(getFilters)
   const currentPath = location.pathname
-  const { user } = useAuthUser()
+  const userData = useAuthUser()
   return (
     <div className={styles.BottomNavigation}>
       <LangLink
@@ -122,12 +122,12 @@ export default function BottomNavigation() {
       >
         <div className={styles.Profile}>
           {currentPath.indexOf('profilo') !== -1 ? (
-            user ? (
+            userData && userData.user !== null ? (
               <ProfileLoggedActive />
             ) : (
               <ProfileActive />
             )
-          ) : user ? (
+          ) : userData && userData.user !== null ? (
             <ProfileLogged />
           ) : (
             <Profile />

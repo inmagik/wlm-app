@@ -26,6 +26,8 @@ interface Props {
     only_without_pictures: string
     user_lat: number
     user_lon: number
+    monument_lat: number
+    monument_lon: number
   }
   setFilters: (filters: {
     search: string
@@ -36,6 +38,8 @@ interface Props {
     only_without_pictures: string
     user_lat: number
     user_lon: number
+    monument_lat: number
+    monument_lon: number
   }) => void
   isDesktop?: boolean
 }
@@ -156,8 +160,23 @@ export function ListMonuments({ filters, setFilters }: Props) {
                   key={k}
                   onClick={() => {
                     sessionStorage.setItem('monument', JSON.stringify(monument))
-                    console.log('monument', monument)
-                    navigate(`${smartSlug(monument.id, monument.label)}`)
+                    navigate(
+                      `${smartSlug(
+                        monument.id,
+                        monument.label
+                      )}?${new URLSearchParams({
+                        search: filters.municipality ? filters.search : '',
+                        municipality: filters.municipality,
+                        category: filters.category,
+                        in_contest: filters.in_contest,
+                        only_without_pictures: filters.only_without_pictures,
+                        user_lat: String(filters.user_lat),
+                        user_lon: String(filters.user_lon),
+                        ordering: filters.ordering,
+                        monument_lat: String(filters.monument_lat) || '',
+                        monument_lon: String(filters.monument_lon) || '',
+                      })}`
+                    )
                   }}
                   className="no-link pointer"
                 >
@@ -220,6 +239,8 @@ const getFilters = (params: URLSearchParams) => ({
   category: params.get('category') ?? '',
   user_lat: Number(params.get('user_lat')) ?? '',
   user_lon: Number(params.get('user_lon')) ?? '',
+  monument_lon: Number(params.get('monument_lon')) ?? '',
+  monument_lat: Number(params.get('monument_lat')) ?? '',
 })
 
 export default function List() {
