@@ -6,7 +6,6 @@ import { ReactComponent as LoginIcon } from '../../../assets/login.svg'
 import { ReactComponent as LoginWhite } from '../../../assets/login-white.svg'
 import { ReactComponent as ProfileUser } from '../../../assets/profile-user.svg'
 import { ReactComponent as Logout } from '../../../assets/logout.svg'
-import { ReactComponent as WikiLogoMobile } from '../../../assets/wiki-logo-mobile.svg'
 import { useState } from 'react'
 import BlockCambiaLingua from '../../../components/Mobile/BlockCambiaLingua'
 import { API_URL, URL_WIKI } from '../../../const'
@@ -20,7 +19,7 @@ export default function Profile() {
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
   const { logout } = useAuthActions()
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   return (
     <Layout>
       <div className={styles.ProfileContent}>
@@ -89,7 +88,7 @@ export default function Profile() {
                 <button
                   className={styles.LoginButton}
                   onClick={() => {
-                    localStorage.setItem('redirectUrl', pathname)
+                    localStorage.setItem('redirectUrl', pathname + search)
                     window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                   }}
                 >
