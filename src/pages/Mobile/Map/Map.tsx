@@ -268,10 +268,11 @@ export default function Map() {
             })
             shouldCloseMarker = false
           } else if (info > 1) {
-            setMapState({
-              ...mapState,
-              zoom: mapState.zoom + 1,
+            const currentZoom = initialMap?.getView().getZoom()
+            initialMap?.getView().animate({
               center: evt.coordinate,
+              zoom: currentZoom ? currentZoom + 1 : 16,
+              duration: 500,
             })
           }
         },
@@ -405,19 +406,19 @@ export default function Map() {
     }
   }, [])
 
-  useEffect(() => {
-    let currZoom = map?.getView().getZoom()
-    map?.on('moveend', function (e) {
-      const newZoom = map.getView().getZoom()
-      if (currZoom != newZoom  && newZoom) {
-        currZoom = newZoom
-        setMapState({
-          ...mapState,
-          zoom: currZoom,
-        })
-      }
-    })
-  }, [map])
+  // useEffect(() => {
+  //   let currZoom = map?.getView().getZoom()
+  //   map?.on('moveend', function (e) {
+  //     const newZoom = map.getView().getZoom()
+  //     if (currZoom != newZoom && newZoom) {
+  //       currZoom = newZoom
+  //       setMapState({
+  //         ...mapState,
+  //         zoom: currZoom,
+  //       })
+  //     }
+  //   })
+  // }, [map])
 
   return (
     <Layout>

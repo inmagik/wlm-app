@@ -11,6 +11,7 @@ body,
 
 :root {
   --primary: #118ab2;
+  color-scheme: only light;
   --secondary: #40baec;
   --secondary-variant: #eff8fb;
   --tertiary: #cf4130;

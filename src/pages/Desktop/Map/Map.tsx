@@ -246,9 +246,7 @@ export default function Map() {
             category = 'Altri monumenti'
           }
           const appCategory = category
-          sessionStorage.setItem('monument_id', monument.id)
           setDetail(monument.id)
-          console.log(filters, 'filters')
           setFilters({
             monument_id: monument.id,
             // search: monument.label,
@@ -275,13 +273,12 @@ export default function Map() {
           })
           shouldCloseMarker = false
         } else if (info > 1) {
-          if (map) {
-            setMapState({
-              ...mapState,
-              zoom: mapState.zoom + 1,
-              center: evt.coordinate,
-            })
-          }
+          const currentZoom = initialMap?.getView().getZoom()
+          initialMap?.getView().animate({
+            center: evt.coordinate,
+            zoom: currentZoom ? currentZoom + 1 : 16,
+            duration: 500,
+          })
         }
       })
       if (shouldCloseMarker) {
@@ -387,18 +384,24 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    let currZoom = map?.getView().getZoom()
     map?.on('moveend', function (e) {
-      const newZoom = map.getView().getZoom()
-      if (currZoom != newZoom  && newZoom) {
-        currZoom = newZoom
-        setMapState({
-          ...mapState,
-          zoom: currZoom,
-        })
-      }
+      const zoom = map.getView().getZoom()
+      const center = map.getView().getCenter()
+      sessionStorage.setItem('map_state', JSON.stringify({ center, zoom }))
     })
   }, [map])
+
+  useEffect(() => {
+    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon) {
+      const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
+      if (mapState) {
+        map?.getView().setCenter(mapState.center)
+        map?.getView().setZoom(mapState.zoom)
+        setMapState(mapState)
+      }
+    }
+  }, [])
+
 
   return (
     <Layout>

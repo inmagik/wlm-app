@@ -172,7 +172,6 @@ export function ListMonuments({
                   })}
                   onClick={() => {
                     setDetail(monument.id)
-                    // sessionStorage.setItem('monument_id', monument.id.toString())
                     setFilters({
                       ...filters,
                       monument_id: monument.id,

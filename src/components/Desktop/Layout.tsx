@@ -56,10 +56,6 @@ export function SlidesPresentazioneDesktop({
         zIndex: 12,
         backgroundColor: 'rgba(0,0,0,0.6)',
       }}
-      //   onClick={() => {
-      //     setPresentazione(false)
-      //     localStorage.setItem('presentazione', 'true')
-      //   }}
     >
       <Swiper
         slidesPerView={1}
@@ -83,21 +79,11 @@ export function SlidesPresentazioneDesktop({
           width: '70%',
 
           marginTop: 'calc(var(--topbar-desktop-height) + 16px)',
-          //   backgroundColor: 'rgba(0,0,0,0.2)',
-          //   zIndex: 12,
         }}
       >
         {slidesToUse.map((slide, i) => (
           <SwiperSlide key={i} className={'position-relative'}>
-            <div
-              //   onClick={() => {
-              //     if (activeSlide === slidesToUse.length - 1) {
-              //       setPresentazione(false)
-              //       localStorage.setItem('presentazione', 'true')
-              //     }
-              //   }}
-              className="h-100 w-100"
-            >
+            <div className="h-100 w-100">
               <img
                 src={slide}
                 alt=""
@@ -105,7 +91,6 @@ export function SlidesPresentazioneDesktop({
                 style={{
                   objectFit: 'contain',
                   borderRadius: 20,
-                  //   backgroundColor: 'rgba(0,0,0,0.2)',
                 }}
               />
             </div>

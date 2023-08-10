@@ -319,7 +319,9 @@ export default function BlockFilters({
         </div>
       </div>
       <div className={styles.Filter}>
-        <div className={styles.FilterTitle}>{t('anche_monumenti_fuori_concorso')}</div>
+        <div className={styles.FilterTitle}>
+          {t('anche_monumenti_fuori_concorso')}
+        </div>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center">
             <ReactSwitch
@@ -340,7 +342,9 @@ export default function BlockFilters({
         </div>
       </div>
       <div className={styles.Filter}>
-        <div className={styles.FilterTitle}>{t('solo_monumenti_senza_foto')}</div>
+        <div className={styles.FilterTitle}>
+          {t('solo_monumenti_senza_foto')}
+        </div>
         <div className="d-flex align-items-center">
           <div className="d-flex align-items-center">
             <ReactSwitch
