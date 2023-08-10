@@ -17,21 +17,25 @@ export default function BlockOrdering({ setFilters, filters }: Props) {
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        console.log(
-          `geolocation permission status is ${permissionStatus.state}`
-        )
-        setGeoPermission(permissionStatus.state)
-
-        permissionStatus.onchange = () => {
+    if (navigator?.permissions?.query) {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((permissionStatus) => {
           console.log(
-            `geolocation permission status has changed to ${permissionStatus.state}`
+            `geolocation permission status is ${permissionStatus.state}`
           )
           setGeoPermission(permissionStatus.state)
-        }
-      })
+
+          permissionStatus.onchange = () => {
+            console.log(
+              `geolocation permission status has changed to ${permissionStatus.state}`
+            )
+            setGeoPermission(permissionStatus.state)
+          }
+        })
+    } else {
+      setGeoPermission('prompt')
+    }
   }, [])
 
   function handleLocationClick() {
@@ -105,8 +109,7 @@ export default function BlockOrdering({ setFilters, filters }: Props) {
         </div>
         <div
           className={classNames(styles.OrderingItem, {
-            [styles.OrderingItemActive]:
-              filters.ordering === 'pictures_count',
+            [styles.OrderingItemActive]: filters.ordering === 'pictures_count',
           })}
           onClick={() => {
             setFilters({

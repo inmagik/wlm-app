@@ -85,6 +85,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
+    if (navigator?.permissions?.query) {
     navigator.permissions
       .query({ name: 'geolocation' })
       .then((permissionStatus) => {
@@ -103,6 +104,9 @@ export function ListMonuments({ filters, setFilters }: Props) {
           setGeoPermission(permissionStatus.state)
         }
       })
+    } else {
+      setGeoPermission('prompt')
+    }
   }, [])
 
   function success(position: any) {

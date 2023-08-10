@@ -98,23 +98,27 @@ export function ListMonuments({
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        console.log(
-          `geolocation permission status is ${permissionStatus.state}`
-        )
-        setGeoPermission(permissionStatus.state)
-        if (permissionStatus.state === 'granted' && filters.ordering === '') {
-          navigator.geolocation.getCurrentPosition(success, error)
-        }
-        permissionStatus.onchange = () => {
+    if (navigator?.permissions?.query) {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((permissionStatus) => {
           console.log(
-            `geolocation permission status has changed to ${permissionStatus.state}`
+            `geolocation permission status is ${permissionStatus.state}`
           )
           setGeoPermission(permissionStatus.state)
-        }
-      })
+          if (permissionStatus.state === 'granted' && filters.ordering === '') {
+            navigator.geolocation.getCurrentPosition(success, error)
+          }
+          permissionStatus.onchange = () => {
+            console.log(
+              `geolocation permission status has changed to ${permissionStatus.state}`
+            )
+            setGeoPermission(permissionStatus.state)
+          }
+        })
+    } else {
+      setGeoPermission('prompt')
+    }
   }, [])
 
   function success(position: any) {

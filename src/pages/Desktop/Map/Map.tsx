@@ -90,6 +90,7 @@ export default function Map() {
   const [geoPermission, setGeoPermission] = useState<string>('prompt')
 
   useEffect(() => {
+    if (navigator?.permissions?.query) {
     navigator.permissions
       .query({ name: 'geolocation' })
       .then((permissionStatus) => {
@@ -105,6 +106,10 @@ export default function Map() {
           setGeoPermission(permissionStatus.state)
         }
       })
+    }
+    else {
+      setGeoPermission('prompt')
+    }
   }, [])
 
   function handleLocationClick() {
