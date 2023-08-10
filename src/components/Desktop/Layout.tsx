@@ -17,6 +17,7 @@ const slidesIt = [
   '/slides/desktop/it/slide5.png',
   '/slides/desktop/it/slide6.png',
   '/slides/desktop/it/slide7.png',
+  '/slides/desktop/it/slide8.png',
 ]
 
 const slidesEn = [
@@ -27,6 +28,7 @@ const slidesEn = [
   '/slides/desktop/en/slide5.png',
   '/slides/desktop/en/slide6.png',
   '/slides/desktop/en/slide7.png',
+  '/slides/desktop/en/slide8.png',
 ]
 
 export function SlidesPresentazioneDesktop({

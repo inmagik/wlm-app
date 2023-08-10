@@ -271,10 +271,16 @@ export default function Map() {
           })
           shouldCloseMarker = false
         } else if (info > 1) {
+          console.log(mapState.zoom, 'zoom')
+          map?.getView().animate({
+            center: evt.coordinate,
+            zoom: mapState.zoom + 1,
+            duration: 500,
+          })
           setMapState({
             ...mapState,
             zoom: mapState.zoom + 1,
-            center: evt.coordinate,
+            center: evt.coordinate, 
           })
         }
       })

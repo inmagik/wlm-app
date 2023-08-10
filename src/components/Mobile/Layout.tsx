@@ -19,6 +19,7 @@ const slidesIt = [
   '/slides/mobile/it/slide7.png',
   '/slides/mobile/it/slide8.png',
   '/slides/mobile/it/slide9.png',
+  '/slides/mobile/it/slide10.png',
 ]
 
 const slidesEn = [
@@ -31,6 +32,7 @@ const slidesEn = [
   '/slides/mobile/en/slide7.png',
   '/slides/mobile/en/slide8.png',
   '/slides/mobile/en/slide9.png',
+  '/slides/mobile/en/slide10.png',
 ]
 
 export function SlidesPresentazioneMobile({
