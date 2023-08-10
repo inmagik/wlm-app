@@ -109,9 +109,6 @@ export function SlidesPresentazioneMobile({
       </Swiper>
       <div
         onClick={() => {
-          if (!isFromPageWiki) {
-            localStorage.setItem('presentazione', 'true')
-          }
           setPresentazione(false)
         }}
         className="button-close-slides-mobile"
@@ -163,6 +160,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!localStorage.getItem('presentazione')) {
       setPresentazione(true)
+      localStorage.setItem('presentazione', 'true')
     }
   }, [])
   return (
