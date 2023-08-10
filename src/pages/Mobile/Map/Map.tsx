@@ -276,7 +276,7 @@ export default function Map() {
           }
         },
         {
-          hitTolerance: 30,
+          hitTolerance: 60,
         }
       )
       if (shouldCloseMarker) {
