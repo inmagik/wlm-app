@@ -406,19 +406,24 @@ export default function Map() {
     }
   }, [])
 
-  // useEffect(() => {
-  //   let currZoom = map?.getView().getZoom()
-  //   map?.on('moveend', function (e) {
-  //     const newZoom = map.getView().getZoom()
-  //     if (currZoom != newZoom && newZoom) {
-  //       currZoom = newZoom
-  //       setMapState({
-  //         ...mapState,
-  //         zoom: currZoom,
-  //       })
-  //     }
-  //   })
-  // }, [map])
+  useEffect(() => {
+    map?.on('moveend', function (e) {
+      const zoom = map.getView().getZoom()
+      const center = map.getView().getCenter()
+      sessionStorage.setItem('map_state', JSON.stringify({ center, zoom }))
+    })
+  }, [map])
+
+  useEffect(() => {
+    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon) {
+      const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
+      if (mapState) {
+        map?.getView().setCenter(mapState.center)
+        map?.getView().setZoom(mapState.zoom)
+        setMapState(mapState)
+      }
+    }
+  }, [])
 
   return (
     <Layout>

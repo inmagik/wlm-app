@@ -44,17 +44,16 @@ function WatchToken() {
 }
 
 function Auth({ children }: { children: JSX.Element }) {
-  const [searchParams, setSearchParams] = useSearchParams()
   return (
     <EazyAuth
       loginCall={loginCall}
       meCall={meCall}
       refreshTokenCall={refreshTokenCall}
-      onAuthenticate={(user) => {
-        const x = new URLSearchParams(searchParams)
-        x.set('token', '')
-        setSearchParams(x)
-      }}
+      // onAuthenticate={(user) => {
+      //   const x = new URLSearchParams(searchParams)
+      //   x.set('token', '')
+      //   setSearchParams(x)
+      // }}
     >
       <WatchToken />
       {children}
