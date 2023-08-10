@@ -109,7 +109,7 @@ export function SlidesPresentazioneMobile({
       </Swiper>
       <div
         onClick={() => {
-          if (isFromPageWiki) {
+          if (!isFromPageWiki) {
             localStorage.setItem('presentazione', 'true')
           }
           setPresentazione(false)
