@@ -405,6 +405,20 @@ export default function Map() {
     }
   }, [])
 
+  useEffect(() => {
+    let currZoom = map?.getView().getZoom()
+    map?.on('moveend', function (e) {
+      const newZoom = map.getView().getZoom()
+      if (currZoom != newZoom  && newZoom) {
+        currZoom = newZoom
+        setMapState({
+          ...mapState,
+          zoom: currZoom,
+        })
+      }
+    })
+  }, [map])
+
   return (
     <Layout>
       <div className="w-100 h-100">

@@ -91,23 +91,22 @@ export default function Map() {
 
   useEffect(() => {
     if (navigator?.permissions?.query) {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        console.log(
-          `geolocation permission status is ${permissionStatus.state}`
-        )
-        setGeoPermission(permissionStatus.state)
-
-        permissionStatus.onchange = () => {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((permissionStatus) => {
           console.log(
-            `geolocation permission status has changed to ${permissionStatus.state}`
+            `geolocation permission status is ${permissionStatus.state}`
           )
           setGeoPermission(permissionStatus.state)
-        }
-      })
-    }
-    else {
+
+          permissionStatus.onchange = () => {
+            console.log(
+              `geolocation permission status has changed to ${permissionStatus.state}`
+            )
+            setGeoPermission(permissionStatus.state)
+          }
+        })
+    } else {
       setGeoPermission('prompt')
     }
   }, [])
@@ -276,16 +275,13 @@ export default function Map() {
           })
           shouldCloseMarker = false
         } else if (info > 1) {
-          map?.getView().animate({
-            center: evt.coordinate,
-            zoom: mapState.zoom + 1,
-            duration: 500,
-          })
-          setMapState({
-            ...mapState,
-            zoom: mapState.zoom + 1,
-            center: evt.coordinate, 
-          })
+          if (map) {
+            setMapState({
+              ...mapState,
+              zoom: mapState.zoom + 1,
+              center: evt.coordinate,
+            })
+          }
         }
       })
       if (shouldCloseMarker) {
@@ -310,7 +306,12 @@ export default function Map() {
   }, [detail])
 
   useEffect(() => {
-    if (filters.monument_lat && filters.monument_lat !== 0 && filters.monument_lon && filters.monument_lon !== 0) {
+    if (
+      filters.monument_lat &&
+      filters.monument_lat !== 0 &&
+      filters.monument_lon &&
+      filters.monument_lon !== 0
+    ) {
       map?.getView().animate({
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
         zoom: 19,
@@ -384,6 +385,20 @@ export default function Map() {
     }
     localStorage.removeItem('monument')
   }, [])
+
+  useEffect(() => {
+    let currZoom = map?.getView().getZoom()
+    map?.on('moveend', function (e) {
+      const newZoom = map.getView().getZoom()
+      if (currZoom != newZoom  && newZoom) {
+        currZoom = newZoom
+        setMapState({
+          ...mapState,
+          zoom: currZoom,
+        })
+      }
+    })
+  }, [map])
 
   return (
     <Layout>
