@@ -327,8 +327,8 @@ export default function Map() {
   useEffect(() => {
     if (
       filters.municipality &&
-      !filters.monument_lat &&
-      !filters.monument_lon &&
+      (!filters.monument_lat || filters.monument_lat === 0) &&
+      (!filters.monument_lon || filters.monument_lon === 0) &&
       !sessionStorage.getItem('map_state')
     ) {
       const coordinates = comuni?.find(
