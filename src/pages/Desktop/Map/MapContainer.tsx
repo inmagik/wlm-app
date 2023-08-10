@@ -2,11 +2,13 @@ import { MarkerProps } from './Map'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
+import { ReactComponent as Italy } from '../../../assets/italy.svg'
 import { ReactComponent as LiveHelp } from '../../../assets/live-help.svg'
 import Legend from '../../../components/Desktop/Legend'
 import IconMonument from '../../../components/IconMonument'
 import { useCallback, useEffect, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
+import { fromLonLat } from 'ol/proj'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
@@ -97,6 +99,20 @@ export default function MapContainer({
             />
           </div>
         )}
+        <div
+          className={styles.ButtonResetItalia}
+          onClick={() => {
+            map
+              .getView()
+              .animate({
+                zoom: 6,
+                center: fromLonLat([12.56738, 41.87194]),
+                duration: 1000,
+              })
+          }}
+        >
+          <Italy />
+        </div>
         <div className={styles.ContainerButtons}>
           {/* <button className={styles.ButtonMappe}>
             <Mappe />

@@ -172,8 +172,31 @@
   cursor: pointer !important;
 }
 
+.ButtonResetItalia {
+  border-radius: 30px !important;
+  background: var(--colori-neutri-white) !important;
+  font-weight: normal !important;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: none !important;
+  margin-top: 8px !important;
+  position: absolute !important;
+  right: 16px !important;
+  top: 120px !important;
+  font-size: 30px !important;
+  color: var(--primary) !important;
+  transition: all 0.3s ease-in-out !important;
+  cursor: pointer !important;
+  z-index: 10;
+}
+
 .ZoomIn:hover,
-.ZoomOut:hover {
+.ZoomOut:hover,
+.ButtonResetItalia:hover {
   background: rgb(208, 223, 228) !important;
   box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.25) !important;
   border: transparent !important;
