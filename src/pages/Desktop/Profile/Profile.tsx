@@ -23,7 +23,7 @@ export default function Profile() {
   const { user } = useAuthUser()
   const username = user ? user.username.replace('mw--', ' ') : ''
   const { logout } = useAuthActions()
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   return (
     <Layout>
       <div className="w-100 h-100 d-flex justify-content-center position-relative">
@@ -105,7 +105,7 @@ export default function Profile() {
                   <button
                     className={styles.LoginButton}
                     onClick={() => {
-                      localStorage.setItem('redirectUrl', pathname)
+                      localStorage.setItem('redirectUrl', pathname + search)
                       window.location.href = `${API_URL}/oauth/oauth-login?redirect_uri=${window.location.href}`
                     }}
                   >

@@ -104,7 +104,22 @@ export default function BottomNavigation() {
           </div>
         </div>
       </LangLink>
-      <LangLink to="/profilo" className="no-link">
+      <LangLink
+        to={`/profilo?${new URLSearchParams({
+          search: filters.municipality ? filters.search : '',
+          municipality: filters.municipality,
+          category: filters.category,
+          in_contest: filters.in_contest,
+          only_without_pictures: filters.only_without_pictures,
+          user_lat: String(filters.user_lat),
+          user_lon: String(filters.user_lon),
+          ordering: filters.ordering,
+          monument_id: filters.monument_id || '',
+          monument_lat: filters.monument_lat || '',
+          monument_lon: filters.monument_lon || '',
+        })}`}
+        className="no-link"
+      >
         <div className={styles.Profile}>
           {currentPath.indexOf('profilo') !== -1 ? (
             user ? (
@@ -117,10 +132,14 @@ export default function BottomNavigation() {
           ) : (
             <Profile />
           )}
-          <div className={classNames({
-            [styles.LabelActive]: currentPath.indexOf('profilo') !== -1,
-            [styles.Label]: currentPath.indexOf('profilo') === -1,
-          })}>{t('profilo')}</div>
+          <div
+            className={classNames({
+              [styles.LabelActive]: currentPath.indexOf('profilo') !== -1,
+              [styles.Label]: currentPath.indexOf('profilo') === -1,
+            })}
+          >
+            {t('profilo')}
+          </div>
         </div>
       </LangLink>
     </div>
