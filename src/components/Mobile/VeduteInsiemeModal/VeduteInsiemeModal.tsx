@@ -36,10 +36,7 @@ export default function VeduteInsiemeModal({
         <InfoIcon />
         <div className={styles.Title}>{t('vedute_insieme')}</div>
         <div className={styles.Description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
-          mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-          mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis
-          tellus. Nullam quis imperdiet augue.
+          {t('vedute_d_insieme_text')}
         </div>
         <div className="pointer">
           <CloseIcon onClick={() => setVeduteInsiemeOpen(false)} />
