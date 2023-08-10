@@ -34,6 +34,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .TextWikiLove > p > a {
