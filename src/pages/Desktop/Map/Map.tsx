@@ -311,13 +311,13 @@ export default function Map() {
     ) {
       map?.getView().animate({
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
-        zoom: 19,
+        zoom: 15,
         duration: 500,
       })
       setMapState({
         ...mapState,
         center: fromLonLat([filters.monument_lon, filters.monument_lat]),
-        zoom: 19,
+        zoom: 15,
       })
     }
   }, [])
@@ -341,8 +341,8 @@ export default function Map() {
   useEffect(() => {
     if (
       filters.municipality &&
-      (!filters.monument_lat || filters.monument_lat !== 0) &&
-      (!filters.monument_lon || filters.monument_lon !== 0)
+      (!filters.monument_lat || filters.monument_lat === 0) &&
+      (!filters.monument_lon || filters.monument_lon === 0)
     ) {
       const coordinates = comuni?.find(
         (c) => c.code === Number(filters.municipality)
@@ -392,7 +392,7 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon) {
+    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon && !filters.municipality) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       if (mapState) {
         map?.getView().setCenter(mapState.center)
