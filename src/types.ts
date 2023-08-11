@@ -25,6 +25,7 @@ export interface Picture {
   relevant_image: boolean
   image_type: string
   data?: PictureData
+  is_relevant?: boolean
 }
 
 
