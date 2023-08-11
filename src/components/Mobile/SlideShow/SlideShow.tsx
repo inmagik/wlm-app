@@ -39,7 +39,7 @@ export default function SlideShow({
   const swiperSlideShowRef = useRef<any>()
   const { t } = useTranslation()
   const [infoSlide, setInfoSlide] = useState<boolean>(true)
-  const isMobile = useMediaQuery('(max-width: 767px)')
+  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
 
   const handleCloseSlideShowOnEsc = useCallback(
     (e: KeyboardEvent) => {
