@@ -88,7 +88,8 @@
             "per_caricare_una_foto": "To log in you must accept the following conditions:",
             "accetta": "Accept",
             "concorso": "Contest",
-            "categorie": "Categories"
+            "categorie": "Categories",
+            "errore_server_riprova_a_fare_il_login": "Server error, try to login again"
         }
     },
     "it": {
@@ -180,7 +181,8 @@
             "per_caricare_una_foto": "Per effettuare il Login è necessario accettare le seguenti condizioni:",
             "accetta": "Accetta",
             "concorso": "Concorso",
-            "categorie": "Categorie"
+            "categorie": "Categorie",
+            "errore_server_riprova_a_fare_il_login": "Errore del server, riprova a fare il login"
         }
     }
 }

@@ -499,7 +499,7 @@ export default function BlockUpload({
                         setIsLoading(false)
                         if (err.response?.status !== 418) {
                           setErrorServer(
-                            err.response?.data?.detail || 'Errore del server'
+                            err.response?.data?.detail || t('errore_server_riprova_a_fare_il_login')
                           )
                         } else {
                           setMappedErrors(err.response?.data)
