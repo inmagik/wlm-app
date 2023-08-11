@@ -277,7 +277,7 @@ export default function Map() {
           }
         },
         {
-          hitTolerance: 60,
+          hitTolerance: 30,
         }
       )
       if (shouldCloseMarker) {
@@ -415,7 +415,7 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon) {
+    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon && !filters.municipality) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       if (mapState) {
         map?.getView().setCenter(mapState.center)
