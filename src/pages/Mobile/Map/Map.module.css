@@ -129,8 +129,9 @@
   margin-bottom: 16px;
   border: none;
   position: absolute;
-  left: 16px;
-  top: 124px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
 }
 
