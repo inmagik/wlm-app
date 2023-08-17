@@ -86,24 +86,30 @@ export function ListMonuments({ filters, setFilters }: Props) {
 
   useEffect(() => {
     if (navigator?.permissions?.query) {
-    navigator.permissions
-      .query({ name: 'geolocation' })
-      .then((permissionStatus) => {
-        console.log(
-          `geolocation permission status is ${permissionStatus.state}`
-        )
-        setGeoPermission(permissionStatus.state)
-        if (permissionStatus.state === 'granted' && filters.ordering === '') {
-          navigator.geolocation.getCurrentPosition(success, error)
-        }
-
-        permissionStatus.onchange = () => {
+      navigator.permissions
+        .query({ name: 'geolocation' })
+        .then((permissionStatus) => {
           console.log(
-            `geolocation permission status has changed to ${permissionStatus.state}`
+            `geolocation permission status is ${permissionStatus.state}`
           )
           setGeoPermission(permissionStatus.state)
-        }
-      })
+          if (
+            permissionStatus.state === 'granted' &&
+            (filters.ordering === '' ||
+              (filters.user_lat === 0 &&
+                filters.user_lon === 0 &&
+                filters.ordering === 'distance'))
+          ) {
+            navigator.geolocation.getCurrentPosition(success, error)
+          }
+
+          permissionStatus.onchange = () => {
+            console.log(
+              `geolocation permission status has changed to ${permissionStatus.state}`
+            )
+            setGeoPermission(permissionStatus.state)
+          }
+        })
     } else {
       setGeoPermission('prompt')
     }

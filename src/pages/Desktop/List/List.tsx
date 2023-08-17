@@ -106,7 +106,13 @@ export function ListMonuments({
             `geolocation permission status is ${permissionStatus.state}`
           )
           setGeoPermission(permissionStatus.state)
-          if (permissionStatus.state === 'granted' && filters.ordering === '') {
+          if (
+            permissionStatus.state === 'granted' &&
+            (filters.ordering === '' ||
+              (filters.user_lat === 0 &&
+                filters.user_lon === 0 &&
+                filters.ordering === 'distance'))
+          ) {
             navigator.geolocation.getCurrentPosition(success, error)
           }
           permissionStatus.onchange = () => {
