@@ -211,7 +211,7 @@ export function ListMonuments({
                     </div>
                     {monument.distance && geoPermission === 'granted' && (
                       <div className={styles.Distance}>
-                        {monument.distance.toFixed(1)} Km
+                        {monument.distance.toFixed(1)} km
                       </div>
                     )}
                   </div>
