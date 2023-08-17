@@ -89,7 +89,8 @@
             "accetta": "Accept",
             "concorso": "Contest",
             "categorie": "Categories",
-            "errore_server_riprova_a_fare_il_login": "Server error, try to login again"
+            "errore_server_riprova_a_fare_il_login": "Server error, try to login again",
+            "centra_comune": "Center municipality"
         }
     },
     "it": {
@@ -182,7 +183,8 @@
             "accetta": "Accetta",
             "concorso": "Concorso",
             "categorie": "Categorie",
-            "errore_server_riprova_a_fare_il_login": "Errore del server, riprova a fare il login"
+            "errore_server_riprova_a_fare_il_login": "Errore del server, riprova a fare il login",
+            "centra_comune": "Centra comune"
         }
     }
 }

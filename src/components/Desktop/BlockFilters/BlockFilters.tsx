@@ -3,6 +3,7 @@ import { ReactComponent as FiltersIcon } from '../../../assets/filter-primary.sv
 import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
 import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
+import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as Flag } from '../../../assets/flag.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
@@ -90,8 +91,18 @@ export default function BlockFilters({
             type="text"
             placeholder={t('cerca_comune')}
             value={searchComune}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+            onChange={(e) => {
+              setOpenOptions(true)
+              setSearchComune(e.target.value)
+            }}
+          />
+          {filters.municipality !== '' && (
+            <div
+              title={
+                t('centra_comune') 
+              }
+              className={styles.PointComune}
+              onClick={() => {
                 const comune = comuni?.find(
                   (comune) =>
                     comune.label.toLowerCase() === searchComune.toLowerCase()
@@ -100,13 +111,11 @@ export default function BlockFilters({
                   setComuneFilterCoords(comune.centroid.coordinates)
                 }
                 setOpenOptions(false)
-              }
-            }}
-            onChange={(e) => {
-              setOpenOptions(true)
-              setSearchComune(e.target.value)
-            }}
-          />
+              }}
+            >
+              <MyLocation />
+            </div>
+          )}
           {searchComune.length > 0 && (
             <div
               className={styles.CloseIconWrapper}
