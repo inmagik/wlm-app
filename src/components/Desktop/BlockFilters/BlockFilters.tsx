@@ -36,7 +36,7 @@ export default function BlockFilters({
 
   const comuniFiltered = useMemo(() => {
     return comuni?.filter((comune) =>
-      comune.label.toLowerCase().includes(searchComune.toLowerCase())
+      comune.label.toLowerCase().startsWith(searchComune.toLowerCase())
     )
   }, [comuni, searchComune])
 
