@@ -27,18 +27,13 @@ interface BlockUploadProps {
 }
 
 function ImageFile({ image }: { image: any }) {
-  const [url, setUrl] = useState<string | null>(null)
 
-  useEffect(() => {
+  const url = useMemo(() => {
     if (image.file) {
-      setUrl((prev) => {
-        if (prev) {
-          URL.revokeObjectURL(prev)
-        }
-        return URL.createObjectURL(image.file)
-      })
+      return URL.createObjectURL(image.file)
     }
-  }, [])
+    return null
+  }, [image.file])
 
   if (!url) {
     return null
@@ -440,7 +435,7 @@ export default function BlockUpload({
               type="file"
               className="d-none"
               onChange={(e) => {
-                if (e.target.files) {
+                if (e.target.files && e.target.files.length > 0) {
                   setUploadState(
                     uploadState?.map((image, i) => {
                       if (i === slideActive) {
