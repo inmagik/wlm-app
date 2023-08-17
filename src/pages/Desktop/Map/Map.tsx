@@ -26,6 +26,7 @@ import VectorSource from 'ol/source/Vector'
 import { Point } from 'ol/geom'
 import { Icon, Style } from 'ol/style'
 import { useComuni } from '../../../hooks/comuni'
+import { useTopContextState } from '../../../context/TopContext'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -87,29 +88,7 @@ export default function Map() {
     minZoom: 5,
   })
 
-  const [geoPermission, setGeoPermission] = useState<string>('prompt')
-
-  useEffect(() => {
-    if (navigator?.permissions?.query) {
-      navigator.permissions
-        .query({ name: 'geolocation' })
-        .then((permissionStatus) => {
-          console.log(
-            `geolocation permission status is ${permissionStatus.state}`
-          )
-          setGeoPermission(permissionStatus.state)
-
-          permissionStatus.onchange = () => {
-            console.log(
-              `geolocation permission status has changed to ${permissionStatus.state}`
-            )
-            setGeoPermission(permissionStatus.state)
-          }
-        })
-    } else {
-      setGeoPermission('prompt')
-    }
-  }, [])
+  const { geoPermission} = useTopContextState()
 
   function handleLocationClick() {
     if (navigator.geolocation && geoPermission !== 'denied') {

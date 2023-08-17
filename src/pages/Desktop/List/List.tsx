@@ -17,6 +17,7 @@ import Detail from '../../Mobile/Detail'
 import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import Legend from '../../../components/Desktop/Legend'
+import { useTopContextState } from '../../../context/TopContext'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -95,41 +96,14 @@ export function ListMonuments({
     }
   }, [filters.monument_id])
 
-  const [geoPermission, setGeoPermission] = useState<string>('prompt')
-
-  useEffect(() => {
-    if (navigator?.permissions?.query) {
-      navigator.permissions
-        .query({ name: 'geolocation' })
-        .then((permissionStatus) => {
-          console.log(
-            `geolocation permission status is ${permissionStatus.state}`
-          )
-          setGeoPermission(permissionStatus.state)
-          if (
-            permissionStatus.state === 'granted' &&
-            (filters.ordering === '' ||
-              (filters.user_lat === 0 &&
-                filters.user_lon === 0 &&
-                filters.ordering === 'distance'))
-          ) {
-            navigator.geolocation.getCurrentPosition(success, error)
-          }
-          permissionStatus.onchange = () => {
-            console.log(
-              `geolocation permission status has changed to ${permissionStatus.state}`
-            )
-            setGeoPermission(permissionStatus.state)
-          }
-        })
-    } else {
-      setGeoPermission('prompt')
-    }
-  }, [])
+  const { geoPermission} = useTopContextState()
 
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
+    console.log('latitude', latitude)
+    console.log('longitude', longitude)
+    
     if (filters.ordering === '') {
       setFilters({
         ...filters,
@@ -151,7 +125,7 @@ export function ListMonuments({
   }
 
   useEffect(() => {
-    if (navigator.geolocation && geoPermission !== 'denied') {
+    if (navigator.geolocation && geoPermission !== 'denied' && filters.ordering === '') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
