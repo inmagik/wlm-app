@@ -235,7 +235,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       /[^0-9]/g,
       ''
     )
-    if(!addressSplittedSecondPartWithoutLetters) return addressFinal[0].replace(',', '')
+    if (!addressSplittedSecondPartWithoutLetters)
+      return addressFinal[0].replace(',', '')
     const addressToReturn = `${addressFinal[0]}, ${addressSplittedSecondPartWithoutLetters}`
     return addressToReturn
   }, [monument])
@@ -390,13 +391,11 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                             )}
                           </div>
                           <div>
-                            {picture.data?.DateTime && (
-                              <div className={styles.BlockImageOverlayTextDate}>
-                                {dayjs(picture.data?.DateTime).format(
-                                  'DD/MM/YYYY'
-                                )}
-                              </div>
-                            )}
+                            <div className={styles.BlockImageOverlayTextDate}>
+                              {dayjs(picture.data?.DateTime).format(
+                                'DD/MM/YYYY'
+                              )}
+                            </div>
                           </div>
                         </div>
                         {picture.data?.License && (
