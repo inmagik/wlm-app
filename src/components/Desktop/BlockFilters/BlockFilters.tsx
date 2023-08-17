@@ -3,7 +3,7 @@ import { ReactComponent as FiltersIcon } from '../../../assets/filter-primary.sv
 import { ReactComponent as CheckOrderingIcon } from '../../../assets/ordering-checked.svg'
 import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-unchecked.svg'
 import { ReactComponent as CloseSecondary } from '../../../assets/close-secondary.svg'
-import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
+import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as Flag } from '../../../assets/flag.svg'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useMemo, useState } from 'react'
@@ -36,10 +36,28 @@ export default function BlockFilters({
   const { data: comuni } = useComuni()
 
   const comuniFiltered = useMemo(() => {
-    return comuni?.filter((comune) =>
-      comune.label.toLowerCase().startsWith(searchComune.toLowerCase())
+    if (searchComune === '') {
+      return []
+    }
+    const comuniFiltered = comuni?.filter((comune) =>
+      comune.label.toLowerCase().includes(searchComune.toLowerCase())
     )
-  }, [comuni, searchComune])
+    const comuniOrdered = comuniFiltered?.sort(
+      (a, b) => {
+        const aStartWith = a.label.toLowerCase().startsWith(searchComune)
+        const bStartWith = b.label.toLowerCase().startsWith(searchComune)
+        if (aStartWith && !bStartWith) {
+          return -1
+        } else if (!aStartWith && bStartWith) {
+          return 1
+        } else {
+          return a.label.length - b.label.length
+        }
+      }
+    )
+  
+    return comuniOrdered
+  }, [searchComune, comuni])
 
   useEffect(() => {
     if (filters.municipality) {
@@ -98,9 +116,7 @@ export default function BlockFilters({
           />
           {filters.municipality !== '' && (
             <div
-              title={
-                t('centra_comune') 
-              }
+              title={t('centra_comune')}
               className={styles.PointComune}
               onClick={() => {
                 const comune = comuni?.find(

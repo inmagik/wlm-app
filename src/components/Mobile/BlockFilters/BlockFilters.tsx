@@ -35,10 +35,26 @@ export default function BlockFilters({
   const { data: comuni } = useComuni()
 
   const comuniFiltered = useMemo(() => {
-    return comuni?.filter((comune) =>
-      comune.label.toLowerCase().startsWith(searchComune.toLowerCase())
+    if (searchComune === '') {
+      return []
+    }
+    const comuniFiltered = comuni?.filter((comune) =>
+      comune.label.toLowerCase().includes(searchComune.toLowerCase())
     )
-  }, [comuni, searchComune])
+    const comuniOrdered = comuniFiltered?.sort((a, b) => {
+      const aStartWith = a.label.toLowerCase().startsWith(searchComune)
+      const bStartWith = b.label.toLowerCase().startsWith(searchComune)
+      if (aStartWith && !bStartWith) {
+        return -1
+      } else if (!aStartWith && bStartWith) {
+        return 1
+      } else {
+        return a.label.length - b.label.length
+      }
+    })
+
+    return comuniOrdered
+  }, [searchComune, comuni])
 
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -152,7 +168,9 @@ export default function BlockFilters({
             </div>
           </div>
           <div className={styles.Filter}>
-            <div className={styles.FilterTitle}>{t('anche_monumenti_fuori_concorso')}</div>
+            <div className={styles.FilterTitle}>
+              {t('anche_monumenti_fuori_concorso')}
+            </div>
             <div className="d-flex align-items-center">
               <div className={styles.FilterItem}>
                 <ReactSwitch
