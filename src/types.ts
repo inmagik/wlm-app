@@ -142,3 +142,12 @@ export interface UploadedImage {
     descriptionshorturl: string
   }[]
 }
+
+export interface Contest {
+  id: number
+  label: string
+  start_date: string
+  end_date: string
+  description?: string
+  link?: string
+}

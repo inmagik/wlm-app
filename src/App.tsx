@@ -6,6 +6,7 @@ import {
   useParams,
   useLocation,
 } from 'react-router-dom'
+import { TopContextProvider } from './context/TopContext'
 import List from './pages/Mobile/List'
 import ListDesktop from './pages/Desktop/List'
 import { I18nextProvider, useTranslation } from 'react-i18next'
@@ -53,15 +54,16 @@ function AvailablesLang() {
 
 function AppRoutes() {
   const location = useLocation()
-  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
+  const isMobile = useMediaQuery(
+    '((hover: none) and (pointer: coarse)) or (max-width: 1024px)'
+  )
   return (
-    <>
+    <TopContextProvider>
       <Routes location={location}>
         <Route path={':lang/*'} element={<SyncLang />} />
         <Route path="*" element={<SyncLang />} />
       </Routes>
       <Routes location={location}>
-        
         <Route index element={isMobile ? <Map /> : <MapDesktop />} />
         <Route path={':lang/*'} element={<AvailablesLang />}>
           <Route index element={isMobile ? <Map /> : <MapDesktop />} />
@@ -99,7 +101,7 @@ function AppRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-    </>
+    </TopContextProvider>
   )
 }
 

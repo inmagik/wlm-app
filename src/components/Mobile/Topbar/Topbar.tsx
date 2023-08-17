@@ -7,12 +7,18 @@ import Legend from '../Legend'
 import WikiLoveMonuments from '../WikiLoveMonuments'
 import { useTranslation } from 'react-i18next'
 import { SlidesPresentazioneMobile } from '../Layout'
+import { useTopContextState } from '../../../context/TopContext'
 
 export default function Topbar() {
   const [legend, setLegend] = useState(false)
   const [infoWiki, setInfoWiki] = useState(false)
   const { t } = useTranslation()
   const [presentazione, setPresentazione] = useState(false)
+  const { activeContests} = useTopContextState()
+
+  console.log("activeContests", activeContests)
+
+
   return (
     <>
       <div className={styles.TopBar}>
