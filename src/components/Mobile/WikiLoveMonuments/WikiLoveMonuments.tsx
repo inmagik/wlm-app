@@ -43,8 +43,14 @@ export default function WikiLoveMonuments({
               {' '}
               Puoi utilizzare questo strumento per partecipare all’edizione
               italiana di Wiki Loves Monuments, che si svolge dal 1° al 30
-              settembre. Prima di partecipare, ricordati di leggere il
-              regolamento del concorso.
+              settembre. Prima di partecipare, ricordati di leggere il{' '}
+              <a
+                href="https://www.wikimedia.it/news/wiki-loves-monuments-italia-2023-regolamento/"
+                target={'_blank'}
+              >
+                regolamento del concorso
+              </a>
+              .
             </p>{' '}
             <p>
               Wiki Loves Monuments è{' '}
@@ -111,7 +117,12 @@ export default function WikiLoveMonuments({
                 setPresentazione(true)
               }}
             >
-              <img className='me-2' src={'/commons.png'} width={16} alt='Commons' />
+              <img
+                className="me-2"
+                src={'/commons.png'}
+                width={16}
+                alt="Commons"
+              />
               <strong>Rivedi il tutorial dell'app</strong>
             </div>
           </div>
@@ -124,7 +135,14 @@ export default function WikiLoveMonuments({
               {' '}
               You can use this tool to participate in the Italian edition of
               Wiki Loves Monuments, which takes place from 1 to 30 September.
-              Before participating, remember to read the competition rules.
+              Before participating,{' '}
+              <a
+                href="https://www.wikimedia.it/news/wiki-loves-monuments-italia-2023-regolamento/"
+                target={'_blank'}
+              >
+                remember to read the competition rules
+              </a>
+              .
             </p>{' '}
             <p>
               Wiki Loves Monuments is{' '}
