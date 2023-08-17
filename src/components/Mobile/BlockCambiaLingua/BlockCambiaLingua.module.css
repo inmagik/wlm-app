@@ -122,7 +122,8 @@
   color: var(--colori-neutri-white);
 }
 
-@media (((hover: none) and (pointer: coarse)) or (max-width: 1024px)) {
+/* @media (((hover: none) and (pointer: coarse)) or (max-width: 1024px)) { */
+@media not (min-width: 1024px) or ((hover: hover) and (pointer: fine)) {
   .OverlayFilters {
     position: absolute;
     top: 0;

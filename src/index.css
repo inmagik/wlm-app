@@ -240,12 +240,6 @@ body,
   position: relative;
 }
 
-/* .ol-control {
-  position: relative !important;
-} */
-
-@media (((hover: none) and (pointer: coarse)) or (max-width: 1024px)) {
-  .ol-attribution {
-    left: 0px !important;
-  }
+.mobile-version .ol-attribution {
+  left: 0px !important;
 }

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Layout from '../../../components/Mobile/Layout'
 import { useMonument } from '../../../hooks/monuments'
-import { parseSmartSlug } from '../../../utils'
+import { isBrowserMobile, parseSmartSlug } from '../../../utils'
 import styles from './Detail.module.css'
 import { ReactComponent as Bell } from '../../../assets/bell.svg'
 import { ReactComponent as CameraDark } from '../../../assets/camera-dark.svg'
@@ -47,7 +47,6 @@ import { Monument } from '../../../types'
 import classNames from 'classnames'
 import { useQsFilters } from '../../../hooks/filters'
 import dayjs from 'dayjs'
-import { useMediaQuery } from 'usehooks-ts'
 import { useAuthUser } from 'use-eazy-auth'
 import IconCategory from '../../../components/IconCategory'
 import { API_URL } from '../../../const'
@@ -98,9 +97,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
   const [showModalUpload, setShowModalUpload] = useState(false)
   const [veduteInsiemeOpen, setVeduteInsiemeOpen] = useState(false)
   const { filters, setFilters } = useQsFilters(getFilters)
-  const isMobile = useMediaQuery(
-    '((hover: none) and (pointer: coarse)) or (max-width: 1024px)'
-  )
+  const isMobile = isBrowserMobile()
   const [showLicenseModal, setShowLicenseModal] = useState(false)
 
   const picturesToUse = useMemo(() => {

@@ -21,10 +21,10 @@ import { createI18n, DEFAULT_LANG, getLangFromParam } from './i18n'
 import ErrorBoundary from './components/ErrorBoundary'
 import Detail from './pages/Mobile/Detail'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useMediaQuery } from 'usehooks-ts'
 import NavigationWrapper from './components/Mobile/NavigationWrapper'
 import Auth from './hooks/auth'
 import RedirectLogin from './pages/RedirectLogin'
+import { isBrowserMobile } from './utils'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -54,9 +54,21 @@ function AvailablesLang() {
 
 function AppRoutes() {
   const location = useLocation()
-  const isMobile = useMediaQuery(
-    '((hover: none) and (pointer: coarse)) or (max-width: 1024px)'
-  )
+  const isMobile = isBrowserMobile()
+
+  console.log(123, isMobile)
+
+  useEffect(() => {
+    if (isMobile) {
+      document.body.classList.add('mobile-version')
+      document.body.classList.remove('desktop-version')
+    } else {
+      document.body.classList.add('desktop-version')
+      document.body.classList.remove('mobile-version')
+    }
+  }, [isMobile])
+
+
   return (
     <TopContextProvider>
       <Routes location={location}>

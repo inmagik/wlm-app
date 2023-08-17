@@ -190,7 +190,7 @@
   cursor: pointer;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 1024px) or ((hover: hover) and (pointer: fine)) {
   .SlideShowImage {
     height: 100%;
     background-position: center;

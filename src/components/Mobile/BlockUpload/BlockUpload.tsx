@@ -9,7 +9,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
-import { useMediaQuery } from 'usehooks-ts'
 import { Monument } from '../../../types'
 import { uploadImages } from '../../../hooks/monuments'
 import dayjs from 'dayjs'
@@ -17,6 +16,7 @@ import { useAuthUser } from 'use-eazy-auth'
 import { useQueryClient } from '@tanstack/react-query'
 import { Spinner } from 'react-bootstrap'
 import classNames from 'classnames'
+import { isBrowserMobile } from '../../../utils'
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -27,7 +27,6 @@ interface BlockUploadProps {
 }
 
 function ImageFile({ image }: { image: any }) {
-
   const url = useMemo(() => {
     if (image.file) {
       return URL.createObjectURL(image.file)
@@ -82,7 +81,6 @@ export default function BlockUpload({
         : monument.categories_urls?.non_wlm_categories ?? []
 
       return categories
-      
     }
     return []
   }, [monument])
@@ -92,11 +90,9 @@ export default function BlockUpload({
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
         images.push({
-          title: `${monument?.label}_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}_${(
-            i + 1
-          )
-            .toString()
-            .padStart(3, '0')}`,
+          title: `${monument?.label}_${dayjs().format(
+            'YYYY-MM-DD_HH:mm:ss'
+          )}_${(i + 1).toString().padStart(3, '0')}`,
           description: monument?.label || '',
           file: fileList[i],
           date: dayjs().format('YYYY-MM-DD'),
@@ -111,7 +107,7 @@ export default function BlockUpload({
 
   const [slideActive, setSlideActive] = useState<number>(0)
 
-  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
+  const isMobile = isBrowserMobile()
 
   const [errors, setErrors] = useState<any[]>()
   const { token } = useAuthUser()
@@ -146,11 +142,14 @@ export default function BlockUpload({
         }}
       >
         <div className={styles.ModalUploadContainer}>
-          <div className="d-flex py-2 align-items-center justify-content-between position-sticky" style={{
-            top: 0,
-            zIndex: 100,
-            backgroundColor: 'var(--overlay)',
-          }}>
+          <div
+            className="d-flex py-2 align-items-center justify-content-between position-sticky"
+            style={{
+              top: 0,
+              zIndex: 100,
+              backgroundColor: 'var(--overlay)',
+            }}
+          >
             <div className={styles.TitleConcorso}>
               {monument?.in_contest
                 ? t('la_tua_foto_sarà_in_concorso')
@@ -412,9 +411,15 @@ export default function BlockUpload({
               <span className={styles.Categorie}>
                 <strong>{t('categorie')}:</strong>
                 {uploadCategories.map((c, i) => (
-                  <div className='py-2' style={{
-                    borderBottom: '1px solid var(--primary)',
-                  }} key={i}>{c.replace(/\+/g, " ")}</div>
+                  <div
+                    className="py-2"
+                    style={{
+                      borderBottom: '1px solid var(--primary)',
+                    }}
+                    key={i}
+                  >
+                    {c.replace(/\+/g, ' ')}
+                  </div>
                 ))}
               </span>
             )}
@@ -494,7 +499,8 @@ export default function BlockUpload({
                         setIsLoading(false)
                         if (err.response?.status !== 418) {
                           setErrorServer(
-                            err.response?.data?.detail || t('errore_server_riprova_a_fare_il_login')
+                            err.response?.data?.detail ||
+                              t('errore_server_riprova_a_fare_il_login')
                           )
                         } else {
                           setMappedErrors(err.response?.data)

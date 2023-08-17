@@ -11,8 +11,8 @@ import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import { Navigation } from 'swiper'
-import { useMediaQuery } from 'usehooks-ts'
 import classNames from 'classnames'
+import { isBrowserMobile } from '../../../utils'
 
 interface Props {
   monument: Monument
@@ -39,7 +39,7 @@ export default function SlideShow({
   const swiperSlideShowRef = useRef<any>()
   const { t } = useTranslation()
   const [infoSlide, setInfoSlide] = useState<boolean>(true)
-  const isMobile = useMediaQuery('((hover: none) and (pointer: coarse)) or (max-width: 1024px)')
+  const isMobile = isBrowserMobile()
 
   const handleCloseSlideShowOnEsc = useCallback(
     (e: KeyboardEvent) => {
