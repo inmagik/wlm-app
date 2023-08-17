@@ -5,6 +5,7 @@ import { ReactComponent as UncheckOrderingIcon } from '../../../assets/ordering-
 import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
+import { useTopContextState } from '../../../context/TopContext'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -14,29 +15,7 @@ interface Props {
 export default function BlockOrdering({ setFilters, filters }: Props) {
   const { t } = useTranslation()
 
-  const [geoPermission, setGeoPermission] = useState<string>('prompt')
-
-  useEffect(() => {
-    if (navigator?.permissions?.query) {
-      navigator.permissions
-        .query({ name: 'geolocation' })
-        .then((permissionStatus) => {
-          console.log(
-            `geolocation permission status is ${permissionStatus.state}`
-          )
-          setGeoPermission(permissionStatus.state)
-
-          permissionStatus.onchange = () => {
-            console.log(
-              `geolocation permission status has changed to ${permissionStatus.state}`
-            )
-            setGeoPermission(permissionStatus.state)
-          }
-        })
-    } else {
-      setGeoPermission('prompt')
-    }
-  }, [])
+  const { geoPermission} = useTopContextState()
 
   function handleLocationClick() {
     if (navigator.geolocation && geoPermission !== 'denied') {

@@ -15,6 +15,7 @@ import BlockOrdering from '../../../components/Mobile/BlockOrdering'
 import classNames from 'classnames'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useTopContextState } from '../../../context/TopContext'
 
 interface Props {
   filters: {
@@ -82,38 +83,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
     }
   }, [])
 
-  const [geoPermission, setGeoPermission] = useState<string>('prompt')
-
-  useEffect(() => {
-    if (navigator?.permissions?.query) {
-      navigator.permissions
-        .query({ name: 'geolocation' })
-        .then((permissionStatus) => {
-          console.log(
-            `geolocation permission status is ${permissionStatus.state}`
-          )
-          setGeoPermission(permissionStatus.state)
-          if (
-            permissionStatus.state === 'granted' &&
-            (filters.ordering === '' ||
-              (filters.user_lat === 0 &&
-                filters.user_lon === 0 &&
-                filters.ordering === 'distance'))
-          ) {
-            navigator.geolocation.getCurrentPosition(success, error)
-          }
-
-          permissionStatus.onchange = () => {
-            console.log(
-              `geolocation permission status has changed to ${permissionStatus.state}`
-            )
-            setGeoPermission(permissionStatus.state)
-          }
-        })
-    } else {
-      setGeoPermission('prompt')
-    }
-  }, [])
+  const { geoPermission} = useTopContextState()
 
   function success(position: any) {
     const latitude = position.coords.latitude
@@ -140,7 +110,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
   }
 
   useEffect(() => {
-    if (navigator.geolocation && geoPermission !== 'denied') {
+    if (navigator.geolocation && geoPermission !== 'denied' && filters.ordering === '') {
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
