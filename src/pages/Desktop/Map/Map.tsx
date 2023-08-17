@@ -324,13 +324,20 @@ export default function Map() {
 
   useEffect(() => {
     if (comuneFilterCoords) {
+      map?.getView().animate({
+        center: fromLonLat([comuneFilterCoords[0], comuneFilterCoords[1]]),
+        zoom: 12,
+        duration: 1000,
+      })
       setMapState({
         ...mapState,
-        center: fromLonLat(comuneFilterCoords),
+        center: fromLonLat([comuneFilterCoords[0], comuneFilterCoords[1]]),
         zoom: 12,
       })
     }
+    setComuneFilterCoords(null)
   }, [comuneFilterCoords])
+
 
   useEffect(() => {
     if (filters.monument_id) {

@@ -321,6 +321,12 @@ export default function Map() {
 
   useEffect(() => {
     if (comuneFilterCoords) {
+      console.log('comuneFilterCoords', comuneFilterCoords)
+      // map?.getView().animate({
+      //   center: fromLonLat(comuneFilterCoords),
+      //   zoom: 12,
+      //   duration: 500,
+      // })
       setMapState({
         ...mapState,
         center: fromLonLat(comuneFilterCoords),

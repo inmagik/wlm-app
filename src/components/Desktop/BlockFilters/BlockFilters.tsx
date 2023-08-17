@@ -90,6 +90,18 @@ export default function BlockFilters({
             type="text"
             placeholder={t('cerca_comune')}
             value={searchComune}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                const comune = comuni?.find(
+                  (comune) =>
+                    comune.label.toLowerCase() === searchComune.toLowerCase()
+                )
+                if (comune && setComuneFilterCoords) {
+                  setComuneFilterCoords(comune.centroid.coordinates)
+                }
+                setOpenOptions(false)
+              }
+            }}
             onChange={(e) => {
               setOpenOptions(true)
               setSearchComune(e.target.value)
