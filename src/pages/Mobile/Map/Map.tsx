@@ -242,12 +242,12 @@ export default function Map() {
                 zoom: map?.getView().getZoom(),
               })
             )
-            setFilters({
-              ...filters,
-              monument_lat: monument.position.coordinates[1],
-              monument_lon: monument.position.coordinates[0],
-              map_zoom: initialMap?.getView().getZoom(),
-            })
+            // setFilters({
+            //   ...filters,
+            //   monument_lat: monument.position.coordinates[1],
+            //   monument_lon: monument.position.coordinates[0],
+            //   map_zoom: initialMap?.getView().getZoom(),
+            // })
             initialMap?.getView().animate({
               center: fromLonLat([
                 monument.position.coordinates[0],
