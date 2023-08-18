@@ -462,10 +462,21 @@ export default function Map() {
                     })
                   )
                   navigate(
-                    `/${i18n.language}/mappa/${smartSlug(
+                    `${smartSlug(
                       infoMarker.id,
                       infoMarker.label
-                    )}`
+                    )}?${new URLSearchParams({
+                      search: filters.municipality ? filters.search : '',
+                      municipality: filters.municipality,
+                      category: filters.category,
+                      in_contest: filters.in_contest,
+                      only_without_pictures: filters.only_without_pictures,
+                      user_lat: String(filters.user_lat),
+                      user_lon: String(filters.user_lon),
+                      ordering: filters.ordering,
+                      monument_lat: String(filters.monument_lat) || '',
+                      monument_lon: String(filters.monument_lon) || '',
+                    })}`
                   )
                 }
               }}
