@@ -46,13 +46,17 @@ interface Props {
 }
 
 export function ListMonuments({ filters, setFilters }: Props) {
-  useEffect(() => {
-    if (history.state?.scroll) {
-      listMonumentsRef.current!.scrollTop = history.state.scroll
-    } else {
-      listMonumentsRef.current!.scrollTop = 0
+  const enableQuery = useMemo(() => {
+    if (filters.ordering === '') {
+      return false
     }
-  }, [])
+    return (
+      filters.ordering !== 'distance' ||
+      (filters.ordering === 'distance' &&
+        !!filters.user_lat &&
+        !!filters.user_lon)
+    )
+  }, [filters])
 
   const {
     data: infiniteMonuments,
@@ -61,45 +65,28 @@ export function ListMonuments({ filters, setFilters }: Props) {
     isFetching,
     isFetchingNextPage,
     fetchNextPage,
-  } = useInfiniteMomuments(filters)
+  } = useInfiniteMomuments(filters, enableQuery)
 
-  const listMonumentsRef = useRef<HTMLDivElement>(null)
+  const { geoPermission } = useTopContextState()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (listMonumentsRef.current) {
-        history.replaceState(
-          {
-            ...history.state,
-            scroll: listMonumentsRef.current.scrollTop,
-          },
-          ''
-        )
-      }
-    }
-    listMonumentsRef.current?.addEventListener('scrollend', handleScroll)
-    return () => {
-      listMonumentsRef.current?.removeEventListener('scrollend', handleScroll)
-    }
-  }, [])
-
-  const { geoPermission} = useTopContextState()
+  const [isLoadingPosition, setIsLoadingPosition] = useState(false)
 
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    console.log('success')
-    if (filters.ordering === '') {
-      setFilters({
-        ...filters,
-        ordering: 'distance',
-        user_lat: latitude,
-        user_lon: longitude,
-      })
-    }
+    console.log('latitude', latitude)
+    console.log('longitude', longitude)
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+    setIsLoadingPosition(false)
   }
 
   function error() {
+    setIsLoadingPosition(false)
     setFilters({
       ...filters,
       ordering: 'label',
@@ -110,10 +97,21 @@ export function ListMonuments({ filters, setFilters }: Props) {
   }
 
   useEffect(() => {
-    if (navigator.geolocation && geoPermission !== 'denied' && filters.ordering === '') {
+    if (
+      navigator.geolocation &&
+      geoPermission !== 'denied' &&
+      filters.ordering === ''
+    ) {
+      setIsLoadingPosition(true)
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
+      if (filters.ordering === '') {
+        setFilters({
+          ...filters,
+          ordering: 'label',
+        })
+      }
     }
   }, [])
 
@@ -126,13 +124,13 @@ export function ListMonuments({ filters, setFilters }: Props) {
   }, [])
 
   return (
-    <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {isFetching && !isFetchingNextPage ? (
+    <div className={classNames(styles.ListMonuments)}>
+      {isFetching && !isFetchingNextPage || isLoadingPosition || isLoading ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <div className="loader" />
         </div>
       ) : (
-        infiniteMonuments!.pages.map((list, i) => (
+        infiniteMonuments && infiniteMonuments?.pages.map((list, i) => (
           <Fragment key={i}>
             {list.results.map((monument, k) => {
               return (
