@@ -81,6 +81,7 @@
   position: sticky;
   width: 100%;
   bottom: 0px;
+  z-index: 10;
 }
 
 .ButtonRiseleziona {
@@ -153,10 +154,6 @@
 .ButtonUploadErrors:hover {
   background: var(--tertiary);
   opacity: 0.8;
-}
-
-.ButtonUpload:hover {
-  background: var(--concorso-hover);
 }
 
 .ImageToUpload {
@@ -284,6 +281,25 @@
   line-height: normal;
 }
 
+.ErrorMapped {
+  color: var(--tertiary);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-top: 8px;
+}
+
+.SuccessMapped {
+  color: var(--success);
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .ErrorBlock {
   background-color: var(--tertiary);
   color: var(--colori-neutri-white);
@@ -353,6 +369,7 @@
     width: 100%;
     bottom: 4px;
     justify-content: space-between;
+    z-index: 999;
   }
 
   .ResponseOverlay {
@@ -383,5 +400,9 @@
     flex-shrink: 0;
     border-radius: 5px;
     background: var(--overlay);
+  }
+  
+  .ButtonUpload:hover {
+    background: var(--concorso-hover);
   }
 }

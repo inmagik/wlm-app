@@ -74,8 +74,6 @@ export function ListMonuments({ filters, setFilters }: Props) {
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    console.log('latitude', latitude)
-    console.log('longitude', longitude)
     setFilters({
       ...filters,
       ordering: 'distance',
@@ -125,7 +123,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
 
   return (
     <div className={classNames(styles.ListMonuments)}>
-      {isFetching && !isFetchingNextPage || isLoadingPosition || isLoading ? (
+      {(isFetching && !isFetchingNextPage) || isLoadingPosition || isLoading ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <div className="loader" />
         </div>

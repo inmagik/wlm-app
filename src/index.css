@@ -35,6 +35,7 @@ body,
   --bottom-desktop-navigation-height: 83px;
   --font-roboto-slab: 'Roboto Slab', serif;
   --font-monsterrat: 'Montserrat', sans-serif;
+  --toastify-color-danger: #cf4130 !important;
 }
 
 .block-content {

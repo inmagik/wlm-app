@@ -51,6 +51,7 @@ import { useAuthUser } from 'use-eazy-auth'
 import IconCategory from '../../../components/IconCategory'
 import { API_URL } from '../../../const'
 import { replace } from 'lodash'
+import BlockUploadFormik from '../../../components/Mobile/BlockUpload/BlockUploadFormik'
 
 interface Props {
   monumentId?: number
@@ -809,8 +810,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
             multiple
             onChange={(e) => {
               if (e.target.files && e.target.files?.length > 0) {
-                setImageUpload(e.target.files)
                 setShowModalUpload(true)
+                setImageUpload(e.target.files)
               }
             }}
             type="file"
@@ -829,7 +830,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           monument={monument}
         />
       )}
-      <BlockUpload
+      <BlockUploadFormik
         fileList={imageUpload}
         monument={monument}
         setUploadOpen={setShowModalUpload}

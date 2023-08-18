@@ -25,6 +25,7 @@ import NavigationWrapper from './components/Mobile/NavigationWrapper'
 import Auth from './hooks/auth'
 import RedirectLogin from './pages/RedirectLogin'
 import { isBrowserMobile } from './utils'
+import { ToastContainer } from 'react-toastify'
 
 function SyncLang() {
   const { i18n } = useTranslation()
@@ -55,8 +56,6 @@ function AvailablesLang() {
 function AppRoutes() {
   const location = useLocation()
   const isMobile = isBrowserMobile()
-
-  console.log(123, isMobile)
 
   useEffect(() => {
     if (isMobile) {
@@ -113,6 +112,10 @@ function AppRoutes() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer
+        style={{ zIndex: 999999 }}
+        draggable={false}
+      />
     </TopContextProvider>
   )
 }

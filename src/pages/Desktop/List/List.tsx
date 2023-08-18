@@ -154,8 +154,6 @@ export function ListMonuments({
     }
   }, [])
 
-  console.log(isFetching, isFetchingNextPage, isLoadingPosition)
-
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {(isFetching && !isFetchingNextPage) || isLoadingPosition || isLoading ? (
