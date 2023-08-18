@@ -157,17 +157,7 @@ const BlockUploadFormik = ({
     },
   })
 
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    setFieldTouched,
-    setErrors,
-    handleChange,
-  } = formik
-
-  console.log(mappedErrors)
+  const { values, errors, touched, setFieldValue, handleChange } = formik
 
   return (
     <>
