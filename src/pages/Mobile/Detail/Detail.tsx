@@ -654,6 +654,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                     category: filters.category,
                     search: filters.search,
                     municipality: filters.municipality,
+                    user_lat: String(filters.user_lat),
+                    user_lon: String(filters.user_lon),
                   }).toString()}`
                 )
               }}

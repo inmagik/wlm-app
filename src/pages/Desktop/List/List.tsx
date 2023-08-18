@@ -115,8 +115,6 @@ export function ListMonuments({
   function success(position: any) {
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
-    console.log('latitude', latitude)
-    console.log('longitude', longitude)
     setFilters({
       ...filters,
       ordering: 'distance',
