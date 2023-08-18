@@ -79,6 +79,18 @@ export function ListMonuments({
     }
   }, [filters])
 
+
+  const enableQuery = useMemo(() => {
+    if(filters.ordering === ''){
+      return false
+    }
+    return filters.ordering !== 'distance' || (filters.ordering === 'distance' && !!filters.user_lat && !!filters.user_lon)
+  
+  }, [filters])
+
+  
+  const [isLoadingPosition, setIsLoadingPosition] = useState(false)
+
   const {
     data: infiniteMonuments,
     hasNextPage,
@@ -86,7 +98,7 @@ export function ListMonuments({
     isLoading,
     isFetching,
     fetchNextPage,
-  } = useInfiniteMomuments(filtersForMonument)
+  } = useInfiniteMomuments(filtersForMonument, enableQuery)
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
 
@@ -99,47 +111,46 @@ export function ListMonuments({
   const { geoPermission} = useTopContextState()
 
   function success(position: any) {
+    
     const latitude = position.coords.latitude
     const longitude = position.coords.longitude
     console.log('latitude', latitude)
     console.log('longitude', longitude)
-    
-    if (filters.ordering === '') {
-      setFilters({
-        ...filters,
-        ordering: 'distance',
-        user_lat: latitude,
-        user_lon: longitude,
-      })
-    }
+    setFilters({
+      ...filters,
+      ordering: 'distance',
+      user_lat: latitude,
+      user_lon: longitude,
+    })
+    setIsLoadingPosition(false)
   }
 
   function error() {
-    setFilters({
-      ...filters,
-      ordering: 'label',
-      user_lat: 0,
-      user_lon: 0,
-    })
+    setIsLoadingPosition(false)
     console.log('Unable to retrieve your location')
   }
 
   useEffect(() => {
     if (navigator.geolocation && geoPermission !== 'denied' && filters.ordering === '') {
+      setIsLoadingPosition(true)
       navigator.geolocation.getCurrentPosition(success, error)
     } else {
       console.log('Geolocation not supported')
+      setFilters({
+        ...filters,
+        ordering: 'label',
+      })
     }
   }, [])
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
-      {isFetching && !isFetchingNextPage ? (
+      {(isFetching && !isFetchingNextPage ) || isLoadingPosition ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <div className="loader" />
         </div>
       ) : (
-        infiniteMonuments!.pages.map((list, i) => (
+        infiniteMonuments && infiniteMonuments?.pages.map((list, i) => (
           <Fragment key={i}>
             {list.results.map((monument, k) => {
               return (

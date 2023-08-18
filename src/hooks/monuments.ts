@@ -33,7 +33,7 @@ export function useMonuments(params: Record<string, any> = {}) {
   )
 }
 
-export function useInfiniteMomuments(params: Record<string, any> = {}) {
+export function useInfiniteMomuments(params: Record<string, any> = {}, enabled = true) {
   return useInfiniteQuery(
     ['infiniteMonuments', params],
     ({ signal, pageParam }) =>
@@ -49,6 +49,7 @@ export function useInfiniteMomuments(params: Record<string, any> = {}) {
       getNextPageParam: getNextPageParam,
       cacheTime: 1000 * 60 * 6,
       staleTime: 300,
+      enabled,
     }
   )
 }
