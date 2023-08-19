@@ -462,7 +462,7 @@ export default function Map() {
                     })
                   )
                   navigate(
-                    `${smartSlug(
+                    `/${i18n.language}/mappa/${smartSlug(
                       infoMarker.id,
                       infoMarker.label
                     )}?${new URLSearchParams({
