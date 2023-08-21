@@ -318,8 +318,7 @@ export default function Map() {
     if (
       filters.municipality &&
       (!filters.monument_lat || filters.monument_lat === 0) &&
-      (!filters.monument_lon || filters.monument_lon === 0) &&
-      !sessionStorage.getItem('map_state')
+      (!filters.monument_lon || filters.monument_lon === 0) 
     ) {
       const coordinates = comuni?.find(
         (c) => c.code === Number(filters.municipality)
