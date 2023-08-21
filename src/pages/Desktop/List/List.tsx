@@ -26,8 +26,8 @@ const getFilters = (params: URLSearchParams) => ({
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   category: params.get('category') ?? '',
-  user_lat: Number(params.get('user_lat')) ?? '',
-  user_lon: Number(params.get('user_lon')) ?? '',
+  user_lat: params.get('user_lat') ?? '',
+  user_lon: params.get('user_lon') ?? '',
   monument_lat: Number(params.get('monument_lat')) ?? '',
   monument_lon: Number(params.get('monument_lon')) ?? '',
   monument_id: Number(params.get('monument_id')) ?? '',
@@ -41,8 +41,8 @@ interface Props {
     category: string
     in_contest: string
     only_without_pictures: string
-    user_lat: number
-    user_lon: number
+    user_lat: string
+    user_lon: string
     monument_lat: number
     monument_lon: number
     monument_id: number
@@ -90,6 +90,8 @@ export function ListMonuments({
         !!filters.user_lon)
     )
   }, [filters])
+
+  console.log(filters.ordering, enableQuery, filters.user_lat, filters.user_lon)
 
   const [isLoadingPosition, setIsLoadingPosition] = useState(false)
 

@@ -33,6 +33,8 @@ export default function BlockFilters({
   const [searchComune, setSearchComune] = useState<string>('')
   const [openOptions, setOpenOptions] = useState<boolean>(false)
 
+  console.log('filters', filters)
+
   const { data: comuni } = useComuni()
 
   const comuniFiltered = useMemo(() => {

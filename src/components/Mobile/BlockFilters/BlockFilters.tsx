@@ -33,6 +33,7 @@ export default function BlockFilters({
   const [filterCategoriaOpen, setFilterCategoriaOpen] = useState<boolean>(false)
   const { t } = useTranslation()
   const { data: comuni } = useComuni()
+  
 
   const comuniFiltered = useMemo(() => {
     if (searchComune === '') {
