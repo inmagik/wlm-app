@@ -38,7 +38,7 @@ const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
   municipality: params.get('municipality') ?? '',
   category: params.get('category') ?? '',
-  ordering: params.get('ordering') ?? 'distance',
+  ordering: params.get('ordering') ?? '',
   in_contest: params.get('in_contest') ?? 'true',
   only_without_pictures: params.get('only_without_pictures') ?? '',
   user_lat: params.get('user_lat') ?? '',
