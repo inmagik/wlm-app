@@ -66,7 +66,7 @@ export default function Legend({ legend, setLegend }: Props) {
         </div>
         <div className={styles.ItemCardLast}>
           <AltroMonumentoIcon fill="var(--primary)" />
-          <span className={styles.NameItem}>{t('altro_monumento')}</span>
+          <span className={styles.NameItem}>{t('altri_monumenti')}</span>
         </div>
       </div>
       <div className={`${styles.CardMinorPadding} mt-2`}>

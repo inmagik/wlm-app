@@ -70,7 +70,7 @@ export default function Legend({ legend, detail }: Props) {
           </div>
           <div className={styles.ItemCard}>
             <AltroMonumentoIcon fill="var(--primary)" />
-            <span className={styles.NameItem}>{t('altro_monumento')}</span>
+            <span className={styles.NameItem}>{t('altri_monumenti')}</span>
           </div>
           <div className={styles.ItemCard}>
             <AlberoMonumentaleIcon fill="var(--primary)" />
