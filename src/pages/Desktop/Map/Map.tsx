@@ -88,7 +88,7 @@ export default function Map() {
     minZoom: 5,
   })
 
-  const { geoPermission} = useTopContextState()
+  const { geoPermission } = useTopContextState()
 
   function handleLocationClick() {
     if (navigator.geolocation && geoPermission !== 'denied') {
@@ -240,16 +240,21 @@ export default function Map() {
             zoom: initialMap?.getView().getZoom() ?? 14,
             duration: 500,
           })
-          setInfoMarker({
-            id: monument.id,
-            label: monument.label,
-            pictures_wlm_count: monument.pictures_wlm_count,
-            pictures_count: monument.pictures_count,
-            coords: evt.pixel,
-            app_category: appCategory,
-            in_contest: monument.in_contest,
-            feature: feature,
-          })
+          if(infoMarker){
+            setInfoMarker(null)
+          }
+          setTimeout(() => {
+            setInfoMarker({
+              id: monument.id,
+              label: monument.label,
+              pictures_wlm_count: monument.pictures_wlm_count,
+              pictures_count: monument.pictures_count,
+              coords: evt.pixel,
+              app_category: appCategory,
+              in_contest: monument.in_contest,
+              feature: feature,
+            })
+          }, 500)
           shouldCloseMarker = false
         } else if (info > 1) {
           const currentZoom = initialMap?.getView().getZoom()
@@ -317,7 +322,6 @@ export default function Map() {
     setComuneFilterCoords(null)
   }, [comuneFilterCoords])
 
-
   useEffect(() => {
     if (filters.monument_id) {
       setDetail(filters.monument_id)
@@ -378,7 +382,12 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon && !filters.municipality) {
+    if (
+      sessionStorage.getItem('map_state') &&
+      !filters.monument_lat &&
+      !filters.monument_lon &&
+      !filters.municipality
+    ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       if (mapState) {
         map?.getView().setCenter(mapState.center)
@@ -387,7 +396,6 @@ export default function Map() {
       }
     }
   }, [])
-
 
   return (
     <Layout>

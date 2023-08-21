@@ -84,7 +84,7 @@ export default function Map() {
     minZoom: 5,
   })
 
-  const { geoPermission} = useTopContextState()
+  const { geoPermission } = useTopContextState()
 
   function handleLocationClick() {
     if (navigator.geolocation && geoPermission !== 'denied') {
@@ -221,12 +221,6 @@ export default function Map() {
                 zoom: map?.getView().getZoom(),
               })
             )
-            // setFilters({
-            //   ...filters,
-            //   monument_lat: monument.position.coordinates[1],
-            //   monument_lon: monument.position.coordinates[0],
-            //   map_zoom: initialMap?.getView().getZoom(),
-            // })
             initialMap?.getView().animate({
               center: fromLonLat([
                 monument.position.coordinates[0],
@@ -235,16 +229,21 @@ export default function Map() {
               // zoom: initialMap?.getView().getZoom(),
               duration: 500,
             })
-            setInfoMarker({
-              id: monument.id,
-              label: monument.label,
-              pictures_wlm_count: monument.pictures_wlm_count,
-              pictures_count: monument.pictures_count,
-              coords: evt.pixel,
-              app_category: appCategory,
-              in_contest: monument.in_contest,
-              feature: feature,
-            })
+            if (infoMarker) {
+              setInfoMarker(null)
+            }
+            setTimeout(() => {
+              setInfoMarker({
+                id: monument.id,
+                label: monument.label,
+                pictures_wlm_count: monument.pictures_wlm_count,
+                pictures_count: monument.pictures_count,
+                coords: evt.pixel,
+                app_category: appCategory,
+                in_contest: monument.in_contest,
+                feature: feature,
+              })
+            }, 500)
             shouldCloseMarker = false
           } else if (info > 1) {
             const currentZoom = initialMap?.getView().getZoom()
@@ -318,7 +317,7 @@ export default function Map() {
     if (
       filters.municipality &&
       (!filters.monument_lat || filters.monument_lat === 0) &&
-      (!filters.monument_lon || filters.monument_lon === 0) 
+      (!filters.monument_lon || filters.monument_lon === 0)
     ) {
       const coordinates = comuni?.find(
         (c) => c.code === Number(filters.municipality)
@@ -399,7 +398,12 @@ export default function Map() {
   }, [map])
 
   useEffect(() => {
-    if(sessionStorage.getItem('map_state') && !filters.monument_lat && !filters.monument_lon && !filters.municipality) {
+    if (
+      sessionStorage.getItem('map_state') &&
+      !filters.monument_lat &&
+      !filters.monument_lon &&
+      !filters.municipality
+    ) {
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
       if (mapState) {
         map?.getView().setCenter(mapState.center)
