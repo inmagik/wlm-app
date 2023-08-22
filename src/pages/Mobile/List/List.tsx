@@ -46,6 +46,14 @@ interface Props {
 }
 
 export function ListMonuments({ filters, setFilters }: Props) {
+  useEffect(() => {
+    if (history.state?.scroll) {
+      listMonumentsRef.current!.scrollTop = history.state.scroll
+    } else {
+      listMonumentsRef.current!.scrollTop = 0
+    }
+  }, [])
+
   const enableQuery = useMemo(() => {
     if (filters.ordering === '') {
       return false
@@ -66,6 +74,26 @@ export function ListMonuments({ filters, setFilters }: Props) {
     isFetchingNextPage,
     fetchNextPage,
   } = useInfiniteMomuments(filters, enableQuery)
+
+  const listMonumentsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (listMonumentsRef.current) {
+        history.replaceState(
+          {
+            ...history.state,
+            scroll: listMonumentsRef.current.scrollTop,
+          },
+          ''
+        )
+      }
+    }
+    listMonumentsRef.current?.addEventListener('scrollend', handleScroll)
+    return () => {
+      listMonumentsRef.current?.removeEventListener('scrollend', handleScroll)
+    }
+  }, [])
 
   const { geoPermission } = useTopContextState()
 
@@ -122,13 +150,14 @@ export function ListMonuments({ filters, setFilters }: Props) {
   }, [])
 
   return (
-    <div className={classNames(styles.ListMonuments)}>
+    <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {(isFetching && !isFetchingNextPage) || isLoadingPosition || isLoading ? (
         <div className="d-flex align-items-center justify-content-center w-100 h-100">
           <div className="loader" />
         </div>
       ) : (
-        infiniteMonuments && infiniteMonuments?.pages.map((list, i) => (
+        infiniteMonuments &&
+        infiniteMonuments?.pages.map((list, i) => (
           <Fragment key={i}>
             {list.results.map((monument, k) => {
               return (
