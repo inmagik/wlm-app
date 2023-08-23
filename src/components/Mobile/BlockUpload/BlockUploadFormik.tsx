@@ -104,7 +104,7 @@ const BlockUploadFormik = ({
       for (let i = 0; i < fileList.length; i++) {
         images.push({
           title: `${monument?.label}_${dayjs().format(
-            'YYYY-MM-DD_HH:mm:ss'
+            'YYYY-MM-DD_HH-mm-ss'
           )}_${(i + 1).toString().padStart(3, '0')}`,
           description: monument?.label || '',
           file: fileList[i],
