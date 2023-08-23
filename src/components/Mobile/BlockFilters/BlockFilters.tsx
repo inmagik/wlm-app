@@ -36,7 +36,7 @@ export default function BlockFilters({
   
 
   const comuniFiltered = useMemo(() => {
-    const searchTrimmed = searchComune.trimStart()
+    const searchTrimmed = searchComune.trimStart().trimEnd()
     if (searchTrimmed === '') {
       return []
     }

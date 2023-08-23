@@ -38,7 +38,7 @@ export default function BlockFilters({
   const { data: comuni } = useComuni()
 
   const comuniFiltered = useMemo(() => {
-    const searchTrimmed = searchComune.trimStart()
+    const searchTrimmed = searchComune.trimStart().trimEnd()
     if (searchTrimmed === '') {
       return []
     }
