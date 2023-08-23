@@ -51,7 +51,7 @@ import { useAuthUser } from 'use-eazy-auth'
 import IconCategory from '../../../components/IconCategory'
 import { API_URL } from '../../../const'
 import { replace } from 'lodash'
-import BlockUploadFormik from '../../../components/Mobile/BlockUpload/BlockUploadFormik'
+import BlockUploadFormik from '../../../components/Mobile/BlockUpload/BlockUpload'
 
 interface Props {
   monumentId?: number
