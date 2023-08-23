@@ -226,7 +226,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
       ''
     )
     const addressOnlyWithLettersNumbersAndComma =
-      addressWithoutProvinceLabel.replace(/[^a-zA-Z0-9, ]/g, '')
+      addressWithoutProvinceLabel.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ, ]/g, '')
     const addressFinal = addressOnlyWithLettersNumbersAndComma.split(',')
     if (addressFinal.length === 1) return addressFinal[0].replace(',', '')
     const addressSplittedSecondPartWithoutLetters = addressFinal[1].replace(
