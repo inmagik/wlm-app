@@ -301,7 +301,7 @@ export default function List() {
                     setFiltersDebounced({ search: e.target.value })
                   }}
                   disabled={
-                    isFetchingNextPage || isFetching || isLoading
+                    isLoading
                   }
                   value={uiFilters.search}
                   className={styles.InputSearch}
