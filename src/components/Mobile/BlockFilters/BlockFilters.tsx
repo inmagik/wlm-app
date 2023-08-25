@@ -36,15 +36,16 @@ export default function BlockFilters({
   
 
   const comuniFiltered = useMemo(() => {
-    if (searchComune === '') {
+    const searchTrimmed = searchComune.trimStart().trimEnd()
+    if (searchTrimmed === '') {
       return []
     }
     const comuniFiltered = comuni?.filter((comune) =>
-      comune.label.toLowerCase().includes(searchComune.toLowerCase())
+      comune.label.toLowerCase().includes(searchTrimmed.toLowerCase())
     )
     const comuniOrdered = comuniFiltered?.sort((a, b) => {
-      const aStartWith = a.label.toLowerCase().startsWith(searchComune)
-      const bStartWith = b.label.toLowerCase().startsWith(searchComune)
+      const aStartWith = a.label.toLowerCase().startsWith(searchTrimmed)
+      const bStartWith = b.label.toLowerCase().startsWith(searchTrimmed)
       if (aStartWith && !bStartWith) {
         return -1
       } else if (!aStartWith && bStartWith) {
