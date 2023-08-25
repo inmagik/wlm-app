@@ -25,14 +25,15 @@ import { Attribution, Zoom } from 'ol/control'
 import { Spinner } from 'react-bootstrap'
 import { defaults } from 'ol/interaction/defaults'
 import IconMonument from '../../../components/IconMonument'
-import { MarkerProps } from '../../Desktop/Map/Map'
-import { forEach } from 'lodash'
+import { forEach, set } from 'lodash'
 import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../../components/Icons/FiltersIcon'
 import { Icon, Style } from 'ol/style'
 import VectorSource from 'ol/source/Vector'
 import { Point } from 'ol/geom'
 import { useTopContextState } from '../../../context/TopContext'
+import Popup from 'ol-popup'
+import { MarkerProps } from '../../../types'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -61,6 +62,8 @@ const myLocationLayer = new VectorLayer({
     }),
   }),
 })
+
+const popup = new Popup({ stopEvent: true, positioning: 'bottom-center' })
 
 export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
@@ -153,6 +156,7 @@ export default function Map() {
         myLocationLayer,
       ],
       interactions: interactions,
+      overlays: [popup],
       controls: [
         new Zoom({
           zoomInClassName: styles.ZoomIn,
@@ -231,20 +235,21 @@ export default function Map() {
             })
             if (infoMarker) {
               setInfoMarker(null)
-            }
-            setTimeout(() => {
+              shouldCloseMarker = true
+            } else {
               setInfoMarker({
                 id: monument.id,
                 label: monument.label,
                 pictures_wlm_count: monument.pictures_wlm_count,
                 pictures_count: monument.pictures_count,
                 coords: evt.pixel,
+                coordinate: evt.coordinate,
                 app_category: appCategory,
                 in_contest: monument.in_contest,
                 feature: feature,
               })
-            }, 500)
-            shouldCloseMarker = false
+              shouldCloseMarker = false
+            }
           } else if (info > 1) {
             const currentZoom = initialMap?.getView().getZoom()
             initialMap?.getView().animate({
@@ -334,27 +339,47 @@ export default function Map() {
     }
   }, [filters.municipality, comuni])
 
-  const [coords, setCoords] = useState<number[] | null>(null)
+  const popupRef = useRef<HTMLDivElement>(null)
 
-  const refreshCoordinates = useCallback(() => {
-    if (infoMarker && map) {
-      const coordinates = infoMarker.feature.getGeometry().getCoordinates()
-      const pixel = map?.getPixelFromCoordinate(coordinates)
-      setCoords(pixel)
+  const setDetail = useCallback(() => {
+    if (infoMarker) {
+      sessionStorage.setItem(
+        'map_state',
+        JSON.stringify({
+          center: map?.getView().getCenter(),
+          zoom: map?.getView().getZoom(),
+        })
+      )
+      navigate(
+        `/${i18n.language}/mappa/${smartSlug(
+          infoMarker.id,
+          infoMarker.label
+        )}?${new URLSearchParams({
+          search: filters.municipality ? filters.search : '',
+          municipality: filters.municipality,
+          category: filters.category,
+          in_contest: filters.in_contest,
+          only_without_pictures: filters.only_without_pictures,
+          user_lat: String(filters.user_lat),
+          user_lon: String(filters.user_lon),
+          ordering: filters.ordering,
+          monument_lat: String(filters.monument_lat) || '',
+          monument_lon: String(filters.monument_lon) || '',
+        })}`
+      )
     }
-  }, [infoMarker, map])
+  }, [infoMarker, filters, i18n.language, navigate, map])
 
   useEffect(() => {
-    refreshCoordinates()
-  }, [infoMarker])
-
-  useEffect(() => {
-    map && map.on('rendercomplete', refreshCoordinates)
-
-    return () => {
-      map && map.un('rendercomplete', refreshCoordinates)
+    if (infoMarker && popupRef.current) {
+      popup.show(
+        infoMarker.feature.getGeometry().getCoordinates(),
+        popupRef.current
+      )
+    } else {
+      popup.hide()
     }
-  }, [map, refreshCoordinates])
+  }, [infoMarker, setDetail])
 
   useEffect(() => {
     if (
@@ -452,85 +477,69 @@ export default function Map() {
             />
           </div>
         )}
-        {infoMarker && coords && (
-          <>
-            <div
-              onClick={(e) => {
-                if (infoMarker) {
-                  sessionStorage.setItem(
-                    'map_state',
-                    JSON.stringify({
-                      center: map?.getView().getCenter(),
-                      zoom: map?.getView().getZoom(),
-                    })
-                  )
-                  navigate(
-                    `/${i18n.language}/mappa/${smartSlug(
-                      infoMarker.id,
-                      infoMarker.label
-                    )}?${new URLSearchParams({
-                      search: filters.municipality ? filters.search : '',
-                      municipality: filters.municipality,
-                      category: filters.category,
-                      in_contest: filters.in_contest,
-                      only_without_pictures: filters.only_without_pictures,
-                      user_lat: String(filters.user_lat),
-                      user_lon: String(filters.user_lon),
-                      ordering: filters.ordering,
-                      monument_lat: String(filters.monument_lat) || '',
-                      monument_lon: String(filters.monument_lon) || '',
-                    })}`
-                  )
-                }
-              }}
-              style={{
-                position: 'absolute',
-                top: coords[1] - 94,
-                left: coords[0] - 80,
-                opacity: coords ? 1 : 0,
-                zIndex: 1,
-                backgroundColor:
-                  infoMarker.pictures_count === 0
-                    ? 'var(--tertiary)'
-                    : infoMarker.pictures_count > 0 &&
-                      infoMarker.pictures_count <= 10
-                    ? 'var(--monumento-poche-foto)'
-                    : 'var(--monumento-tante-foto)',
-              }}
-              className={styles.DetailMarker}
-            >
-              <div>
-                <IconMonument
-                  monument={{
-                    in_contest: infoMarker.in_contest,
-                    pictures_count: infoMarker.pictures_count,
-                    app_category: infoMarker.app_category,
+        <div style={{ display: 'none' }}>
+          <div
+            className="popup-container"
+            ref={popupRef}
+            style={{
+              position: 'relative',
+              top: '-12px',
+            }}
+          >
+            {infoMarker && (
+              <>
+                <div
+                  onClick={(e) => {
+                    if(popup.isOpened()){
+                      setDetail()
+                    }
                   }}
-                />
-              </div>
-              <div className={styles.TitleMarker}>{infoMarker.label}</div>
-              <div className={styles.TextMarker}>
-                <div>
-                  <CameraTransparent />
+                  style={{
+                    zIndex: 1,
+                    backgroundColor:
+                      infoMarker.pictures_count === 0
+                        ? 'var(--tertiary)'
+                        : infoMarker.pictures_count > 0 &&
+                          infoMarker.pictures_count <= 10
+                        ? 'var(--monumento-poche-foto)'
+                        : 'var(--monumento-tante-foto)',
+                  }}
+                  className={styles.DetailMarker}
+                >
+                  <div>
+                    <IconMonument
+                      monument={{
+                        in_contest: infoMarker.in_contest,
+                        pictures_count: infoMarker.pictures_count,
+                        app_category: infoMarker.app_category,
+                      }}
+                    />
+                  </div>
+                  <div className={styles.TitleMarker}>{infoMarker.label}</div>
+                  <div className={styles.TextMarker}>
+                    <div>
+                      <CameraTransparent />
+                    </div>
+                    <div className="ms-2 mt-1">{infoMarker.pictures_count}</div>
+                  </div>
+                  <div
+                    className={styles.PinMarker}
+                    style={{
+                      borderTop:
+                        '10px solid ' +
+                        (infoMarker.pictures_count === 0
+                          ? 'var(--tertiary)'
+                          : infoMarker.pictures_count > 0 &&
+                            infoMarker.pictures_count <= 10
+                          ? 'var(--monumento-poche-foto)'
+                          : 'var(--monumento-tante-foto)'),
+                    }}
+                  ></div>
                 </div>
-                <div className="ms-2 mt-1">{infoMarker.pictures_count}</div>
-              </div>
-              <div
-                className={styles.PinMarker}
-                style={{
-                  borderTop:
-                    '10px solid ' +
-                    (infoMarker.pictures_count === 0
-                      ? 'var(--tertiary)'
-                      : infoMarker.pictures_count > 0 &&
-                        infoMarker.pictures_count <= 10
-                      ? 'var(--monumento-poche-foto)'
-                      : 'var(--monumento-tante-foto)'),
-                }}
-              ></div>
-            </div>
-          </>
-        )}
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       <BlockFilters

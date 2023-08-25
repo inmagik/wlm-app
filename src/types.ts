@@ -151,3 +151,15 @@ export interface Contest {
   description?: string
   link?: string
 }
+
+export interface MarkerProps {
+  id: number
+  label: string
+  pictures_wlm_count: number
+  pictures_count: number
+  app_category: string
+  in_contest: boolean
+  coords: number[],
+  coordinate: number[],
+  feature: any
+}

@@ -27,6 +27,8 @@ import { Point } from 'ol/geom'
 import { Icon, Style } from 'ol/style'
 import { useComuni } from '../../../hooks/comuni'
 import { useTopContextState } from '../../../context/TopContext'
+import Popup from 'ol-popup'
+import { MarkerProps } from '../../../types'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -42,16 +44,6 @@ const getFilters = (params: URLSearchParams) => ({
   monument_id: Number(params.get('monument_id')) ?? '',
 })
 
-export interface MarkerProps {
-  id: number
-  label: string
-  pictures_wlm_count: number
-  pictures_count: number
-  app_category: string
-  in_contest: boolean
-  coords: number[]
-  feature: any
-}
 
 const vectorSourceMyLocation = new VectorSource({
   features: [],
@@ -66,6 +58,9 @@ const myLocationLayer = new VectorLayer({
     }),
   }),
 })
+
+
+const popup = new Popup({stopEvent: false, positioning: 'bottom-center'});
 
 export default function Map() {
   const { filters, setFilters } = useQsFilters(getFilters)
@@ -156,6 +151,8 @@ export default function Map() {
       style: getFeatureStyle,
     })
 
+    
+
     const initialMap = new MapOl({
       target: mapElement.current,
 
@@ -166,6 +163,7 @@ export default function Map() {
         featureOverlay,
         myLocationLayer,
       ],
+      overlays : [popup],
       controls: [
         new Zoom({
           zoomInClassName: styles.ZoomIn,
@@ -195,6 +193,8 @@ export default function Map() {
     })
 
     initialMap.on('click', function (evt) {
+
+
       let shouldCloseMarker = true
       initialMap.forEachFeatureAtPixel(evt.pixel, function (feature) {
         const info = getFeatureInfo(feature)
@@ -242,20 +242,24 @@ export default function Map() {
           })
           if(infoMarker){
             setInfoMarker(null)
-          }
-          setTimeout(() => {
+            shouldCloseMarker = true
+            popup.hide()
+          } else {
             setInfoMarker({
               id: monument.id,
               label: monument.label,
               pictures_wlm_count: monument.pictures_wlm_count,
               pictures_count: monument.pictures_count,
               coords: evt.pixel,
+              coordinate: evt.coordinate,
               app_category: appCategory,
               in_contest: monument.in_contest,
               feature: feature,
             })
-          }, 500)
-          shouldCloseMarker = false
+            shouldCloseMarker = false
+          }
+          
+          
         } else if (info > 1) {
           const currentZoom = initialMap?.getView().getZoom()
           initialMap?.getView().animate({
@@ -418,6 +422,7 @@ export default function Map() {
           setLegend={setLegend}
           map={map}
           loading={loading}
+          popup={popup}
         />
 
         {detail && (
