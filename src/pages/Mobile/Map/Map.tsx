@@ -34,6 +34,7 @@ import { Point } from 'ol/geom'
 import { useTopContextState } from '../../../context/TopContext'
 import Popup from 'ol-popup'
 import { MarkerProps } from '../../../types'
+import { createPortal } from 'react-dom'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -235,21 +236,21 @@ export default function Map() {
             })
             if (infoMarker) {
               setInfoMarker(null)
-              shouldCloseMarker = true
-            } else {
-              setInfoMarker({
-                id: monument.id,
-                label: monument.label,
-                pictures_wlm_count: monument.pictures_wlm_count,
-                pictures_count: monument.pictures_count,
-                coords: evt.pixel,
-                coordinate: evt.coordinate,
-                app_category: appCategory,
-                in_contest: monument.in_contest,
-                feature: feature,
-              })
-              shouldCloseMarker = false
+              setPopOpen(null)
             }
+
+            setInfoMarker({
+              id: monument.id,
+              label: monument.label,
+              pictures_wlm_count: monument.pictures_wlm_count,
+              pictures_count: monument.pictures_count,
+              coords: evt.pixel,
+              coordinate: evt.coordinate,
+              app_category: appCategory,
+              in_contest: monument.in_contest,
+              feature: feature,
+            })
+            shouldCloseMarker = false
           } else if (info > 1) {
             const currentZoom = initialMap?.getView().getZoom()
             initialMap?.getView().animate({
@@ -370,14 +371,20 @@ export default function Map() {
     }
   }, [infoMarker, filters, i18n.language, navigate, map])
 
+  const [popOpen, setPopOpen] = useState<string|null>(null)
+
   useEffect(() => {
     if (infoMarker && popupRef.current) {
       popup.show(
         infoMarker.feature.getGeometry().getCoordinates(),
-        popupRef.current
+        '<div></div>'
       )
+      setPopOpen(infoMarker.id.toString())
+      
     } else {
+
       popup.hide()
+      setPopOpen(null)
     }
   }, [infoMarker, setDetail])
 
@@ -438,6 +445,7 @@ export default function Map() {
     }
   }, [])
 
+
   return (
     <Layout>
       <div className="w-100 h-100">
@@ -477,20 +485,21 @@ export default function Map() {
             />
           </div>
         )}
-        <div style={{ display: 'none' }}>
-          <div
-            className="popup-container"
-            ref={popupRef}
-            style={{
-              position: 'relative',
-              top: '-12px',
-            }}
-          >
-            {infoMarker && (
+
+        <div
+          className="popup-container"
+          ref={popupRef}
+          style={{
+            position: 'relative',
+            top: '-12px',
+          }}
+        >
+          {infoMarker &&
+            createPortal(
               <>
                 <div
                   onClick={(e) => {
-                    if(popup.isOpened()){
+                    if (popOpen === infoMarker.id.toString()) {
                       setDetail()
                     }
                   }}
@@ -536,9 +545,9 @@ export default function Map() {
                     }}
                   ></div>
                 </div>
-              </>
+              </>,
+              popup.getElement()
             )}
-          </div>
         </div>
       </div>
 

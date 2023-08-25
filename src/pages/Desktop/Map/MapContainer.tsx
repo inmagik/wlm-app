@@ -9,6 +9,7 @@ import IconMonument from '../../../components/IconMonument'
 import { useCallback, useEffect, useState, useRef } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { fromLonLat } from 'ol/proj'
+import { createPortal } from 'react-dom'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>
@@ -35,17 +36,17 @@ export default function MapContainer({
 }: MapContainerProps) {
   const popupRef = useRef<HTMLDivElement>(null)
 
-  // useEffect(() => {
-  //   console.log('p', popup)
-  //   // refreshCoordinates()
-  //   if (infoMarker) {
-  //     popup.show(
-  //       infoMarker.feature.getGeometry().getCoordinates(),
-  //       // popupRef.current?.outerHTML
-  //       '<div class="bg-white">hello</div>'
-  //     )
-  //   }
-  // }, [infoMarker, popup])
+  useEffect(() => {
+    // refreshCoordinates()
+    if (infoMarker) {
+      popup.show(
+        infoMarker.feature.getGeometry().getCoordinates(),
+        '<div></div>'
+      )
+    } else {
+      popup.hide()
+    }
+  }, [infoMarker, popup])
 
   const pointerFeatures = useCallback(
     (e: any) => {
@@ -132,59 +133,61 @@ export default function MapContainer({
             pointerEvents: 'none',
           }}
         >
-          {infoMarker && (
-            <>
-              <div
-                style={{
-                  opacity: 1,
-                  zIndex: 1,
-                  pointerEvents: 'none',
-                  backgroundColor:
-                    infoMarker.pictures_count === 0
-                      ? 'var(--tertiary)'
-                      : infoMarker.pictures_count > 0 &&
-                        infoMarker.pictures_count <= 10
-                      ? 'var(--monumento-poche-foto)'
-                      : 'var(--monumento-tante-foto)',
-                }}
-                className={styles.DetailMarker}
-              >
-                <div>
-                  <IconMonument
-                    monument={{
-                      in_contest: infoMarker.in_contest,
-                      pictures_count: infoMarker.pictures_count,
-                      app_category: infoMarker.app_category,
-                    }}
-                  />
-                </div>
-                <div className={styles.TitleMarker}>
-                  {infoMarker.label.charAt(0).toUpperCase() +
-                    infoMarker.label.slice(1)}
-                </div>
-
-                <div className={styles.TextMarker}>
-                  <div>
-                    <CameraTransparent />
-                  </div>
-                  <div className="ms-2 mt-1">{infoMarker.pictures_count}</div>
-                </div>
+          {infoMarker &&
+            createPortal(
+              <>
                 <div
-                  className={styles.PinMarker}
                   style={{
-                    borderTop:
-                      '10px solid ' +
-                      (infoMarker.pictures_count === 0
+                    opacity: 1,
+                    zIndex: 1,
+                    pointerEvents: 'none',
+                    backgroundColor:
+                      infoMarker.pictures_count === 0
                         ? 'var(--tertiary)'
                         : infoMarker.pictures_count > 0 &&
                           infoMarker.pictures_count <= 10
                         ? 'var(--monumento-poche-foto)'
-                        : 'var(--monumento-tante-foto)'),
+                        : 'var(--monumento-tante-foto)',
                   }}
-                ></div>
-              </div>
-            </>
-          )}
+                  className={styles.DetailMarker}
+                >
+                  <div>
+                    <IconMonument
+                      monument={{
+                        in_contest: infoMarker.in_contest,
+                        pictures_count: infoMarker.pictures_count,
+                        app_category: infoMarker.app_category,
+                      }}
+                    />
+                  </div>
+                  <div className={styles.TitleMarker}>
+                    {infoMarker.label.charAt(0).toUpperCase() +
+                      infoMarker.label.slice(1)}
+                  </div>
+
+                  <div className={styles.TextMarker}>
+                    <div>
+                      <CameraTransparent />
+                    </div>
+                    <div className="ms-2 mt-1">{infoMarker.pictures_count}</div>
+                  </div>
+                  <div
+                    className={styles.PinMarker}
+                    style={{
+                      borderTop:
+                        '10px solid ' +
+                        (infoMarker.pictures_count === 0
+                          ? 'var(--tertiary)'
+                          : infoMarker.pictures_count > 0 &&
+                            infoMarker.pictures_count <= 10
+                          ? 'var(--monumento-poche-foto)'
+                          : 'var(--monumento-tante-foto)'),
+                    }}
+                  ></div>
+                </div>
+              </>,
+              popup.getElement()
+            )}
         </div>
       </div>
       <Legend detail={detail} legend={legend} />
