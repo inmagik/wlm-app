@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import BlockFilters from '../../../components/Desktop/BlockFilters'
 import Layout from '../../../components/Desktop/Layout'
 import { useQsFilters } from '../../../hooks/filters'
@@ -134,10 +134,26 @@ export default function Map() {
     vectorSource.refresh()
   }, [categories])
 
+  const filtersForRefresh = useMemo(() => {
+    const o = {
+      search: filters.search,
+      municipality: filters.municipality,
+      ordering: filters.ordering,
+      in_contest: filters.in_contest,
+      only_without_pictures: filters.only_without_pictures,
+      category: filters.category,
+      user_lat: filters.user_lat,
+      user_lon: filters.user_lon,
+    }
+    return Object.values(o).join('')
+
+
+  }, [filters])
+
   useEffect(() => {
     vectorSource.set('filters', filters)
     vectorSource.refresh()
-  }, [filters])
+  }, [filtersForRefresh])
 
   useEffect(() => {
     if (!mapElement.current) return
