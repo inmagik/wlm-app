@@ -1,4 +1,3 @@
-import { MarkerProps } from './Map'
 import styles from './Map.module.css'
 import { ReactComponent as MyLocation } from '../../../assets/my-location.svg'
 import { ReactComponent as CameraTransparent } from '../../../assets/camera-transparent.svg'
@@ -10,6 +9,7 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { fromLonLat } from 'ol/proj'
 import { createPortal } from 'react-dom'
+import { MarkerProps } from '../../../types'
 
 interface MapContainerProps {
   mapElement: React.MutableRefObject<HTMLDivElement | null>

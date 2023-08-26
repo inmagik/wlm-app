@@ -546,7 +546,7 @@ export default function Map() {
                   ></div>
                 </div>
               </>,
-              popup.getElement()
+              popup.getElement() as HTMLElement
             )}
         </div>
       </div>
