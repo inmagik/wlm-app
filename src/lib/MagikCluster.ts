@@ -88,12 +88,18 @@ const clusterScale = scaleLinear().domain([9, 45, 46]).range([14, 24, 24])
 const styleCache = {} as any
 export function getFeatureStyle(feature: any) {
   const info = getFeatureInfo(feature)
+  let singleCluster = false
+  if(info === 1) {
+    const subFeatures = feature.getProperties().features
+    const sproperties = subFeatures[0].getProperties()
+    singleCluster = !!sproperties.cluster
+  }
+  
   const categories: CategoryDomain[] = vectorSource.get('categories')
-  if (info === 1) {
+  if (info === 1 && !singleCluster ) {
+    
     const properties = feature.getProperties().features[0].getProperties()
-    const categoriesFeature = feature
-      .getProperties()
-      .features[0].getProperties().categories
+    const categoriesFeature = properties.categories
     let category = ''
     const categoryLookup = {} as Record<number, string>
     forEach(
