@@ -146,6 +146,7 @@ export interface UploadedImage {
 export interface Contest {
   id: number
   label: string
+  label_en: string
   start_date: string
   end_date: string
   description?: string

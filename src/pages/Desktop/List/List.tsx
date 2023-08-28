@@ -80,7 +80,6 @@ export function ListMonuments({
     }
   }, [])
 
-
   const [isLoadingPosition, setIsLoadingPosition] = useState(false)
 
   const listMonumentsRef = useRef<HTMLDivElement>(null)
@@ -133,6 +132,8 @@ export function ListMonuments({
     }
   }, [])
 
+  const { t } = useTranslation()
+
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {(isFetching && !isFetchingNextPage) || isLoadingPosition || isLoading ? (
@@ -143,57 +144,64 @@ export function ListMonuments({
         infiniteMonuments &&
         infiniteMonuments?.pages.map((list, i) => (
           <Fragment key={i}>
-            {list.results.map((monument, k) => {
-              return (
-                <div
-                  key={k}
-                  className={classNames({
-                    [styles.MonumentCard]: !detail || detail !== monument.id,
-                    [styles.MonumentCardWithDetail]:
-                      detail && detail === monument.id,
-                  })}
-                  onClick={() => {
-                    setDetail(monument.id)
-                    setFilters({
-                      ...filters,
-                      monument_id: monument.id,
-                      monument_lat: monument.position?.coordinates[1],
-                      monument_lon: monument.position?.coordinates[0],
-                    })
-                  }}
-                >
-                  <div className="d-flex">
-                    <div>
-                      <IconMonument monument={monument} />
+            {list.results.length > 0 &&
+              list.results.map((monument, k) => {
+                return (
+                  <div
+                    key={k}
+                    className={classNames({
+                      [styles.MonumentCard]: !detail || detail !== monument.id,
+                      [styles.MonumentCardWithDetail]:
+                        detail && detail === monument.id,
+                    })}
+                    onClick={() => {
+                      setDetail(monument.id)
+                      setFilters({
+                        ...filters,
+                        monument_id: monument.id,
+                        monument_lat: monument.position?.coordinates[1],
+                        monument_lon: monument.position?.coordinates[0],
+                      })
+                    }}
+                  >
+                    <div className="d-flex">
+                      <div>
+                        <IconMonument monument={monument} />
+                      </div>
+                      <div className="ms-2">
+                        <div className={styles.MonumentTitle}>
+                          {monument.label.charAt(0).toUpperCase() +
+                            monument.label.slice(1)}
+                        </div>
+                        <div className={styles.City}>
+                          {monument.municipality_label}
+                          {monument.location &&
+                            monument.location !==
+                              monument.municipality_label && (
+                              <div>Loc: {monument.location}</div>
+                            )}
+                        </div>
+                      </div>
                     </div>
-                    <div className="ms-2">
-                      <div className={styles.MonumentTitle}>
-                        {monument.label.charAt(0).toUpperCase() +
-                          monument.label.slice(1)}
+                    <div className="d-flex align-items-center flex-column">
+                      <div className={styles.NumberPhoto}>
+                        <div>{monument.pictures_count}</div>
+                        <Camera className="ms-2" />
                       </div>
-                      <div className={styles.City}>
-                        {monument.municipality_label}
-                        {monument.location &&
-                          monument.location !== monument.municipality_label && (
-                            <div>Loc: {monument.location}</div>
-                          )}
-                      </div>
+                      {monument.distance && geoPermission === 'granted' && (
+                        <div className={styles.Distance}>
+                          {monument.distance.toFixed(1)} km
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="d-flex align-items-center flex-column">
-                    <div className={styles.NumberPhoto}>
-                      <div>{monument.pictures_count}</div>
-                      <Camera className="ms-2" />
-                    </div>
-                    {monument.distance && geoPermission === 'granted' && (
-                      <div className={styles.Distance}>
-                        {monument.distance.toFixed(1)} km
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            {list.results.length === 0 && (
+              <div className={styles.NessunRisultato}>
+                {t('nessun_risultato_trovato')}
+              </div>
+            )}
           </Fragment>
         ))
       )}
@@ -300,9 +308,7 @@ export default function List() {
                   onChange={(e) => {
                     setFiltersDebounced({ search: e.target.value })
                   }}
-                  disabled={
-                    isLoading
-                  }
+                  disabled={isLoading}
                   value={uiFilters.search}
                   className={styles.InputSearch}
                   type="text"

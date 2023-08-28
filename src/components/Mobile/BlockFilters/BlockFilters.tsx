@@ -12,6 +12,7 @@ import { useComuni } from '../../../hooks/comuni'
 import FiltersIcon from '../../Icons/FiltersIcon'
 import classNames from 'classnames'
 import ReactSwitch from 'react-switch'
+import { useTopContextState } from '../../../context/TopContext'
 
 interface BlockFiltersProps {
   filtersOpen: boolean
@@ -33,7 +34,6 @@ export default function BlockFilters({
   const [filterCategoriaOpen, setFilterCategoriaOpen] = useState<boolean>(false)
   const { t } = useTranslation()
   const { data: comuni } = useComuni()
-  
 
   const comuniFiltered = useMemo(() => {
     const searchTrimmed = searchComune.trimStart().trimEnd()
@@ -62,11 +62,14 @@ export default function BlockFilters({
 
   const [openComuni, setOpenComuni] = useState<boolean>(false)
 
+  const { activeContests } = useTopContextState()
+
   const isResetDisaable = useMemo(() => {
     return (
       filters.category === '' &&
       filters.municipality === '' &&
-      filters.in_contest === 'true' &&
+      (filters.in_contest === 'true' ||
+        (filters.in_contest === '' && activeContests.length === 0)) &&
       filters.only_without_pictures === ''
     )
   }, [filters])
@@ -181,6 +184,7 @@ export default function BlockFilters({
                   checkedIcon={false}
                   uncheckedIcon={false}
                   onColor="#40BAEC"
+                  disabled={activeContests.length === 0}
                   onChange={(checked) => {
                     setFilters({
                       ...filters,
@@ -232,7 +236,7 @@ export default function BlockFilters({
                 setFilters({
                   category: '',
                   municipality: '',
-                  in_contest: 'true',
+                  in_contest: activeContests.length === 0 ? '' : 'true', 
                   only_without_pictures: '',
                 })
               }}

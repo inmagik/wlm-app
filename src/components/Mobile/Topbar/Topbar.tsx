@@ -14,10 +14,9 @@ export default function Topbar() {
   const [infoWiki, setInfoWiki] = useState(false)
   const { t } = useTranslation()
   const [presentazione, setPresentazione] = useState(false)
-  const { activeContests} = useTopContextState()
+  const { activeContests } = useTopContextState()
 
-  // console.log("activeContests", activeContests)
-
+  console.log('activeContests', activeContests)
 
   return (
     <>
@@ -30,9 +29,11 @@ export default function Topbar() {
         >
           <Logo />
         </div>
-        <div className={styles.ContainerTitle}>
-          <Bell /> <span className={styles.Title}>{t('concorso')} WLM</span>
-        </div>
+        {activeContests.length > 0 && (
+          <div className={styles.ContainerTitle}>
+            <Bell /> <span className={styles.Title}>{t('concorso')} WLM</span>
+          </div>
+        )}
         <div
           className="pointer"
           onClick={() => {

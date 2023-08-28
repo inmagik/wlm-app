@@ -15,6 +15,7 @@ import EdificioReligiosoIcon from '../../Icons/EdificioReligiosoIcon'
 import AltroMonumentoIcon from '../../Icons/AltroMonumentoIcon'
 import MuseoIcon from '../../Icons/MuseoIcon'
 import AlberoMonumentaleIcon from '../../Icons/AlberoMonumentaleIcon'
+import { useTopContextState } from '../../../context/TopContext'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -32,6 +33,7 @@ export default function BlockFilters({
   const { t } = useTranslation()
   const [searchComune, setSearchComune] = useState<string>('')
   const [openOptions, setOpenOptions] = useState<boolean>(false)
+  const { activeContests } = useTopContextState()
 
   const { data: comuni } = useComuni()
 
@@ -43,20 +45,18 @@ export default function BlockFilters({
     const comuniFiltered = comuni?.filter((comune) =>
       comune.label.toLowerCase().includes(searchTrimmed.toLowerCase())
     )
-    const comuniOrdered = comuniFiltered?.sort(
-      (a, b) => {
-        const aStartWith = a.label.toLowerCase().startsWith(searchTrimmed)
-        const bStartWith = b.label.toLowerCase().startsWith(searchTrimmed)
-        if (aStartWith && !bStartWith) {
-          return -1
-        } else if (!aStartWith && bStartWith) {
-          return 1
-        } else {
-          return a.label.length - b.label.length
-        }
+    const comuniOrdered = comuniFiltered?.sort((a, b) => {
+      const aStartWith = a.label.toLowerCase().startsWith(searchTrimmed)
+      const bStartWith = b.label.toLowerCase().startsWith(searchTrimmed)
+      if (aStartWith && !bStartWith) {
+        return -1
+      } else if (!aStartWith && bStartWith) {
+        return 1
+      } else {
+        return a.label.length - b.label.length
       }
-    )
-  
+    })
+
     return comuniOrdered
   }, [searchComune, comuni])
 
@@ -86,17 +86,26 @@ export default function BlockFilters({
             [styles.ResetButtonDisabled]:
               filters.category === '' &&
               filters.municipality === '' &&
-              filters.in_contest === 'true' &&
+              (filters.in_contest === 'true' ||
+                (filters.in_contest === '' && activeContests.length === 0)) &&
               filters.only_without_pictures === '',
           })}
           onClick={() => {
-            setFilters({
-              category: '',
-              municipality: '',
-              in_contest: 'true',
-              only_without_pictures: '',
-            })
-            setSearchComune('')
+            if (
+              filters.category !== '' ||
+              filters.municipality !== '' ||
+              filters.only_without_pictures !== '' ||
+              filters.in_contest !== 'true' ||
+              (filters.in_contest === '' && activeContests.length === 0)
+            ) {
+              setFilters({
+                category: '',
+                municipality: '',
+                in_contest: activeContests.length === 0 ? '' : 'true',
+                only_without_pictures: '',
+              })
+              setSearchComune('')
+            }
           }}
         >
           {t('reset')}
@@ -368,6 +377,7 @@ export default function BlockFilters({
               checkedIcon={false}
               uncheckedIcon={false}
               onColor="#40BAEC"
+              disabled={activeContests.length === 0}
               onChange={(checked) => {
                 setFilters({
                   ...filters,

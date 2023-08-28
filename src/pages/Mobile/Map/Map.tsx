@@ -127,7 +127,6 @@ export default function Map() {
     vectorSource.refresh()
   }, [categories])
 
-
   const filtersForRefresh = useMemo(() => {
     const o = {
       search: filters.search,
@@ -140,8 +139,6 @@ export default function Map() {
       user_lon: filters.user_lon,
     }
     return Object.values(o).join('')
-
-
   }, [filters])
 
   useEffect(() => {
@@ -306,10 +303,12 @@ export default function Map() {
     }
   }, [filters.monument_lat, filters.monument_lon])
 
+  const { activeContests } = useTopContextState()
+
   const areFiltersActive = useMemo(() => {
     if (
       filters.category !== '' ||
-      filters.in_contest !== 'true' ||
+      (filters.in_contest !== 'true'  && activeContests.length > 0) ||
       filters.municipality !== '' ||
       filters.only_without_pictures !== '' ||
       filters.search !== ''
@@ -322,12 +321,6 @@ export default function Map() {
 
   useEffect(() => {
     if (comuneFilterCoords) {
-      console.log('comuneFilterCoords', comuneFilterCoords)
-      // map?.getView().animate({
-      //   center: fromLonLat(comuneFilterCoords),
-      //   zoom: 12,
-      //   duration: 500,
-      // })
       setMapState({
         ...mapState,
         center: fromLonLat(comuneFilterCoords),
@@ -388,7 +381,7 @@ export default function Map() {
     }
   }, [infoMarker, filters, i18n.language, navigate, map])
 
-  const [popOpen, setPopOpen] = useState<string|null>(null)
+  const [popOpen, setPopOpen] = useState<string | null>(null)
 
   useEffect(() => {
     if (infoMarker && popupRef.current) {
@@ -397,9 +390,7 @@ export default function Map() {
         '<div></div>'
       )
       setPopOpen(infoMarker.id.toString())
-      
     } else {
-
       popup.hide()
       setPopOpen(null)
     }
@@ -461,7 +452,6 @@ export default function Map() {
       }
     }
   }, [])
-
 
   return (
     <Layout>

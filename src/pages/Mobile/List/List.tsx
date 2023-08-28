@@ -149,6 +149,8 @@ export function ListMonuments({ filters, setFilters }: Props) {
     }
   }, [])
 
+  const { t } = useTranslation()
+
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
       {(isFetching && !isFetchingNextPage) || isLoadingPosition || isLoading ? (
@@ -159,67 +161,76 @@ export function ListMonuments({ filters, setFilters }: Props) {
         infiniteMonuments &&
         infiniteMonuments?.pages.map((list, i) => (
           <Fragment key={i}>
-            {list.results.map((monument, k) => {
-              return (
-                <div
-                  key={k}
-                  onClick={() => {
-                    sessionStorage.setItem('monument', JSON.stringify(monument))
-                    navigate(
-                      `${smartSlug(
-                        monument.id,
-                        monument.label
-                      )}?${new URLSearchParams({
-                        search: filters.municipality ? filters.search : '',
-                        municipality: filters.municipality,
-                        category: filters.category,
-                        in_contest: filters.in_contest,
-                        only_without_pictures: filters.only_without_pictures,
-                        user_lat: String(filters.user_lat),
-                        user_lon: String(filters.user_lon),
-                        ordering: filters.ordering,
-                        monument_lat: String(filters.monument_lat) || '',
-                        monument_lon: String(filters.monument_lon) || '',
-                      })}`
-                    )
-                  }}
-                  className="no-link pointer"
-                >
-                  <div className={styles.MonumentCard}>
-                    <div className="d-flex">
-                      <div>
-                        <IconMonument monument={monument} />
-                      </div>
-                      <div className="ms-2">
-                        <div className={styles.MonumentTitle}>
-                          {monument.label.charAt(0).toUpperCase() +
-                            monument.label.slice(1)}
+            {list.results.length > 0 &&
+              list.results.map((monument, k) => {
+                return (
+                  <div
+                    key={k}
+                    onClick={() => {
+                      sessionStorage.setItem(
+                        'monument',
+                        JSON.stringify(monument)
+                      )
+                      navigate(
+                        `${smartSlug(
+                          monument.id,
+                          monument.label
+                        )}?${new URLSearchParams({
+                          search: filters.municipality ? filters.search : '',
+                          municipality: filters.municipality,
+                          category: filters.category,
+                          in_contest: filters.in_contest,
+                          only_without_pictures: filters.only_without_pictures,
+                          user_lat: String(filters.user_lat),
+                          user_lon: String(filters.user_lon),
+                          ordering: filters.ordering,
+                          monument_lat: String(filters.monument_lat) || '',
+                          monument_lon: String(filters.monument_lon) || '',
+                        })}`
+                      )
+                    }}
+                    className="no-link pointer"
+                  >
+                    <div className={styles.MonumentCard}>
+                      <div className="d-flex">
+                        <div>
+                          <IconMonument monument={monument} />
                         </div>
-                        <div className={styles.City}>
-                          {monument.municipality_label}
-                          {monument.location &&
-                            monument.location !==
-                              monument.municipality_label && (
-                              <div>Loc: {monument.location}</div>
-                            )}
+                        <div className="ms-2">
+                          <div className={styles.MonumentTitle}>
+                            {monument.label.charAt(0).toUpperCase() +
+                              monument.label.slice(1)}
+                          </div>
+                          <div className={styles.City}>
+                            {monument.municipality_label}
+                            {monument.location &&
+                              monument.location !==
+                                monument.municipality_label && (
+                                <div>Loc: {monument.location}</div>
+                              )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="d-flex align-items-center flex-column">
-                      <div className={styles.NumberPhoto}>
-                        <div>{monument.pictures_count}</div>
-                        <Camera className="ms-2" />
-                      </div>
-                      {monument.distance && geoPermission === 'granted' && (
-                        <div className={styles.Distance}>
-                          {monument.distance.toFixed(1)} km
+                      <div className="d-flex align-items-center flex-column">
+                        <div className={styles.NumberPhoto}>
+                          <div>{monument.pictures_count}</div>
+                          <Camera className="ms-2" />
                         </div>
-                      )}
+                        {monument.distance && geoPermission === 'granted' && (
+                          <div className={styles.Distance}>
+                            {monument.distance.toFixed(1)} km
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            {list.results.length === 0 && (
+              <div className={styles.NessunRisultato}>
+                {t('nessun_risultato_trovato')}
+              </div>
+            )}
           </Fragment>
         ))
       )}
@@ -254,10 +265,12 @@ export default function List() {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
+  const { activeContests } = useTopContextState()
+
   const areFiltersActive = useMemo(() => {
     if (
       filters.category !== '' ||
-      filters.in_contest !== 'true' ||
+      (filters.in_contest !== 'true'  && activeContests.length > 0) ||
       filters.municipality !== '' ||
       filters.only_without_pictures !== '' ||
       filters.search !== ''

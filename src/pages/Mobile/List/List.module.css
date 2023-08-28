@@ -12,6 +12,12 @@
   width: 100%;
   padding-left: 48px;
   padding-right: 100px;
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: var(--secondary);
 }
 
 .InputContainer {
@@ -173,4 +179,20 @@
   height: 10px;
   border-radius: 50%;
   background: var(--tertiary);
+}
+
+.NessunRisultato {
+  color: var(--primary);
+  text-align: center;
+  /* Body */
+  font-family: var(--font-roboto-slab);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
