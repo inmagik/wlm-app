@@ -21,6 +21,10 @@ import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
 import { toast, ToastContainer } from 'react-toastify'
 
+function capitalizeFirstLetter(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 function ImageFile({ image }: { image: any }) {
   const url = useMemo(() => {
     if (image.file) {
@@ -102,10 +106,12 @@ const BlockUploadFormik = ({
     if (fileList) {
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
-        let titlePrefix = monument?.municipality_label ? `${monument?.label}, ${monument?.municipality_label}` : `${monument?.label}`
-        if(monument?.app_category === 'Comune'){
-          titlePrefix = `Comune di ${titlePrefix}`
-        }
+
+        let monumentPrefix = monument?.app_category === 'Comune' ? `Comune di ${monument?.label}` : `${monument?.label}`
+        monumentPrefix = capitalizeFirstLetter(monumentPrefix)
+        let titlePrefix = monument?.municipality_label ? `${monument?.municipality_label} - ${monumentPrefix}` : `${monumentPrefix}`
+        
+        
         images.push({
           title: `${titlePrefix}_${dayjs().format(
             'YYYY-MM-DD_HH-mm-ss'
