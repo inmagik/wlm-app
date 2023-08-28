@@ -102,8 +102,12 @@ const BlockUploadFormik = ({
     if (fileList) {
       const images: ImageInfo[] = []
       for (let i = 0; i < fileList.length; i++) {
+        let titlePrefix = monument?.municipality_label ? `${monument?.label}, ${monument?.municipality_label}` : `${monument?.label}`
+        if(monument?.app_category === 'Comune'){
+          titlePrefix = `Comune di ${titlePrefix}`
+        }
         images.push({
-          title: `${monument?.label}_${dayjs().format(
+          title: `${titlePrefix}_${dayjs().format(
             'YYYY-MM-DD_HH-mm-ss'
           )}_${(i + 1).toString().padStart(3, '0')}`,
           description: monument?.label || '',
