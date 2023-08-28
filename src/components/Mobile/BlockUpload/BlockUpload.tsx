@@ -113,7 +113,7 @@ const BlockUploadFormik = ({
         
         
         images.push({
-          title: `${titlePrefix}_${dayjs().format(
+          title: `${titlePrefix} - ${dayjs().format(
             'YYYY-MM-DD_HH-mm-ss'
           )}_${(i + 1).toString().padStart(3, '0')}`,
           description: monument?.label || '',
