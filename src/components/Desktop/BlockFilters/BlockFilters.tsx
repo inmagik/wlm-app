@@ -15,7 +15,6 @@ import EdificioReligiosoIcon from '../../Icons/EdificioReligiosoIcon'
 import AltroMonumentoIcon from '../../Icons/AltroMonumentoIcon'
 import MuseoIcon from '../../Icons/MuseoIcon'
 import AlberoMonumentaleIcon from '../../Icons/AlberoMonumentaleIcon'
-import { useTopContextState } from '../../../context/TopContext'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -33,7 +32,6 @@ export default function BlockFilters({
   const { t } = useTranslation()
   const [searchComune, setSearchComune] = useState<string>('')
   const [openOptions, setOpenOptions] = useState<boolean>(false)
-  const { activeContests } = useTopContextState()
 
   const { data: comuni } = useComuni()
 
@@ -86,8 +84,7 @@ export default function BlockFilters({
             [styles.ResetButtonDisabled]:
               filters.category === '' &&
               filters.municipality === '' &&
-              (filters.in_contest === 'true' ||
-                (filters.in_contest === '' && activeContests.length === 0)) &&
+              filters.in_contest === 'true' &&
               filters.only_without_pictures === '',
           })}
           onClick={() => {
@@ -95,13 +92,12 @@ export default function BlockFilters({
               filters.category !== '' ||
               filters.municipality !== '' ||
               filters.only_without_pictures !== '' ||
-              filters.in_contest !== 'true' ||
-              (filters.in_contest === '' && activeContests.length === 0)
+              filters.in_contest !== 'true'
             ) {
               setFilters({
                 category: '',
                 municipality: '',
-                in_contest: activeContests.length === 0 ? '' : 'true',
+                in_contest: 'true',
                 only_without_pictures: '',
               })
               setSearchComune('')
@@ -377,7 +373,6 @@ export default function BlockFilters({
               checkedIcon={false}
               uncheckedIcon={false}
               onColor="#40BAEC"
-              disabled={activeContests.length === 0}
               onChange={(checked) => {
                 setFilters({
                   ...filters,

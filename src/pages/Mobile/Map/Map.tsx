@@ -303,12 +303,10 @@ export default function Map() {
     }
   }, [filters.monument_lat, filters.monument_lon])
 
-  const { activeContests } = useTopContextState()
-
   const areFiltersActive = useMemo(() => {
     if (
       filters.category !== '' ||
-      (filters.in_contest !== 'true'  && activeContests.length > 0) ||
+      filters.in_contest !== 'true' ||
       filters.municipality !== '' ||
       filters.only_without_pictures !== '' ||
       filters.search !== ''

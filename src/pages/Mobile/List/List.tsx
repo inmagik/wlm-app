@@ -149,7 +149,7 @@ export function ListMonuments({ filters, setFilters }: Props) {
     }
   }, [])
 
-  const { t } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <div className={classNames(styles.ListMonuments)} ref={listMonumentsRef}>
@@ -265,12 +265,10 @@ export default function List() {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false)
   const [orderingOpen, setOrderingOpen] = useState<boolean>(false)
 
-  const { activeContests } = useTopContextState()
-
   const areFiltersActive = useMemo(() => {
     if (
       filters.category !== '' ||
-      (filters.in_contest !== 'true'  && activeContests.length > 0) ||
+      filters.in_contest !== 'true' ||
       filters.municipality !== '' ||
       filters.only_without_pictures !== '' ||
       filters.search !== ''
