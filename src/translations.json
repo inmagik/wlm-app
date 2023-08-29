@@ -93,7 +93,9 @@
             "centra_comune": "Center municipality",
             "Concorso Wiki Loves Monuments 1-30 settembre": "Contest Wiki Loves Monuments 1-30 September",
             "si_e_verificato_un_errore_si_prega_di_ricaricare_la_pagina": "An error has occurred. Please reload the page",
-            "nessun_risultato_trovato": "No results found"
+            "nessun_risultato_trovato": "No results found",
+            "campo_obbligatorio": "Required field",
+            "titolo_esistente": "Duplicate title, use another one"
         }
     },
     "it": {
@@ -189,7 +191,9 @@
             "errore_server_riprova_a_fare_il_login": "Errore del server, riprova a fare il login",
             "centra_comune": "Centra comune",
             "si_e_verificato_un_errore_si_prega_di_ricaricare_la_pagina": "Si è verificato un errore. Si prega di ricaricare la pagina",
-            "nessun_risultato_trovato": "Nessun risultato trovato"
+            "nessun_risultato_trovato": "Nessun risultato trovato",
+            "campo_obbligatorio": "Campo obbligatorio",
+            "titolo_esistente": "Titolo duplicato, utilizzarne un altro"
         }
     }
 }

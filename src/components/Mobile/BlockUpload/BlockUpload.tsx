@@ -21,6 +21,21 @@ import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
 import { toast, ToastContainer } from 'react-toastify'
 import { useTopContextState } from '../../../context/TopContext'
+import { replace } from 'lodash'
+
+
+function getMonumentImageTitles(monument: Monument) {
+  const pictures = monument.pictures
+  const titles = pictures.map((picture) => picture.image_title).map((title) => {
+    const titleParts = title.split('.')
+    const extension = titleParts[titleParts.length - 1]
+    return title.replace('File:', '').replace(`.${extension}`, '' )
+  })
+  return titles
+}
+
+
+
 
 function capitalizeFirstLetter(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -49,15 +64,7 @@ function ImageFile({ image }: { image: any }) {
   )
 }
 
-const validationSchema = Yup.object().shape({
-  images: Yup.array().of(
-    Yup.object().shape({
-      title: Yup.string().required('Title is required'),
-      description: Yup.string().required('Description is required'),
-      date: Yup.string().required('Date is required'),
-    })
-  ),
-})
+
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -107,6 +114,34 @@ const BlockUploadFormik = ({
   const [slideActive, setSlideActive] = useState<number>(0)
   const [responseUploadOpen, setResponseUploadOpen] = useState<boolean>(false)
   const [mappedErrors, setMappedErrors] = useState<any>({})
+
+
+  const imageTitles = useMemo(() => {
+    if (monument) {
+      return getMonumentImageTitles(monument)
+    }
+    return []
+  }, [monument])
+
+  
+
+
+  const validationSchema = useMemo(() => {
+
+    const requiredMessage = t('campo_obbligatorio')
+    const titleAlreadyExistsMessage = t('titolo_esistente')
+
+    return Yup.object().shape({
+      images: Yup.array().of(
+        Yup.object().shape({
+          title: Yup.string().required(requiredMessage).notOneOf(imageTitles, titleAlreadyExistsMessage),
+          description: Yup.string().required(requiredMessage),
+          date: Yup.string().required(requiredMessage),
+        })
+      ),
+    })
+  }, [monument])
+
 
   useEffect(() => {
     if (fileList) {
