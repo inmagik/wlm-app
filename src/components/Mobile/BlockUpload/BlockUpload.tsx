@@ -20,6 +20,7 @@ import { Spinner } from 'react-bootstrap'
 import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
 import { toast, ToastContainer } from 'react-toastify'
+import { useTopContextState } from '../../../context/TopContext'
 
 function capitalizeFirstLetter(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
@@ -87,9 +88,14 @@ const BlockUploadFormik = ({
 
   const inputFileRef = useRef<HTMLInputElement>(null)
 
+  const { activeContests } = useTopContextState()
+  const anyContest = useMemo(() => {
+    return activeContests && activeContests.length > 0
+  }, [activeContests])
+
   const uploadCategories = useMemo(() => {
     if (monument) {
-      const categories = monument.in_contest
+      const categories = anyContest
         ? monument.categories_urls?.wlm_categories ?? []
         : monument.categories_urls?.non_wlm_categories ?? []
 
