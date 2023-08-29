@@ -18,8 +18,6 @@ import { getLabelFromSlug, parseSmartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
 import Legend from '../../../components/Desktop/Legend'
 import { useTopContextState } from '../../../context/TopContext'
-import { MonumentList, PaginatedDJResponse } from '../../../types'
-import { InfiniteData } from '@tanstack/react-query'
 
 const getFilters = (params: URLSearchParams) => ({
   search: params.get('search') ?? '',
@@ -52,12 +50,6 @@ interface Props {
   setDetail: (monument: number) => void
   detail: number | null
   setFilters: (filters: any) => void
-  infiniteMonuments: InfiniteData<PaginatedDJResponse<MonumentList>> | undefined
-  isFetching: boolean
-  isFetchingNextPage: boolean
-  isLoading: boolean
-  hasNextPage: boolean | undefined
-  fetchNextPage: () => void
 }
 
 export function ListMonuments({
@@ -65,13 +57,42 @@ export function ListMonuments({
   setDetail,
   detail,
   setFilters,
-  infiniteMonuments,
-  isFetching,
-  isFetchingNextPage,
-  isLoading,
-  hasNextPage,
-  fetchNextPage,
 }: Props) {
+
+  const filtersForMonument = useMemo(() => {
+    return {
+      search: filters.search,
+      municipality: filters.municipality,
+      ordering: filters.ordering,
+      category: filters.category,
+      in_contest: filters.in_contest,
+      only_without_pictures: filters.only_without_pictures,
+      user_lat: filters.user_lat,
+      user_lon: filters.user_lon,
+    }
+  }, [filters])
+
+  const enableQuery = useMemo(() => {
+    if (filters.ordering === '') {
+      return false
+    }
+    return (
+      filters.ordering !== 'distance' ||
+      (filters.ordering === 'distance' &&
+        !!filters.user_lat &&
+        !!filters.user_lon)
+    )
+  }, [filters])
+
+  const {
+    data: infiniteMonuments,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+  } = useInfiniteMomuments(filtersForMonument, enableQuery)
+
   useEffect(() => {
     if (history.state?.scroll) {
       listMonumentsRef.current!.scrollTop = history.state.scroll
@@ -239,39 +260,9 @@ export default function List() {
 
   const { i18n } = useTranslation()
 
-  const filtersForMonument = useMemo(() => {
-    return {
-      search: filters.search,
-      municipality: filters.municipality,
-      ordering: filters.ordering,
-      category: filters.category,
-      in_contest: filters.in_contest,
-      only_without_pictures: filters.only_without_pictures,
-      user_lat: filters.user_lat,
-      user_lon: filters.user_lon,
-    }
-  }, [filters])
+  
 
-  const enableQuery = useMemo(() => {
-    if (filters.ordering === '') {
-      return false
-    }
-    return (
-      filters.ordering !== 'distance' ||
-      (filters.ordering === 'distance' &&
-        !!filters.user_lat &&
-        !!filters.user_lon)
-    )
-  }, [filters])
-
-  const {
-    data: infiniteMonuments,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isFetching,
-    fetchNextPage,
-  } = useInfiniteMomuments(filtersForMonument, enableQuery)
+  
 
   return (
     <Layout>
@@ -308,7 +299,7 @@ export default function List() {
                   onChange={(e) => {
                     setFiltersDebounced({ search: e.target.value })
                   }}
-                  disabled={isLoading}
+                  // disabled={isLoading}
                   value={uiFilters.search}
                   className={styles.InputSearch}
                   type="text"
@@ -365,15 +356,9 @@ export default function List() {
               >
                 <ListMonuments
                   detail={detail}
-                  infiniteMonuments={infiniteMonuments}
                   setDetail={setDetail}
                   filters={filters}
                   setFilters={setFilters}
-                  fetchNextPage={fetchNextPage}
-                  hasNextPage={hasNextPage}
-                  isFetchingNextPage={isFetchingNextPage}
-                  isLoading={isLoading}
-                  isFetching={isFetching}
                 />
               </Suspense>
             </div>
