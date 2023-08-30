@@ -22,6 +22,7 @@ import { isBrowserMobile } from '../../../utils'
 import { toast, ToastContainer } from 'react-toastify'
 import { useTopContextState } from '../../../context/TopContext'
 import { replace } from 'lodash'
+import { set } from 'ol/transform'
 
 
 function getMonumentImageTitles(monument: Monument) {
@@ -200,10 +201,31 @@ const BlockUploadFormik = ({
             position: toast.POSITION.BOTTOM_RIGHT,
           })
         }
-        if (errors.response.status === 418) {
+        else if (errors.response.status === 418) {
           setMappedErrors(errors.response.data)
         }
-        setErrors(errors.response.data)
+        else if(errors.response.status === 400) {
+          const newErrors = Object.assign({}, errors.response.data)
+          const keys = Object.keys(newErrors)
+          keys.forEach((key) => {
+            const value = newErrors[key]
+            const newValue = newErrors[key].map((v:any) => {
+              if (v["non_field_errors"]) {
+                return {"title" : v["non_field_errors"]}
+              }
+              return v
+            })
+            newErrors[key] = newValue
+          })
+
+          setErrors(newErrors)
+          
+        }  else {
+          setErrors(errors.response.data)
+        }
+
+        
+        
       }
     },
   })
