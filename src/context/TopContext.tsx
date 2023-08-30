@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { Contest } from '../types'
 import { useActiveContests } from '../hooks/contest'
-import { useQsFilters } from '../hooks/filters'
 
 interface ContextTop {
   activeContests: Contest[]
