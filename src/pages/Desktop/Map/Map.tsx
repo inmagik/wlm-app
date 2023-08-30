@@ -6,7 +6,7 @@ import { Feature, Map as MapOl, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
 import 'ol/ol.css'
 import OSM from 'ol/source/OSM'
-import { Attribution, Zoom } from 'ol/control'
+import { Attribution, Zoom, ScaleLine } from 'ol/control'
 import { fromLonLat } from 'ol/proj'
 import styles from './Map.module.css'
 import VectorLayer from 'ol/layer/Vector'
@@ -183,6 +183,9 @@ export default function Map() {
         }),
         new Attribution({
           collapsible: false,
+        }),
+        new ScaleLine({
+          units: 'metric',
         }),
       ],
       view: new View(mapState),

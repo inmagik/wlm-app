@@ -244,3 +244,7 @@ body,
 .mobile-version .ol-attribution {
   left: 0px !important;
 }
+
+.ol-scale-line {
+  bottom: 30px;
+}

@@ -1,5 +1,6 @@
 import Layout from '../../../components/Mobile/Layout'
 import { Feature, Map as MapOl, View } from 'ol'
+
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import 'ol/ol.css'
@@ -21,7 +22,7 @@ import { useCategoriesDomain } from '../../../hooks/monuments'
 import { useNavigate } from 'react-router-dom'
 import { smartSlug } from '../../../utils'
 import { useTranslation } from 'react-i18next'
-import { Attribution, Zoom } from 'ol/control'
+import { Attribution, Zoom, ScaleLine } from 'ol/control'
 import { Spinner } from 'react-bootstrap'
 import { defaults } from 'ol/interaction/defaults'
 import IconMonument from '../../../components/IconMonument'
@@ -179,6 +180,9 @@ export default function Map() {
         }),
         new Attribution({
           collapsible: false,
+        }),
+        new ScaleLine({
+          units: 'metric',
         }),
       ],
       view: new View(mapState),
