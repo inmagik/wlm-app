@@ -8,7 +8,7 @@ export default function RedirectLogin() {
   useEffect(() => {
     if (user) {
       const urlRedirect = localStorage.getItem('redirectUrl')
-      navigate(urlRedirect ? urlRedirect : '/it/pprofilo')
+      navigate(urlRedirect ? urlRedirect : '/it/profilo')
       localStorage.removeItem('redirectUrl')
     }
   })
