@@ -99,29 +99,9 @@ export function getFeatureStyle(feature: any) {
   if (info === 1 && !singleCluster ) {
     
     const properties = feature.getProperties().features[0].getProperties()
-    const categoriesFeature = properties.categories
-    let category = ''
-    const categoryLookup = {} as Record<number, string>
-    forEach(
-      categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
-      ({ name, categories: ids }) => {
-        ids.forEach((id: number) => {
-          categoryLookup[id] = name
-        })
-      }
-    )
+    
 
-    category =
-      categoriesFeature.reduce(
-        (acc: string, id: number) => acc ?? categoryLookup[id],
-        undefined
-      ) ?? ''
-
-    if (category === '') {
-      category = 'Altri monumenti'
-    }
-
-    const appCategory = category
+    const appCategory = feature.getProperties().features[0].getProperties().app_category
     const iconStyle = new Style({
       image: new Icon({
         anchor: [0.5, 1],

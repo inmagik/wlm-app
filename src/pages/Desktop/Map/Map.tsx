@@ -211,30 +211,7 @@ export default function Map() {
 
         if (info === 1) {
           const monument = feature.getProperties().features[0].getProperties()
-          const categoriesFeature = feature
-            .getProperties()
-            .features[0].getProperties().categories
-          let category = ''
-          const categoryLookup = {} as Record<number, string>
-          forEach(
-            categories?.filter((c) => c.name !== 'Altri monumenti') ?? [],
-            ({ name, categories: ids }) => {
-              ids.forEach((id: number) => {
-                categoryLookup[id] = name
-              })
-            }
-          )
-
-          category =
-            categoriesFeature.reduce(
-              (acc: string, id: number) => acc ?? categoryLookup[id],
-              undefined
-            ) ?? ''
-
-          if (category === '') {
-            category = 'Altri monumenti'
-          }
-          const appCategory = category
+          const appCategory = feature.getProperties().features[0].getProperties().app_category
           setDetail(monument.id)
           setFilters({
             monument_id: monument.id,
