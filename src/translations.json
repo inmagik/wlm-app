@@ -100,7 +100,8 @@
             "wizard_upload_description": "Upload your photos with the Wikimedia Commons upload wizard. This function is for advanced users. Are you sure you want to continue?",
             "annulla": "Cancel",
             "continua": "Continue",
-            "puoi_caricare_al_massimo_50_foto": "You can upload up to 50 photos"
+            "puoi_caricare_al_massimo_50_foto": "You can upload up to 50 photos",
+            "duplica_su_tutte_le_immagini": "Duplicate on all images"
         }
     },
     "it": {
@@ -203,7 +204,8 @@
             "wizard_upload_description": "Carica le tue foto con l'upload wizard di Wikimedia Commons. Questa funzione è per utenti avanzati. Sei sicuro di voler continuare?",
             "annulla": "Annulla",
             "continua": "Continua",
-            "puoi_caricare_al_massimo_50_foto": "Puoi caricare al massimo 50 foto"
+            "puoi_caricare_al_massimo_50_foto": "Puoi caricare al massimo 50 foto",
+            "duplica_su_tutte_le_immagini": "Duplica su tutte le immagini"
         }
     }
 }

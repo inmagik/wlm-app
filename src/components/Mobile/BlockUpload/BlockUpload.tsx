@@ -7,7 +7,7 @@ import { ReactComponent as UploadSuccess } from '../../../assets/upload-success.
 import { ReactComponent as ArrowLeftSlideShow } from '../../../assets/left-slideshow-arrow.svg'
 import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-slideshow-arrow.svg'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { type Swiper as SwiperRef } from 'swiper'
 import 'swiper/css'
@@ -205,6 +205,33 @@ const BlockUploadFormik = ({
 
   const [uploadWizard, setUploadWizard] = useState<boolean | object>(false)
 
+  const copyTitles = useCallback(
+    (title: string) => {
+      const position = title.indexOf('_001')
+      let titleWithoutNumber = title
+      if (position > -1) {
+        titleWithoutNumber = title.substring(0, position)
+      }
+      values.images.forEach((image: any, index: number) => {
+        if (index !== 0) {
+          const suffix = String(index + 1).padStart(3, '0')
+          const newTitle = `${titleWithoutNumber}_${suffix}`
+          setFieldValue(`images[${index}].title`, newTitle)
+        }
+      })
+    },
+    [values.images]
+  )
+
+  const [checkedCopia, setCheckedCopia] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (!checkedCopia) return
+    if (values.images && values.images.length > 0) {
+      copyTitles(values.images[0].title)
+    }
+  }, [values.images, checkedCopia])
+
   return (
     <>
       <div
@@ -231,7 +258,7 @@ const BlockUploadFormik = ({
                 backgroundColor: 'var(--overlay)',
               }}
             >
-              <div className='d-flex'>
+              <div className="d-flex">
                 <div className={styles.TitleConcorso}>
                   {monument?.in_contest
                     ? t('la_tua_foto_sarà_in_concorso')
@@ -242,7 +269,7 @@ const BlockUploadFormik = ({
                     color: 'var(--primary)',
                     fontSize: 12,
                   }}
-                  className='ms-4 pointer'
+                  className="ms-4 pointer"
                   onClick={() => {
                     setUploadWizard({
                       description: values.images[0].description,
@@ -318,8 +345,30 @@ const BlockUploadFormik = ({
                               </div>
                               <div className="mt-4">
                                 <div className="d-flex align-items-center justify-content-between">
-                                  <div className={styles.LabelInput}>
+                                  <div className={`${styles.LabelInput} d-flex align-items-center`}>
                                     {t('titolo_immagine')} <span>*</span>
+                                    <span
+                                      onClick={() => {
+                                        copyTitles(values.images[index].title)
+                                      }}
+                                    >
+                                      {index === 0 &&
+                                        values.images.length > 1 && (
+                                          <div className='d-flex align-items-center ms-4'>
+                                            <input
+                                              type="checkbox"
+                                              className='me-2'
+                                              checked={checkedCopia}
+                                              onChange={(e) => {
+                                                setCheckedCopia(
+                                                  e.target.checked
+                                                )
+                                              }}
+                                            />{' '}
+                                            {t('duplica_su_tutte_le_immagini')}
+                                          </div>
+                                        )}
+                                    </span>
                                   </div>
                                 </div>
                                 <div>
@@ -327,7 +376,7 @@ const BlockUploadFormik = ({
                                     rows={isMobile ? 2 : 1}
                                     className={styles.InputTitle}
                                     name={`images[${index}].title`}
-                                    disabled={isLoading}
+                                    disabled={isLoading || (index !== 0 && checkedCopia)}
                                     value={values.images[index].title}
                                     onChange={handleChange}
                                     placeholder={t('inserisci_titolo')}
@@ -573,7 +622,11 @@ const BlockUploadFormik = ({
           </div>
         </div>
       )}
-      <Modal centered show={!!uploadWizard} onHide={() => setUploadWizard(false)}>
+      <Modal
+        centered
+        show={!!uploadWizard}
+        onHide={() => setUploadWizard(false)}
+      >
         <Modal.Header closeButton>
           <Modal.Title>{t('wizard_upload')}</Modal.Title>
         </Modal.Header>
