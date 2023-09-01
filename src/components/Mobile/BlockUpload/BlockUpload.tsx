@@ -650,6 +650,7 @@ const BlockUploadFormik = ({
               )
               setUploadWizard(false)
               setUploadOpen(false)
+              setFileList(null)
             }}
           >
             {t('continua')}

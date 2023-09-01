@@ -9,7 +9,7 @@ function readDateFromExif(file: File): Promise<string | null> {
       if (data.exif) {
         const exif = data.exif as any
         // console.log(exif.get('Exif'))
-        const dateFromExif = exif.get('Exif')[36867]
+        const dateFromExif = exif.get('Exif')
         if (dateFromExif) {
           resolve(
             dayjs(dateFromExif, 'YYYY:MM:DD HH:mm:ss').format('YYYY-MM-DD')
