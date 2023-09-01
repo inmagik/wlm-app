@@ -33,12 +33,19 @@ export async function processUploadFiles(
   monument: Monument
 ) {
   const images: ImageInfo[] = []
-
+  
+  const awaits: Array<Promise<{date:string | null, file:File}>> = []
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i]
-    const date =
-      (await readDateFromExif(file)) ?? dayjs().format('YYYY-MM-DD')
+    awaits.push(readDateFromExif(fileList[i]).then((date) => ({date, file})))
+  }
 
+  const dates = await Promise.all(awaits)
+  console.log("DATES", dates, fileList)
+
+  for (let i = 0; i < dates.length; i++) {
+    console.log("ITERATING", i)
+    const {date, file} = dates[i]
     let monumentPrefix =
       monument?.app_category === 'Comune'
         ? `Comune di ${monument?.label}`
@@ -56,10 +63,9 @@ export async function processUploadFiles(
         .padStart(3, '0')}`,
       description: monument?.label || '',
       file: file,
-      date: date,
+      date: date ?? dayjs().format('YYYY-MM-DD'),
       monument_id: monument?.id,
     })
-    
   }
   return images
 }

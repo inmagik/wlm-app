@@ -39,10 +39,6 @@ function getMonumentImageTitles(monument: Monument) {
   return titles
 }
 
-function capitalizeFirstLetter(s: string) {
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
-
 function ImageFile({ image }: { image: any }) {
   const url = useMemo(() => {
     if (image.file) {
@@ -143,6 +139,7 @@ const BlockUploadFormik = ({
     if (fileList && monument) {
       processUploadFiles(fileList, monument).then((images) => {
         setFieldValue('images', images)
+        console.log(images, 'images')
       })
     }
   }, [fileList])
