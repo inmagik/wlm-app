@@ -14,32 +14,33 @@ import 'swiper/css'
 import { Monument } from '../../../types'
 import { uploadImages } from '../../../hooks/monuments'
 import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useAuthUser } from 'use-eazy-auth'
 import { useQueryClient } from '@tanstack/react-query'
 import { Spinner } from 'react-bootstrap'
 import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import { useTopContextState } from '../../../context/TopContext'
-import { replace } from 'lodash'
-import { set } from 'ol/transform'
+import * as loadImage from 'blueimp-load-image'
+import { processUploadFiles } from './processUpload'
 
+dayjs.extend(customParseFormat)
 
 function getMonumentImageTitles(monument: Monument) {
   const pictures = monument.pictures
-  const titles = pictures.map((picture) => picture.image_title).map((title) => {
-    const titleParts = title.split('.')
-    const extension = titleParts[titleParts.length - 1]
-    return title.replace('File:', '').replace(`.${extension}`, '' )
-  })
+  const titles = pictures
+    .map((picture) => picture.image_title)
+    .map((title) => {
+      const titleParts = title.split('.')
+      const extension = titleParts[titleParts.length - 1]
+      return title.replace('File:', '').replace(`.${extension}`, '')
+    })
   return titles
 }
 
-
-
-
 function capitalizeFirstLetter(s: string) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
+  return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 function ImageFile({ image }: { image: any }) {
@@ -64,8 +65,6 @@ function ImageFile({ image }: { image: any }) {
     />
   )
 }
-
-
 
 interface BlockUploadProps {
   uploadOpen: boolean
@@ -116,7 +115,6 @@ const BlockUploadFormik = ({
   const [responseUploadOpen, setResponseUploadOpen] = useState<boolean>(false)
   const [mappedErrors, setMappedErrors] = useState<any>({})
 
-
   const imageTitles = useMemo(() => {
     if (monument) {
       return getMonumentImageTitles(monument)
@@ -124,18 +122,16 @@ const BlockUploadFormik = ({
     return []
   }, [monument])
 
-  
-
-
   const validationSchema = useMemo(() => {
-
     const requiredMessage = t('campo_obbligatorio')
     const titleAlreadyExistsMessage = t('titolo_esistente')
 
     return Yup.object().shape({
       images: Yup.array().of(
         Yup.object().shape({
-          title: Yup.string().required(requiredMessage).notOneOf(imageTitles, titleAlreadyExistsMessage),
+          title: Yup.string()
+            .required(requiredMessage)
+            .notOneOf(imageTitles, titleAlreadyExistsMessage),
           description: Yup.string().required(requiredMessage),
           date: Yup.string().required(requiredMessage),
         })
@@ -143,28 +139,11 @@ const BlockUploadFormik = ({
     })
   }, [monument])
 
-
   useEffect(() => {
-    if (fileList) {
-      const images: ImageInfo[] = []
-      for (let i = 0; i < fileList.length; i++) {
-
-        let monumentPrefix = monument?.app_category === 'Comune' ? `Comune di ${monument?.label}` : `${monument?.label}`
-        monumentPrefix = capitalizeFirstLetter(monumentPrefix)
-        let titlePrefix = monument?.municipality_label ? `${monument?.municipality_label} - ${monumentPrefix}` : `${monumentPrefix}`
-        
-        
-        images.push({
-          title: `${titlePrefix} - ${dayjs().format(
-            'YYYY-MM-DD_HH-mm-ss'
-          )}_${(i + 1).toString().padStart(3, '0')}`,
-          description: monument?.label || '',
-          file: fileList[i],
-          date: dayjs().format('YYYY-MM-DD'),
-          monument_id: monument?.id,
-        })
-      }
-      setFieldValue('images', images)
+    if (fileList && monument) {
+      processUploadFiles(fileList, monument).then((images) => {
+        setFieldValue('images', images)
+      })
     }
   }, [fileList])
 
@@ -202,18 +181,16 @@ const BlockUploadFormik = ({
           toast.error(errors.response.data.detail, {
             position: toast.POSITION.BOTTOM_RIGHT,
           })
-        }
-        else if (errors.response.status === 418) {
+        } else if (errors.response.status === 418) {
           setMappedErrors(errors.response.data)
-        }
-        else if(errors.response.status === 400) {
+        } else if (errors.response.status === 400) {
           const newErrors = Object.assign({}, errors.response.data)
           const keys = Object.keys(newErrors)
           keys.forEach((key) => {
             const value = newErrors[key]
-            const newValue = newErrors[key].map((v:any) => {
-              if (v["non_field_errors"]) {
-                return {"title" : v["non_field_errors"]}
+            const newValue = newErrors[key].map((v: any) => {
+              if (v['non_field_errors']) {
+                return { title: v['non_field_errors'] }
               }
               return v
             })
@@ -221,13 +198,9 @@ const BlockUploadFormik = ({
           })
 
           setErrors(newErrors)
-          
-        }  else {
+        } else {
           setErrors(errors.response.data)
         }
-
-        
-        
       }
     },
   })
@@ -339,6 +312,7 @@ const BlockUploadFormik = ({
                                     rows={isMobile ? 2 : 1}
                                     className={styles.InputTitle}
                                     name={`images[${index}].title`}
+                                    disabled={isLoading}
                                     value={values.images[index].title}
                                     onChange={handleChange}
                                     placeholder={t('inserisci_titolo')}
@@ -369,6 +343,7 @@ const BlockUploadFormik = ({
                                   <textarea
                                     className={styles.InputTitle}
                                     rows={2}
+                                    disabled={isLoading}
                                     name={`images[${index}].description`}
                                     value={values.images[index].description}
                                     onChange={handleChange}
@@ -421,6 +396,7 @@ const BlockUploadFormik = ({
                                           ? '0px 0px 0px 1px #FF0000'
                                           : '0px 0px 0px 1px #E5E5E5',
                                     }}
+                                    disabled={isLoading}
                                     className={styles.InputTitle}
                                     name={`images[${index}].date`}
                                     value={values.images[index].date}
