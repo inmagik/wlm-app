@@ -17,7 +17,7 @@ import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useAuthUser } from 'use-eazy-auth'
 import { useQueryClient } from '@tanstack/react-query'
-import { Spinner } from 'react-bootstrap'
+import { Modal, Spinner } from 'react-bootstrap'
 import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
 import { toast } from 'react-toastify'
@@ -204,6 +204,8 @@ const BlockUploadFormik = ({
 
   const { values, errors, touched, setFieldValue, handleChange } = formik
 
+  const [uploadWizard, setUploadWizard] = useState<boolean | object>(false)
+
   return (
     <>
       <div
@@ -230,10 +232,27 @@ const BlockUploadFormik = ({
                 backgroundColor: 'var(--overlay)',
               }}
             >
-              <div className={styles.TitleConcorso}>
-                {monument?.in_contest
-                  ? t('la_tua_foto_sarà_in_concorso')
-                  : t('la_tua_foto_non_sarà_in_concorso')}{' '}
+              <div className='d-flex'>
+                <div className={styles.TitleConcorso}>
+                  {monument?.in_contest
+                    ? t('la_tua_foto_sarà_in_concorso')
+                    : t('la_tua_foto_non_sarà_in_concorso')}{' '}
+                </div>
+                <div
+                  style={{
+                    color: 'var(--primary)',
+                    fontSize: 12,
+                  }}
+                  className='ms-4 pointer'
+                  onClick={() => {
+                    setUploadWizard({
+                      description: values.images[0].description,
+                      categories: uploadCategories.join('|'),
+                    })
+                  }}
+                >
+                  {t('wizard_upload')}{' '}
+                </div>
               </div>
               <div className={styles.Close}>
                 <Close
@@ -555,6 +574,36 @@ const BlockUploadFormik = ({
           </div>
         </div>
       )}
+      <Modal centered show={!!uploadWizard} onHide={() => setUploadWizard(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t('wizard_upload')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{t('wizard_upload_description')}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className={styles.ButtonCancel}
+            onClick={() => setUploadWizard(false)}
+          >
+            {t('annulla')}
+          </button>
+          <button
+            className={styles.ButtonUpload}
+            onClick={() => {
+              const params = new URLSearchParams(uploadWizard as any)
+              window.open(
+                `https://commons.wikimedia.org/wiki/Special:UploadWizard?${params.toString()}`,
+                '_blank'
+              )
+              setUploadWizard(false)
+              setUploadOpen(false)
+            }}
+          >
+            {t('continua')}
+          </button>
+        </Modal.Footer>
+      </Modal>
     </>
   )
 }

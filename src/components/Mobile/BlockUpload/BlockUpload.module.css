@@ -128,6 +128,29 @@
   transition: all 0.3s ease-in-out;
 }
 
+.ButtonCancel {
+  display: flex;
+  padding: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  border-radius: 5px;
+  background: var(--colori-neutri-gray-2);
+  /* Shade Button Blu */
+  box-shadow: 1px 1px 0px 0px var(--primary);
+  border: none;
+  margin-left: 8px;
+  color: var(--primary);
+  text-align: center;
+  /* CTA */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  transition: all 0.3s ease-in-out;
+}
+
 .ButtonUploadErrors {
   display: flex;
   padding: 8px;

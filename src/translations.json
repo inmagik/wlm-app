@@ -95,7 +95,11 @@
             "si_e_verificato_un_errore_si_prega_di_ricaricare_la_pagina": "An error has occurred. Please reload the page",
             "nessun_risultato_trovato": "No results found",
             "campo_obbligatorio": "Required field",
-            "titolo_esistente": "Duplicate title, use another one"
+            "titolo_esistente": "Duplicate title, use another one",
+            "wizard_upload": "Upload wizard",
+            "wizard_upload_description": "Upload your photos with the Wikimedia Commons upload wizard. This function is for advanced users. Are you sure you want to continue?",
+            "annulla": "Cancel",
+            "continua": "Continue"
         }
     },
     "it": {
@@ -193,7 +197,11 @@
             "si_e_verificato_un_errore_si_prega_di_ricaricare_la_pagina": "Si è verificato un errore. Si prega di ricaricare la pagina",
             "nessun_risultato_trovato": "Nessun risultato trovato",
             "campo_obbligatorio": "Campo obbligatorio",
-            "titolo_esistente": "Titolo duplicato, utilizzarne un altro"
+            "titolo_esistente": "Titolo duplicato, utilizzarne un altro",
+            "wizard_upload": "Upload wizard",
+            "wizard_upload_description": "Carica le tue foto con l'upload wizard di Wikimedia Commons. Questa funzione è per utenti avanzati. Sei sicuro di voler continuare?",
+            "annulla": "Annulla",
+            "continua": "Continua"
         }
     }
 }
