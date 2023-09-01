@@ -623,10 +623,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               target={'_blank'}
               href={
                 monument.data.commons_n.length > 0
-                  ? 'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search=' +
-                    'incategory:"' +
-                    monument.data.commons_n +
-                    '"'
+                  ? 'https://commons.wikimedia.org/wiki/Category:' +
+                    monument.data.commons_n
                   : 'https://commons.wikimedia.org/w/index.php?title=Special:Search&limit=500&offset=0&profile=default&search="' +
                     monument?.wlm_n +
                     '"'
