@@ -361,7 +361,7 @@ const BlockUploadFormik = ({
                                               checked={checkedCopia}
                                               onChange={(e) => {
                                                 setCheckedCopia(
-                                                  e.target.checked
+                                                  !checkedCopia
                                                 )
                                               }}
                                             />{' '}
