@@ -190,6 +190,8 @@ const BlockUploadFormik = ({
         if (response.status === 200) {
           setUploadOpen(false)
           setResponseUploadOpen(true)
+          setFileList(null)
+          setMappedErrors({})
           queryClient.invalidateQueries(['monument'])
           queryClient.invalidateQueries(['monuments'])
           queryClient.invalidateQueries(['infiniteMonuments'])
