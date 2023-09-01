@@ -52,6 +52,7 @@ import IconCategory from '../../../components/IconCategory'
 import { API_URL } from '../../../const'
 import { replace } from 'lodash'
 import BlockUploadFormik from '../../../components/Mobile/BlockUpload/BlockUpload'
+import { toast } from 'react-toastify'
 
 interface Props {
   monumentId?: number
@@ -808,8 +809,13 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
           <input
             ref={inputFileRef}
             multiple
+            max={2}
             onChange={(e) => {
               if (e.target.files && e.target.files?.length > 0) {
+                if(e.target.files.length > 50) {
+                  toast.error(t('puoi_caricare_al_massimo_50_foto'))
+                  return
+                }
                 setShowModalUpload(true)
                 setImageUpload(e.target.files)
               }

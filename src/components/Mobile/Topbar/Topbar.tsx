@@ -16,8 +16,6 @@ export default function Topbar() {
   const [presentazione, setPresentazione] = useState(false)
   const { activeContests } = useTopContextState()
 
-  console.log('activeContests', activeContests)
-
   return (
     <>
       <div className={styles.TopBar}>

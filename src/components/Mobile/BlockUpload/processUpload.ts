@@ -41,10 +41,8 @@ export async function processUploadFiles(
   }
 
   const dates = await Promise.all(awaits)
-  console.log("DATES", dates, fileList)
 
   for (let i = 0; i < dates.length; i++) {
-    console.log("ITERATING", i)
     const {date, file} = dates[i]
     let monumentPrefix =
       monument?.app_category === 'Comune'
@@ -54,7 +52,6 @@ export async function processUploadFiles(
     let titlePrefix = monument?.municipality_label
       ? `${monument?.municipality_label} - ${monumentPrefix}`
       : `${monumentPrefix}`
-    console.log(file)
     images.push({
       title: `${titlePrefix} - ${dayjs().format('YYYY-MM-DD_HH-mm-ss')}_${(
         i + 1

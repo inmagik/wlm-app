@@ -139,7 +139,6 @@ const BlockUploadFormik = ({
     if (fileList && monument) {
       processUploadFiles(fileList, monument).then((images) => {
         setFieldValue('images', images)
-        console.log(images, 'images')
       })
     }
   }, [fileList])
