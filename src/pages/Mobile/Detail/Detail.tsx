@@ -22,7 +22,7 @@ import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-sli
 import { ReactComponent as License } from '../../../assets/icon-license.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperClass from 'swiper'
+import SwiperClass, { Virtual } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
@@ -342,6 +342,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 onSlideChange={(swiper) => {
                   setSlideActive(swiper.activeIndex)
                 }}
+                modules={[Virtual]}
+                virtual
                 spaceBetween={10}
                 className={styles.Swiper}
               >
@@ -552,6 +554,8 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               onSwiper={(swiper) => {
                 swiperBlock12.current = swiper
               }}
+              virtual
+              modules={[Virtual]}
               onSlideChange={(swiper) => {
                 setSlideGroup12(swiper.activeIndex)
               }}
@@ -560,7 +564,7 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 groupsOf12Pictures.map((group, index) => (
                   <Fragment key={index}>
                     {group.length > 0 && (
-                      <SwiperSlide key={index}>
+                      <SwiperSlide key={index} virtualIndex={index}>
                         <div className={styles.ContainerImages}>
                           {group.map((picture: any, k: number) => (
                             <div
