@@ -8,8 +8,9 @@ function readDateFromExif(file: File): Promise<string | null> {
     loadImage.parseMetaData(file, (data) => {
       if (data.exif) {
         const exif = data.exif as any
-        // console.log(exif.get('Exif'))
-        const dateFromExif = exif.get('Exif')
+        const allProperties = exif.getAll()
+        const dateFromExif = allProperties?.Exif?.DateTimeOriginal
+
         if (dateFromExif) {
           resolve(
             dayjs(dateFromExif, 'YYYY:MM:DD HH:mm:ss').format('YYYY-MM-DD')
@@ -33,17 +34,26 @@ export async function processUploadFiles(
   monument: Monument
 ) {
   const images: ImageInfo[] = []
-  
-  const awaits: Array<Promise<{date:string | null, file:File}>> = []
+
+  const awaits: Array<Promise<{ date: string | null; file: File }>> = []
   for (let i = 0; i < fileList.length; i++) {
     const file = fileList[i]
-    awaits.push(readDateFromExif(fileList[i]).then((date) => ({date, file})))
+    const today = dayjs().format('YYYY-MM-DD')
+    awaits.push(
+      readDateFromExif(fileList[i]).then((date) => {
+        if (date) {
+          return { date, file }
+        } else {
+          return { date: today, file }
+        }
+      })
+    )
   }
 
   const dates = await Promise.all(awaits)
 
   for (let i = 0; i < dates.length; i++) {
-    const {date, file} = dates[i]
+    const { date, file } = dates[i]
     let monumentPrefix =
       monument?.app_category === 'Comune'
         ? `Comune di ${monument?.label}`

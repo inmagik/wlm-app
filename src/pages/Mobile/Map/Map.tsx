@@ -381,9 +381,7 @@ export default function Map() {
       filters.monument_lat !== 0 &&
       filters.monument_lon !== 0
     ) {
-      // console.log('setting map state', mapState)
       const mapState = JSON.parse(sessionStorage.getItem('map_state')!)
-      // console.log('setting map state', mapState)
       map?.getView().setZoom(mapState.zoom)
       map?.getView().setCenter(mapState.center)
       setMapState(mapState)
