@@ -15,6 +15,7 @@ import EdificioReligiosoIcon from '../../Icons/EdificioReligiosoIcon'
 import AltroMonumentoIcon from '../../Icons/AltroMonumentoIcon'
 import MuseoIcon from '../../Icons/MuseoIcon'
 import AlberoMonumentaleIcon from '../../Icons/AlberoMonumentaleIcon'
+import ComuneIcon from '../../Icons/ComuneIcon'
 
 interface Props {
   setFilters: (filters: any) => void
@@ -357,6 +358,37 @@ export default function BlockFilters({
                 }
               />
               <span className="ms-2">{t('alberi_monumentali')}</span>
+            </div>
+          </div>
+          <div
+            className={classNames(styles.FilterItem, {
+              [styles.FilterItemActive]:
+                filters.category === 'Comune',
+            })}
+            onClick={() => {
+              setDetail(null)
+              setFilters({
+                ...filters,
+                category: 'Comune',
+              })
+            }}
+          >
+            <div>
+              {filters.category === 'Comune' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.FilterItemTitle}>
+              <ComuneIcon
+                fill={
+                  filters.category === 'Alberi monumentali'
+                    ? '#fff'
+                    : 'var(--primary)'
+                }
+              />
+              <span className="ms-2">{t('comuni_vedute_d_insieme')}</span>
             </div>
           </div>
         </div>

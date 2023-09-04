@@ -451,6 +451,30 @@ export default function BlockFilters({
               {t('alberi_monumentali')}
             </div>
           </div>
+          <div
+            className={classNames(styles.OrderingItem, {
+              [styles.OrderingItemActive]:
+                filters.category === 'Comune',
+            })}
+            onClick={() => {
+              setFilters({
+                ...filters,
+                category: 'Comune',
+              })
+              setFilterCategoriaOpen(false)
+            }}
+          >
+            <div>
+              {filters.category === 'Comune' ? (
+                <CheckOrderingIcon />
+              ) : (
+                <UncheckOrderingIcon />
+              )}
+            </div>
+            <div className={styles.OrderingItemTitle}>
+              {t('comuni_vedute_d_insieme')}
+            </div>
+          </div>
         </div>
       </div>
     </>

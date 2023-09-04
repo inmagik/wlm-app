@@ -5,7 +5,7 @@
   padding: 24px;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   flex-shrink: 0;
   border-radius: 30px;
   background: var(--overlay);
@@ -30,7 +30,7 @@
   font-weight: 700;
   line-height: normal;
   margin-left: 8px;
-  padding-bottom: 16px;
+  padding-bottom: 5px;
 }
 
 .FilterLabelFiltri {
@@ -236,9 +236,9 @@
   cursor: pointer;
 }
 
-.ComuneItemTitle{
-    display: flex;
-    align-items: center;
+.ComuneItemTitle {
+  display: flex;
+  align-items: center;
 }
 
 .CloseIconWrapper {
