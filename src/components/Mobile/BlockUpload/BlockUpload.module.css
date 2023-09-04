@@ -429,3 +429,14 @@
     background: var(--concorso-hover);
   }
 }
+
+.LabelUploadWizard {
+  font-size: 12px;
+  color: var(--primary);
+  cursor: pointer;
+  margin-right: 35px;
+}
+
+.LabelUploadWizard:hover {
+  text-decoration: underline;
+}

@@ -264,12 +264,10 @@ const BlockUploadFormik = ({
                     ? t('la_tua_foto_sarà_in_concorso')
                     : t('la_tua_foto_non_sarà_in_concorso')}{' '}
                 </div>
+              </div>
+              <div className='d-flex align-items-center'>
                 <div
-                  style={{
-                    color: 'var(--primary)',
-                    fontSize: 12,
-                  }}
-                  className="ms-4 pointer"
+                  className={styles.LabelUploadWizard}
                   onClick={() => {
                     setUploadWizard({
                       description: values.images[0].description,
@@ -279,14 +277,14 @@ const BlockUploadFormik = ({
                 >
                   {t('wizard_upload')}{' '}
                 </div>
-              </div>
-              <div className={styles.Close}>
-                <Close
-                  onClick={() => {
-                    setFileList(null)
-                    setUploadOpen(false)
-                  }}
-                />
+                <div className={styles.Close}>
+                  <Close
+                    onClick={() => {
+                      setFileList(null)
+                      setUploadOpen(false)
+                    }}
+                  />
+                </div>
               </div>
             </div>
 
@@ -345,7 +343,9 @@ const BlockUploadFormik = ({
                               </div>
                               <div className="mt-4">
                                 <div className="d-flex align-items-center justify-content-between">
-                                  <div className={`${styles.LabelInput} d-flex align-items-center`}>
+                                  <div
+                                    className={`${styles.LabelInput} d-flex align-items-center`}
+                                  >
                                     {t('titolo_immagine')} <span>*</span>
                                     <span
                                       onClick={() => {
@@ -354,15 +354,13 @@ const BlockUploadFormik = ({
                                     >
                                       {index === 0 &&
                                         values.images.length > 1 && (
-                                          <div className='d-flex align-items-center ms-4'>
+                                          <div className="d-flex align-items-center ms-4">
                                             <input
                                               type="checkbox"
-                                              className='me-2'
+                                              className="me-2"
                                               checked={checkedCopia}
                                               onChange={(e) => {
-                                                setCheckedCopia(
-                                                  !checkedCopia
-                                                )
+                                                setCheckedCopia(!checkedCopia)
                                               }}
                                             />{' '}
                                             {t('duplica_su_tutte_le_immagini')}
@@ -376,7 +374,9 @@ const BlockUploadFormik = ({
                                     rows={isMobile ? 2 : 1}
                                     className={styles.InputTitle}
                                     name={`images[${index}].title`}
-                                    disabled={isLoading || (index !== 0 && checkedCopia)}
+                                    disabled={
+                                      isLoading || (index !== 0 && checkedCopia)
+                                    }
                                     value={values.images[index].title}
                                     onChange={handleChange}
                                     placeholder={t('inserisci_titolo')}
