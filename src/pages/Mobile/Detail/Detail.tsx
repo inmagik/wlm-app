@@ -22,7 +22,7 @@ import { ReactComponent as ArrowRightSlideShow } from '../../../assets/right-sli
 import { ReactComponent as License } from '../../../assets/icon-license.svg'
 import { useTranslation } from 'react-i18next'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperClass from 'swiper'
+import SwiperClass, { Virtual } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Fragment, Suspense, useEffect, useMemo, useRef, useState } from 'react'
@@ -339,11 +339,14 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper
                 }}
+                key={monument.id}
                 onSlideChange={(swiper) => {
                   setSlideActive(swiper.activeIndex)
                 }}
                 spaceBetween={10}
                 className={styles.Swiper}
+                virtual
+                modules={[Virtual]}
               >
                 {picturesToUse?.map((picture, k) => (
                   <SwiperSlide
@@ -552,6 +555,9 @@ function DetailBlock({ monument, setDetail, isDesktop }: DetailBlockProps) {
               onSwiper={(swiper) => {
                 swiperBlock12.current = swiper
               }}
+              virtual
+              modules={[Virtual]}
+              key={monument.id+'gruped'}
               onSlideChange={(swiper) => {
                 setSlideGroup12(swiper.activeIndex)
               }}

@@ -10,7 +10,7 @@ import styles from './SlideShow.module.css'
 import IconMonument from '../../IconMonument'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
-import { Navigation } from 'swiper'
+import { Navigation, Virtual } from 'swiper'
 import classNames from 'classnames'
 import { isBrowserMobile } from '../../../utils'
 
@@ -68,8 +68,10 @@ export default function SlideShow({
         onSwiper={(swiper) => {
           swiperSlideShowRef.current = swiper
         }}
-        modules={[Navigation]}
+        key={monument.id+'slideShow'}
+        modules={[Navigation, Virtual]}
         navigation
+        virtual
         onSlideChange={(swiper) => {
           setSlideShowActive(swiper.activeIndex)
         }}
