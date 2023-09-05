@@ -1,4 +1,4 @@
-import { useFormik, FieldArray, Form, FormikProvider, getIn } from 'formik'
+import { useFormik, FieldArray, FormikProvider, getIn } from 'formik'
 import * as Yup from 'yup'
 import styles from './BlockUpload.module.css'
 import { ReactComponent as Close } from '../../../assets/close.svg'
@@ -232,6 +232,11 @@ const BlockUploadFormik = ({
     }
   }, [values.images, checkedCopia])
 
+  const descriptionForWizard = useMemo(() => {
+    if (!monument || values.images.length === 0) return ''
+    return `${values.images[0].description} {{Monumento italiano|${monument?.wlm_n}|anno=${dayjs().year()}}}{{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
+  }, [values.images, monument])
+
   return (
     <>
       <div
@@ -270,7 +275,8 @@ const BlockUploadFormik = ({
                   className={styles.LabelUploadWizard}
                   onClick={() => {
                     setUploadWizard({
-                      description: values.images[0].description,
+                      description: descriptionForWizard,
+                      descriptionlang: 'it',
                       categories: uploadCategories.join('|'),
                     })
                   }}
