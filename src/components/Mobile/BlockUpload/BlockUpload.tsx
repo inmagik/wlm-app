@@ -234,7 +234,9 @@ const BlockUploadFormik = ({
 
   const descriptionForWizard = useMemo(() => {
     if (!monument || values.images.length === 0) return ''
-    return `${values.images[0].description} {{Monumento italiano|${monument?.wlm_n}|anno=${dayjs().year()}}}{{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
+    return `${values.images[0].description} {{Monumento italiano|${
+      monument?.wlm_n
+    }|anno=${dayjs().year()}}}{{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
   }, [values.images, monument])
 
   return (
@@ -270,17 +272,25 @@ const BlockUploadFormik = ({
                     : t('la_tua_foto_non_sarà_in_concorso')}{' '}
                 </div>
               </div>
-              <div className='d-flex align-items-center'>
+              <div className="d-flex align-items-center">
                 <div
                   className={styles.LabelUploadWizard}
                   onClick={() => {
-                    setUploadWizard({
-                      description: descriptionForWizard,
-                      descriptionlang: 'it',
-                      categories: uploadCategories.join('|'),
-                      campaign: 'wlm-it',
-                      id: monument?.wlm_n,
-                    })
+                    if (monument?.in_contest && anyContest) {
+                      setUploadWizard({
+                        description: descriptionForWizard,
+                        descriptionlang: 'it',
+                        categories: uploadCategories.join('|'),
+                        campaign: 'wlm-it',
+                        id: monument?.wlm_n,
+                      })
+                    } else {
+                      setUploadWizard({
+                        description: descriptionForWizard,
+                        descriptionlang: 'it',
+                        categories: uploadCategories.join('|'),
+                      })
+                    }
                   }}
                 >
                   {t('wizard_upload')}{' '}
