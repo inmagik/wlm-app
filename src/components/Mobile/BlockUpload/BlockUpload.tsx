@@ -278,6 +278,8 @@ const BlockUploadFormik = ({
                       description: descriptionForWizard,
                       descriptionlang: 'it',
                       categories: uploadCategories.join('|'),
+                      campaign: 'wlm-it',
+                      id: monument?.wlm_n,
                     })
                   }}
                 >
