@@ -234,9 +234,7 @@ const BlockUploadFormik = ({
 
   const descriptionForWizard = useMemo(() => {
     if (!monument || values.images.length === 0) return ''
-    return `${values.images[0].description} {{Monumento italiano|${
-      monument?.wlm_n
-    }|anno=${dayjs().year()}}}{{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
+    return `${values.images[0].description} {{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
   }, [values.images, monument])
 
   return (
