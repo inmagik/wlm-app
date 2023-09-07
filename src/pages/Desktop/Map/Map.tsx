@@ -195,7 +195,9 @@ export default function Map() {
       if (resolution < 0.1) {
         clusterSource.setDistance(0)
       } else if (resolution <= 300) {
-        clusterSource.setDistance(40)
+        clusterSource.setDistance(40)}
+      else if (resolution <= 0.05) {
+          clusterSource.setDistance(0)
       } else {
         clusterSource.setDistance(0)
       }
@@ -204,6 +206,7 @@ export default function Map() {
     setClusterDistance(v.getResolution() || 1000)
     v.on('change', function () {
       const resolution = v.getResolution() || 1000
+      console.log(123, resolution)
       setClusterDistance(resolution)
     })
 
