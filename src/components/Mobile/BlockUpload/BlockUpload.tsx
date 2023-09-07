@@ -98,7 +98,7 @@ const BlockUploadFormik = ({
 
   const uploadCategories = useMemo(() => {
     if (monument) {
-      const categories = anyContest
+      const categories = anyContest && monument.in_contest
         ? monument.categories_urls?.wlm_categories ?? []
         : monument.categories_urls?.non_wlm_categories ?? []
 
