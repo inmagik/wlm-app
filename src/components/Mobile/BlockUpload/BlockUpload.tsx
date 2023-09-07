@@ -234,8 +234,21 @@ const BlockUploadFormik = ({
 
   const descriptionForWizard = useMemo(() => {
     if (!monument || values.images.length === 0) return ''
-    return `${values.images[0].description} {{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
+    return `${
+      values.images[0].description
+    } {{Load via app WLM.it|year=${dayjs().year()}|source=wizard}}`
   }, [values.images, monument])
+
+  useEffect(() => {
+    if (!uploadOpen) {
+      setFileList(null)
+      setSlideActive(0)
+      if (swiperRef.current) {
+        swiperRef.current.slideTo(0)
+      }
+      setMappedErrors({})
+    }
+  }, [uploadOpen])
 
   return (
     <>
@@ -248,8 +261,9 @@ const BlockUploadFormik = ({
         }}
         onTransitionEnd={() => {
           if (!uploadOpen) {
-            setFileList(null)
-            setMappedErrors({})
+            // setFileList(null)
+            // setMappedErrors({})
+            // setSlideActive(0)
           }
         }}
       >
