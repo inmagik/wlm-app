@@ -8,6 +8,7 @@ export const API_URL = import.meta.env.PROD
     ? 'https://wlm-it-visual.wmcloud.org/api/app'
     : 'https://wlm.inmagik.com/api/app'
   : 'http://localhost:8000/api/app'
+  
 export const API_URL_SECOND = import.meta.env.PROD
   ? IS_WIKI_DOMAIN
     ? 'https://wlm-it-visual.wmcloud.org/api'
